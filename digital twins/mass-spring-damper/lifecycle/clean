@@ -1,0 +1,4 @@
+#!/bin/bash
+rm -rf debug.log target
+#cd "/workspace/data/mass-spring-damper/output"
+rm -rf "/workspace/data/mass-spring-damper/output"
