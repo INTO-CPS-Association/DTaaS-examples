@@ -1,3 +1,4 @@
 #!/bin/bash
 
 printf "install dependencies and create configuration \n\n"
+sudo apt-get install openjdk-17-jre
