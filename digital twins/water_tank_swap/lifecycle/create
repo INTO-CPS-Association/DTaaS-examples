@@ -1,0 +1,3 @@
+#!/bin/bash
+
+printf "install dependencies and create configuration \n\n"

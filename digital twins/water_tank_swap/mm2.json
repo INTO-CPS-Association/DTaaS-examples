@@ -1,0 +1,51 @@
+{
+  "fmus": {
+    "{x1}": "file:///workspace/models/watertankcontroller-c.fmu",
+    "{x2}": "file:///workspace/models/singlewatertank-20sim.fmu",
+    "{x3}": "file:///workspace/models/leak_detector.fmu",
+    "{x4}": "file:///workspace/models/leak_controller.fmu"
+  },
+  "connections": {
+    "{x1}.controller.valve": [
+      "{x2}.tank.valvecontrol",
+      "{x3}.leak_detector.valve"
+    ],
+    "{x2}.tank.level": [
+      "{x1}.controller.level",
+      "{x3}.leak_detector.level"
+    ]
+  },
+  "parameters": {
+    "{x1}.controller.maxlevel": 2,
+    "{x1}.controller.minlevel": 1,
+    "{x4}.leak_controller.maxlevel": 2,
+    "{x4}.leak_controller.minlevel": 1
+  },
+  "algorithm": {
+    "type": "fixed-step",
+    "size": 0.1
+  },
+  "modelSwaps": {
+    "controller": {
+      "swapInstance": "leak_controller",
+      "stepCondition": "(true)",
+      "swapCondition": "(true)",
+      "swapConnections": {
+        "{x4}.leak_controller.valve": [
+          "{x2}.tank.valvecontrol",
+          "{x3}.leak_detector.valve"
+        ],
+        "{x2}.tank.level": [
+          "{x4}.leak_controller.level"
+        ],
+        "{x3}.leak_detector.leak": [
+          "{x4}.leak_controller.leak"
+        ]
+      }
+    }
+  },
+  "modelTransfers": {
+    "controller": "controller",
+    "tank": "tank"
+  }
+}

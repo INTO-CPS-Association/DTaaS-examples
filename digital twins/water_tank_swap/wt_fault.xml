@@ -1,0 +1,8 @@
+<events>
+    <event id="id-A" when="t&gt;=12.0" other="(var_17&gt;1.6) &amp; (var_16=0.0)" vars="var_17,var_16">
+        <variable valRef="16" type="real" newVal="1.0-var_16" vars="var_16," />
+    </event>
+    <!-- <event id="id-A" when="t&gt;=0.5" other="(var_17&gt;1.5) &amp; (var_16=0.0)" vars="var_17,var_16" > -->
+    <!--     <variable valRef="17" type="real" newVal="-0.001*var_17+1.5" vars="var_17," /> -->
+    <!-- </event> -->
+</events>
