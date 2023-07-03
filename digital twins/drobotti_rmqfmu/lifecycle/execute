@@ -9,7 +9,7 @@ echo "\t FMU search path: $FSP"
 
 echo "Generating Mabl specification"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 coe.json multimodel.json -fsp $FSP -output generate/
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 digital\ twins/drobotti_rmqfmu/coe.json digital\ twins/drobotti_rmqfmu/multimodel.json -fsp $FSP -output generate/
 
 echo "Run publisher script in other terminal"
 
