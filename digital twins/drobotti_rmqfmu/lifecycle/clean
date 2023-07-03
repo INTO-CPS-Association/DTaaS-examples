@@ -1,0 +1,6 @@
+#!/bin/bash
+rm -rf target\
+out.txt\
+generate\
+publisher-out.txt\
+
