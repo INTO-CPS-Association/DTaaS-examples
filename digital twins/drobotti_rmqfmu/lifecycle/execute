@@ -9,14 +9,14 @@ echo "\t FMU search path: $FSP"
 
 echo "Generating Mabl specification"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 digital\ twins/drobotti_rmqfmu/coe.json digital\ twins/drobotti_rmqfmu/multimodel.json -fsp $FSP -output generate/
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 digital\ twins/drobotti_rmqfmu/coe.json digital\ twins/drobotti_rmqfmu/multimodel.json -fsp $FSP -output digital\ twins/drobotti_rmqfmu/generate/
 
 echo "Run publisher script in other terminal"
 
-python $TOOLS/rmq-publisher.py 2>&1 | tee publisher-out.txt &
+python $TOOLS/rmq-publisher.py 2>&1 | tee digital\ twins/drobotti_rmqfmu/publisher-out.txt &
 
-python $TOOLS/consume.py 2>&1 | tee consume.txt &
+python $TOOLS/consume.py 2>&1 | tee digital\ twins/drobotti_rmqfmu/consume.txt &
 
 echo "Simulating specifications"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret generate/spec.mabl -output target 2>&1 | tee out.txt
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret digital\ twins/drobotti_rmqfmu/generate/spec.mabl -output digital\ twins/drobotti_rmqfmu/target 2>&1 | tee digital\ twins/drobotti_rmqfmu/out.txt
