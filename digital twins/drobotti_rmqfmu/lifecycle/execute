@@ -4,7 +4,7 @@ echo Configuring extension
 export MAESTRO="/workspace/DTaaS-examples/common/tools"
 export FSP="/workspace/DTaaS-examples/models"
 export TOOLS="/workspace/DTaaS-examples/tools/drobotti_rmqfmu"
-export FILES="/workspace/DTaaS-examples/digital\ twins/drobotti_rmqfmu"
+export FILES="/workspace/DTaaS-examples/digital twins/drobotti_rmqfmu"
 echo "\t Maestro path: $MAESTRO"
 echo "\t FMU search path: $FSP"
 
