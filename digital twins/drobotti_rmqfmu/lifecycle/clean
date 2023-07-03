@@ -4,3 +4,7 @@ out.txt\
 generate\
 publisher-out.txt\
 
+kill $(ps -ef | grep "rmq-publisher.py" | awk '{print $2}')
+
+kill $(ps -ef | grep "consume.py" | awk '{print $2}')
+
