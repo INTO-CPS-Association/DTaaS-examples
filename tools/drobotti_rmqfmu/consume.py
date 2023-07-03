@@ -5,7 +5,8 @@ import datetime
 import time
 import ssl
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+credentials = pika.PlainCredentials('mirgita', 'MirgitaUsesDTaaS')
+connection = pika.BlockingConnection(pika.ConnectionParameters('dtl-server-2.st.lab.au.dk', 8089, credentials=credentials))
 
 channel = connection.channel()
 
