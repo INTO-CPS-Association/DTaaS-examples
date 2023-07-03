@@ -4,19 +4,20 @@ echo Configuring extension
 export MAESTRO="/workspace/DTaaS-examples/common/tools"
 export FSP="/workspace/DTaaS-examples/models"
 export TOOLS="/workspace/DTaaS-examples/tools/drobotti_rmqfmu"
+export FILES="/workspace/DTaaS-examples/digital\ twins/drobotti_rmqfmu"
 echo "\t Maestro path: $MAESTRO"
 echo "\t FMU search path: $FSP"
 
 echo "Generating Mabl specification"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 digital\ twins/drobotti_rmqfmu/coe.json digital\ twins/drobotti_rmqfmu/multimodel.json -fsp $FSP -output digital\ twins/drobotti_rmqfmu/generate/
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 $FILES/coe.json $FILES/multimodel.json -fsp $FSP -output $FILES/generate/
 
 echo "Run publisher script in other terminal"
 
-python $TOOLS/rmq-publisher.py 2>&1 | tee digital\ twins/drobotti_rmqfmu/publisher-out.txt &
+python $TOOLS/rmq-publisher.py 2>&1 | tee $TOOLS/publisher-out.txt &
 
-python $TOOLS/consume.py 2>&1 | tee digital\ twins/drobotti_rmqfmu/consume.txt &
+python $TOOLS/consume.py 2>&1 | tee $TOOLS/consume.txt &
 
 echo "Simulating specifications"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret digital\ twins/drobotti_rmqfmu/generate/spec.mabl -output digital\ twins/drobotti_rmqfmu/target 2>&1 | tee digital\ twins/drobotti_rmqfmu/out.txt
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret $FILES/generate/spec.mabl -output $FILES/target 2>&1 | tee $FILES/out.txt
