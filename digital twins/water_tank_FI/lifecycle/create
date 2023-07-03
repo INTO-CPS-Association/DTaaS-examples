@@ -1,0 +1,6 @@
+#!/bin/bash
+
+printf "install dependencies and create configuration \n\n"
+
+apt-get install openjdk-17-jre
+pip install pandas matplotlib

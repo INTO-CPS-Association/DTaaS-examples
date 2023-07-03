@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Plotting results"
+mkdir -p /workspace/data/water_tank_FI/output/plots
+python lifecycle/plot.py
+mv *.png /workspace/data/water_tank_FI/output/plots
