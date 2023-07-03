@@ -3,6 +3,7 @@
 echo Configuring extension
 export MAESTRO="/workspace/common/tools"
 export FSP="/workspace/models"
+export TOOLS="/workspace/tools/drobotti_rmqfmu"
 echo "\t Maestro path: $MAESTRO"
 echo "\t FMU search path: $FSP"
 
@@ -12,9 +13,9 @@ $MAESTRO/maestro import sg1 coe.json multimodel.json -fsp $FSP -output generate/
 
 echo "Run publisher script in other terminal"
 
-python $MAESTRO/rmq-publisher.py 2>&1 | tee publisher-out.txt &
+python $TOOLS/rmq-publisher.py 2>&1 | tee publisher-out.txt &
 
-python $MAESTRO/consume.py 2>&1 | tee consume.txt &
+python $TOOLS/consume.py 2>&1 | tee consume.txt &
 
 echo "Simulating specifications"
 
