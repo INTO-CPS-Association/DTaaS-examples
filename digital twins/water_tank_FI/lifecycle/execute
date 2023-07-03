@@ -13,5 +13,5 @@ java -jar $MAESTRO/faultinject-bundle-1.0.0-SNAPSHOT-jar-with-dependencies.jar i
 
 echo "Simulating specification with FI"
 
-java -jar $MAESTRO/faultinject-bundle-1.0.0-SNAPSHOT-jar-with-dependencies.jar  interpret "$FILES"/generateFI/spec.mabl $MAESTRO/FaultInject.mabl -output "$FILES"/targetFI 2>&1 | tee "$FILES"/out.txt
+java -jar $MAESTRO/faultinject-bundle-1.0.0-SNAPSHOT-jar-with-dependencies.jar  interpret $MAESTRO/FaultInject.mabl "$FILES"/generateFI/spec.mabl -output "$FILES"/targetFI 2>&1 | tee "$FILES"/out.txt
 
