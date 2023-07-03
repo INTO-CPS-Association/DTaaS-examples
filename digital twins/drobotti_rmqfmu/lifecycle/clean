@@ -1,4 +1,6 @@
 #!/bin/bash
+cd /workspace/DTaaS-examples/digital\ twins/drobotti_rmqfmu
+
 rm -rf target\
 out.txt\
 generate\
