@@ -1,7 +1,7 @@
 {
   "fmus": {
-    "{x1}": "/workspace/DTaaS-examples/models/watertankcontroller-c.fmu",
-    "{x2}": "/workspace/DTaaS-examples/models/singlewatertank-20sim.fmu"
+    "{x1}": "file:///workspace/DTaaS-examples/models/watertankcontroller-c.fmu",
+    "{x2}": "file:///workspace/DTaaS-examples/models/singlewatertank-20sim.fmu"
   },
   "connections": {
     "{x1}.controller.valve": [
@@ -20,7 +20,7 @@
     "size": 0.1
   },
 
-  "faultInjectConfigurationPath": "/workspace/DTaaS-examples/digital twins/water_tank_FI/wt_fault.xml",
+  "faultInjectConfigurationPath": "file:///workspace/DTaaS-examples/digital twins/water_tank_FI/wt_fault.xml",
   "faultInjectInstances": {
     "tank": "id-A"
   }
