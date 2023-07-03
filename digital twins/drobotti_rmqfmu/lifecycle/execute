@@ -10,14 +10,14 @@ echo "\t FMU search path: $FSP"
 
 echo "Generating Mabl specification"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 $FILES/coe.json $FILES/multimodel.json -fsp $FSP -output $FILES/generate/
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 "$FILES"/coe.json "$FILES"/multimodel.json -fsp $FSP -output "$FILES"/generate/
 
 echo "Run publisher script in other terminal"
 
-python $TOOLS/rmq-publisher.py 2>&1 | tee $TOOLS/publisher-out.txt &
+python $TOOLS/rmq-publisher.py 2>&1 | tee "$FILES"/publisher-out.txt &
 
-python $TOOLS/consume.py 2>&1 | tee $TOOLS/consume.txt &
+python $TOOLS/consume.py 2>&1 | tee "$FILES"/consume.txt &
 
 echo "Simulating specifications"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret $FILES/generate/spec.mabl -output $FILES/target 2>&1 | tee $FILES/out.txt
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret "$FILES"/generate/spec.mabl -output "$FILES"/target 2>&1 | tee "$FILES"/out.txt
