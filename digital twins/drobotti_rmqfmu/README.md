@@ -1,10 +1,29 @@
+# Desktop Robotti DT
+
+## Overview
+
 This example demonstrates feeding data to the DT using the rabbitMQ FMU (RMQFMU).
 In this example, the data consists in the ```xpos``` and ```ypos```.
-The data goes to a distance FMU, that calculates the distance of the robot from point (0,0),
-and send this back through the RMQFMU.
+The DT consists of the RMQFMU and a distance FMU.
+The data goes to from the RMQFMU to the distance FMU, which calculates the distance of the robot based on the received position from point (0,0).
+Thereafter the distance is send out through RMQFMU.
+
 The following steps are covered:
 
-1) installation of depenencies in create phase
-2) generation of outputs in execute stage
+1) Installation of depenencies in create phase
+2) Generation of outputs in execute stage
+3) Clean-up after termination
 
 Find the complete documentation for the RMQFMU [https://github.com/INTO-CPS-Association/fmu-rabbitmq/](here).
+
+## Examining the results
+
+Executing the DT will generate and launch a co-simulation (RMQFMU and distance FMU), and two python scripts.
+One to publish data that is read from a file. And one to consume what is sent by the distance FMU.
+
+In this examples the DT will run for 10 seconds, with a stepsize of 100ms. 
+Thereafter it is possible to examine the logs produce in ```/workspace/DTaaS-examples/digital twins/drobotti_rmqfmu/target```.
+The outputs for each FMU, xpos and ypos for the RMQFMU, and the distance for the distance FMU are recorded in the ```outputs.csv``` file.
+Other logs can be examined for each FMU and the publisher scripts. 
+Note that, the RMQFMU only send data, if the current input is different to the previous one.
+
