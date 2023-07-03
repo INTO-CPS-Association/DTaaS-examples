@@ -14,7 +14,7 @@ The following steps are covered:
 2) Generation of outputs in execute stage
 3) Clean-up after termination
 
-Find the complete documentation for the RMQFMU [https://github.com/INTO-CPS-Association/fmu-rabbitmq/](here).
+Find the complete documentation for the RMQFMU here: https://github.com/INTO-CPS-Association/fmu-rabbitmq.
 
 ## Examining the results
 
