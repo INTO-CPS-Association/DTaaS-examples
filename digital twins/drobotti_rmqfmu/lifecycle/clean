@@ -1,12 +1,14 @@
 #!/bin/bash
 cd /workspace/DTaaS-examples/digital\ twins/drobotti_rmqfmu
 
-rm -rf target\
-out.txt\
-generate\
-publisher-out.txt\
+echo "Remove generated files and folders"
+rm -rf target
+rm out.txt
+rm -rf generate
+rm publisher-out.txt
+rm consume.txt
 
+echo "Kill background processes (publisher and consume scripts)"
 kill $(ps -ef | grep "rmq-publisher.py" | awk '{print $2}')
 
 kill $(ps -ef | grep "consume.py" | awk '{print $2}')
-
