@@ -32,4 +32,4 @@
 *.app
 
 # Weird apple files
-models/.DS_Store
+*.DS_Store

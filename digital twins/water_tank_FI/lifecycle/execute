@@ -9,8 +9,8 @@ echo "\t FMU search path: $FSP"
 
 echo "Generating Mabl specifications - DT with FI"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 $MAESTRO/FaultInject.mabl "$FILES"/multimodelFI.json "$FILES"/simulation-config.json -fsp $FSP -output "$FILES"/generateFI/
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 $MAESTRO/FaultInject.mabl $MAESTRO/faultinject.jar "$FILES"/multimodelFI.json "$FILES"/simulation-config.json -fsp $FSP -output "$FILES"/generateFI/
 
 echo "Simulating specification with FI"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar   interpret "$FILES"/generateFI/spec.mabl $MAESTRO/FaultInject.mabl -output "$FILES"/targetFI 2>&1 | tee "$FILES"/out.txt
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret "$FILES"/generateFI/spec.mabl $MAESTRO/FaultInject.mabl $MAESTRO/faultinject.jar -output "$FILES"/targetFI 2>&1 | tee "$FILES"/out.txt
