@@ -1,23 +1,22 @@
 #!/bin/sh
 
 echo Configuring extension
-export MAESTRO="/workspace/DTaaS-examples/common/tools"
-export FSP="/workspace/DTaaS-examples/models"
-export TOOLS="/workspace/DTaaS-examples/tools/drobotti_rmqfmu"
-export FILES="/workspace/DTaaS-examples/digital twins/drobotti_rmqfmu"
+export MAESTRO="/workspace/common/tools"
+export FSP="/workspace/models"
+export TOOLS="/workspace/tools/drobotti_rmqfmu"
 echo "\t Maestro path: $MAESTRO"
 echo "\t FMU search path: $FSP"
 
 echo "Generating Mabl specification"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 "$FILES"/coe.json "$FILES"/multimodel.json -fsp $FSP -output "$FILES"/generate/
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 ./coe.json ./multimodel.json -fsp $FSP -output ./generate/
 
 echo "Run publisher script in other terminal"
 
-python $TOOLS/rmq-publisher.py 2>&1 | tee "$FILES"/publisher-out.txt &
+python $TOOLS/rmq-publisher.py 2>&1 | tee ./publisher-out.txt &
 
-python $TOOLS/consume.py 2>&1 | tee "$FILES"/consume.txt &
+python $TOOLS/consume.py 2>&1 | tee "./consume.txt &
 
 echo "Simulating specifications"
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret "$FILES"/generate/spec.mabl -output "$FILES"/target 2>&1 | tee "$FILES"/out.txt
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret ./generate/spec.mabl -output ./target 2>&1 | tee ./out.txt
