@@ -1,4 +1,6 @@
 #!/bin/bash
 
-mkdir /workspace/data/water_tank_swap/output/plots
+mkdir -p /workspace/data/water_tank_swap/output/plots
 python lifecycle/plot.py
+
+mv *.png /workspace/data/water_tank_swap/output/plots

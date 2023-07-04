@@ -15,7 +15,7 @@ echo "Run publisher script in other terminal"
 
 python $TOOLS/rmq-publisher.py 2>&1 | tee ./publisher-out.txt &
 
-python $TOOLS/consume.py 2>&1 | tee "./consume.txt &
+python $TOOLS/consume.py 2>&1 | tee ./consume.txt &
 
 echo "Simulating specifications"
 
