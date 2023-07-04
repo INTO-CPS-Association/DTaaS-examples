@@ -1,4 +1,5 @@
 #!/bin/bash
 
+echo "Plotting results"
 mkdir /workspace/data/water_tank_FI/output/plots
 python lifecycle/plot.py
