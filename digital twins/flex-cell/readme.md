@@ -35,3 +35,7 @@ The output stored in ```outputs.csv``` contains the joint position of both robot
 Additional variables can be added, such as the discrete (X,Y,Z) position of the other joints.
 
 When connected to the real robots, the tools ```urinterface``` and ```kukalbrinterface``` log their data at a higher sampling rate.
+
+
+## Credentials
+The files ```/workspace/digital twins/flex-cell/kuka_actual.conf```, ```/workspace/digital twins/flex-cell/ur5e_actual.conf```, ```/workspace/tools/flex-cell/publisher-flexcell-physical.py```, and the ```modelDescription.xml``` for the RabbitMQFMU require special credentials to connect to the RabbitMQ and the MQTT brokers.
