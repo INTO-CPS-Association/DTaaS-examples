@@ -1,0 +1,58 @@
+{
+    "aliases": {
+        "kuka_experimental": "{kuka}.kuka",
+        "ur5e_experimental": "{ur5e}.ur5e"
+    },
+    "fmus": {
+        "{rabbitmq}": "/workspace/models/flex-cell/rabbit2.1.5-16_flexcell.fmu",
+        "{kuka}": "/workspace/models/flex-cell/kukalbriiwa_model.fmu",
+        "{ur5e}": "/workspace/models/flex-cell/ur5e_model.fmu"
+    },
+    "logVariables": {
+        "{kuka}.kuka": [
+            "actual_q0",
+            "actual_q1",
+            "actual_q2",
+            "actual_q3",
+            "actual_q4",
+            "actual_q5",
+            "actual_q6",
+            "actual_X",
+            "actual_Y",
+            "actual_Z",
+            "actual_x",
+            "actual_y",
+            "actual_z"
+        ],
+        "{ur5e}.ur5e": [
+            "actual_q0",
+            "actual_q1",
+            "actual_q2",
+            "actual_q3",
+            "actual_q4",
+            "actual_q5",
+            "actual_X",
+            "actual_Y",
+            "actual_Z",
+            "actual_x",
+            "actual_y",
+            "actual_z"
+        ]
+    },
+    "parameters": {
+    },
+    "connections": {
+        "{rabbitmq}.rabbitmq.target_Z_kuka": ["{kuka}.kuka.target_Z"],
+        "{rabbitmq}.rabbitmq.target_X_ur5e": ["{ur5e}.ur5e.target_X"],
+        "{rabbitmq}.rabbitmq.target_Y_ur5e": ["{ur5e}.ur5e.target_Y"],
+        "{rabbitmq}.rabbitmq.target_Y_kuka": ["{kuka}.kuka.target_Y"],
+        "{rabbitmq}.rabbitmq.target_Z_ur5e": ["{ur5e}.ur5e.target_Z"],
+        "{rabbitmq}.rabbitmq.target_X_kuka": ["{kuka}.kuka.target_X"],
+        "{rabbitmq}.rabbitmq.motion_time_ur5e": ["{ur5e}.ur5e.motion_time"],
+        "{rabbitmq}.rabbitmq.motion_time_kuka": ["{kuka}.kuka.motion_time"]
+    },
+    "algorithm": {
+        "size": 0.5,
+        "type": "fixed-step"
+    }
+}
