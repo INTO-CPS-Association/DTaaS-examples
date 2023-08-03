@@ -4,7 +4,7 @@
         "ur5e_experimental": "{ur5e}.ur5e"
     },
     "fmus": {
-        "{rabbitmq}": "/workspace/models/flex-cell/rabbit2.1.5-16_flexcell.fmu",
+        "{rabbitmq}": "/workspace/models/flex-cell/rmqfmu_flexcell.fmu",
         "{kuka}": "/workspace/models/flex-cell/kukalbriiwa_model.fmu",
         "{ur5e}": "/workspace/models/flex-cell/ur5e_model.fmu"
     },
