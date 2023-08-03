@@ -22,6 +22,18 @@ kuka_robot_model = robots.KukaLBR_RL()
 use_real_robots = False
 mqtt_enabled = False
 
+### pyhocon
+conf = ConfigFactory.parse_file('/workspace/data/flex-cell/connections.conf')
+rabbitmq_host = conf.get_string('rabbitmq.hostname')
+rabbitmq_port = conf.get_int('rabbitmq.port')
+rabbitmq_username = conf.get_string('rabbitmq.username')
+rabbitmq_password = conf.get_string('rabbitmq.password')
+
+mqtt_host = conf.get_string('mqtt.hostname')
+mqtt_port = conf.get_int('mqtt.port')
+mqtt_username = conf.get_string('mqtt.username')
+mqtt_password = conf.get_string('mqtt.password')
+
 if use_real_robots:
     # Kuka
     kuka_f_name = "kukalbriiwa7_actual.csv"
@@ -39,7 +51,7 @@ if use_real_robots:
     config_file =  "/workspace/tools/flex-cell/resources/record_configuration.xml"
     ur5e_robot.start_recording(filename=filename, overwrite=True, frequency=50, config_file=config_file)
     if mqtt_enabled:
-        ur5e_mqtt_pub = ur5e_mqtt_publisher.UR5eMQTTPublisher(filename,addr_mqtt="dtl-server-2.st.lab.au.dk",port_mqtt=8090,mqtt_username="santiago",mqtt_password="SantiagoAU-2023")
+        ur5e_mqtt_pub = ur5e_mqtt_publisher.UR5eMQTTPublisher(filename,addr_mqtt=mqtt_host,port_mqtt=mqtt_port,mqtt_username=mqtt_username,mqtt_password=mqtt_password)
 
 #### Robots ####
 def compute_ur_q(X,Y,Z):
@@ -69,17 +81,6 @@ def transmit_robot_motion(q,robot):
             #queue_server.send_string_kuka(f"actual_q_{j} {joint_pos[j]}")
         #    pass
 
-### pyhocon
-conf = ConfigFactory.parse_file('/workspace/data/flex-cell/connections.conf')
-rabbitmq_host = conf.get_string('rabbitmq.hostname')
-rabbitmq_port = conf.get_int('rabbitmq.port')
-rabbitmq_username = conf.get_string('rabbitmq.username')
-rabbitmq_password = conf.get_string('rabbitmq.password')
-
-mqtt_host = conf.get_string('mqtt.hostname')
-mqtt_port = conf.get_int('mqtt.port')
-mqtt_username = conf.get_string('mqtt.username')
-mqtt_password = conf.get_string('mqtt.password')
 
 #### RabbitMQ ####
 credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
