@@ -16,11 +16,20 @@ The ```DTManager``` is in charge of reading the values from the co-simulation ou
 
 The lifecycles that are covered include:
 1. Installation of dependencies in the create phase.
-2. Execution of the experiment in the execution phase.
-3. Saving experiments in the save phase.
-4. Plotting the results of the co-simulation and the real data coming from the robots in the analyze phase.
-5. Terminating the background processes and cleaning up the outputs in the termination phase.
+2. Preparing the credentials for connections in the prepare phase.
+3. Execution of the experiment in the execution phase.
+4. Saving experiments in the save phase.
+5. Plotting the results of the co-simulation and the real data coming from the robots in the analyze phase.
+6. Terminating the background processes and cleaning up the outputs in the termination phase.
 
+The order the run this example is:
+1. Run the create script file with ```./workspace/digital twins/flex-cell/lifecycle/create.sh```.
+2. Set up the credentials in the ```/workspace/data/flex-cell/connections.conf``` and run the script file ```./workspace/digital twins/flex-cell/lifecycle/prepare.sh```.
+3. Execute the Digital Twin with the script file ```./workspace/digital twins/flex-cell/lifecycle/execute.sh```.
+4. (Optional) save the results with the script file ```./workspace/digital twins/flex-cell/lifecycle/save.sh```.
+5. (Optional) plot the results with the script file ```./workspace/digital twins/flex-cell/lifecycle/analyze.sh```, which saves the plots in the folder ```/workspace/data/flex-cell/output```.
+6. Terminate the background processes with the script file ```./workspace/digital twins/flex-cell/lifecycle/terminate.sh```.
+7. (Optional) clean up the output folder with the script file ```./workspace/digital twins/flex-cell/lifecycle/clean.sh```.
 
 ## Examining the results
 Executing this Digital Twin will generate a co-simulation output, but the results can also be monitored from updating the ```/workspace/tools/flex-cell/FlexCellMain.java``` with a specific set of ```getAttributeValue``` commands, such as shown in the code.
@@ -39,3 +48,7 @@ When connected to the real robots, the tools ```urinterface``` and ```kukalbrint
 
 ## Credentials
 The files ```/workspace/digital twins/flex-cell/kuka_actual.conf```, ```/workspace/digital twins/flex-cell/ur5e_actual.conf```, ```/workspace/tools/flex-cell/publisher-flexcell-physical.py```, and the ```modelDescription.xml``` for the RabbitMQFMU require special credentials to connect to the RabbitMQ and the MQTT brokers.
+
+The script file  ```/workspace/digital twins/flex-cell/lifecycle/prepare.sh``` helps you to set up the credentials and connection parameters easily.
+The only thing needed to set up the connection is to update the file ```/workspace/data/flex-cell/connections.conf``` with the connection parameters for MQTT and RabbitMQ and then execute the ```prepare.sh``` script.
+The script will set up the RabbitMQFMU and config files for this example for you.
