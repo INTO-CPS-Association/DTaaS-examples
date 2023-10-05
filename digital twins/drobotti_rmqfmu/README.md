@@ -22,7 +22,7 @@ Executing the DT will generate and launch a co-simulation (RMQFMU and distance F
 One to publish data that is read from a file. And one to consume what is sent by the distance FMU.
 
 In this examples the DT will run for 10 seconds, with a stepsize of 100ms. 
-Thereafter it is possible to examine the logs produce in ```/workspace/DTaaS-examples/digital twins/drobotti_rmqfmu/target```.
+Thereafter it is possible to examine the logs produce in ```/workspace/examples/DTaaS-examples/digital twins/drobotti_rmqfmu/target```.
 The outputs for each FMU, xpos and ypos for the RMQFMU, and the distance for the distance FMU are recorded in the ```outputs.csv``` file.
 Other logs can be examined for each FMU and the publisher scripts. 
 Note that, the RMQFMU only sends data, if the current input is different to the previous one.

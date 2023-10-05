@@ -1,3 +1,3 @@
 #!/bin/bash
-printf "Cleaning /workspace/data/three-tank/output\n\n"
-rm /workspace/data/three-tank/output/*
+printf "Cleaning /workspace/examples/data/three-tank/output\n\n"
+rm /workspace/examples/data/three-tank/output/*

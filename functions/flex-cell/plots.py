@@ -12,9 +12,9 @@ font = {'font.family' : 'monospace',
        }
 
 plt.rcParams.update(font)
-df_cosim = pd.read_csv("/workspace/data/flex-cell/output/outputs.csv")
-df_kuka = pd.read_csv("/workspace/data/flex-cell/output/physical_twin/kukalbriiwa7_actual.csv")
-df_ur5e = pd.read_csv("/workspace/data/flex-cell/output/physical_twin/ur5e_actual.csv",sep=" ")
+df_cosim = pd.read_csv("/workspace/examples/data/flex-cell/output/outputs.csv")
+df_kuka = pd.read_csv("/workspace/examples/data/flex-cell/output/physical_twin/kukalbriiwa7_actual.csv")
+df_ur5e = pd.read_csv("/workspace/examples/data/flex-cell/output/physical_twin/ur5e_actual.csv",sep=" ")
 
 
 fig, axes = plt.subplots(2,2, figsize=(16,12))
@@ -66,5 +66,5 @@ plt.xlabel('timestamp')
 plt.ylabel('radians')
 plt.grid()
 plt.tight_layout()
-fig.savefig('/workspace/data/flex-cell/output/experiment_plot.pdf', dpi=300)
-fig.savefig('/workspace/data/flex-cell/output/experiment_plot.png', dpi=300)
+fig.savefig('/workspace/examples/data/flex-cell/output/experiment_plot.pdf', dpi=300)
+fig.savefig('/workspace/examples/data/flex-cell/output/experiment_plot.png', dpi=300)

@@ -27,7 +27,7 @@ channel.queue_bind(exchange='fmi_digital_twin', queue=queue_name,
 time_sleep = 0.1
 
 #Recorded data
-data = '/workspace/DTaaS-examples/data/drobotti_rmqfmu/drobotti_playback_data.csv'
+data = '/workspace/examples/DTaaS-examples/data/drobotti_rmqfmu/drobotti_playback_data.csv'
 
 print(' [*] Waiting for logs. To exit press CTRL+C, sleep time [ms]: ', time_sleep*1000)
 

@@ -1,9 +1,9 @@
 #!/bin/sh
 
 echo Configuring extension
-export MAESTRO="/workspace/common/tools"
-export FSP="/workspace/models"
-export TOOLS="/workspace/tools/drobotti_rmqfmu"
+export MAESTRO="/workspace/examples/common/tools"
+export FSP="/workspace/examples/models"
+export TOOLS="/workspace/examples/tools/drobotti_rmqfmu"
 echo "\t Maestro path: $MAESTRO"
 echo "\t FMU search path: $FSP"
 

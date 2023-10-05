@@ -1,7 +1,7 @@
 {
 	"fmus":{
-		"{msd1}":"file:///workspace/models/MassSpringDamper1.fmu",
-		"{msd2}":"file:///workspace/models/MassSpringDamper2.fmu"
+		"{msd1}":"file:///workspace/examples/models/MassSpringDamper1.fmu",
+		"{msd2}":"file:///workspace/examples/models/MassSpringDamper2.fmu"
 	},
 	"connections": {
 		"{msd1}.msd1i.x1": [

@@ -5,7 +5,7 @@
         "tank3": "{tank}.tank3",
         "Level": "level"
     },
-    "fmus": {"{tank}": "/workspace/models/three-tank/Linear.fmu"},
+    "fmus": {"{tank}": "/workspace/examples/models/three-tank/Linear.fmu"},
     "logVariables": {
         "{tank}.tank3": [
             "level",

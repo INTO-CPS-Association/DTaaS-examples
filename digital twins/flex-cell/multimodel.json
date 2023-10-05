@@ -4,9 +4,9 @@
         "ur5e_experimental": "{ur5e}.ur5e"
     },
     "fmus": {
-        "{rabbitmq}": "/workspace/models/flex-cell/rmqfmu_flexcell.fmu",
-        "{kuka}": "/workspace/models/flex-cell/kukalbriiwa_model.fmu",
-        "{ur5e}": "/workspace/models/flex-cell/ur5e_model.fmu"
+        "{rabbitmq}": "/workspace/examples/models/flex-cell/rmqfmu_flexcell.fmu",
+        "{kuka}": "/workspace/examples/models/flex-cell/kukalbriiwa_model.fmu",
+        "{ur5e}": "/workspace/examples/models/flex-cell/ur5e_model.fmu"
     },
     "logVariables": {
         "{kuka}.kuka": [

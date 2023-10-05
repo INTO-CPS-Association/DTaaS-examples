@@ -1,4 +1,4 @@
 #!/bin/bash
-printf "Creating plots of the execution in /workspace/data/flex-cell/output... \n\n"
+printf "Creating plots of the execution in /workspace/examples/data/flex-cell/output... \n\n"
 
-python /workspace/functions/flex-cell/plots.py
+python /workspace/examples/functions/flex-cell/plots.py

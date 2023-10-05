@@ -6,9 +6,9 @@ This example contains only the simulated components for demonstration purposes; 
 
 The three-tank system case study is managed using the ```DTManager```, which is packed as a jar library in the tools, and run from a java main file.
 The ```DTManager``` uses Maestro as a slave for co-simulation, so it generates the output of the co-simulation.
-The main file can be changed according to the application scope, i.e., the ```/workspace/tools/three-tank/TankMain.java``` can be manipulated to get a different result.
+The main file can be changed according to the application scope, i.e., the ```/workspace/examples/tools/three-tank/TankMain.java``` can be manipulated to get a different result.
 
-The ```/workspace/models/three-tank/``` folder contains the ```Linear.fmu``` file, which is a non-realistic model for a tank with input and output and the ```TankSystem.aasx``` file for the schema representation with Asset Administration Shell.
+The ```/workspace/examples/models/three-tank/``` folder contains the ```Linear.fmu``` file, which is a non-realistic model for a tank with input and output and the ```TankSystem.aasx``` file for the schema representation with Asset Administration Shell.
 The three instances use the same ```.fmu``` file and the same schema due to being of the same object class.
 The ```DTManager``` is in charge of reading the values from the co-simulation output.
 
@@ -18,16 +18,16 @@ The lifecycles that are covered include:
 3. Terminating the background processes and cleaning up the outputs in the termination phase.
 
 The order the run this example is:
-1. Run the create script file with ```/workspace/digital twins/three-tank/lifecycle/create.sh```. In case of error, be sure the installed version of Java is OpenJDK 11, otherwise, install manually the OpenJDK 11 and use the command ```update-java-alternatives``` to set the Java version to be OpenJDK 11 and rerun the ```create.sh``` script.
-2. Execute the Digital Twin with the script file ```/workspace/digital twins/three-tank/lifecycle/execute.sh```.
-3. Terminate the background processes with the script file ```/workspace/digital twins/three-tank/lifecycle/terminate.sh```.
-7. (Optional) clean up the output folder with the script file ```/workspace/digital twins/three-tank/lifecycle/clean.sh```. 
+1. Run the create script file with ```/workspace/examples/digital twins/three-tank/lifecycle/create.sh```. In case of error, be sure the installed version of Java is OpenJDK 11, otherwise, install manually the OpenJDK 11 and use the command ```update-java-alternatives``` to set the Java version to be OpenJDK 11 and rerun the ```create.sh``` script.
+2. Execute the Digital Twin with the script file ```/workspace/examples/digital twins/three-tank/lifecycle/execute.sh```.
+3. Terminate the background processes with the script file ```/workspace/examples/digital twins/three-tank/lifecycle/terminate.sh```.
+7. (Optional) clean up the output folder with the script file ```/workspace/examples/digital twins/three-tank/lifecycle/clean.sh```. 
 
 ## Examining the results
-Executing this Digital Twin will generate a co-simulation output, but the results can also be monitored from updating the ```/workspace/tools/three-tank/TankMain.java``` with a specific set of ```getAttributeValue``` commands, such as shown in the code.
+Executing this Digital Twin will generate a co-simulation output, but the results can also be monitored from updating the ```/workspace/examples/tools/three-tank/TankMain.java``` with a specific set of ```getAttributeValue``` commands, such as shown in the code.
 That main file enables the online execution of the Digital Twin and its internal components.
 
-The output of the co-simulation is generated to the ```/workspace/data/three-tank/output``` folder.
+The output of the co-simulation is generated to the ```/workspace/examples/data/three-tank/output``` folder.
 
 
 In the default example, the co-simulation is run for 10 seconds in steps of 0.5 seconds.

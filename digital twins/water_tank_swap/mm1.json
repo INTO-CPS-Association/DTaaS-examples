@@ -1,7 +1,7 @@
 {
   "fmus": {
-    "{x1}": "file:///workspace/models/watertankcontroller-c.fmu",
-    "{x2}": "file:///workspace/models/singlewatertank-20sim.fmu"
+    "{x1}": "file:///workspace/examples/models/watertankcontroller-c.fmu",
+    "{x2}": "file:///workspace/examples/models/singlewatertank-20sim.fmu"
   },
   "connections": {
     "{x1}.controller.valve": [

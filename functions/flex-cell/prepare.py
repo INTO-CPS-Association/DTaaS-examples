@@ -3,7 +3,7 @@ from pyhocon import HOCONConverter
 import xml.etree.ElementTree as ET
 
 
-conf = ConfigFactory.parse_file('/workspace/data/flex-cell/connections.conf')
+conf = ConfigFactory.parse_file('/workspace/examples/data/flex-cell/connections.conf')
 rabbitmq_host = conf.get_string('rabbitmq.hostname')
 rabbitmq_port = conf.get_int('rabbitmq.port')
 rabbitmq_username = conf.get_string('rabbitmq.username')
@@ -15,8 +15,8 @@ mqtt_username = conf.get_string('mqtt.username')
 mqtt_password = conf.get_string('mqtt.password')
 
 ## Config files
-kuka_conf = ConfigFactory.parse_file('/workspace/digital twins/flex-cell/kuka_actual.conf')
-ur5e_conf = ConfigFactory.parse_file('/workspace/digital twins/flex-cell/ur5e_actual.conf')
+kuka_conf = ConfigFactory.parse_file('/workspace/examples/digital twins/flex-cell/kuka_actual.conf')
+ur5e_conf = ConfigFactory.parse_file('/workspace/examples/digital twins/flex-cell/ur5e_actual.conf')
 
 kuka_conf.pop("mqtt.ip")
 kuka_conf.put("mqtt.ip",mqtt_host)
@@ -27,7 +27,7 @@ kuka_conf.put("mqtt.username",mqtt_username)
 kuka_conf.pop("mqtt.password")
 kuka_conf.put("mqtt.password",mqtt_password)
 HOCONConverter().to_hocon(kuka_conf)
-with open('/workspace/digital twins/flex-cell/kuka_actual.conf', 'w') as f:
+with open('/workspace/examples/digital twins/flex-cell/kuka_actual.conf', 'w') as f:
     print(HOCONConverter().to_hocon(kuka_conf), file=f)
     f.close()
 
@@ -40,12 +40,12 @@ ur5e_conf.pop("mqtt.username")
 ur5e_conf.put("mqtt.username",mqtt_username)
 ur5e_conf.pop("mqtt.password")
 ur5e_conf.put("mqtt.password",mqtt_password)
-with open('/workspace/digital twins/flex-cell/ur5e_actual.conf', 'w') as f:
+with open('/workspace/examples/digital twins/flex-cell/ur5e_actual.conf', 'w') as f:
     print(HOCONConverter().to_hocon(ur5e_conf), file=f)
     f.close()
 
 ## modelDescription file
-md_file = ET.parse('/workspace/models/flex-cell/modelDescription.xml')
+md_file = ET.parse('/workspace/examples/models/flex-cell/modelDescription.xml')
 root = md_file.getroot()
 model_vars = root.find("ModelVariables")
 for variable in model_vars:
@@ -62,4 +62,4 @@ for variable in model_vars:
         password_xml = variable.find("String")
         password_xml.attrib["start"] = rabbitmq_password
 
-md_file.write('/workspace/models/flex-cell/modelDescription.xml')
+md_file.write('/workspace/examples/models/flex-cell/modelDescription.xml')

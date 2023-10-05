@@ -10,9 +10,9 @@ import dtmanager.TwinSchema;
 
 public class FlexCellMain {
 	static DTManager dtManager;
-	static String modelFolderPrefix = "/workspace/models/flex-cell/";
-	static String dtFolderPrefix = "/workspace/digital twins/flex-cell/";
-	static String dataFolderPrefix = "/workspace/data/flex-cell/";
+	static String modelFolderPrefix = "/workspace/examples/models/flex-cell/";
+	static String dtFolderPrefix = "/workspace/examples/digital twins/flex-cell/";
+	static String dataFolderPrefix = "/workspace/examples/data/flex-cell/";
 
 	public static void main(String[] args) {
 		TwinSchema kukaSchema = new TwinSchema(modelFolderPrefix+"kuka.aasx","Kuka_LBR_iiwa7_AAS");

@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf target
-cd /workspace/digital\ twins/drobotti_rmqfmu
+cd /workspace/examples/digital\ twins/drobotti_rmqfmu
 
 echo "Remove generated files and folders"
 rm -rf target

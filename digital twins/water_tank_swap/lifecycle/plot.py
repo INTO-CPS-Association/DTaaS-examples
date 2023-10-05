@@ -30,5 +30,5 @@ plt.rcParams['figure.figsize'] = [12, 10]
 #plt.show()
 Path('post').mkdir(parents=True, exist_ok=True)
 #plt.savefig('plots/result.png')
-plt.savefig('/workspace/data/water_tank_swap/output/plots/result.png')
-plt.savefig('/workspace/data/water_tank_swap/output/plots/result.pdf')
+plt.savefig('/workspace/examples/data/water_tank_swap/output/plots/result.png')
+plt.savefig('/workspace/examples/data/water_tank_swap/output/plots/result.pdf')
