@@ -14,7 +14,7 @@ import dtmanager.TwinSchema;
 public class TankMain {
 	static DTManager dtManager;
 	static String modelFolderPrefix = "/workspace/examples/models/three-tank/";
-	static String dtFolderPrefix = "/workspace/examples/digital twins/three-tank/";
+	static String dtFolderPrefix = "/workspace/examples/digital_twins/three-tank/";
 	static String dataFolderPrefix = "/workspace/examples/data/three-tank/";
 
 	public static void main(String[] args) {

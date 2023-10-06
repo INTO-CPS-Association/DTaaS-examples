@@ -18,10 +18,10 @@ The lifecycles that are covered include:
 3. Terminating the background processes and cleaning up the outputs in the termination phase.
 
 The order the run this example is:
-1. Run the create script file with ```/workspace/examples/digital twins/three-tank/lifecycle/create.sh```. In case of error, be sure the installed version of Java is OpenJDK 11, otherwise, install manually the OpenJDK 11 and use the command ```update-java-alternatives``` to set the Java version to be OpenJDK 11 and rerun the ```create.sh``` script.
-2. Execute the Digital Twin with the script file ```/workspace/examples/digital twins/three-tank/lifecycle/execute.sh```.
-3. Terminate the background processes with the script file ```/workspace/examples/digital twins/three-tank/lifecycle/terminate.sh```.
-7. (Optional) clean up the output folder with the script file ```/workspace/examples/digital twins/three-tank/lifecycle/clean.sh```. 
+1. Run the create script file with ```/workspace/examples/digital_twins/three-tank/lifecycle/create.sh```. In case of error, be sure the installed version of Java is OpenJDK 11, otherwise, install manually the OpenJDK 11 and use the command ```update-java-alternatives``` to set the Java version to be OpenJDK 11 and rerun the ```create.sh``` script.
+2. Execute the Digital Twin with the script file ```/workspace/examples/digital_twins/three-tank/lifecycle/execute.sh```.
+3. Terminate the background processes with the script file ```/workspace/examples/digital_twins/three-tank/lifecycle/terminate.sh```.
+7. (Optional) clean up the output folder with the script file ```/workspace/examples/digital_twins/three-tank/lifecycle/clean.sh```. 
 
 ## Examining the results
 Executing this Digital Twin will generate a co-simulation output, but the results can also be monitored from updating the ```/workspace/examples/tools/three-tank/TankMain.java``` with a specific set of ```getAttributeValue``` commands, such as shown in the code.
