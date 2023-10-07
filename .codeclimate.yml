@@ -1,0 +1,25 @@
+---
+version: "2"
+
+plugins:
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+        typescript:
+        javascript:
+        java:
+        python:
+          python_version: 3
+  fixme:
+    enabled: true
+  markdownlint:
+    enabled: true
+  shellcheck:
+    enabled: true
+
+exclude_patterns:
+  - "**.txt"
+  - "**.json"
