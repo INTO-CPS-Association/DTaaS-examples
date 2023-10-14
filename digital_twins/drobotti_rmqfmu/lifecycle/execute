@@ -1,22 +1,22 @@
 #!/bin/sh
 
-echo Configuring extension
+printf Configuring extension
 export MAESTRO="/workspace/examples/common/tools"
 export FSP="/workspace/examples/models"
 export TOOLS="/workspace/examples/tools/drobotti_rmqfmu"
-echo "\t Maestro path: $MAESTRO"
-echo "\t FMU search path: $FSP"
+printf "\t Maestro path: $MAESTRO"
+printf "\t FMU search path: $FSP"
 
-echo "Generating Mabl specification"
+printf "Generating Mabl specification"
 
 java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 ./coe.json ./multimodel.json -fsp $FSP -output ./generate/
 
-echo "Run publisher script in other terminal"
+printf "Run publisher script in other terminal"
 
 python $TOOLS/rmq-publisher.py 2>&1 | tee ./publisher-out.txt &
 
 python $TOOLS/consume.py 2>&1 | tee ./consume.txt &
 
-echo "Simulating specifications"
+printf "Simulating specifications"
 
 java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret ./generate/spec.mabl -output ./target 2>&1 | tee ./out.txt

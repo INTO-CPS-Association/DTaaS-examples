@@ -1,18 +1,18 @@
 #!/bin/sh
 
-echo Configuring extension
+printf Configuring extension
 export MAESTRO="/workspace/examples/common/tools"
 export FSP="/workspace/examples/models"
-echo "\t Maestro path: $MAESTRO"
-echo "\t FMU search path: $FSP"
+printf "\t Maestro path: $MAESTRO"
+printf "\t FMU search path: $FSP"
 
-echo "Generating Mabl specifications - DT with FI"
+printf "Generating Mabl specifications - DT with FI"
 
 $MAESTRO/maestro import sg1 $MAESTRO/FaultInject.mabl ./multimodelFI.json \
   ./simulation-config.json -fsp $FSP \
   -output ./generateFI/
 
-echo "Simulating specification with FI"
+printf "Simulating specification with FI"
 
 $MAESTRO/maestro interpret \
   ./generateFI/spec.mabl \

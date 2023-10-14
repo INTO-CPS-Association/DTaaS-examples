@@ -1,24 +1,27 @@
 #!/bin/sh
 
-echo Configuring extension
+printf Configuring extension
 export MAESTRO="/workspace/examples/common/tools"
 export FSP="/workspace/examples/models"
-echo "\t Maestro path: $MAESTRO"
-echo "\t FMU search path: $FSP"
+printf "\t Maestro path: $MAESTRO"
+printf "\t FMU search path: $FSP"
 
-echo "Generating Mabl specifications"
+printf "Generating Mabl specifications"
 
 mkdir -p transition
 
-$MAESTRO/maestro import sg1 ./FaultInject.mabl mm1.json simulation-config.json -fsp $FSP -output stage1/
+$MAESTRO/maestro import sg1 ./FaultInject.mabl mm1.json simulation-config.json \
+  -fsp $FSP -output stage1/
 
-$MAESTRO/maestro import sg1 ./FaultInject.mabl mm2.json simulation-config.json -fsp $FSP -output transition/stage2/
+$MAESTRO/maestro import sg1 ./FaultInject.mabl mm2.json simulation-config.json \
+  -fsp $FSP -output transition/stage2/
 
 
-echo "Simulating specifications"
+printf "Simulating specifications"
 
-$MAESTRO/maestro  interpret stage1/spec.mabl ./FaultInject.mabl -tms 220 -transition transition -output stage1 2>&1 | tee out.txt
+$MAESTRO/maestro  interpret stage1/spec.mabl ./FaultInject.mabl -tms 220 \
+  -transition transition -output stage1 2>&1 | tee out.txt
 
-mkdir -p /workspace/examples/data/water_tank_swap/output || exit 1
+mkdir -p /workspace/examples/data/water_tank_swap/output || exit 0
 cp -R stage1 /workspace/examples/data/water_tank_swap/output
 cp -R transition/stage2 /workspace/examples/data/water_tank_swap/output

@@ -8,5 +8,6 @@ This repository contains examples for [DTaaS software](https://github.com/into-c
 
 The order of digital twin examples to work through:
 
-1. mass-spring-damper
-2. water_tank_FI
+1. Mass Spring Damper
+2. water Tank FI
+3. Water Tank Swap

@@ -2,14 +2,14 @@
 rm -rf target
 cd /workspace/examples/digital\ twins/drobotti_rmqfmu
 
-echo "Remove generated files and folders"
+printf "Remove generated files and folders"
 rm -rf target
 rm out.txt
 rm -rf generate
 rm publisher-out.txt
 rm consume.txt
 
-echo "Kill background processes (publisher and consume scripts)"
+printf "Kill background processes (publisher and consume scripts)"
 kill $(ps -ef | grep "rmq-publisher.py" | awk '{print $2}')
 
 kill $(ps -ef | grep "consume.py" | awk '{print $2}')
