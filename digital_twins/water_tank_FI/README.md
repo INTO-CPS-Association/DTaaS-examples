@@ -21,7 +21,7 @@ lifecycle/create
 ## Execute phase
 
 Run the co-simulation. Generate the co-simulation output.csv file
-at `/workspace/examples/digital_twins/water_tank_FI/targetFI`.
+at `/workspace/examples/data/water_tank_FI/output`.
 
 ```bash
 lifecycle/execute
@@ -38,7 +38,7 @@ lifecycle/analyze
 
 ## Terminate phase
 
-Clean up the temporary files and output plot
+Clean up the temporary files and delete output plot
 
 ```bash
 lifecycle/terminate

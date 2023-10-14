@@ -5,3 +5,8 @@
 
 
 This repository contains examples for [DTaaS software](https://github.com/into-cps-association/DTaaS)
+
+The order of digital twin examples to work through:
+
+1. mass-spring-damper
+2. water_tank_FI

@@ -5,7 +5,7 @@ import numpy as np
 from pathlib import Path
 
 # Plot results with FI
-df0 = read_csv('targetFI/outputs.csv')
+df0 = read_csv('/workspace/examples/data/water_tank_FI/output/outputs.csv')
 df0.fillna(0, inplace=True)
 fig, ax = plt.subplots(1, sharex=False, sharey=False)
 name1='{x2}.tank.level'
