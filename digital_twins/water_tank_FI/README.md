@@ -7,10 +7,39 @@ and shows an a fault injection (FI) enabled DT. In this case the watertank case-
 in a tank and controller, the goal of which is to keep the level of water in the tank between ```1``` and ```2```.
 The output of the controller is injected, such that it is closed for a period of time, leading to the water level increasing in the tank beyond the desired level.
 
-This example demonstrates:
+This example demonstrates: create, execute, analyze and terminate phases
 
-1) installation of depenencies in create phase
-2) generation of outputs in execute stage
-3) Visualisation of the results
-4) terminate to clean up the temporary files and outputs
+## Create phase
 
+Installs Open Java Development Kit 17 and pip dependencies.
+The pandas and matplotlib are the pip dependencies installated.
+
+```bash
+lifecycle/create
+```
+
+## Execute phase
+
+Run the co-simulation. Generate the co-simulation output.csv file
+at `/workspace/examples/digital_twins/water_tank_FI/targetFI`.
+
+```bash
+lifecycle/execute
+```
+
+## Analyze phase
+
+Process the output of co-simulation to produce a plot at:
+`/workspace/examples/data/water_tank_FI/output/plots/`.
+
+```bash
+lifecycle/analyze
+```
+
+## Terminate phase
+
+Clean up the temporary files and output plot
+
+```bash
+lifecycle/terminate
+```
