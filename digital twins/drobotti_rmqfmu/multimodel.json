@@ -1,6 +1,6 @@
 {
     "fmus": {
-        "{rbmq}": "file:///workspace/models/rmqfmu.fmu",
+        "{rbmq}": "file:///workspace/models/rmqfmu-vhost.fmu",
         "{distance}": "file:///workspace/models/distance_from_zero.fmu"
     },
     "connections": {
@@ -16,7 +16,9 @@
     },
     "parameters": {
         "{rbmq}.rbmqInstance.config.maxage": 300,
-        "{rbmq}.rbmqInstance.config.hostname": "dtl-server-2.st.lab.au.dk",
+        "{rbmq}.rbmqInstance.config.hostname": "host",
+        "{rbmq}.rbmqInstance.config.username": "usr",
+        "{rbmq}.rbmqInstance.config.password": "pass",
         "{rbmq}.rbmqInstance.config.precision": 10
     },
     "algorithm":{"type":"fixed-step","size":0.1}
