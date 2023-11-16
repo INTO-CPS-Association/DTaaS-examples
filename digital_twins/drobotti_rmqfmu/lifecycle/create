@@ -2,6 +2,5 @@
 
 printf "install dependencies and create configuration \n\n"
 
-sudo apt-get update
-sudo apt-get install -y openjdk-17-jre
-pip install -r lifecycle/requirements.txt
+apt-get install openjdk-17-jre
+pip install -r requirements.txt
