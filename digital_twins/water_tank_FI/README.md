@@ -1,3 +1,5 @@
+The fault-injection plugin is an extension to the Maestro co-orchestration engine that enables injecting inputs and outputs of FMUs in an FMI-based co-simulation with tampered values.
+More details on the plugin can be found here: https://github.com/INTO-CPS-Association/fault-injection-maestro/tree/development.
 
 This example has been taken from:
 
