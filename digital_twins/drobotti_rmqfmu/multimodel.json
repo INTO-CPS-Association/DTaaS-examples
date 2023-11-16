@@ -1,0 +1,26 @@
+{
+    "fmus": {
+        "{rbmq}": "file:///workspace/examples/models/rmqfmu.fmu",
+        "{distance}": "file:///workspace/examples/models/distance_from_zero.fmu"
+    },
+    "connections": {
+        "{distance}.distanceInstance.distance":[
+            "{rbmq}.rbmqInstance.distance"
+        ],
+        "{rbmq}.rbmqInstance.xpos":[
+            "{distance}.distanceInstance.xpos"
+        ],
+        "{rbmq}.rbmqInstance.ypos":[
+            "{distance}.distanceInstance.ypos"
+        ]
+    },
+    "parameters": {
+        "{rbmq}.rbmqInstance.config.maxage": 300,
+        "{rbmq}.rbmqInstance.config.hostname": "services.foo.com",
+        "{rbmq}.rbmqInstance.config.username": "username",
+        "{rbmq}.rbmqInstance.config.password": "password",
+        "{rbmq}.rbmqInstance.config.precision": 10
+    },
+    "algorithm":{"type":"fixed-step","size":0.1}
+
+}     
