@@ -6,7 +6,7 @@ import time
 import ssl
 
 credentials = pika.PlainCredentials('username', 'password')
-connection = pika.BlockingConnection(pika.ConnectionParameters('hostname', 8089, credentials=credentials))
+connection = pika.BlockingConnection(pika.ConnectionParameters('dtl-server-2.st.lab.au.dk', 8089, credentials=credentials))
 
 channel = connection.channel()
 
