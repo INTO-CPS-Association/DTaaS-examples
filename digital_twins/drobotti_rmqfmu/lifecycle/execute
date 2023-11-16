@@ -1,9 +1,9 @@
 #!/bin/sh
 
 echo Configuring extension
-export MAESTRO="/workspace/common/tools"
-export FSP="/workspace/models"
-export TOOLS="/workspace/tools/drobotti_rmqfmu"
+export MAESTRO="/workspace/examples/common/tools"
+export FSP="/workspace/examples/models"
+export DATA="/workspace/examples/data/drobotti_rmqfmu"
 echo "\t Maestro path: $MAESTRO"
 echo "\t FMU search path: $FSP"
 
@@ -13,9 +13,9 @@ java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 ./coe.json
 
 echo "Run publisher script in other terminal"
 
-python $TOOLS/rmq-publisher.py 2>&1 | tee ./publisher-out.txt &
+python $DATA/rmq-publisher.py 2>&1 | tee ./publisher-out.txt &
 
-python $TOOLS/consume.py 2>&1 | tee ./consume.txt &
+python $DATA/consume.py 2>&1 | tee ./consume.txt &
 
 echo "Simulating specifications"
 

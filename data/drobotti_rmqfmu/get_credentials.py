@@ -2,7 +2,7 @@ import json
 
 def get_data():
     # Opening JSON file
-    f = open('/workspace/examples/digit_brain/drobotti_rmqfmu/rabbitMQ-credentials.json')
+    f = open('/workspace/examples/digital_twins/drobotti_rmqfmu/rabbitMQ-credentials.json')
 
     # returns JSON object as 
     # a dictionary
