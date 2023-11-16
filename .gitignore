@@ -33,3 +33,7 @@
 
 # Weird apple files
 *.DS_Store
+
+# Temporary files
+.workspace
+.virtual_documents
