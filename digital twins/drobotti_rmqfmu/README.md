@@ -2,13 +2,16 @@
 
 ## Overview
 
-This example demonstrates feeding data to the DT using the rabbitMQ FMU (RMQFMU).
+This example demonstrates feeding data to a DT of a mobile robot (the Desktop Robotti) using the rabbitMQ FMU (RMQFMU).
+The DT consists of a FMI-based co-simulation, where Maestro is used as cp-orchestration engine.
+
 In this example, the data consists in the ```xpos``` and ```ypos```.
 The DT consists of the RMQFMU and a distance FMU.
-The ```xpos``` and ```ypos``` go from the RMQFMU to the distance FMU, which calculates the distance of the robot based on the received position from point (0,0), which is then fed to the RMQFMU as input..
+The ```xpos``` and ```ypos``` go from the RMQFMU to the distance FMU, which then calculates the distance of the robot based on the received position from point (0,0). 
+This value is fed as input to the RMQFMU.
 Thereafter the distance is send out externally through RMQFMU, which publishes a message to the rabbitMQ server.
 
-The following steps are covered:
+The following steps are covered for the DT:
 
 1) Installation of depenencies in create phase
 2) Generation of outputs in execute stage
