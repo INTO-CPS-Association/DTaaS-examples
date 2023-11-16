@@ -29,10 +29,15 @@ if "vhost" in login_info:
 else: 
     print("Vhost should be provided in the credentials json file")
     sys.exit()
+if "port" in login_info:
+    port = login_info["port"]
+else: 
+    print("port should be provided in the credentials json file")
+    sys.exit()
 
 #Create connection to rabbitMQ server
 credentials = pika.PlainCredentials(username, password)
-connection = pika.BlockingConnection(pika.ConnectionParameters(hostname, 8089, vhost, credentials=credentials))
+connection = pika.BlockingConnection(pika.ConnectionParameters(hostname, port, vhost, credentials=credentials))
 
 #Create channel
 channel = connection.channel()

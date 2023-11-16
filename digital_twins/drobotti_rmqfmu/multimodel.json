@@ -20,6 +20,7 @@
         "{rbmq}.rbmqInstance.config.username": "usr",
         "{rbmq}.rbmqInstance.config.password": "pass",
         "{rbmq}.rbmqInstance.config.vhost": "vhost",
+        "{rbmq}.rbmqInstance.config.port": 5672,
         "{rbmq}.rbmqInstance.config.precision": 10
     },
     "algorithm":{"type":"fixed-step","size":0.1}
