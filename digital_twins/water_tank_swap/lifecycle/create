@@ -2,5 +2,6 @@
 
 printf "install dependencies and create configuration \n\n"
 
+sudo apt-get update
 sudo apt-get install -y openjdk-17-jre
 pip install pandas matplotlib
