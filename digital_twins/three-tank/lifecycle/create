@@ -1,5 +1,6 @@
 #!/bin/bash
 printf "Installing dependencies...\n\n"
+apt-get update
 apt-get install default-jre ## Minimum java 1.8
 apt-get install maven
 mvn -f /workspace/examples/tools/DTManager/pom.xml package
