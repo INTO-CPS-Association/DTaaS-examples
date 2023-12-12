@@ -1,3 +1,5 @@
+## Overview
+
 This codes conducts stochastic (i.e., output-only) subspace identification based on vibration 
 measurements. In the main file, "Input_SysID", the user must provide input and execute the code. 
 The output of the code is a file (saved in the folder "Results") containing the estimated eigen-
@@ -10,3 +12,9 @@ criterion (MAC) values and the modal complexity factors (MCFs) will appear. This
 the quality of the identification.
 
 /MDU 13-11-2023
+
+
+## Sequence of Steps
+
+1. Install Octave
+
