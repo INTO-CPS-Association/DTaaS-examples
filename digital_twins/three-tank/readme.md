@@ -1,7 +1,5 @@
 # Three-Tank System Digital Twin
-
 ## Overview
-
 The three-tank system is a simple case study allows us to represent a system that is composed of three individual components that are coupled in a cascade as follows: The first tank is connected to the input of the second tank, and the output of the second tank is connected to the input of the third tank.
 
 ![Three-tank graphical representation](three-tank_graphical_representation.png)
@@ -17,105 +15,47 @@ The three instances use the same ```.fmu``` file and the same schema due to bein
 The ```DTManager``` is in charge of reading the values from the co-simulation output.
 
 ## Example Structure
-
 ![Three-tank system architecture with DT Manager](threeTankRepresentation_GitHub.png)
 
-
 ## Digital Twin Configuration
-
 This example uses two models, two tools, one data, and one script. The specific assets used are:
 
 | Asset Type | Names of Assets | Visibility | Reuse in Other Examples |
 |:---|:---|:---|:---|
 | Model | Linear.fmu | Private | No |
 |  | TankSystem.aasx | Private | No |
-| Tool | DTManager-0.0.1-Maestro.jar (wraps Maestro) | Common | Yes |
-|  | maestro-2.3.0-jar-with-dependencies.jar (used by DTManager) | Common | Yes |
+| Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+|  | DTManager-0.0.1-Maestro.jar | Private | Yes |
 |  | TankMain.java (main script) | Private | No |
 | Data | outputs.csv | Private | No |
 
 
-This DT has multiple configuration files. The _coe.json_ and _multimodel.json_ are used by Maestro tool. The _tank1.conf_, _tank2.conf_ and _tank3.conf_ are the config files for three different instances of one model (Linear.fmu).
-
 
 ## Lifecycle Phases
-
 The lifecycles that are covered include:
+1. Installation of dependencies in the create phase.
+2. Execution of the experiment in the execution phase.
+3. Terminating the background processes and cleaning up the outputs in the termination phase.
 
-| Lifecycle Phase    | Completed Tasks |
-| --------- | ------- |
-| Create    | Installs Java Development Kit for Maestro tool                                                                    |
-| Execute   | The DT Manager executes the three-tank digital twin and produces output in ```data/three-tank/output``` directory |
-| Terminate | Terminating the background processes and cleaning up the output                                                   |
-
-
-## Run the example
-
-To run the example, change your present directory.
-
-```bash
-cd /workspace/examples/digital twins/three-tank
-```
-
-If required, change the execute permission of lifecycle scripts
-you need to execute, for example:
-
-```bash
-chmod +x lifecycle/create
-```
-
-Now, run the following scripts:
-
-### Create
-
-Installs Open Java Development Kit 17 and pip dependencies.
-Also creates ```DTManager``` tool (DTManager-0.0.1-Maestro.jar) from source code.
-
-```bash
-lifecycle/create
-```
-
-### Execute
-
-Execute the three-tank digital twin using DTManager. DTManager in-turn runs
-the co-simulation using Maestro. Generates the co-simulation output.csv file
-at `/workspace/examples/data/three-tank/output`.
-
-```bash
-lifecycle/execute
-```
-
-### Terminate
-
-Stops the Maestro running in the background. Also stops any other
-jvm process started during **execute** phase.
-
-```bash
-lifecycle/terminate
-```
-
-### Clean
-
-Removes the output generated during execute phase.
-
-```bash
-lifecycle/terminate
-```
+## Run the Example
+The order the run this example is:
+1. Run the create script file with ```/workspace/examples/digital twins/three-tank/lifecycle/create.sh```. In case of error, be sure the installed version of Java is OpenJDK 11, otherwise, install manually the OpenJDK 11 and use the command ```update-java-alternatives``` to set the Java version to be OpenJDK 11 and rerun the ```create.sh``` script.
+2. Execute the Digital Twin with the script file ```/workspace/examples/digital twins/three-tank/lifecycle/execute.sh```.
+3. Terminate the background processes with the script file ```/workspace/examples/digital twins/three-tank/lifecycle/terminate.sh```.
+7. (Optional) clean up the output folder with the script file ```/workspace/examples/digital twins/three-tank/lifecycle/clean.sh```. 
 
 ## Examining the results
-
 Executing this Digital Twin will generate a co-simulation output, but the results can also be monitored from updating the ```/workspace/examples/tools/three-tank/TankMain.java``` with a specific set of ```getAttributeValue``` commands, such as shown in the code.
-
 That main file enables the online execution of the Digital Twin and its internal components.
 
 The output of the co-simulation is generated to the ```/workspace/examples/data/three-tank/output``` folder.
+
 
 In the default example, the co-simulation is run for 10 seconds in steps of 0.5 seconds.
 This can be modified for a longer period and different step size.
 The output stored in ```outputs.csv``` contains the level, in/out flow, and leak values.
 
 No data from the physical twin are generated/used.
-
 
 ## References
 
