@@ -293,13 +293,13 @@ public class DTManager {
 		return value;
 	}
 	
-	/***** Get Knowledge graphs - Systems and individual DTs *****/
-	// 
-	
 	public Object getSystemAttributeValue(String attrName, String systemName, String twinName) {
 		DigitalTwinSystem twinSystem = this.availableTwinSystems.get(systemName);
 		twinSystem.setClock(this.internalClock.getNow());
 		Object value = twinSystem.getAttributeValue(attrName,twinName);
 		return value;
 	}
+	
+	/***** Get Knowledge graphs - Systems and individual DTs *****/
+	//TBD
 }

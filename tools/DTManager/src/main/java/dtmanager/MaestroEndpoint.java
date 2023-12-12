@@ -67,6 +67,8 @@ public class MaestroEndpoint implements Endpoint {
 	Connection conn;
 	Channel channel;
 	DeliverCallback deliverCallback;
+	Map<String,Object> registeredAttributes;
+	List<Operation> registeredOperations;
 	
 	public MaestroEndpoint() {
 		// TODO Auto-generated constructor stub
@@ -119,31 +121,69 @@ public class MaestroEndpoint implements Endpoint {
 
 			try {
 				this.conn = this.factory.newConnection();
-			} catch (IOException | TimeoutException e) {
+				this.channel = this.conn.createChannel();
+				this.channel.exchangeDeclare(this.exchange,"direct");
+				String queueName = this.channel.queueDeclare().getQueue();
+				this.channel.queueBind(queueName, this.exchange, this.routingKey);
+				//this.channel.basicConsume(queueName, this.deliverCallback, null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TimeoutException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			
-			try {
-				this.channel = this.conn.createChannel();
-			} catch (IOException e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
-			}
-			
 		}
+		
+		
 		
 	}
 
 	@Override
 	public void registerOperation(String name, Operation op) {
-		//Not relevant
+		//Only relevant when RabbitMQFMU is in use
+		//name = RabbitMQFMU variable
+		this.registeredOperations.add(op);
 	}
 
 	@Override
 	public void registerAttribute(String name, Object obj) {
-		//Not relevant
+		//Only relevant when RabbitMQFMU is in use
+		//name = RabbitMQFMU variable
+		this.registeredAttributes.put(name,obj);
+		/*
+		String queue = name + ":queue";
+		try {
+			channel.queueDeclare(queue, false, true, false, null);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			channel.queueBind(queue, this.routingKey, this.routingKey);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		this.deliverCallback = (consumerTag, delivery) -> {
+			for (Map.Entry<String, Object> entry : this.registeredAttributes.entrySet()) {
+				try {
+					final String message = new String(delivery.getBody(), "UTF-8");
+			        JSONObject jsonMessage = new JSONObject(message);
+			        String alias = mapAlias(entry.getKey());
+			        Object value = jsonMessage.getJSONObject("fields").get(alias);
+			        entry.setValue(value);
+				} catch (Exception e) {
+				}
+			}
+      	};
+      	try {
+      		channel.basicConsume(queue, true, this.deliverCallback, consumerTag -> {});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		*/
 	}
 
 	@Override

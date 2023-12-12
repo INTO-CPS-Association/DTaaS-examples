@@ -52,57 +52,24 @@
 		<dependency>
 			<groupId>org.eclipse.basyx</groupId>
 			<artifactId>basyx.components.lib</artifactId>
-			<version>1.0.1</version>
+			<version>1.4.0</version>
 		</dependency>
-
-		<!-- Add Registry Server component dependency -->
-		<dependency>
-			<groupId>org.eclipse.basyx</groupId>
-			<artifactId>basyx.components.registry</artifactId>
-			<version>1.0.3</version>
-		</dependency>
-
-		<!-- Add AAS Server component dependency -->
 		<dependency>
 			<groupId>org.eclipse.basyx</groupId>
 			<artifactId>basyx.components.AASServer</artifactId>
-			<version>1.0.1</version>
+			<version>1.4.0</version>
 		</dependency>
-
+		<!--
 		<dependency>
 			<groupId>org.eclipse.basyx</groupId>
 			<artifactId>basyx.sdk</artifactId>
-			<version>1.0.1</version>
+			<version>1.4.0</version>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-		</dependency>
-		<dependency>
-			<groupId>com.rabbitmq</groupId>
-			<artifactId>amqp-client</artifactId>
-			<version>5.14.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20211205</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zeromq</groupId>
-			<artifactId>jeromq</artifactId>
-			<version>0.5.2</version>
-		</dependency>
+		-->
 		<dependency>
 			<groupId>org.eclipse.paho</groupId>
 			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
 			<version>1.2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.12.0</version>
 		</dependency>
 		<dependency>
 		  	<groupId>com.rabbitmq</groupId>
@@ -129,26 +96,10 @@
 		  <artifactId>maestro</artifactId>
 		  <version>2.3.0</version>
 		</dependency>
-		
-		<dependency>
-		  <groupId>org.into-cps.maestro</groupId>
-		  <artifactId>maestro-webapi</artifactId>
-		  <version>2.3.0</version>
-		</dependency>	
 		<dependency>
 		  <groupId>com.opencsv</groupId>
 		  <artifactId>opencsv</artifactId>
 		  <version>5.7.1</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-log4j12</artifactId>
-		    <version>1.7.5</version>
-		</dependency>
-		<dependency>
-	        <groupId>org.eclipse.paho</groupId>
-	        <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-	        <version>1.2.0</version>
-	    </dependency>
 	</dependencies>
 </project>
