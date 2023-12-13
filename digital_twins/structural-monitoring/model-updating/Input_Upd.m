@@ -37,8 +37,8 @@ addpath('Functions');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Input plugin (the user plugs in the required input)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-load('..\System identification\Results\sys.txt'); % load sys file from the ID
-open('..\System identification\Results\MAC_MCF.png');
+load('../system-identification/Results/sys.txt'); % load sys file from the ID
+imshow('../system-identification/Results/MAC_MCF.png');
 ReMo=input('Choose the physical modes to use for updating (ex.: [1,3,4]): ');
 sys.oloc=[1,3,5]; % Output DOF (must match some DOF in the model)
 m=ones(1,5); % Initial mass of the model

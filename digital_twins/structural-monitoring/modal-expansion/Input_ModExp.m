@@ -31,14 +31,14 @@
 % Starting commands (no input required)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all; close all; clc;
-addpath('Functions','..\Data');
+addpath('Functions','/workspace/examples/data/structural-monitoring/input');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Input plugin (the user plugs in the required input)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 FileName='Acc_5DOF.txt'; % provide the name of the output measurement data file
-load('..\System identification\Results\sys.txt'); % file from the sys. ID block
-load('..\Model updating\Results\mod.txt'); % file from the model updating block
+load('../system-identification/Results/sys.txt'); % file from the sys. ID block
+load('../model-updating/Results/mod.txt'); % file from the model updating block
 MoRe=input('Choose (experimental) modes to use for expansion (ex.: [1,3,4]): ');
 if  any(~ismember(MoRe,mod.ReMo))
   disp('Warning: modes have been selected that are not updated in the model.')
