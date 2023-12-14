@@ -241,7 +241,7 @@ def runFMU(client       : ClientOPCUA,
 #%% ============ MAIN ============
 if __name__ == "__main__":
     working_directory = os.path.dirname(os.path.realpath(__file__))
-    # os.chdir(working_directory)
+    os.chdir(working_directory)
     cwd = os.getcwd()
     assert cwd == working_directory, f"working directory expected {working_directory}, got: {cwd}"
     
