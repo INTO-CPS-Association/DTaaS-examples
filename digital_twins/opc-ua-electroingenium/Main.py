@@ -217,7 +217,7 @@ def runFMU(client       : ClientOPCUA,
         
         if enable_send == True:     
             elapsed_time = datetime.now() - t_ini
-            print(f"Simulation time = {time} ---------- Real time {elapsed_time.seconds + elapsed_time.microseconds/1e6}")                      
+            print(f"Simulation time = {time} ---------- Real time = {elapsed_time.seconds + elapsed_time.microseconds/1e6}")                      
             client.opcua_write_values(node_values)
 
         # get the values
@@ -252,8 +252,8 @@ if __name__ == "__main__":
     parametros = pd.read_excel(configuration_file,sheet_name="parametros",index_col="name")   
 
     # ============ OPC UA SETUP ============    
-    # url = 'opc.tcp://vm-Linux:53530/OPCUA/SimulationServer'
-    url = 'opc.tcp://DESKTOP-48KT8R6:53530/OPCUA/SimulationServer'
+    url = 'opc.tcp://vm-Linux:53530/OPCUA/SimulationServer'
+
     try:
         client = ClientOPCUA(url)
         client.connect()

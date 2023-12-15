@@ -1,8 +1,8 @@
 # Install and Demonstrate
 
-1. Install Python (**version 3.10 is recommended**): 
-   - **Linux**: [Install Python 3.10](https://computingforgeeks.com/how-to-install-python-on-ubuntu-linux-system/). The program does not work on earlier versions of Python.
-   - **Windows**: Version 3.8 also works fine.
+1. Install Python 3.8 or above. It has been tested in 3.8, 3.10 and 3.11 versions. However **version 3.10 is recommended**: 
+   - **Linux**: [Install Python 3.10](https://computingforgeeks.com/how-to-install-python-on-ubuntu-linux-system/).
+   - **Windows**: [Install Python 3.10](https://www.python.org/downloads/release/python-31013/)
 1. Install pip for Python
    - **Linux**: [Install pip3 for python3.10](https://stackoverflow.com/questions/69503329/pip-is-not-working-for-python-3-10-on-ubuntu/).
    `curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10`
