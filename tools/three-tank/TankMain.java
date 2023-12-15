@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.log4j.LogManager;
+//import org.apache.log4j.LogManager;
 
 import dtmanager.ComponentConfiguration;
 import dtmanager.DTManager;
@@ -19,7 +19,7 @@ public class TankMain {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		LogManager.shutdown();
+		//LogManager.shutdown();
 
 		TwinSchema schema = new TwinSchema(modelFolderPrefix+"TankSystem.aasx","TankSystem_AAS");
 		TwinConfiguration tank1Config = new TwinConfiguration(dtFolderPrefix+"tank1.conf");
