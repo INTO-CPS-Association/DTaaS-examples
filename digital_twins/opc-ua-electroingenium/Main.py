@@ -115,7 +115,7 @@ def runFMU(client       : ClientOPCUA,
            parametros   : pd.DataFrame, 
            record       : bool = True, 
            record_interval: float = 5.0,
-           record_variables: list[str] = None, 
+           record_variables: list = None, 
            enable_send  : bool = False):
     # read the model description
     global model_description
@@ -252,7 +252,8 @@ if __name__ == "__main__":
     parametros = pd.read_excel(configuration_file,sheet_name="parametros",index_col="name")   
 
     # ============ OPC UA SETUP ============    
-    url = 'opc.tcp://vm-Linux:53530/OPCUA/SimulationServer'
+    # url = 'opc.tcp://vm-Linux:53530/OPCUA/SimulationServer'
+    url = 'opc.tcp://DESKTOP-48KT8R6:53530/OPCUA/SimulationServer'
     try:
         client = ClientOPCUA(url)
         client.connect()
