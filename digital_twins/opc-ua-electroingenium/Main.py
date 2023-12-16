@@ -8,7 +8,6 @@ from opcua import Client
 from opcua import ua
 import pandas as pd
 import sys
-# import time as tiempo
 from datetime import datetime
 from fmpy import *
 import os
@@ -62,10 +61,10 @@ Read node value from OPCUA
     def opcua_write_value(self, node_id, value):
         client_node = self.get_node(node_id)
 
-        ## Para PLC virtual
+        ## Virtual PLC
         # client_node.set_value(value)
         
-        ## Para PLC fisico
+        ## Physic PLC
         data_value = ua.DataValue(ua.Variant(value, ua.VariantType.Float))
         client_node.set_data_value(data_value)
 
@@ -73,7 +72,7 @@ Read node value from OPCUA
         # for node_id in node_values.keys():
         #     opcua_write_value(node_id,node_values[node_id])
 
-        ## Otra forma de hacer lo mismo
+        ## Another way to do the same
         for node_id, value in node_values.items():
             self.opcua_write_value(node_id,value)
 
@@ -86,21 +85,24 @@ class SubscriptionHandler(object):
     def datachange_notification(self, node, val, data):
         node_str = str(node)
         names = self.df.index[self.df["node_id"] == node_str]
-        self.df.loc[names, "value"] = val     # Al detectar un cambio de valor actualizamos el dataframe ademas del servidor OPC    
+        self.df.loc[names, "value"] = val     # Update dataframe when an OPC node changes its value
         
 def export_model_description(model_description,filename):
-    df = pd.DataFrame(columns=["name","causality","reference","start_value"])
+    df = pd.DataFrame(columns=["name","causality","reference","start_value","description"])
     for i,variable in enumerate(model_description.modelVariables):
         df.loc[i,"name"] = variable.name
         df.loc[i,"causality"] = variable.causality
         df.loc[i,"reference"] = variable.valueReference
         df.loc[i,"start_value"] = variable.start   
-    if not filename.lower().endswith((".csv",".xls",".xlsx")):
-        print("Extension del archivo incorrecta, deberia ser '.csv' o '.xls' o '.xlsx'")
-    elif filename.lower().endswith(".csv"):        
+        df.loc[i,"description"] = variable.description   
+
+    assert filename.lower().endswith((".csv",".xls",".xlsx")),\
+    f"Wrong file extension for saving model description, the expected formats are: '.csv' o '.xls' o '.xlsx', but got: '.{filename.rsplit('.')[-1]}'"
+
+    if filename.lower().endswith(".csv"):        
         df.to_csv(filename,sep=';',index=False)        
     elif filename.lower().endswith(".xlsx"):
-        df.to_excel(filename,sheet_name="model_description",index=False,)        
+        df.to_excel(filename,sheet_name="model_description",index=False)        
     
 
 def runFMU(client       : ClientOPCUA,
@@ -113,30 +115,33 @@ def runFMU(client       : ClientOPCUA,
            parametros   : pd.DataFrame, 
            record       : bool = True, 
            record_interval: float = 5.0,
-           record_variables: list[str] = None, 
+           record_variables: list = None, 
            enable_send  : bool = False):
     # read the model description
     global model_description
     global node_values
     
-    model_description = read_model_description(fmu_filename)
+    # Read and export model description
+    model_description = read_model_description(fmu_filename)    
+    export_model_description(model_description,"model_description.csv")
+
     info_fmi = fmi_info(fmu_filename)
     fmi_version = info_fmi[0]
     fmi_type = info_fmi[1]   # 'CoSimulation' o 'ModelExchange'
     print("Simulating %s (FMI: Version = %s, Type = %s)..." % (fmu_filename, fmi_version, fmi_type))
-    
-    # Assign the reference values fro model_description to each variable
+
+    # Update dataframes ('inputs' and 'send_to_plc) with the FMU value references collected from the model description
     variable_names = list()
+    idx_param = list()
     for variable in model_description.modelVariables:
         variable_names.append(variable.name)
         if variable.name in inputs.index:
             inputs.loc[variable.name,"reference"] = int(variable.valueReference)
         if variable.name in send_to_plc.index.to_list():
             send_to_plc.loc[variable.name,"reference"] = int(variable.valueReference)
-    
-    # Export model description
-    export_model_description(model_description,"model_description.csv")
-    
+        if variable.name in parametros.index.to_list():
+            parametros.loc[variable.name,"reference"] = int(variable.valueReference)
+            idx_param.append(variable.name)
     # extract the FMU
     unzipdir = extract(fmu_filename)
     
@@ -149,7 +154,11 @@ def runFMU(client       : ClientOPCUA,
     fmu.instantiate()
     fmu.setupExperiment(startTime=start_time)
     # =============== set parameters ================
-    # ¡¡¡ VERY IMPORT DEFINE PARAMETERS AND VARIABLES fmu.setupExperiment() y fmu.enterInitializationMode()  !!!
+    # ¡¡¡ VERY IMPORTANT TO DEFINE PARAMETERS AND VARIABLES between fmu.setupExperiment() y fmu.enterInitializationMode()  !!!
+    if len(idx_param) > 0:
+        fmu.setReal(parametros.loc[idx_param,'reference'].to_list(), parametros.loc[idx_param, 'value'])
+    else:
+        pass
     # fmu.setReal(parametros["reference"].to_list(), parametros["value"].to_list())
     # start_values = {key: val for key, val in start_values.items() if key not in vr_inputs}
     # start_values = apply_start_values(fmu, model_description, start_values, settable=settable_in_instantiated)
@@ -159,7 +168,7 @@ def runFMU(client       : ClientOPCUA,
     fmu.exitInitializationMode()  
         
     if not all(element in variable_names for element in send_to_plc.index.to_list()):
-        print("Aviso: alguna variable del archivo de configuracion no se encuentra en el model description")
+        print("WARNING: some variable of the configuration file is not present in the model description")
     if record == True:
         varNames = send_to_plc.index.to_list()
         varNames.extend(["power[1]", "power[2]", "power[3]", "vfr"])
@@ -171,12 +180,12 @@ def runFMU(client       : ClientOPCUA,
     # Bucle
     time = start_time
     t_ini = datetime.now()
-    tiempo_transcurrido = 0.0
+    elapsed_time = 0.0
     while time < stop_time:         
     # while True:  
-        tiempo_transcurrido = datetime.now() - t_ini
-        while (tiempo_transcurrido.seconds + tiempo_transcurrido.microseconds/1e6) < time:
-            tiempo_transcurrido = datetime.now() - t_ini
+        elapsed_time = datetime.now() - t_ini
+        while (elapsed_time.seconds + elapsed_time.microseconds/1e6) < time:
+            elapsed_time = datetime.now() - t_ini
 
     ###############################
         # set the input
@@ -197,8 +206,8 @@ def runFMU(client       : ClientOPCUA,
         # advance the time
         time += step_size
         
-        while (tiempo_transcurrido.seconds + tiempo_transcurrido.microseconds/1e6) < time:
-            tiempo_transcurrido = datetime.now() - t_ini
+        while (elapsed_time.seconds + elapsed_time.microseconds/1e6) < time:
+            elapsed_time = datetime.now() - t_ini
         # get values we want to send
         results = fmu.getReal(send_to_plc.loc[idx_send,"reference"].to_list())           
         for i,_ in enumerate(results):
@@ -207,8 +216,8 @@ def runFMU(client       : ClientOPCUA,
         node_values = dict(zip(send_to_plc.loc[idx_send,"node_id"].to_list(), results))  
         
         if enable_send == True:     
-            tiempo_transcurrido = datetime.now() - t_ini
-            print(f"Tiempo de simulacion = {time} ---------- Tiempo real {tiempo_transcurrido.seconds + tiempo_transcurrido.microseconds/1e6}")                      
+            elapsed_time = datetime.now() - t_ini
+            print(f"Simulation time = {time} ---------- Real time = {elapsed_time.seconds + elapsed_time.microseconds/1e6}")                      
             client.opcua_write_values(node_values)
 
         # get the values
@@ -218,7 +227,9 @@ def runFMU(client       : ClientOPCUA,
         
     if record == True:
         results_df = pd.DataFrame(recorder.result())
-        results_df.to_csv("results.csv",index=False,sep=';')        
+        results_df.to_csv("results.csv",index=False,sep=';')    
+    else:
+        results_df = None
     
     # Close FMU 
     fmu.terminate()
@@ -229,10 +240,10 @@ def runFMU(client       : ClientOPCUA,
 
 #%% ============ MAIN ============
 if __name__ == "__main__":
-    working_directory = os.path.dirname(os.path.realpath('__file__'))
+    working_directory = os.path.dirname(os.path.realpath(__file__))
     os.chdir(working_directory)
     cwd = os.getcwd()
-    print(cwd)
+    assert cwd == working_directory, f"working directory expected {working_directory}, got: {cwd}"
     
     # ================ Read configuration Excel .ods file ===============   
     configuration_file = "configuration.ods"
@@ -242,30 +253,31 @@ if __name__ == "__main__":
 
     # ============ OPC UA SETUP ============    
     url = 'opc.tcp://vm-Linux:53530/OPCUA/SimulationServer'
-    try:
-        try:
-            client = ClientOPCUA(url)
-            client.connect()
-            print("Client connected successfully")
-            nodes = list()  # Lista de elementos tipo nodo
-            idx = inputs["node_id"] != ""
-            for name in inputs.index[idx]:
-                node = client.get_node(inputs.loc[name,"node_id"])
-                nodes.append(node)
-            handler = SubscriptionHandler(inputs)
-            sub = client.create_subscription(500, handler) # 500 miliseconds
-            handle = sub.subscribe_data_change(nodes)
-        except Exception as err:  
-            print("Error while creating the connection ", err)
-            sys.exit(1)
 
-        # ============= EJECUTAR FMU ================
-        fmu_filename = "Test_DTCONEDAR_linux.fmu"
+    try:
+        client = ClientOPCUA(url)
+        client.connect()
+        print("Client connected successfully")
+        nodes = list()  # Lista de elementos tipo nodo
+        idx = inputs["node_id"] != ""
+        for name in inputs.index[idx]:
+            node = client.get_node(inputs.loc[name,"node_id"])
+            nodes.append(node)
+        handler = SubscriptionHandler(inputs)
+        sub = client.create_subscription(500, handler) # 500 miliseconds
+        handle = sub.subscribe_data_change(nodes)
+    except Exception as err:  
+        print("Error while creating the connection ", err)
+        sys.exit(1)
+
+    else:        
+        # ============= RUN FMU ================
+        fmu_filename = "Test_DTCONEDAR_windows.fmu"
         print(dump(fmu_filename))
         res = runFMU(client     = client,
-                fmu_filename    = fmu_filename,            
+                fmu_filename    = fmu_filename,
                 start_time      = 0.0, 
-                stop_time       = 300.0, 
+                stop_time       = 50.0, 
                 step_size       = 0.5, 
                 inputs          = inputs, 
                 send_to_plc     = send_to_plc,
@@ -273,20 +285,24 @@ if __name__ == "__main__":
                 record          = False,
                 record_interval = 5.0,
                 record_variables = None, 
-                enable_send     = True)        
-    except:
-        pass
+                enable_send     = True)       
+
     finally:                
         # ============ EXIT ============    
+        # Send a zero to al writable nodes before disconnecting
         idx_send = send_to_plc["node_id"] != ""  
         nodes_before_exit = send_to_plc.loc[idx_send,"node_id"].to_list()
         send_before_exit = dict()
         for node in nodes_before_exit:
-            send_before_exit[node] = 0
-        client.opcua_write_values(send_before_exit)
-        # Disconnect client from OPC UA server
-        client.disconnect()
-        print("Client disconnected")
+            send_before_exit[node] = 0.0
+
+        try:
+            client.opcua_write_values(send_before_exit)
+            # Disconnect client from OPC UA server
+            client.disconnect()
+            print("Client disconnected")
+        except:
+            pass
 
         # Close FMU
         try:
