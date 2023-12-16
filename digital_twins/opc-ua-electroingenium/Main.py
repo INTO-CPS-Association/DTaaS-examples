@@ -272,7 +272,7 @@ if __name__ == "__main__":
 
     else:        
         # ============= RUN FMU ================
-        fmu_filename = "Test_DTCONEDAR_windows.fmu"
+        fmu_filename = "Test_DTCONEDAR_linux.fmu"
         print(dump(fmu_filename))
         res = runFMU(client     = client,
                 fmu_filename    = fmu_filename,

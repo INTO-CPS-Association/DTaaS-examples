@@ -37,3 +37,4 @@
 # Temporary files
 .workspace
 .virtual_documents
+venv
