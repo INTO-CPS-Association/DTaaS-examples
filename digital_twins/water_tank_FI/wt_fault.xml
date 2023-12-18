@@ -1,5 +1,0 @@
-<events>
-    <event id="id-A" when="(t&lt;=20.0) &amp; (t&gt;=12.0)" other="" vars="">
-        <variable valRef="16" type="real" newVal="0.0" vars="" />
-    </event>
-</events>

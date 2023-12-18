@@ -1,9 +1,0 @@
-#!/bin/bash
-rm -rf events_xml_log.xml\
-  target\
-  transition\
-  post\
-  stage1\
-  debug.log\
-  out.txt
-
