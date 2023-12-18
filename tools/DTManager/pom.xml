@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>au.DTManager</groupId>
+  <artifactId>DTManager</artifactId>
+  <version>0.0.1-Maestro</version>
+  
+
+<build>
+  <plugins>
+    <plugin>    
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+            <descriptorRefs>
+          	<descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+        </configuration>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-shade-plugin</artifactId>
+      <version>3.0.0</version>
+      <executions>
+        <execution>
+            <configuration>
+		    <filters>
+			<filter>
+			    <artifact>*:*</artifact>
+			    <excludes>
+				<exclude>META-INF/*.SF</exclude>
+				<exclude>META-INF/*.DSA</exclude>
+				<exclude>META-INF/*.RSA</exclude>
+			    </excludes>
+			</filter>
+		    </filters>
+		    <!-- Additional configuration. -->
+	    </configuration>
+          <phase>package</phase>
+          <goals>
+            <goal>shade</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
+</build>
+  
+  <dependencies>
+		<!-- Add BaSys components from local repository. This contains the dependency 
+			to the basyx.sdk -->
+		<dependency>
+			<groupId>org.eclipse.basyx</groupId>
+			<artifactId>basyx.components.lib</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.basyx</groupId>
+			<artifactId>basyx.components.AASServer</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>org.eclipse.basyx</groupId>
+			<artifactId>basyx.sdk</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.eclipse.paho</groupId>
+			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
+		  	<groupId>com.rabbitmq</groupId>
+		  	<artifactId>amqp-client</artifactId>
+		  	<version>5.14.0</version>
+		</dependency>
+		<dependency>
+		  	<groupId>org.json</groupId>
+		  	<artifactId>json</artifactId>
+		  	<version>20211205</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.typesafe</groupId>
+		    <artifactId>config</artifactId>
+		    <version>1.4.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.siani.javafmi</groupId>
+		    <artifactId>fmu-wrapper</artifactId>
+		    <version>LATEST</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.into-cps.maestro</groupId>
+		  <artifactId>maestro</artifactId>
+		  <version>2.3.0</version>
+		  <scope>system</scope>
+    	  <systemPath>/workspace/examples/common/tools/maestro-2.3.0-jar-with-dependencies.jar</systemPath>
+		</dependency>
+		<dependency>
+		  <groupId>com.opencsv</groupId>
+		  <artifactId>opencsv</artifactId>
+		  <version>5.7.1</version>
+		</dependency>
+	</dependencies>
+</project>
