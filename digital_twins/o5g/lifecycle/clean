@@ -1,0 +1,4 @@
+#!/bin/bash
+
+printf "Cleaning temporary file"
+rm /workspace/digital\ twins/o5g/lifecycle/graph.json

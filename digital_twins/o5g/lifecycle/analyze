@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 /workspace/digital\ twins/o5g/plot.py
