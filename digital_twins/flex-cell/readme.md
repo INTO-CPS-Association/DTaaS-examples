@@ -17,32 +17,41 @@ Right now, RabbitMQFMU is only used for injecting values into the co-simulation,
 The ```DTManager``` is in charge of reading the values from the co-simulation output and the current state of the physical twins.
 
 ## Example Structure
-![Flex-cell system architecture with the DT Manager](flexcellRepresentation_GitHub.png)
+The structure of this example is split into two figures.
+The first one shows the architecture for the flex-cell example using the DT Manager. See [References](#references) for more detail.
+
+
+
+![Flex-cell system architecture with the DT Manager](flexcellRepresentation_GitHub_upper.png)
+
+The second one shows the details of the internal assets of the physical twin and the digital twin, where the FMU models and the communication interfaces, including RabbitMQ, FMU are used.
+
+![Flex-cell system architecture with the DT Manager](flexcellRepresentation_GitHub_lower.png)
 
 ## Digital Twin Configuration
 This example uses seven models, five tools, six data, two functions, and one script. The specific assets used are:
 
-| Asset Type | Names of Assets | Visibility | Reuse in Other Examples |
-|:---|:---|:---|:---|
-| Model | kukalbriiwa_model.fmu | Private | No |
-|  | kuka.aasx | Private | No |
-|  | ur5e_model.fmu | Private | No |
-|  | ur5e.aasx | Private | No |
-|  | rmq-vhost.fmu | Private | Yes |
-| Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
-|  | DTManager-0.0.1-Maestro.jar | Private | Yes |
-|  | urinterface | Private | No |
-|  | kukalbrinterface | Private | No |
-|  | robots_flexcell | Private | No |
-|  | FlexCellMain.java (main script) | Private | No |
-| Data | publisher-flexcell-physical.py | Private | No |
-|  | ur5e_mqtt_publisher.py | Private | No |
-|  | connections.conf | Private | No |
-|  | outputs.csv | Private | No |
-|  | kukalbriiwa7_actual.csv | Private | No |
-|  | ur5e_actual.csv | Private | No |
-| Function | plots.py | Private | No |
-|  | prepare.py | Private | No |
+| Asset Type | Name of Assets | Name in the Example Structure | Visibility | Reuse in Other Examples |
+|:---|:---|:---|:---|:---|
+| Model | kukalbriiwa_model.fmu | Kuka lbr iiwa 7 FMU | Private | No |
+|  | kuka.aasx | Kuka lbr iiwa 7 Schema | Private | No |
+|  | ur5e_model.fmu | UR5e FMU | Private | No |
+|  | ur5e.aasx | UR5e Schema | Private | No |
+|  | rmq-vhost.fmu | RabbitMQ FMU | Private | Yes |
+| Tool | maestro-2.3.0-jar-with-dependencies.jar | Maestro | Common | Yes |
+|  | DTManager-0.0.1-Maestro.jar | DTManager | Private | Yes |
+|  | urinterface | *urinterface* | Private | No |
+|  | kukalbrinterface | *kukalbrinterface* | Private | No |
+|  | robots_flexcell | *robots_flexcell* | Private | No |
+|  | FlexCellMain.java (main script) | *FlexCellMain.java* | Private | No |
+| Data | publisher-flexcell-physical.py | *publisher-flexcell-physical.py* | Private | No |
+|  | ur5e_mqtt_publisher.py | *ur5e_mqtt_publisher.py* | Private | No |
+|  | connections.conf | *connections.conf* | Private | No |
+|  | outputs.csv | *outputs.csv* | Private | No |
+|  | kukalbriiwa7_actual.csv | *kukalbriiwa7_actual.csv* | Private | No |
+|  | ur5e_actual.csv | *ur5e_actual.csv* | Private | No |
+| Function | plots.py | *plots.py* | Private | No |
+|  | prepare.py | *prepare.py* | Private | No |
 
 ## Lifecycle Phases
 The lifecycles that are covered include:
