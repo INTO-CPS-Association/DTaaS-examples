@@ -25,10 +25,8 @@ This example uses seven models, five tools, six data, two functions, and one scr
 | Asset Type | Names of Assets | Visibility | Reuse in Other Examples |
 |:---|:---|:---|:---|
 | Model | kukalbriiwa_model.fmu | Private | No |
-|  | kuka_irw_gripper_rg6.urdf | Private | No |
 |  | kuka.aasx | Private | No |
 |  | ur5e_model.fmu | Private | No |
-|  | ur5e_gripper_2fg7.urdf | Private | No |
 |  | ur5e.aasx | Private | No |
 |  | rmq-vhost.fmu | Private | Yes |
 | Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
