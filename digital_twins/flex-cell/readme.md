@@ -24,7 +24,7 @@ The first one shows the architecture for the flex-cell example using the DT Mana
 
 ![Flex-cell system architecture with the DT Manager](flexcellRepresentation_GitHub_upper.png)
 
-The second one shows the details of the internal assets of the physical twin and the digital twin, where the FMU models and the communication interfaces, including RabbitMQ, FMU are used.
+The second one shows the details of the internal assets of the physical twin and the digital twin, where the FMU models and the communication interfaces, including RabbitMQ FMU, are used.
 
 ![Flex-cell system architecture with the DT Manager](flexcellRepresentation_GitHub_lower.png)
 
