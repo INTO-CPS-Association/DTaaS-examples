@@ -11,7 +11,7 @@ The flex-cell case study is managed using the ```DTManager```, which is packed a
 The ```DTManager``` uses Maestro as a slave for co-simulation, so it generates the output of the co-simulation and can interact with the real robots at the same time (with the proper configuration and setup).
 The mainfile can be changed according to the application scope, i.e., the ```/workspace/examples/tools/flex-cell/FlexCellMain.java``` can be manipulated to get a different result.
 
-The ```/workspace/examples/models/flex-cell/``` folder contains the ```.fmu``` files for the kinematic models of the robotic arms, the ```.urdf``` files for visualization (including the grippers), and the ```.aasx``` files for the schema representation with Asset Administration Shell.
+The ```/workspace/examples/models/flex-cell/``` folder contains the ```.fmu``` files for the kinematic models of the robotic arms and the ```.aasx``` files for the schema representation with Asset Administration Shell.
 The case study also uses RabbitMQFMU to inject values into the co-simulation, therefore, there is the rabbitmqfmu in the models folder as well.
 Right now, RabbitMQFMU is only used for injecting values into the co-simulation, but not the other way around.
 The ```DTManager``` is in charge of reading the values from the co-simulation output and the current state of the physical twins.
@@ -59,7 +59,7 @@ The lifecycles that are covered include:
 The order the run this example is:
 1. Run the create script file with ```/workspace/examples/digital_twins/flex-cell/lifecycle/create```. In case of error, be sure the installed version of Java is OpenJDK 11, otherwise, install manually the OpenJDK 11 and use the command ```update-java-alternatives``` to set the Java version to be OpenJDK 11 and rerun the ```create``` script.
 2. Set up the credentials in the ```/workspace/examples/data/flex-cell/connections.conf``` and run the script file ```./workspace/examples/digital_twins/flex-cell/lifecycle/prepare```.
-3. Execute the Digital Twin with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/execute```.
+3. Execute the Digital Twin with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/execute```. **Remark**: You need to terminate the ```execute``` script by pressing ```Control + C``` since the application opens a loop that runs forever.
 4. (Optional) save the results with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/save```.
 5. (Optional) plot the results with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/analyze```, which saves the plots in the folder ```/workspace/examples/data/flex-cell/output```.
 6. Terminate the background processes with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/terminate```. This one is required before running an execution again.
