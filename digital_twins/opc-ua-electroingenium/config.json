@@ -1,6 +1,6 @@
 {
-    "url"           : "opc.tcp://localhost:53530/OPCUA/SimulationServer",
-    "config_ods"    : "configuration.ods",
+    "url"           : "opc.tcp://localhost:4840",
+    "config_ods"    : "configuration_freeopcua.ods",
     "fmu_filename"  : "Test_DTCONEDAR_windows.fmu",
     "stop_time"     : 10.0,
     "step_size"     : 0.5,

@@ -107,12 +107,13 @@ the read, execution and extraction of results.
 1. Configure parameters and inputs of the simulation in the file *configuration.ods*.
 ![Configuration parameters](images/conf-parameters.png)
 ![Configuration input](images/conf-inputs.png)
-1. Open the script `Main.py`
+1. Open the configuration file *config.json* and fill in the values:
+![Config JSON](images/config_json.png)
    1. Replace `url = 'opc.tcp://Ubuntu.myguest.virtualbox.org:53530/OPCUA/SimulationServer'` with new **Connection Address**.
    2. Make sure that your are running the FMU that suits your Operating System.
       - **Linux**: `fmu_filename = "Test_DTCONEDAR_linux.fmu"`
       - **Windows**: `fmu_filename = "Test_DTCONEDAR_windows.fmu"`
-      ![FMU filename](images/code-fmu_filename.png)
+      
    3. Besides the fmu_filename other optional parameters can be modified:
       - stop_time
       - step_size
