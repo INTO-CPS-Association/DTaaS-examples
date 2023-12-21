@@ -3,7 +3,6 @@ import asyncio
 import json
 import os
 import random 
-import time
 
 async def main():
     working_directory = os.path.dirname(os.path.realpath(__file__))

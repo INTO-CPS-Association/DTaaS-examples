@@ -66,7 +66,7 @@ Read node value from OPCUA
         # client_node.set_value(value)
         
         ## Physic PLC
-        data_value = ua.DataValue(ua.Variant(value, ua.VariantType.Float))
+        data_value = ua.DataValue(ua.Variant(value, ua.VariantType.Double))
         client_node.set_data_value(data_value)
 
     def opcua_write_values(self, node_values:dict):
