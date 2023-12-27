@@ -50,9 +50,6 @@ The main python script (_main.py_) does the following actions:
 
 ## Digital Twin Configuration
 
-This example uses two models, one tool, one data, and two scripts to create
-mock physical twin. The specific assets used are:
-
 | Asset Type | Name of Asset | Visibility | Reuse in Other Examples |
 |:----|:----|:----|:----|
 | Models | Test_DTCONEDAR_linux.fmu | private | No |
@@ -64,13 +61,14 @@ mock physical twin. The specific assets used are:
 |  | nodes-export.xml  | private   | No  |
 | Tool | **Server**: server-opcua.py, server-asyncua.py, server-opcua-xml.py, server-asyncua-xml.py  | private | No |
 |      | **Client**: client-opcua.py, client-asyncua.py | private | No |
+|      | **FMU builder**: script.mos | private | No |
 
-The _configuration.ods_ file is used for customizing the initial values
+The _configurationXXX.ods_ file is used for customizing the initial values
 to your needs. In this example, a dummy model representation of the plant
 is used, instead of the real model. The simplified model (with not
 the real equations) is developed in **Modelica
 (Test_DTCONEDAR.mo)**. The FMU is generated from the Open Modelica interface in
-Linux and Windows to obtain the needed binaries to run the FMU in both operating systems. The python script contains the read, execution and extraction of results.
+Linux and Windows to obtain the needed binaries to run the FMU in both operating systems. It is possible to run an FMU previously generated, however, to ensure that we are using the right binaries it is recommended to install Open Modelica Compiler and run `script.mos` to build the FMU from de Modelica file `Test_DTCONEDAR.mo`
 
 ## Install and Demonstrate
 
@@ -81,6 +79,18 @@ Linux and Windows to obtain the needed binaries to run the FMU in both operating
      for Ubuntu 20.04.
    - **Windows**: [Install Visual Studio Redistributable](https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170)
      to install the newest version of GLIBC.
+1. Install Open Modelica Compiler for [Linux](https://openmodelica.org/download/download-linux/) or [Windows](https://openmodelica.org/download/download-windows/). The minimal installation is enough since the graphical clients (OMEdit, OMShell and OMNotebook) are not necessary. **This allows to compile an FMU from the terminal, therefore if the FMU is already built with the correct binaries, this step is optional**
+1. Run the `script.mos` file to compile the FMU from the Modelica file.
+![script-mos](images/build-fmu.png)   
+
+   Linux
+   ``` bash
+   omc script.mos
+   ```
+   Windows: omc usually is located in a path like this
+   ``` cmd
+   "C:\Program Files\OpenModelica1.21.0-64bit\bin\omc.exe" script.mos
+   ```
 1. Install Python 3.8 or above. It has been tested in 3.8, 3.10 and 3.11 versions. However **version 3.10 is recommended**: 
    - **Linux**: [Install Python 3.10](https://computingforgeeks.com/how-to-install-python-on-ubuntu-linux-system/).
    - **Windows**: [Install Python 3.10](https://www.python.org/downloads/release/python-31013/)
@@ -88,19 +98,25 @@ Linux and Windows to obtain the needed binaries to run the FMU in both operating
    - **Linux**: [Install pip3 for python3.10](https://stackoverflow.com/questions/69503329/pip-is-not-working-for-python-3-10-on-ubuntu/).
    `curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10`
    - **Windows**: pip is installed by default when installing Python.
-1. Install pip dependencies. 
-   - **Linux**: `pip3.10 install fmpy opcua odfpy pandas cryptography asyncua`
-   - **Windows**: Make sure that the desired Python virtual environment is activated (see `.env38` in the figure below). Then run the following command `pip install fmpy opcua odfpy pandas cryptography asyncua`. During the package installation, `cryptography` package may cause an error like this:
-   ![Cryptography error](images/cryptography-error.png)
-   Upgrade pip `python -m pip install --upgrade pip`.
-   Run again `pip install fmpy opcua odfpy pandas cryptography asyncua` and it should install all the required packages correctly.
+1. Upgrade pip and install pip dependencies. 
+
+   Linux
+      ``` bash
+      python3 -m pip install --upgrade pip
+      python3 -m pip install requirements_linux.txt
+      ```
+      Windows
+      ```cmd
+      py -m pip install --upgrade pip
+      py -m pip install requirements_windows.txt
+      ```
 
 1. Configure an OPC UA simulation server. Two options are available.
    1. Use [Free OPC-UA Library](https://github.com/FreeOpcUa). This is the recommended approach, because its configuration is more straightforward. Two libraries are provided within Free OPC-UA Library.
       - [opcua](https://github.com/FreeOpcUa/python-opcua) is deprecated, but still works fine to create OPC-UA servers and clients.
       - [asyncua](https://github.com/FreeOpcUa/opcua-asyncio) is very similar, but allows asynchronous programming through the [asyncio](https://docs.python.org/es/3/library/asyncio.html) Python native library.
    2. Install Prosys OPC UA Simulation Server [here](https://www.prosysopc.com/opcua/apps/JavaServer/dist/5.4.6-148/prosys-opc-ua-simulation-server-linux-x64-5.4.6-148.sh). **This server is not running properly in DTaaS user workspace but works well on Ubuntu 22.04.**
-   **It seems there is a bug in the OPC UA server. This needs debugging.** To configure Prosys OPC UA Simulation Server see 'How to configure Prosys'
+   **It seems there is a bug in the OPC UA server. This needs debugging.** To configure Prosys OPC UA Simulation Server see [How to configure Prosys](#how-to-configure-prosys).
 
 1. Start the OPC-UA Server (two options available):
    - **Free OPC-UA Library**: run any of these scripts (`server-opcua.py`, `server-opcua-xml.py`, `server-asyncua.py`, `server-asyncua-xml.py`). All of them create the same server, the difference between them is that ones use opcua library and others asyncua and ones define each node by hand and others import a list of nodes from a .xml file.
@@ -111,14 +127,15 @@ Linux and Windows to obtain the needed binaries to run the FMU in both operating
 1. Open the configuration file *config.json* and fill in the values:
 ![Config JSON](images/config_json.png)
 
-   2. Replace `url = 'opc.tcp://localhost:4840'` with new **Connection Address**.
+   2. Replace `"url" : "opc.tcp://0.0.0.0:4840"` with new **Connection Address**. The default localhost is:
+      - `opc.tcp://0.0.0.0:4840` for Linux
+      - `opc.tcp://localhost:4840` for Windows
+
    2. Select the .ods configuration file. 
       - If using Free OPC-UA select `configuration_freeopcua.ods`
       - If using Prosys select `configuration_prosys.ods`
 
-   2. Make sure that your are running the FMU that suits your Operating System.
-      - **Linux**: `fmu_filename = "Test_DTCONEDAR_linux.fmu"`
-      - **Windows**: `fmu_filename = "Test_DTCONEDAR_windows.fmu"`
+   2. Make sure that your are running the FMU that suits your Operating System. The easiest way is to provide the same _fmu_filename_ that has been created after running **step 3**.
       
    2. Besides the mentioned parameters, optional parameters can be modified:
       - stop_time
