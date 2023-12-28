@@ -1,0 +1,11 @@
+{
+    "url"           : "opc.tcp://localhost:4840",
+    "config_ods"    : "configuration_freeopcua.ods",
+    "fmu_filename"  : "Test_DTCONEDAR.fmu",
+    "stop_time"     : 10.0,
+    "step_size"     : 0.5,
+    "record"        : false,
+    "record_interval"   : 5.0,
+    "record_variables"  : [], 
+    "enable_send"       : true
+}

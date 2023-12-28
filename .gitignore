@@ -38,3 +38,10 @@
 .workspace
 .virtual_documents
 venv
+
+# Build FMU auxiliary files
+Test_DTCONEDAR_FMU.libs
+Test_DTCONEDAR_FMU.log
+Test_DTCONEDAR_FMU.makefile
+Test_DTCONEDAR_info.json
+Test_DTCONEDAR.log
