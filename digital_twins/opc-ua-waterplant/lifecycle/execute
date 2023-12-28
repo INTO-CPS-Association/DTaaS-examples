@@ -2,5 +2,9 @@
 
 python3.10 server-asyncua.py &
 SERVER_PID=$!
+
+printf "waiting for OPC UA server to start...\n"
+sleep 60
+
 python3.10 client-asyncua.py
-kill -SIGKILL SERVER_PID
+kill -SIGKILL "$SERVER_PID"

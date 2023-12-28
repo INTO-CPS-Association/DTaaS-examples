@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # OpenModelica Build FMU auxiliary files
+rm Test_DTCONEDAR_FMU
 rm Test_DTCONEDAR_FMU.libs
 rm Test_DTCONEDAR_FMU.log
 rm Test_DTCONEDAR_FMU.makefile
