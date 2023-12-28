@@ -3,8 +3,9 @@
 python3.10 server-asyncua.py &
 SERVER_PID=$!
 
-printf "waiting for OPC UA server to start...\n"
-sleep 60
+printf "waiting 30 seconds for OPC UA server to start...\n"
+sleep 30
 
-python3.10 client-asyncua.py
+python3.10 client-asyncua.py 2>&1 | \
+  tee "/workspace/examples/data/opc-ua-waterplant/output/execute.log"
 kill -SIGKILL "$SERVER_PID"

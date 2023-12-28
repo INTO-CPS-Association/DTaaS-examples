@@ -1,0 +1,4 @@
+loadFile("/workspace/examples/models/Test_DTCONEDAR.mo"); 
+getErrorString();
+buildModelFMU(Test_DTCONEDAR); 
+getErrorString();
