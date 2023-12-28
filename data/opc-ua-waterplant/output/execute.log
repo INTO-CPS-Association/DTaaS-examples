@@ -11,7 +11,7 @@ Model Info
   Event Indicators   0
   Variables          120
   Generation Tool    OpenModelica Compiler OpenModelica 1.22.1
-  Generation Date    2023-12-28T12:44:50Z
+  Generation Date    2023-12-28T13:13:46Z
 
 Default Experiment
 
@@ -139,25 +139,25 @@ Variables (input, output)
   vel_prof[10,8]     input                         10.0           
   vfr                input                      0.20833           [m3/s]
 None
-Simulating Test_DTCONEDAR.fmu (FMI: Version = 2.0, Type = ['ModelExchange'])...
-Simulation time = 0.5 ---------- Real time = 0.500369
-Simulation time = 1.0 ---------- Real time = 1.000705
-Simulation time = 1.5 ---------- Real time = 1.500788
-Simulation time = 2.0 ---------- Real time = 2.00038
-Simulation time = 2.5 ---------- Real time = 2.500271
-Simulation time = 3.0 ---------- Real time = 3.000267
-Simulation time = 3.5 ---------- Real time = 3.500328
-Simulation time = 4.0 ---------- Real time = 4.000264
-Simulation time = 4.5 ---------- Real time = 4.500268
-Simulation time = 5.0 ---------- Real time = 5.000289
-Simulation time = 5.5 ---------- Real time = 5.500431
-Simulation time = 6.0 ---------- Real time = 6.000271
-Simulation time = 6.5 ---------- Real time = 6.500263
+Simulating /workspace/examples/digital_twins/opc-ua-waterplant/Test_DTCONEDAR.fmu (FMI: Version = 2.0, Type = ['ModelExchange'])...
+Simulation time = 0.5 ---------- Real time = 0.500371
+Simulation time = 1.0 ---------- Real time = 1.000718
+Simulation time = 1.5 ---------- Real time = 1.500672
+Simulation time = 2.0 ---------- Real time = 2.00027
+Simulation time = 2.5 ---------- Real time = 2.50028
+Simulation time = 3.0 ---------- Real time = 3.000282
+Simulation time = 3.5 ---------- Real time = 3.500293
+Simulation time = 4.0 ---------- Real time = 4.000253
+Simulation time = 4.5 ---------- Real time = 4.500282
+Simulation time = 5.0 ---------- Real time = 5.000275
+Simulation time = 5.5 ---------- Real time = 5.50037
+Simulation time = 6.0 ---------- Real time = 6.000262
+Simulation time = 6.5 ---------- Real time = 6.50027
 Simulation time = 7.0 ---------- Real time = 7.000711
-Simulation time = 7.5 ---------- Real time = 7.500346
-Simulation time = 8.0 ---------- Real time = 8.000279
-Simulation time = 8.5 ---------- Real time = 8.500704
-Simulation time = 9.0 ---------- Real time = 9.00026
-Simulation time = 9.5 ---------- Real time = 9.500366
-Simulation time = 10.0 ---------- Real time = 10.000254
+Simulation time = 7.5 ---------- Real time = 7.500288
+Simulation time = 8.0 ---------- Real time = 8.000265
+Simulation time = 8.5 ---------- Real time = 8.500708
+Simulation time = 9.0 ---------- Real time = 9.000271
+Simulation time = 9.5 ---------- Real time = 9.500303
+Simulation time = 10.0 ---------- Real time = 10.000269
 Client disconnected

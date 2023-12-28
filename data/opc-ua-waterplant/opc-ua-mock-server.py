@@ -11,7 +11,7 @@ async def main():
     assert cwd == working_directory, f"working directory expected {working_directory}, got: {cwd}"
 
     # Read configuration file and store info in DATA dictionary
-    with open('config.json', 'r') as f:
+    with open('/workspace/examples/digital_twins/opc-ua-waterplant/config.json', 'r') as f:
         DATA = json.load(f)  
 
     # Instance of Server class

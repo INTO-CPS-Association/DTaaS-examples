@@ -247,7 +247,7 @@ async def main():
     cwd = os.getcwd()
     assert cwd == working_directory, f"working directory expected {working_directory}, got: {cwd}"
     # ================ Read configuration 'config.json' file ===============   
-    with open('config.json', 'r') as f:
+    with open('/workspace/examples/digital_twins/opc-ua-waterplant/config.json', 'r') as f:
         DATA = json.load(f)       
     # ================ Read configuration Excel .ods file ===============   
     inputs = pd.read_excel(DATA['config_ods'],sheet_name="inputs",index_col="name",na_filter=False)    

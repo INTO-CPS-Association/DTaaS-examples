@@ -1,7 +1,7 @@
 {
     "url"           : "opc.tcp://0.0.0.0:4840",
     "config_ods"    : "/workspace/examples/data/opc-ua-waterplant/input/configuration_freeopcua.ods",
-    "fmu_filename"  : "Test_DTCONEDAR.fmu",
+    "fmu_filename"  : "/workspace/examples/digital_twins/opc-ua-waterplant/Test_DTCONEDAR.fmu",
     "stop_time"     : 10.0,
     "step_size"     : 0.5,
     "record"        : false,
