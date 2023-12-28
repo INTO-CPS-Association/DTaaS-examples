@@ -1,0 +1,6 @@
+#!/bin/bash
+
+python3.10 server-asyncua.py &
+SERVER_PID=$!
+python3.10 client-asyncua.py
+kill -SIGKILL SERVER_PID

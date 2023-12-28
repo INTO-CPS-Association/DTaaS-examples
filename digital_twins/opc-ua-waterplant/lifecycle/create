@@ -1,0 +1,4 @@
+#!/bin/bash
+
+printf "create fmu from modelica file\n"
+omc script.mos
