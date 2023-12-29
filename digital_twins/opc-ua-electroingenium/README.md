@@ -162,3 +162,9 @@ of the two FMUs:
    `~/.prosysopc/prosys-opc-ua-simulation-server` directory. After that, when running again Prosys OPC UA the following nodes should appear.
    ![Prosys window](images/prosys-screenshot.png)
 1. Start the OPC UA server again. Make sure that the server is running at a port. Copy **Connection Address (UA TCP)** from the **Status** tab.  
+
+## References
+1. Royo, L., Labarías, A., Arnau, R., Gómez, A., Ezquerra, A., Cilla, I., & Díez-Antoñazas, L. (2023). Improving energy efficiency in the tertiary treatment of Alguazas WWTP (Spain) by means of digital twin development based on Physics modelling . Cambridge Open Engage. [doi:10.33774/coe-2023-1vjcw](https://doi.org/10.33774/coe-2023-1vjcw)
+
+## Acknowledgements
+This project is subsidised thanks to the support grants for Agrupación Empresarial Innovadora (AEI) of the Ministry of Industry, Trade and Tourism (MINCOTUR) with the aim of improving the competitiveness of small and medium-sized enterprises within the Recovery, Transformation and Resilience Plan (PRTR) financed by the Next Generation EU (NGEU) funds, with Grant Number: AEI-010500-2022b-196.
