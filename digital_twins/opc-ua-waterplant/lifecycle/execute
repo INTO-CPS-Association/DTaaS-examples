@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python3.10 "/workspace/examples/data/opc-ua-waterplant/oopcua-mock-server.py" &
+python3.10 "/workspace/examples/data/opc-ua-waterplant/opcua-mock-server.py" &
 SERVER_PID=$!
 
 printf "waiting 30 seconds for OPC UA server to start...\n"
