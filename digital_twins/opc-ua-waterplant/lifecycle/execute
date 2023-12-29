@@ -1,0 +1,11 @@
+#!/bin/bash
+
+python3.10 "/workspace/examples/data/opc-ua-waterplant/opcua-mock-server.py" &
+SERVER_PID=$!
+
+printf "waiting 30 seconds for OPC UA server to start...\n"
+sleep 30
+
+python3.10 /workspace/examples/tools/opc-ua-waterplant/client-opcua.py 2>&1 | \
+  tee "/workspace/examples/data/opc-ua-waterplant/output/execute.log"
+kill -SIGKILL "$SERVER_PID"
