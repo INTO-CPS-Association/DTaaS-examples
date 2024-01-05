@@ -4,8 +4,7 @@
 Waste water treatment (WWT) plants must comply with substance and species concentration limits established by regulation in order to ensure the good quality of the water. This is usually done taking periodic samples that are analyzed in the laboratory. This means that plant operators do not have continuous information for making decisions and, therefore, operation setpoints are set to higher values than needed to guarantee water quality. Some of the processes involved in WWT plants consume a lot of power, thus adjusting setpoints could significantly reduce energy consumption.
 
 ## Physical Twin Overview
-This example demonstrates the communication between a physical waste
-water plant in the tertiary treatment and a digital twin of the ultaviolet (UV) disinfection process based on Computational Fluid Dynamics (CFD) and compartment models. The aim of this digital twin is to develop "virtual sensors" that provide continuous information that facilitates the decision making process for the plant operator. 
+This example demonstrates the communication between a physical ultraviolet (UV) disinfection process (the tertiary treatment of a WWT plant) and its digital twin, which is based on Computational Fluid Dynamics (CFD) and compartment models. The aim of this digital twin is to develop "virtual sensors" that provide continuous information that facilitates the decision making process for the plant operator. 
 
 ![Waste water treatment plant](images/water-treatment-plant.png)
 
@@ -32,15 +31,15 @@ conservation laws (mass, energy and momentum), but simplifies details
 (geometry, mainly) to ensure real-time calculations and accurate results.
 The results are compared to the ones obtained by the CFD. C solver developed
 is used by the OpenModelica model. OpenModelica converts it into FMI standard,
-to be integrated in the main script execution (_main.py_).
+to be integrated in the main script execution (_client-opcua.py_).
 
-![Structure of Python Script](images/dt-structure.png)
+![Structure of Python Script](images/dt-structure2.png)
 
-The main python script (_main.py_) does the following actions:
+The main python script (_client-opcua.py_) does the following actions:
 
 - Read values from PLC using a client OPC.
 - Read the spreadsheet to fix initial values, parameters and some inputs
-  (those inputs that are not being measured, a reasonable value is assumed).
+  (those inputs that are not being measured, a reasonable value is assumed). And read the node IDs assigned to each input and output variable of the OPC UA server.
 - Execute the algorithm with the FMPy library using the .fmu created from
   the compartment model (based on CFD)
   - Obtain results.
