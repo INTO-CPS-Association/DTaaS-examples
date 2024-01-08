@@ -30,7 +30,6 @@ The distance FMU is responsible
 for calculating the distance between _(0,0)_ and _(x,y)_. The RMQ FMU and distance FMU exchange values
 during co-simulation.
 
-
 ## Configure
 
 This example uses RabbitMQ broker and client services. Thus a working account
