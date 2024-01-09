@@ -1,16 +1,23 @@
 #!/bin/bash 
 
 # This script expects the following files to exist:
-#   /workspace/digital twins/o5g/main.py
-#   /workspace/digital twins/o5g/sensorSimulation.py
-#   /workspace/digital twins/o5g/telegraf.conf
+#   /workspace/digital_twins/o5g/main.py
+#   /workspace/digital_twins/o5g/sensorSimulation.py
+#   /workspace/digital_twins/o5g/telegraf.conf
+#   /workspace/digital_twins/o5g/runTessla.sh
+#   /workspace/digital_twins/o5g/config.py
+#   /workspace/data/lab.ifc
 #   /workspace/models/graphToPath.py
 #   /workspace/models/pathToTime.py
 #   /workspace/models/PathOxygenEstimate.mo
 #   /workspace/models/makefmu.mos
 #   /workspace/tools/ifc_to_graph
-#   /workspace/tools/tessla/tessla-telegraf-connector.zip
+#   /workspace/tools/tessla/tessla-telegraf-connector/     containing the contents of 
+#       https://git.tessla.io/telegraf/tessla-telegraf-connector/-/blob/master/Release/tessla-telegraf-connector.zip
 #   /workspace/tools/tessla/tessla-telegraf-connector/specification.tessla
+
+# exit if a command fails
+set -e
 
 printf "Install apt dependencies \n"
 
@@ -53,11 +60,6 @@ printf "Compiling fmu from OpenModelica model \n"
 cd /workspace/models
 omc /workspace/models/makefmu.mos
 
-printf "Compiling TeSSLa monitor from specification \n"
-
-cd /workspace/tools/tessla/tessla-telegraf-connector
-chmod +x TesslaTelegrafConnector
-./TesslaTelegrafConnector -i specification.tessla -c /workspace/digital\ twins/o5g/telegraf.conf
-chmod +x ./outputRustProject/target/debug/tessla_monitor
+chmod +x /workspace/digital_twins/o5g/runTessla.sh
 
 printf "Done installing, use execute script to run digital twin \n"

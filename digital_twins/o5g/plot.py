@@ -3,11 +3,12 @@ import matplotlib.pyplot as plt
 import time
 import logging
 import json
+import config
 
 
 # MQTT configurations
-BROKER_ADDRESS = "dtl-server-2.st.lab.au.dk"
-PORT = 8090
+BROKER_ADDRESS = config.MQTT_SERVER
+PORT = config.MQTT_PORT
 TOPIC = "vgiot/dt/#"
 
 # Dictionary to hold values for each subtopic
@@ -40,7 +41,7 @@ def on_message(client, userdata, message):
 
 # Set up the MQTT client
 client = mqtt.Client("Listener")
-client.username_pw_set("lars", "LarsLubeck082023")
+client.username_pw_set(config.MQTT_USER, config.MQTT_PASS)
 client.on_message = on_message
 client.on_connect = on_connect
 client.connect(BROKER_ADDRESS, PORT)
@@ -62,7 +63,7 @@ for subtopic, values in data.items():
         plt.title(f'Values Over Time for {subtopic}')
         plt.xlabel('Time (sequence)')
         plt.ylabel('Value')
-        filename = f"/workspace/digital twins/o5g/figures/{subtopic}_plot.png"
+        filename = f"/workspace/digital_twins/o5g/figures/{subtopic}_plot.png"
         plt.savefig(filename)
     else:
         print(f"No data received for topic {subtopic} in the given time frame.")

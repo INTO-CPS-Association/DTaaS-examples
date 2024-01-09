@@ -12,14 +12,14 @@ if [ $? != 0 ]; then
   tmux new-session -d -s $SESSION_NAME \; \split-window -v \; \split-window -h \; \select-pane -t 0 \; \split-window -h
 
   # Start the first Python script in the left pane
-  tmux send-keys -t ${SESSION_NAME}.0 'python3 /workspace/digital\ twins/o5g/sensorSimulation.py' C-m
+  tmux send-keys -t ${SESSION_NAME}.0 'python3 /workspace/digital_twins/o5g/sensorSimulation.py' C-m
 
   # Start the second Python script in the right pane
-  tmux send-keys -t ${SESSION_NAME}.1 'python3 /workspace/digital\ twins/o5g/main.py' C-m
+  tmux send-keys -t ${SESSION_NAME}.1 'python3 /workspace/digital_twins/o5g/main.py' C-m
 
-  tmux send-keys -t ${SESSION_NAME}.2 'telegraf --config /workspace/digital\ twins/o5g/telegraf.conf' C-m
+  tmux send-keys -t ${SESSION_NAME}.2 'telegraf --config /workspace/digital_twins/o5g/telegraf.conf' C-m
 
-  tmux send-keys -t ${SESSION_NAME}.3 '/workspace/tools/tessla/tessla-telegraf-connector/outputRustProject/target/debug/tessla_monitor' C-m
+  tmux send-keys -t ${SESSION_NAME}.3 '/workspace/digital_twins/o5g/runTessla.sh' C-m
 fi
 
 echo "Scripts started in tmux session $SESSION_NAME."

@@ -4,6 +4,7 @@ import subprocess
 import json
 import numpy as np
 import paho.mqtt.client as mqtt
+import config
 
 sys.path.append('/workspace/models')
 from pathToTime import calc_oxygen
@@ -32,8 +33,7 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("vgiot/ue/metric/#")
-    # client.subscribe("vgiot/dt/prediction/#")
+    client.subscribe(config.MQTT_TOPIC_SENSOR + '/#')
 
 
 # The callback for when a PUBLISH message is received from the server.
@@ -64,8 +64,7 @@ def on_message(client, userdata, msg):
         # print(f"Final integer value from Test.fmu: {result['air-supply']['remaining']}")
 
         # publish the new value to the output topic
-        result_topic = "vgiot/dt/prediction/" + str(ue_identifier)
-        result_topic = "vgiot/dt/prediction"
+        result_topic = config.MQTT_TOPIC_AIR_PREDICTION
         # client.publish(result_topic, json.dumps(result))
         result_influx = "prediction air-remaining=" + str(result['air-supply']['remaining'])
         print(f'Publishing "{result_influx}" to {result_topic}')
@@ -85,10 +84,10 @@ with open(output_file, 'r') as content:
     graph = json.load(content)
 
 client = mqtt.Client("supplymon")
-client.username_pw_set("lars", "LarsLubeck082023")
+client.username_pw_set(config.MQTT_USER, config.MQTT_PASS)
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("dtl-server-2.st.lab.au.dk", 8090, 60)
+client.connect(config.MQTT_SERVER, config.MQTT_PORT, 60)
 
 client.loop_forever()
