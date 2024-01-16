@@ -19,7 +19,7 @@ apt install -y git
 # Fetch git repositories
 cd ~
 git clone https://gitlab.au.dk/desktop_robotti/drobotti-intocps.git &> /dev/null &
-git clone hhttps://gitlab.au.dk/desktop_robotti/drobotti-processing-and-control.git &> /dev/null &
+git clone https://gitlab.au.dk/desktop_robotti/drobotti-processing-and-control.git &> /dev/null &
 
 # Install Java 17 for Maestro
 apt install -y openjdk-17-jre 
