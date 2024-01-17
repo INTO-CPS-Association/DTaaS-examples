@@ -1,0 +1,33 @@
+{
+    "fmus": {
+        "{act}": "../../models/drobotti/ActuationModel.fmu",
+        "{kin}": "../../models/drobotti/BicycleKinematic.fmu",
+        "{sine}": "../../models/drobotti/Sine.fmu"
+    },
+    "connections": {
+        "{act}.actuationModel.act_accelleration": ["{kin}.kinematicModel.a"],
+        "{act}.actuationModel.act_angle": ["{kin}.kinematicModel.psi_r"],
+        "{sine}.speedSignal.signal": ["{act}.actuationModel.cmd_speed"],
+        "{sine}.steeringSignal.signal": ["{act}.actuationModel.cmd_angle"]
+    },
+    "parameters": {
+        "{act}.actuationModel.a1": 0.99889,
+        "{act}.actuationModel.a2": -0.0123,
+        "{act}.actuationModel.b0": 0,
+        "{act}.actuationModel.b1": 0.84766,
+        "{act}.actuationModel.b2": -0.834215,
+        "{act}.actuationModel.wheel_radius": 0.05,
+        "{kin}.kinematicModel.lf": 0.2,
+        "{kin}.kinematicModel.lr": 0.2,
+        "{sine}.speedSignal.amplitude": 1,
+        "{sine}.speedSignal.frequency": 1,
+        "{sine}.speedSignal.offset": 1,
+        "{sine}.speedSignal.phase": 0,
+        "{sine}.steeringSignal.amplitude": 0.5,
+        "{sine}.steeringSignal.frequency": 0.5,
+        "{sine}.steeringSignal.offset": 0.25,
+        "{sine}.steeringSignal.phase": 0
+    },
+    "algorithm":{"type":"fixed-step","size":0.1}
+
+}     
