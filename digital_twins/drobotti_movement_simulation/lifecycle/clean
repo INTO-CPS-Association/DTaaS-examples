@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "Remove generated files and folders"
+rm -rf target
+rm out.txt
+rm -rf generate
