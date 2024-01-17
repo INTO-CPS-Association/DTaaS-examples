@@ -61,3 +61,10 @@ rosdep init
 rosdep update
 rosdep install --from-paths src --ignore-src -y --skip-keys "fastcdr rti-connext-dds-6.0.1 urdfdom_headers"
 colcon build --symlink-install
+
+
+# Install FMU dependencies
+python3 -m pip install -U \
+  zmq \
+  "protobuf==3.19.0" \
+  scipy
