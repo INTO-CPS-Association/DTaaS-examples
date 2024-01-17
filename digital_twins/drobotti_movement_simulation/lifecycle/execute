@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Source ROS2
+#. ~/ros2_humble/install/local_setup.bash
+
+
+MAESTRO="../../common/tools"
+FSP="../../models"
+
+echo "Maestro path: $MAESTRO"
+echo "FMU search path: $FSP"
+
+echo "Generating Mabl specification"
+
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 ./coe.json ./multimodel.json -fsp $FSP -output ./generate/
+
+
+java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret ./generate/spec.mabl -output ./target 2>&1 | tee ./out.txt
