@@ -9,5 +9,9 @@ This repository contains examples for [DTaaS software](https://github.com/into-c
 The order of digital twin examples to work through:
 
 1. Mass Spring Damper
-2. water Tank FI
-3. Water Tank Swap
+1. Water Tank Fault Injection
+1. Water Tank Model Swap
+1. Desktop Robotti and RabbitMQ
+1. Water Treatment Plant and OPC-UA
+1. Three Water Tanks with DT Manager Framework
+

@@ -32,7 +32,7 @@
 % Starting commands (no input required)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all; close all; clc;
-addpath('Functions');
+addpath('Functions','/workspace/examples/data/structural-monitoring/model-updating');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Input plugin (the user plugs in the required input)
