@@ -22,7 +22,7 @@ set -e
 printf "Install apt dependencies \n"
 
 apt-get update
-apt-get install -y ca-certificates curl gnupg build-essential default-jre-headless cargo
+apt-get install -y ca-certificates curl gnupg build-essential default-jre-headless cargo curl jq
 
 printf "Install OpenModelica \n"
 
@@ -62,4 +62,126 @@ omc /workspace/models/makefmu.mos
 
 chmod +x /workspace/digital_twins/o5g/runTessla.sh
 
-printf "Done installing, use execute script to run digital twin \n"
+printf "Create Grafana datasource"
+
+source_uid=$(curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <Grafana HTTP API token>" -d '{
+  "name": "o5g_influx",
+  "type": "influxdb",
+  "access": "proxy",
+  "url": "<InfluxDB host>",
+  "jsonData": 
+    {"defaultBucket":"<Bucket ID>",
+      "httpMode":"POST",
+      "organization":"<InfluxDB Org>",
+      "version":"Flux"
+    },
+  "secureJsonData":{
+    "token":"<InfluxDB API Token>"
+  }
+}' http://<Grafana URL>:8088/api/datasources | tee | jq -r '.datasource.uid')
+
+printf "Create Grafana visulization dashboard"
+
+data="{\
+  \"dashboard\": {\
+    \"id\": null,\
+    \"title\": \"O5G mission control\",\
+    \"tags\": [ \"templated\" ],\
+    \"timezone\": \"browser\",\
+  \"panels\": [\
+    {\
+      \"datasource\": {\
+        \"type\": \"influxdb\",\
+        \"uid\": \"$source_uid\"\
+      },\
+      \"fieldConfig\": {\
+        \"defaults\": {\
+          \"color\": {\
+            \"mode\": \"palette-classic\"\
+          },\
+          \"custom\": {\
+            \"axisCenteredZero\": false,\
+            \"axisColorMode\": \"text\",\
+            \"axisLabel\": \"\",\
+            \"axisPlacement\": \"auto\",\
+            \"barAlignment\": 0,\
+            \"drawStyle\": \"points\",\
+            \"fillOpacity\": 0,\
+            \"gradientMode\": \"none\",\
+            \"hideFrom\": {\
+              \"legend\": false,\
+              \"tooltip\": false,\
+              \"viz\": false\
+            },\
+            \"lineInterpolation\": \"linear\",\
+            \"lineWidth\": 1,\
+            \"pointSize\": 5,\
+            \"scaleDistribution\": {\
+              \"type\": \"linear\"\
+            },\
+            \"showPoints\": \"auto\",\
+            \"spanNulls\": false,\
+            \"stacking\": {\
+              \"group\": \"A\",\
+              \"mode\": \"none\"\
+            },\
+            \"thresholdsStyle\": {\
+              \"mode\": \"area\"\
+            }\
+          },\
+          \"mappings\": [],\
+          \"thresholds\": {\
+            \"mode\": \"absolute\",\
+            \"steps\": [\
+              {\
+                \"color\": \"red\",\
+                \"value\": null\
+              },\
+              {\
+                \"color\": \"light-green\",\
+                \"value\": 2\
+              }\
+            ]\
+          }\
+        },\
+        \"overrides\": []\
+      },\
+      \"gridPos\": {\
+        \"h\": 17,\
+        \"w\": 13,\
+        \"x\": 0,\
+        \"y\": 0\
+      },\
+      \"id\": 1,\
+      \"options\": {\
+        \"legend\": {\
+          \"calcs\": [],\
+          \"displayMode\": \"list\",\
+          \"placement\": \"bottom\",\
+          \"showLegend\": true\
+        },\
+        \"tooltip\": {\
+          \"mode\": \"single\",\
+          \"sort\": \"none\"\
+        }\
+      },\
+      \"targets\": [\
+        {\
+          \"datasource\": {\
+            \"type\": \"influxdb\",\
+            \"uid\": \"$source_uid\"\
+          },\
+          \"query\": \"from(bucket: \\\"o5g_bucket\\\")\\r\\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\\r\\n  |> filter(fn: (r) =>\\r\\n    r._measurement == \\\"prediction\\\" and\\r\\n    r._field == \\\"air-remaining\\\"\\r\\n  )\",\
+          \"refId\": \"A\"\
+        }\
+      ],\
+      \"title\": \"Panel Title\",\
+      \"type\": \"timeseries\"\
+    }\
+  ],\
+  \"overwrite\": false\
+}}"
+
+echo $data | curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <Grafana HTTP API Token" -d @- http://<Grafana Url>/api/dashboards/db
+
+printf "\n\nDone installing, use execute script to run digital twin \n"
