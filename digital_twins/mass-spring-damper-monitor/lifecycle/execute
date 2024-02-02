@@ -1,0 +1,7 @@
+#!/bin/bash
+mkdir -p /workspace/examples/data/mass-spring-damper-monitor/output
+
+java -jar /workspace/examples/common/tools/maestro-2.3.0-jar-with-dependencies.jar\
+  import -output /workspace/examples/data/mass-spring-damper-monitor/output\
+  --dump-intermediate sg1 cosim.json time.json\
+  -i -vi FMI2 output-dir>debug.log 2>&1
