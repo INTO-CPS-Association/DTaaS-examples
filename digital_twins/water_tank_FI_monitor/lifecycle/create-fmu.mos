@@ -1,4 +1,0 @@
-loadFile("/workspace/examples/models/RtI.mo");
-getErrorString();
-buildModelFMU(RtI);
-getErrorString();
