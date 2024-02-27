@@ -42,7 +42,7 @@ def log(value):
 
 parser = argparse.ArgumentParser(
     prog='plot_realtime_dot_xt.py',
-    description='''Plot real-time data from a CSV file in xy coordinates.
+    description='''Plot data at runtimefrom a CSV file in xy coordinates.
         Example 1: Single x,y pair
         \tplot_realtime_dot_xy.py ./ file.csv -l "{FMU}.Ins1.x,{FMU}.Ins1.y"
         Example 2: Two x,y pairs
@@ -108,7 +108,12 @@ class FileEventHandler(FileSystemEventHandler):
         return super().on_modified(event)
     def processFileData(self):
             log("Updating fileContent")
-            csvFile.data =  json.loads(pd.read_csv(csvFile.filePath).to_json())
+            try:
+                csvFile.data =  json.loads(pd.read_csv(csvFile.filePath).to_json())
+            except Exception as e:
+                log(e)
+                log("processFileData() - Invalid file")
+                return
 
         
 observer = Observer()
@@ -166,7 +171,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             else:
                 log("update_data() - Invalid xypair")
                 return
-        log("Total number of keys: " + str(len(csvFile.data)))
+        try:
+            log("Total number of keys: " + str(len(csvFile.data)))
+        except:
+            return
         for index in range(0, len(csvFile.data[str(xy_data[0]['x_key'])])):
             for item in xy_data:
                 item['x_data'].append(csvFile.data[str(item['x_key'])][str(index)])
@@ -186,7 +194,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.axes.legend()
         self.axes.grid(color='gray', linestyle='dashed')
         log("Updating END")
-        print("Updated Data. Refreshing plot...")
+        log("Updated Data. Refreshing plot...")
         self.canvas.draw()
 
 app = QtWidgets.QApplication(sys.argv)
