@@ -1,6 +1,6 @@
 {
     "startTime": 0,
-    "endTime": 10,
+    "endTime": 30,
     "reportProgress": true,
     "liveLogInterval": 0,
     "logLevels": {}

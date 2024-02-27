@@ -1,0 +1,17 @@
+rmq_publisher:
+  ros__parameters:
+    server_hostname: srv03.levisen.eu
+    server_username: uniuser
+    server_password: unitest4321
+    exchange_name: "fmi_digital_twin"
+    routing_key: "desktoprobotti"
+    prefix_topic_name: True
+    group_values_by_topic: True
+    topic_config:
+      /move_cmd:
+        type: "ackermann_msgs/msg/AckermannDrive"
+        fields: ["steering_angle", "speed"]
+
+teleop:
+  ros__parameters:
+    topic_name: /move_cmd
