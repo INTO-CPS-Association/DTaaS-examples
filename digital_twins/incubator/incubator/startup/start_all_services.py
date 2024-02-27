@@ -15,8 +15,8 @@ from startup.start_supervisor import start_supervisor
 from startup.utils.start_as_daemon import start_as_daemon
 
 if __name__ == '__main__':
-    start_docker_rabbitmq()
-    start_docker_influxdb()
+    # start_docker_rabbitmq()
+    # start_docker_influxdb()
 
     start_as_daemon(start_incubator_realtime_mockup)
     start_as_daemon(start_low_level_driver_mockup)
