@@ -12,8 +12,6 @@ apt upgrade -y
 
 # Install git and python
 apt install -y git python3 python3-pip
-# While developing using docker volume bindings
-git config --global --add safe.directory '*'
 
 # Setup character encoding
 apt install -y locales
@@ -43,29 +41,22 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-a
 printf "\nInstalling ROS2..\n\n" && sleep 5
 apt update
 apt upgrade -y
-apt install -y ros-foxy-ros-base python3-argcomplete ros-dev-tools
+apt install -y ros-foxy-desktop python3-argcomplete ros-dev-tools
 
 # Install FMU dependencies
 printf "\nInstalling FMU dependencies..\n\n" && sleep 5
-python3 -m pip install -U \
-  zmq \
-  "protobuf==3.19.0" \
-  scipy \
-  pika
+python -m pip install -U zmq protobuf==3.19.0
+python -m pip install pika scipy
 
 # Install Ros ackermann msgs
-printf "\nInstalling ROS ackermann msgs..\n\n" && sleep 5
-source /opt/ros/foxy/setup.bash
-cd ~
-git clone https://github.com/ros-drivers/ackermann_msgs.git
-cd ackermann_msgs
-git checkout ros2
-colcon build
+printf "\nInstalling ROS ackermann msgs..\n\n" && sleep 2
+apt install ros-foxy-ackermann-msgs
 
 # Build rmq ros client message broker
 printf "\nBuilding FMU bridge and teleoperation controller node..\n\n" && sleep 5
 cd ~/drobotti-processing-and-control
 rosdep init
 rosdep update
-rosdep install --from-paths src --ignore-src -r -y
+source /opt/ros/foxy/setup.bash
+rosdep install --from-paths src --ignore-src -r -y --rosdistro foxy
 colcon build --symlink-install --packages-select rmq_bridge teleop
