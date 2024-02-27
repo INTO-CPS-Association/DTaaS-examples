@@ -1,0 +1,33 @@
+#!/bin/bash
+
+apt_updated=false
+
+check_binary() {
+    if dpkg -l "$1" &> /dev/null; then
+        echo "$1 is installed."
+    else
+        echo "$1 is not installed. Installing."
+        if [ "$apt_updated" = false ]; then
+            sudo apt update
+            sudo apt upgrade
+            apt_updated=true
+        fi
+        sudo apt install "${2:-1}" # Install argument 2 if provided, otherwise 1
+    fi
+}
+
+echo "Checking dependencies"
+
+# Install stuff
+check_binary "python3"
+check_binary "python3-pip"
+check_binary "python3-venv"
+pip install wheel
+
+# Go to lifecycle dir
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+# Create a virtual environment and install packages
+python3 -m venv ../.venv
+source ../.venv/bin/activate
+pip install -r ../incubator/requirements.txt
