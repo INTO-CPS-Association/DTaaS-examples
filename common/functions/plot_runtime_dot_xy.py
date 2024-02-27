@@ -25,8 +25,9 @@ import datetime
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from PyQt5 import QtWidgets
-from matplotlib.backends.backend_qt import TimerQT, FigureCanvasQT as FigureCanvas
-from matplotlib.backends.backend_qtagg import FigureCanvas
+import matplotlib
+from matplotlib.backends.backend_qt5 import TimerQT, FigureCanvasQT as FigureCanvas
+from matplotlib.backends.backend_qt5 import FigureCanvas
 from matplotlib.figure import Figure
 
 
@@ -119,7 +120,7 @@ class FileEventHandler(FileSystemEventHandler):
 observer = Observer()
 fileEventHandler = FileEventHandler()
 observer.schedule(fileEventHandler, parser.parse_args().csv_dir, recursive=True)
-observer.start()
+#observer.start()
 
 # Matplotlib Qt Window
 class ApplicationWindow(QtWidgets.QMainWindow):

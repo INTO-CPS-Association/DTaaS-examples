@@ -43,10 +43,11 @@ apt update
 apt upgrade -y
 apt install -y ros-foxy-desktop python3-argcomplete ros-dev-tools
 
-# Install FMU dependencies
+# Install FMU and tool dependencies
 printf "\nInstalling FMU dependencies..\n\n" && sleep 5
 python -m pip install -U zmq protobuf==3.19.0
 python -m pip install pika scipy
+python3 -m pip install pyqt5==5.12
 
 # Install Ros ackermann msgs
 printf "\nInstalling ROS ackermann msgs..\n\n" && sleep 2
