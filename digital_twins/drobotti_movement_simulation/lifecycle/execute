@@ -1,12 +1,11 @@
 #!/bin/bash
 
-source ~/ros2_humble/install/setup.bash
 source ~/drobotti-processing-and-control/install/setup.bash
-source ~/ackermann_msgs/install/setup.bash
 
 export MAESTRO_PATH=/workspace/examples/common/tools
 export DEFAULT_PATH=/workspace/examples/digital_twins/drobotti_movement_simulation
 export FSP=/workspace/examples/models/drobotti_movement_simulation
+export PYTHONPATH=$PYTHONPATH:/opt/conda/lib/python3.8/site-packages
 
 printf "\n\nStarting ROS to RMQ bridge.\n" && sleep 2
 mkdir -p $DEFAULT_PATH/logs
@@ -22,5 +21,5 @@ java -jar $MAESTRO_PATH/maestro-2.3.0-jar-with-dependencies.jar interpret ./gene
 printf "\n\nLaunching steering controller. The simulation will run for 30 seconds.\n" && sleep 5
 ros2 run teleop terminal_teleop --ros-args -r __node:=teleop --params-file $DEFAULT_PATH/ros2_parameters.yaml
 
-printf "\n\nSimulation finished.\n"
-/bin/bash $DEFAULT_PATH/lifecycle/terminate
+# printf "\n\nSimulation finished.\n"
+# /bin/bash $DEFAULT_PATH/lifecycle/terminate
