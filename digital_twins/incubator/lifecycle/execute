@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Go to lifecycle dir and source venv
+cd "$(dirname "${BASH_SOURCE[0]}")"
+source ../.venv/bin/activate
+
+cd "../incubator"
+python -m startup.start_all_services
