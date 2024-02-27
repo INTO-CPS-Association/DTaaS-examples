@@ -1,2 +1,5 @@
 #!/bin/bash
-lifecycle/clean
+# Stop background processes
+printf "\nTerminating background processes..\n\n" && sleep 2
+pkill -f tee
+pkill -f rmq_publisher

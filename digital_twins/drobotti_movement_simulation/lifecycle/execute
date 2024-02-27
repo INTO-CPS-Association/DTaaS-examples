@@ -1,18 +1,26 @@
 #!/bin/bash
 
-# Source ROS2
-#. ~/ros2_humble/install/local_setup.bash
+source ~/ros2_humble/install/setup.bash
+source ~/drobotti-processing-and-control/install/setup.bash
+source ~/ackermann_msgs/install/setup.bash
 
+export MAESTRO_PATH=/workspace/examples/common/tools
+export DEFAULT_PATH=/workspace/examples/digital_twins/drobotti_movement_simulation
+export FSP=/workspace/examples/models/drobotti_movement_simulation
 
-MAESTRO="../../common/tools"
-FSP="../../models"
+printf "\n\nStarting ROS to RMQ bridge.\n" && sleep 2
+mkdir -p $DEFAULT_PATH/logs
+ros2 run rmq_bridge rmq_publisher --ros-args -r __node:=rmq_publisher --params-file $DEFAULT_PATH/ros2_parameters.yaml 2>&1 | tee $DEFAULT_PATH/logs/publisher-log.txt > /dev/null &
 
-echo "Maestro path: $MAESTRO"
-echo "FMU search path: $FSP"
+printf "\n\nGenerating simulation spec file\n" && sleep 2
+cd $DEFAULT_PATH
+java -jar $MAESTRO_PATH/maestro-2.3.0-jar-with-dependencies.jar import sg1 ./coe.json ./multimodel.json -fsp $FSP -output ./generate 2>&1 | tee $DEFAULT_PATH/logs/generate-spec-log.txt > /dev/null & 
 
-echo "Generating Mabl specification"
+printf "\n\nInterpreting simulation spec file and launching simulation.\n" && sleep 2
+java -jar $MAESTRO_PATH/maestro-2.3.0-jar-with-dependencies.jar interpret ./generate/spec.mabl -output ./target 2>&1 | tee $DEFAULT_PATH/logs/simulation-log.txt > /dev/null & 
 
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar import sg1 ./coe.json ./multimodel.json -fsp $FSP -output ./generate/
+printf "\n\nLaunching steering controller. The simulation will run for 30 seconds.\n" && sleep 5
+ros2 run teleop terminal_teleop --ros-args -r __node:=teleop --params-file $DEFAULT_PATH/ros2_parameters.yaml
 
-
-java -jar $MAESTRO/maestro-2.3.0-jar-with-dependencies.jar interpret ./generate/spec.mabl -output ./target 2>&1 | tee ./out.txt
+printf "\n\nSimulation finished.\n"
+/bin/bash $DEFAULT_PATH/lifecycle/terminate

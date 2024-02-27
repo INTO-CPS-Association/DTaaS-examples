@@ -1,5 +1,14 @@
 #!/bin/bash
-echo "Remove generated files and folders"
+
+export DEFAULT_PATH=/workspace/examples/digital_twins/drobotti_movement_simulation
+cd $DEFAULT_PATH
+
+/bin/bash $DEFAULT_PATH/lifecycle/terminate
+
+printf "\n\nRemoving generated files and folders.\n" && sleep 2
 rm -rf target
-rm out.txt
+rm -rf logs
 rm -rf generate
+
+
+

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ROS2 Foxy
+# ROS2 Humble
 
 # Set noninteractive for building
 export DEBIAN_FRONTEND=noninteractive
@@ -10,10 +10,11 @@ printf "\nUpgrading current packages..\n\n" && sleep 5
 apt update
 apt upgrade -y
 
-# Install git and python
-apt install -y git python3 python3-pip
+# Install git
+apt install -y git 
 # While developing using docker volume bindings
 git config --global --add safe.directory '*'
+
 
 # Setup character encoding
 apt install -y locales
@@ -39,11 +40,37 @@ apt install -y curl
 curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && printf $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
-# ROS2 
-printf "\nInstalling ROS2..\n\n" && sleep 5
+# ROS2 dependencies
+printf "\nInstalling ROS2 dependencies..\n\n" && sleep 5
 apt update
-apt upgrade -y
-apt install -y ros-foxy-ros-base python3-argcomplete ros-dev-tools
+apt install -y \
+  python3-flake8-docstrings \
+  python3-pip \
+  python3-pytest-cov \
+  ros-dev-tools
+python3 -m pip install -U \
+   flake8-blind-except \
+   flake8-builtins \
+   flake8-class-newline \
+   flake8-comprehensions \
+   flake8-deprecated \
+   flake8-import-order \
+   flake8-quotes \
+   "pytest>=5.3" \
+   pytest-repeat \
+   pytest-rerunfailures
+
+# Download ROS2 source code and build humble
+printf "\nDownloading ROS2 source..\n\n" && sleep 5
+mkdir -p ~/ros2_humble/src
+cd ~/ros2_humble
+vcs import --input https://raw.githubusercontent.com/ros2/ros2/humble/ros2.repos src
+printf "\nInstalling dependencies..\n\n" && sleep 5
+rosdep init
+rosdep update
+rosdep install --from-paths src --ignore-src -y --skip-keys "fastcdr rti-connext-dds-6.0.1 urdfdom_headers"
+printf "\nBuilding ROS2..\n\n" && sleep 5
+colcon build --symlink-install
 
 # Install FMU dependencies
 printf "\nInstalling FMU dependencies..\n\n" && sleep 5
@@ -55,7 +82,7 @@ python3 -m pip install -U \
 
 # Install Ros ackermann msgs
 printf "\nInstalling ROS ackermann msgs..\n\n" && sleep 5
-source /opt/ros/foxy/setup.bash
+source ~/ros2_humble/install/setup.bash
 cd ~
 git clone https://github.com/ros-drivers/ackermann_msgs.git
 cd ackermann_msgs
@@ -64,8 +91,6 @@ colcon build
 
 # Build rmq ros client message broker
 printf "\nBuilding FMU bridge and teleoperation controller node..\n\n" && sleep 5
+source ~/ackermann_msgs/install/setup.bash
 cd ~/drobotti-processing-and-control
-rosdep init
-rosdep update
-rosdep install --from-paths src --ignore-src -r -y
 colcon build --symlink-install --packages-select rmq_bridge teleop
