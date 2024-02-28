@@ -1,1 +1,0 @@
-Files created under development, these can simply be deleted.
