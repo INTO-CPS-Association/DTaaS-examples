@@ -90,7 +90,15 @@ lifecycle/clean
 
 ## Examining the results
 
-TODO - MHK: Write this
+After starting all services successfully, the controller service will start producing output that looks like the following:
+````
+time           execution_interval  elapsed  heater_on  fan_on   room   box_air_temperature  state 
+19/11 16:17:59  3.00                0.01     True       False   10.70  19.68                Heating
+19/11 16:18:02  3.00                0.03     True       True    10.70  19.57                Heating
+19/11 16:18:05  3.00                0.01     True       True    10.70  19.57                Heating
+19/11 16:18:08  3.00                0.01     True       True    10.69  19.47                Heating
+19/11 16:18:11  3.00                0.01     True       True    10.69  19.41                Heating
+````
 
 ## References
 
