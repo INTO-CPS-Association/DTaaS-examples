@@ -59,6 +59,10 @@ Executing the simulation / DT setting will launch the background process for par
 
 The results can be plottted by running the jupyter plot_xy_coordinate.ipynb file.
 
+When running the execute, a terminal controller should be shown as below:
+
+![Overview](example.png)
+
 ## Future work
 
 It may be considered to add position data from the real Desktop Robotti robot, to show the actual behavior of the real robot, compared to its digital twin counterpart showed in this example. In fact, that would make it a truly digital twin/shadow, to show of the DTaaS platform.
