@@ -8,6 +8,14 @@ This example demonstrates the usage of ROS on the DTaaS platform, including the 
 
 The digital twin consists of a FMI-based co-simulation, where Maestro is used as co-orchestration engine. In this case, the co-simulation is created using three FMUS, the RabbitMQFMU as broker client, along with a two other FMU's to represent the actual behavior of the Desktop Robotti robot. These consist of an actuation model to calculate the actuated angle and acceleration, which are being parsed to kinematic model, that will yield the _(x,y)_ position.
 
+The following shows an overview of the system:
+
+<div style="text-align: center;">
+
+![Overview](movement_simulation.drawio.png)
+
+</div>
+
 ## Configure
 
 This example uses the RabbitMQ broker. Thus, a RabbitMQ service is required for running the experiment. To run the example two files need to be modified with connection parameters. As for now this is example are only being used for demonstration purposes and are only set up for non encrypted plain text authentication. If the server does not require authentication the setting parameters can be removed from the configuration files.

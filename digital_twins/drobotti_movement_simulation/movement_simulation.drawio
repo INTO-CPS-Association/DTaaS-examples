@@ -1,0 +1,102 @@
+<mxfile host="app.diagrams.net" modified="2024-02-28T13:28:23.139Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="vyOoGbOPG0CKz9TKMcrU" version="23.1.7" type="device">
+  <diagram name="Side-1" id="A73qWXxWepTzZVwLZAnt">
+    <mxGraphModel dx="1562" dy="938" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-2" value="&amp;nbsp; &amp;nbsp;ROS&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;align=left;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="79" y="180" width="720" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-1" value="&amp;lt;service&amp;gt;&lt;br&gt;Terminal Teleoperation" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="_gMbqhoSScwUL5VDzH3t-3" target="_gMbqhoSScwUL5VDzH3t-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-17" value="speed , angle" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_gMbqhoSScwUL5VDzH3t-16">
+          <mxGeometry x="0.1571" y="1" relative="1" as="geometry">
+            <mxPoint x="-11" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-3" value="&amp;lt;service&amp;gt;&lt;br&gt;RabbitMQ&lt;br&gt;Publisher" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="_gMbqhoSScwUL5VDzH3t-9" target="_gMbqhoSScwUL5VDzH3t-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-27" value="speed , angle" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_gMbqhoSScwUL5VDzH3t-19">
+          <mxGeometry x="0.3271" y="-1" relative="1" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-9" value="&amp;lt;queue&amp;gt;&lt;br&gt;RabbitMQ&lt;br&gt;Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-10" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="_gMbqhoSScwUL5VDzH3t-1" target="_gMbqhoSScwUL5VDzH3t-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="250" y="230" as="sourcePoint" />
+            <mxPoint x="300" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-14" value="speed , angle" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_gMbqhoSScwUL5VDzH3t-10">
+          <mxGeometry x="-0.2625" y="1" relative="1" as="geometry">
+            <mxPoint x="11" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-21" value="&amp;nbsp; Maestro&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;align=left;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="79" y="420" width="720" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="_gMbqhoSScwUL5VDzH3t-18" target="_gMbqhoSScwUL5VDzH3t-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-29" value="speed , angle" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_gMbqhoSScwUL5VDzH3t-28">
+          <mxGeometry x="-0.2137" y="-1" relative="1" as="geometry">
+            <mxPoint x="36" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-18" value="RabbitMQ&lt;br&gt;Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="330" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="_gMbqhoSScwUL5VDzH3t-4" target="_gMbqhoSScwUL5VDzH3t-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-30" value="speed , angle" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_gMbqhoSScwUL5VDzH3t-25">
+          <mxGeometry x="0.04" y="-1" relative="1" as="geometry">
+            <mxPoint x="-13" y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-4" value="&amp;lt;fmu&amp;gt;&lt;br&gt;RabbitMQFMU" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-23" value="&amp;nbsp; Desktop Robotti Model&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;align=left;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="350" y="430" width="440" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="_gMbqhoSScwUL5VDzH3t-7" target="_gMbqhoSScwUL5VDzH3t-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-31" value="act acceleration , act. angle" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_gMbqhoSScwUL5VDzH3t-26">
+          <mxGeometry x="0.1886" y="-1" relative="1" as="geometry">
+            <mxPoint x="-13" y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-7" value="&amp;lt;fmu&amp;gt;&lt;br&gt;Desktop Robotti&lt;br&gt;Actuation Model" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="_gMbqhoSScwUL5VDzH3t-11" target="_gMbqhoSScwUL5VDzH3t-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-34" value="position { x , y }&amp;nbsp;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_gMbqhoSScwUL5VDzH3t-33">
+          <mxGeometry x="0.2538" y="1" relative="1" as="geometry">
+            <mxPoint y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-11" value="&amp;lt;fmu&amp;gt;&lt;br&gt;Desktop Robotti&lt;br&gt;Kinematic Model" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-32" value="&amp;lt;servie&amp;gt;&lt;br&gt;CSV Plotter&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="580" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
