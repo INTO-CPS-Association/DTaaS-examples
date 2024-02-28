@@ -24,7 +24,7 @@ printf "\nCheckout Desktop Robotti git repository..\n\n" && sleep 5
 cd ~
 git clone https://gitlab.au.dk/desktop_robotti/drobotti-processing-and-control.git
 cd drobotti-processing-and-control
-git checkout c8628ea11608d78745b9d7815aa33824495ba398
+git fetch && git checkout 1be6ee53bcee29399d68c47d1ad5ec48760db188
 # Install Java 17 for Maestro
 printf "\nInstalling Java 17 for Maestro simulation..\n\n" && sleep 5
 apt install -y openjdk-17-jre
@@ -56,8 +56,7 @@ apt install ros-foxy-ackermann-msgs
 # Build rmq ros client message broker
 printf "\nBuilding FMU bridge and teleoperation controller node..\n\n" && sleep 5
 cd ~/drobotti-processing-and-control
-rosdep init
+rosdep init >/dev/null 2>&1
 rosdep update
-source /opt/ros/foxy/setup.bash
-rosdep install --from-paths src --ignore-src -r -y --rosdistro foxy
+bash -c "source /opt/ros/foxy/setup.bash && rosdep install --from-paths src --ignore-src -r -y --rosdistro foxy" >/dev/null 2>&1
 colcon build --symlink-install --packages-select rmq_bridge teleop

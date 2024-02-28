@@ -116,7 +116,7 @@ class FileEventHandler(FileSystemEventHandler):
                 log("processFileData() - Invalid file")
                 return
 
-        
+
 observer = Observer()
 fileEventHandler = FileEventHandler()
 observer.schedule(fileEventHandler, parser.parse_args().csv_dir, recursive=True)

@@ -33,7 +33,6 @@ The following lifecycle phases are covered in this setting.
 2) __execute__ - Executing the simulation (Runs 30 seconds)
 3) __terminate__ - Stop running backgorund processess
 4) __clean__ - Remove generated simulation outputs
-5) __analyse__ - Real time plotting of results this can be run prior to execution.
 
 ## Results
 
@@ -41,7 +40,7 @@ Creating the simulation will launch a deploying script that will deploy ROS, and
 
 Executing the simulation / DT setting will launch the background process for parsing the data from ROS2 to the simulatioon, after which it will generate the simulation specification files and run the simulation. After the simulation is started it will launch and present a console teleoperation service that the user can alter the movement settings.
 
-The outputs from the simulation is located in the generated target directory in the outputs.csv file. For a greater experience the analyse lifecycle phase can be used to plot the results for the _(x,y)_ outputs. This lifecycle phase can be launched prior to executing the the digital twin, for a real time plotting session.
+The results can be plottted by running the jupyter plot_xy_coordinate.ipynb file.
 
 ## Future work
 
