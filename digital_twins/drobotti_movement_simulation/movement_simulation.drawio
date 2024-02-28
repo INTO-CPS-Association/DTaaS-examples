@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-02-28T13:28:23.139Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="vyOoGbOPG0CKz9TKMcrU" version="23.1.7" type="device">
+<mxfile host="app.diagrams.net" modified="2024-02-28T14:17:46.044Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="A0Z2vO-_1qbfFs4pjO7Z" version="23.1.7" type="device">
   <diagram name="Side-1" id="A73qWXxWepTzZVwLZAnt">
-    <mxGraphModel dx="1562" dy="938" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="893" dy="536" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -93,7 +93,7 @@
         <mxCell id="_gMbqhoSScwUL5VDzH3t-11" value="&amp;lt;fmu&amp;gt;&lt;br&gt;Desktop Robotti&lt;br&gt;Kinematic Model" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="650" y="460" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="_gMbqhoSScwUL5VDzH3t-32" value="&amp;lt;servie&amp;gt;&lt;br&gt;CSV Plotter&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="_gMbqhoSScwUL5VDzH3t-32" value="&amp;lt;service&amp;gt;&lt;br&gt;CSV Plotter&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="390" y="580" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
