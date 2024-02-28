@@ -9,6 +9,6 @@ printf "\n\nRemoving generated files and folders.\n" && sleep 2
 rm -rf target
 rm -rf logs
 rm -rf generate
-
+rm hs_err*
 
 
