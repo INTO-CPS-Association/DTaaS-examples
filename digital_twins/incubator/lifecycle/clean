@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Go to lifecycle dir
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+rm ../incubator/log.log
+
+echo "Removed log file"
