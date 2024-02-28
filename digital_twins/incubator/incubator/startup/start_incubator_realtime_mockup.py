@@ -79,7 +79,7 @@ class SampledRealTimePlantModel(Model):
 
 def start_incubator_realtime_mockup(ok_queue=None, step_size=CTRL_EXEC_INTERVAL):
     config_logger("logging.conf")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
 
     model = SampledRealTimePlantModel(**(config["digital_twin"]["models"]["plant"]["param4"]),
                                       comm=Rabbitmq(**(config["rabbitmq"])))

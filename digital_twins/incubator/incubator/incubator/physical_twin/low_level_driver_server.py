@@ -182,7 +182,7 @@ if __name__ == '__main__':
 
     config_logger("logging.conf")
     l = logging.getLogger("low_level_driver_server")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
 
     incubator = IncubatorDriver(heater=Heater(12),
                                 fan=Fan(13),

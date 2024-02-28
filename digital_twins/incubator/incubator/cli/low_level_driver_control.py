@@ -7,7 +7,7 @@ from incubator.config.config import config_logger, load_config
 
 
 def _send_command(routing_key, message):
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
     with Rabbitmq(**config["rabbitmq"]) as rabbitmq:
         rabbitmq.send_message(routing_key=routing_key, message=message)
 

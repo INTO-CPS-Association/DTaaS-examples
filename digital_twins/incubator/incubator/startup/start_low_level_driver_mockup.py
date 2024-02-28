@@ -6,7 +6,7 @@ from incubator.physical_twin.low_level_driver_server import IncubatorDriver, CTR
 
 def start_low_level_driver_mockup(ok_queue=None, exec_interval=CTRL_EXEC_INTERVAL):
     config_logger("logging.conf")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
 
     incubator = IncubatorDriver(rabbit_config=config["rabbitmq"],
                                  heater=HeaterMock(config["rabbitmq"]),

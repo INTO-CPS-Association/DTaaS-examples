@@ -4,7 +4,7 @@ from incubator.config.config import load_config, config_logger
 
 def start_simulator(ok_queue=None):
     config_logger("logging.conf")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
     simulator = PhysicalTwinSimulator4ParamsServer(rabbitmq_config=config["rabbitmq"], influxdb_config=config["influxdb"])
 
     simulator.setup()

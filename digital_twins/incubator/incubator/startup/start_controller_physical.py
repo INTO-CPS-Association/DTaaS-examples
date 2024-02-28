@@ -8,7 +8,7 @@ from incubator.physical_twin.controller_physical import ControllerPhysical
 def start_controller_physical(ok_queue=None):
     config_logger("logging.conf")
     l = logging.getLogger("start_controller_physical")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
 
     while True:
         try:

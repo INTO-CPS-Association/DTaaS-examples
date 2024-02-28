@@ -85,7 +85,7 @@ class CosimulationTests(CLIModeTest):
 
         show_heater_signal = False
 
-        config = load_config("startup.conf")
+        config = load_config("simulation.conf")
         n_samples_period = 40
         C_air = config["digital_twin"]["models"]["plant"]["param4"]["C_air"]
         G_box = config["digital_twin"]["models"]["plant"]["param4"]["G_box"]

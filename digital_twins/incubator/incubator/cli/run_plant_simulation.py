@@ -39,7 +39,7 @@ def run_plant_simulation(params, start_date, end_date, initial_heat_temperature,
     heater_on = heater_data["_value"].to_numpy().tolist()
     fan_on = fan_data["_value"].to_numpy().tolist()
 
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
     client = RPCClient(**(config["rabbitmq"]))
     client.connect_to_server()
 

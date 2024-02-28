@@ -13,7 +13,7 @@ def send_G_box_config(config, G_box):
 
 if __name__ == '__main__':
     config_logger("logging.conf")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
 
     with Rabbitmq(**config["rabbitmq"]) as rabbitmq:
         rabbitmq.send_message(ROUTING_KEY_SELF_ADAPTATION_TRIGGER, {})

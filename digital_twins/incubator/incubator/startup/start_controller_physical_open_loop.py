@@ -4,7 +4,7 @@ from incubator.physical_twin.controller_physical_openloop import ControllerPhysi
 
 def start_controller_physical_open_loop(ok_queue=None):
     config_logger("logging.conf")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
     controller = ControllerPhysicalOpenLoop(rabbit_config=config["rabbitmq"], **(config["physical_twin"]["controller_open_loop"]))
     controller.setup()
 

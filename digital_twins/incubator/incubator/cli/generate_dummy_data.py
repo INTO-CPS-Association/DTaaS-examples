@@ -72,7 +72,7 @@ def generate_incubator_exec_data(rpc_client, config, start_date, end_date):
 
 def generate_dummy_data():
     config_logger("logging.conf")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
 
     # Time range for the fake data
     end_date = datetime.now()

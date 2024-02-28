@@ -1,8 +1,8 @@
 /incubator/digital_twin/data_access/influxdbserver/influxdb
-/incubator/startup.conf
 .venv
 venv
 .vscode
 .idea
 *.pyc
 *.log
+simulation.conf

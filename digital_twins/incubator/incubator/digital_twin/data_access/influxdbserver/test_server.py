@@ -11,7 +11,7 @@ from incubator.config.config import config_logger, load_config
 if __name__ == '__main__':
 
     config_logger("logging.conf")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
 
     client = InfluxDBClient(**config["influxdb"])
 

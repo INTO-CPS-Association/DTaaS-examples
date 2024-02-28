@@ -5,7 +5,7 @@ from incubator.physical_twin.low_level_driver_server import CTRL_EXEC_INTERVAL
 
 def start_plant_kalmanfilter(ok_queue=None):
     config_logger("logging.conf")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
 
     monitor = KalmanFilterPlantServer(rabbit_config=config["rabbitmq"])
 

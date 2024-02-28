@@ -22,7 +22,7 @@ from incubator.tests.cli_mode_test import CLIModeTest
 class SelfAdaptationTests(CLIModeTest):
 
     def test_run_self_adaptation(self):
-        config = load_config("startup.conf")
+        config = load_config("simulation.conf")
 
         n_samples_period = config["physical_twin"]["controller_open_loop"]["n_samples_period"]
         n_samples_heating = 5

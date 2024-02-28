@@ -68,7 +68,7 @@ class StartDTWithDummyData(CLIModeTest):
         cls.processes.append(start_as_daemon(start_self_adaptation_manager))
 
         config_logger("logging.conf")
-        cls.config = load_config("startup.conf")
+        cls.config = load_config("simulation.conf")
 
         cls.l = logging.getLogger("DTIntegrationTest")
 

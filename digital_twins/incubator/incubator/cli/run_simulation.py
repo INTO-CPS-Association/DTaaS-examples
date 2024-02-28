@@ -24,7 +24,7 @@ if __name__ == '__main__':
     start_date_ns = from_s_to_ns(start_date.timestamp())
 
     config_logging(level=logging.WARN)
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
     client = RPCClient(**(config["rabbitmq"]))
     client.connect_to_server()
 

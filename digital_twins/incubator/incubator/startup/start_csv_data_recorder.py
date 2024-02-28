@@ -7,7 +7,7 @@ from digital_twin.data_access.dbmanager.incubator_state_csv_recorder import Incu
 if __name__ == '__main__':
     config_logger("logging.conf")
     l = logging.getLogger("start_csv_data_recorder")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
     while True:
         try:
             recorder = IncubatorDataRecorderCSV(csv_file_path=".", csv_file_prefix="rec", rollover_limit=100000)

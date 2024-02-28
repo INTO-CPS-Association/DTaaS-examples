@@ -10,7 +10,7 @@ def resource_file_path(filename):
     """
     pythonpath = os.environ.get("PYTHONPATH")
     if pythonpath is None:
-        directories = ['.']
+        directories = ['.', '..']
     else:
         directories = pythonpath.split(os.pathsep) + ['.']
 

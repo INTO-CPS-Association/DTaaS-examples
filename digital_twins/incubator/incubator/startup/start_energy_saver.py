@@ -5,7 +5,7 @@ from incubator.physical_twin.low_level_driver_server import CTRL_EXEC_INTERVAL
 
 def start_energy_saver(ok_queue=None):
     config_logger("logging.conf")
-    config = load_config("startup.conf")
+    config = load_config("simulation.conf")
 
     monitor = EnergySaverServer(1.0, config["physical_twin"]["controller"], config["rabbitmq"])
 
