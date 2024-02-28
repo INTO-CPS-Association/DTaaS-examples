@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -z "$XDG_CURRENT_DESKTOP" ]; then
+    echo "Desktop environment not found. Please run this script from a terminal emulator in your desktop environment."
+    exit 1
+fi
+
+python3 /workspace/examples/common/functions/plot_runtime_dot_xy.py /workspace/examples/digital_twins/drobotti_movement_simulation/target outputs.csv -l "{kin}.kinematicModel.x,{kin}.kinematicModel.y"
