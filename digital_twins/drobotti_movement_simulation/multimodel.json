@@ -2,7 +2,7 @@
     "fmus": {
         "{act}": "/workspace/examples/models/drobotti_movement_simulation/ActuationModel.fmu",
         "{kin}": "/workspace/examples/models/drobotti_movement_simulation/BicycleKinematic.fmu",
-        "{rbmq}": "/workspace/examples/models/drobotti_movement_simulation/rmqfmu.fmu"
+        "{rbmq}": "/workspace/examples/models/drobotti_movement_simulation/rmqfmu-vhost.fmu"
     },
     "connections": {
         "{act}.actuationModel.act_accelleration": ["{kin}.kinematicModel.a"],
@@ -22,17 +22,17 @@
         "{kin}.kinematicModel.lf": 0.2,
         "{kin}.kinematicModel.lr": 0.2,
         "{rbmq}.rbmqInstance.config.maxage": 300,
-        "{rbmq}.rbmqInstance.config.hostname": "srv03.levisen.eu",
-        "{rbmq}.rbmqInstance.config.username": "uniuser",
-        "{rbmq}.rbmqInstance.config.password": "unitest4321",
+        "{rbmq}.rbmqInstance.config.hostname": "host",
+        "{rbmq}.rbmqInstance.config.port": 5672,
+        "{rbmq}.rbmqInstance.config.username": "user",
+        "{rbmq}.rbmqInstance.config.password": "pass",
         "{rbmq}.rbmqInstance.config.vhost": "vhost",
         "{rbmq}.rbmqInstance.config.exchangename": "fmi_digital_twin",
         "{rbmq}.rbmqInstance.config.routingkey": "desktoprobotti",
-        "{rbmq}.rbmqInstance.config.port": 5672,
         "{rbmq}.rbmqInstance.config.precision": 10
     },
     "algorithm": { 
         "type":"fixed-step",
         "size":0.1
     }
-}     
+}

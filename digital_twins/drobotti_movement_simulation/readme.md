@@ -18,12 +18,29 @@ The following shows an overview of the system:
 
 ## Configure
 
-This example uses the RabbitMQ broker. Thus, a RabbitMQ service is required for running the experiment. To run the example two files need to be modified with connection parameters. As for now this is example are only being used for demonstration purposes and are only set up for non encrypted plain text authentication. If the server does not require authentication the setting parameters can be removed from the configuration files.
+This example uses the RabbitMQ broker. Thus, a RabbitMQ service is required for running the experiment. To run the example two files need to be modified with connection parameters for a RabbitMQ broker/server with vhost enabled. 
 
 Configuration files:
 
 1. ros2_parameters.yaml     - Connection parameters for ROS -> RabbitMQ
+
+```yaml
+    server_hostname: host
+    server_username: user
+    server_password: pass
+    server_port: 5672
+    server_vhost: vhost
+```
+
 2. multimodel.json          - Connection parameters for RabbitMQ -> Simulation
+```json
+    "{rbmq}.rbmqInstance.config.maxage": 300,
+    "{rbmq}.rbmqInstance.config.hostname": "host",
+    "{rbmq}.rbmqInstance.config.port": 5672,
+    "{rbmq}.rbmqInstance.config.username": "user",
+    "{rbmq}.rbmqInstance.config.password": "pass",
+    "{rbmq}.rbmqInstance.config.vhost": "vhost",
+```
 
 ## Lifecycle Phases
 

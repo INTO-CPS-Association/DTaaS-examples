@@ -1,8 +1,10 @@
 rmq_publisher:
   ros__parameters:
-    server_hostname: srv03.levisen.eu
-    server_username: uniuser
-    server_password: unitest4321
+    server_hostname: host
+    server_username: user
+    server_password: pass
+    server_port: 5672
+    server_vhost: vhost
     exchange_name: "fmi_digital_twin"
     routing_key: "desktoprobotti"
     prefix_topic_name: True

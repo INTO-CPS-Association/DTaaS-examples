@@ -24,7 +24,7 @@ printf "\nCheckout Desktop Robotti git repository..\n\n" && sleep 5
 cd ~
 git clone https://gitlab.au.dk/desktop_robotti/drobotti-processing-and-control.git
 cd drobotti-processing-and-control
-git fetch && git checkout 1be6ee53bcee29399d68c47d1ad5ec48760db188
+git fetch && git checkout dc7f06e92dcb2048d227cc9496c266032c6ff8a1
 # Install Java 17 for Maestro
 printf "\nInstalling Java 17 for Maestro simulation..\n\n" && sleep 5
 apt install -y openjdk-17-jre
