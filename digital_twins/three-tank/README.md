@@ -2,27 +2,44 @@
 
 ## Overview
 
-The three-tank system is a simple case study allows us to represent a system that is composed of three individual components that are coupled in a cascade as follows: The first tank is connected to the input of the second tank, and the output of the second tank is connected to the input of the third tank.
+The three-tank system is a simple case study allows us to represent a system
+that is composed of three individual components that are coupled in
+a cascade as follows: The first tank is connected to the input of
+the second tank, and the output of the second tank is connected to
+the input of the third tank.
 
-![Three-tank graphical representation](three-tank_graphical_representation.png)
+![Three-tank graphical representation](./three-tank.png)
 
-This example contains only the simulated components for demonstration purposes; therefore, there is no configuration for the connection with the physical system.
+This example contains only the simulated components for
+demonstration purposes; therefore, there is no configuration for
+the connection with the physical system.
 
-The three-tank system case study is managed using the ```DTManager```, which is packed as a jar library in the tools, and run from a java main file.
-The ```DTManager``` uses Maestro as a slave for co-simulation, so it generates the output of the co-simulation.
-The main file can be changed according to the application scope, i.e., the ```/workspace/examples/tools/three-tank/TankMain.java``` can be manipulated to get a different result.
+The three-tank system case study is managed using the ```DTManager```,
+which is packed as a jar library in the tools, and run from a java main file.
+The ```DTManager``` uses Maestro as a slave for co-simulation,
+so it generates the output of the co-simulation.
 
-The ```/workspace/examples/models/three-tank/``` folder contains the ```Linear.fmu``` file, which is a non-realistic model for a tank with input and output and the ```TankSystem.aasx``` file for the schema representation with Asset Administration Shell.
-The three instances use the same ```.fmu``` file and the same schema due to being of the same object class.
-The ```DTManager``` is in charge of reading the values from the co-simulation output.
+The main file can be changed according to the application scope, i.e.,
+the ```/workspace/examples/tools/three-tank/TankMain.java```
+can be manipulated to get a different result.
+
+The ```/workspace/examples/models/three-tank/``` folder contains
+the ```Linear.fmu``` file, which is a non-realistic model for a tank
+with input and output and the ```TankSystem.aasx``` file for
+the schema representation with Asset Administration Shell.
+The three instances use the same ```.fmu``` file and the same schema
+due to being of the same object class.
+The ```DTManager``` is in charge of reading the values from
+the co-simulation output.
 
 ## Example Structure
 
-![Three-tank system architecture with DT Manager](threeTankRepresentation_GitHub.png)
+![Three-tank system architecture with DT Manager](./dt-structure.png)
 
 ## Digital Twin Configuration
 
-This example uses two models, two tools, one data, and one script. The specific assets used are:
+This example uses two models, two tools, one data, and one script.
+The specific assets used are:
 
 | Asset Type | Names of Assets | Visibility | Reuse in Other Examples |
 |:---|:---|:---|:---|
@@ -33,7 +50,10 @@ This example uses two models, two tools, one data, and one script. The specific 
 |  | TankMain.java (main script) | Private | No |
 | Data | outputs.csv | Private | No |
 
-This DT has multiple configuration files. The _coe.json_ and _multimodel.json_ are used by Maestro tool. The _tank1.conf_, _tank2.conf_ and _tank3.conf_ are the config files for three different instances of one model (Linear.fmu).
+This DT has multiple configuration files. The _coe.json_ and
+_multimodel.json_ are used by Maestro tool. The _tank1.conf_, _tank2.conf_
+and _tank3.conf_ are the config files for three different instances of
+one model (Linear.fmu).
 
 ## Lifecycle Phases
 
@@ -64,7 +84,7 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 17 and pip dependencies.
+Installs Open Java Development Kit 11 and pip dependencies.
 Also creates ```DTManager``` tool (DTManager-0.0.1-Maestro.jar) from source code.
 
 ```bash
@@ -100,15 +120,23 @@ lifecycle/terminate
 
 ## Examining the results
 
-Executing this Digital Twin will generate a co-simulation output, but the results can also be monitored from updating the ```/workspace/examples/tools/three-tank/TankMain.java``` with a specific set of ```getAttributeValue``` commands, such as shown in the code.
+Executing this Digital Twin will generate a co-simulation output,
+but the results can also be monitored from updating
+the```/workspace/examples/tools/three-tank/TankMain.java``` with
+a specific set of ```getAttributeValue``` commands, such as shown in
+the code.
 
-That main file enables the online execution of the Digital Twin and its internal components.
+That main file enables the online execution of the Digital Twin and
+its internal components.
 
-The output of the co-simulation is generated to the ```/workspace/examples/data/three-tank/output``` folder.
+The output of the co-simulation is generated to
+the ```/workspace/examples/data/three-tank/output``` folder.
 
-In the default example, the co-simulation is run for 10 seconds in steps of 0.5 seconds.
+In the default example, the co-simulation is run for 10 seconds in
+steps of 0.5 seconds.
 This can be modified for a longer period and different step size.
-The output stored in ```outputs.csv``` contains the level, in/out flow, and leak values.
+The output stored in ```outputs.csv``` contains the level, in/out flow,
+and leak values.
 
 No data from the physical twin are generated/used.
 
@@ -117,5 +145,9 @@ No data from the physical twin are generated/used.
 More information about the DT Manager is available at:
 
 ```txt
-D. Lehner, S. Gil, P. H. Mikkelsen, P. G. Larsen and M. Wimmer, "An Architectural Extension for Digital Twin Platforms to Leverage Behavioral Models," 2023 IEEE 19th International Conference on Automation Science and Engineering (CASE), Auckland, New Zealand, 2023, pp. 1-8, doi: 10.1109/CASE56687.2023.10260417.
+D. Lehner, S. Gil, P. H. Mikkelsen, P. G. Larsen and M. Wimmer,
+"An Architectural Extension for Digital Twin Platforms to Leverage
+Behavioral Models," 2023 IEEE 19th International Conference on
+Automation Science and Engineering (CASE), Auckland, New Zealand,
+2023, pp. 1-8, doi: 10.1109/CASE56687.2023.10260417.
 ```
