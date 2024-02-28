@@ -34,7 +34,6 @@ Configuration files:
 
 2. multimodel.json          - Connection parameters for RabbitMQ -> Simulation
 ```json
-    "{rbmq}.rbmqInstance.config.maxage": 300,
     "{rbmq}.rbmqInstance.config.hostname": "host",
     "{rbmq}.rbmqInstance.config.port": 5672,
     "{rbmq}.rbmqInstance.config.username": "user",
