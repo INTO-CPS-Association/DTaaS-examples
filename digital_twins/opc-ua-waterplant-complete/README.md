@@ -1,9 +1,13 @@
 # Waste Water Plant with OPC UA
 
+**NOTE**: This directory contains complete version of the `digital_twins/opc-ua-waterplant` digital twin. This directory contains code for multiple versions of mock physical twin and the example given here works on both Windows and Linux.
+
 ## Introduction
+
 Waste water treatment (WWT) plants must comply with substance and species concentration limits established by regulation in order to ensure the good quality of the water. This is usually done taking periodic samples that are analyzed in the laboratory. This means that plant operators do not have continuous information for making decisions and, therefore, operation setpoints are set to higher values than needed to guarantee water quality. Some of the processes involved in WWT plants consume a lot of power, thus adjusting setpoints could significantly reduce energy consumption.
 
 ## Physical Twin Overview
+
 This example demonstrates the communication between a physical ultraviolet (UV) disinfection process (the tertiary treatment of a WWT plant) and its digital twin, which is based on Computational Fluid Dynamics (CFD) and compartment models. The aim of this digital twin is to develop "virtual sensors" that provide continuous information that facilitates the decision making process for the plant operator. 
 
 ![Waste water treatment plant](images/water-treatment-plant.png)
@@ -11,9 +15,9 @@ This example demonstrates the communication between a physical ultraviolet (UV) 
 The physical twin of the waste water plant is composed of an ultraviolet
 channel controlled by a PLC that controls the power of the UV lamps needed to kill all the pathogens of the flow. The channel has 3 groups of UV lamps, therefore the real channel (and is mathematical model) is subdivided in 7 zones: 4 correspond to zones without UV lamps (2 for the entrance and exit of the channel + 2 zones between UV lamps) and the 3 reamaining for the UV lamps. 
 
-The dose to be applied (related with the power) changes according to the residence time (computed from the measure of the volume flow) and the UV intensity (measured by the intensity sensor). 
-The information of the volumetric flow and power (in the three parts of the channel) is transmitted to the PLC of the plant. 
-Furthermore, the PLC is working as OPC UA Server to send and receive data to and from an OPC UA client. 
+The dose to be applied (related with the power) changes according to the residence time (computed from the measure of the volume flow) and the UV intensity (measured by the intensity sensor).
+The information of the volumetric flow and power (in the three parts of the channel) is transmitted to the PLC of the plant.
+Furthermore, the PLC is working as OPC UA Server to send and receive data to and from an OPC UA client.
 Additionally, some sizing parameters and initial values are read from
 a spreadsheet filled in by the plant operator. In this case, the spreadsheet
 is an Open Office file (.ods) due to the software installed in the SCADA PC.
@@ -80,69 +84,85 @@ Linux and Windows to obtain the needed binaries to run the FMU in both operating
      to install the newest version of GLIBC.
 1. Install Open Modelica Compiler for [Linux](https://openmodelica.org/download/download-linux/) or [Windows](https://openmodelica.org/download/download-windows/). The minimal installation is enough since the graphical clients (OMEdit, OMShell and OMNotebook) are not necessary. **This allows to compile an FMU from the terminal, therefore if the FMU is already built with the correct binaries, this step is optional**
 1. Run the `create-fmu.mos` file to compile the FMU from the Modelica file.
-![script-mos](images/build-fmu.png)   
+![script-mos](images/build-fmu.png)
 
    Linux
+
    ``` bash
+   sudo apt-get install cmake
    omc create-fmu.mos
    ```
+
    Windows: omc usually is located in a path like this
+
    ``` cmd
    "C:\Program Files\OpenModelica1.21.0-64bit\bin\omc.exe" create-fmu.mos
    ```
+
+   Two FMUs, namely `Test_DTCONEDAR_linux.fmu` and `Test_DTCONEDAR_windows.fmu` have been provided as samples. The  `Test_DTCONEDAR_linux.fmu` has been generated on Ubuntu Linux 22.04 and the `Test_DTCONEDAR_windows.fmu` has been generated on Windows 10.
+
 1. Install Python 3.8 or above. It has been tested in 3.8, 3.10 and 3.11 versions. However **version 3.10 is recommended**: 
    - **Linux**: [Install Python 3.10](https://computingforgeeks.com/how-to-install-python-on-ubuntu-linux-system/).
    - **Windows**: [Install Python 3.10](https://www.python.org/downloads/release/python-31013/)
+
 1. Install pip for Python
    - **Linux**: [Install pip3 for python3.10](https://stackoverflow.com/questions/69503329/pip-is-not-working-for-python-3-10-on-ubuntu/).
    `curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10`
    - **Windows**: pip is installed by default when installing Python.
-1. Upgrade pip and install pip dependencies. 
+
+1. Upgrade pip and install pip dependencies.
 
    Linux
+
       ``` bash
+      sudo apt-get install python-is-python3 python3-pip
       python3 -m pip install --upgrade pip
-      python3 -m pip install requirements_linux.txt
+      python3 -m pip install -r requirements_linux.txt
       ```
+
       Windows
+
       ```cmd
       py -m pip install --upgrade pip
-      py -m pip install requirements_windows.txt
+      py -m pip install -r requirements_windows.txt
       ```
 
 1. Configure an OPC UA simulation server. Two options are available.
    1. Use [Free OPC-UA Library](https://github.com/FreeOpcUa). This is the recommended approach, because its configuration is more straightforward. Two libraries are provided within Free OPC-UA Library.
       - [opcua](https://github.com/FreeOpcUa/python-opcua) is deprecated, but still works fine to create OPC-UA servers and clients.
       - [asyncua](https://github.com/FreeOpcUa/opcua-asyncio) is very similar, but allows asynchronous programming through the [asyncio](https://docs.python.org/es/3/library/asyncio.html) Python native library.
-   2. Install Prosys OPC UA Simulation Server [here](https://www.prosysopc.com/opcua/apps/JavaServer/dist/5.4.6-148/prosys-opc-ua-simulation-server-linux-x64-5.4.6-148.sh). **This server is not running properly in DTaaS user workspace but works well on Ubuntu 22.04.**
+
+   2. [Download](https://downloads.prosysopc.com/opc-ua-simulation-server-downloads.php) and install Prosys OPC UA Simulation Server. **This server is not running properly in DTaaS user workspace but works well on Ubuntu 22.04.**
    **It seems there is a bug in the OPC UA server. This needs debugging.** To configure Prosys OPC UA Simulation Server see [How to configure Prosys](#how-to-configure-prosys).
 
 1. Start the OPC-UA Server (two options available):
    - **Free OPC-UA Library**: run any of these scripts (`server-opcua.py`, `server-opcua-xml.py`, `server-asyncua.py`, `server-asyncua-xml.py`). All of them create the same server, the difference between them is that ones use opcua library and others asyncua and ones define each node by hand and others import a list of nodes from a .xml file.
    - **Prosys OPC UA Simulation Server**: just run the application.
+
 1. Configure parameters and inputs of the simulation model in the file *configuration.ods*.
-![Configuration parameters](images/conf-parameters.png)
-![Configuration input](images/conf-inputs.png)
+   ![Configuration parameters](images/conf-parameters.png)
+   ![Configuration input](images/conf-inputs.png)
+
 1. Open the configuration file *config.json* and fill in the values:
 ![Config JSON](images/config_json.png)
 
-   2. Replace `"url" : "opc.tcp://0.0.0.0:4840"` with new **Connection Address**. The default localhost is:
+   1. Replace `"url" : "opc.tcp://0.0.0.0:4840"` with new **Connection Address**. The default localhost is:
       - `opc.tcp://0.0.0.0:4840` for Linux
       - `opc.tcp://localhost:4840` for Windows
 
-   2. Select the .ods configuration file. 
+   2. Select the .ods configuration file.
       - If using Free OPC-UA select `configuration_freeopcua.ods`
       - If using Prosys select `configuration_prosys.ods`
 
-   2. Make sure that your are running the FMU that suits your Operating System. The easiest way is to provide the same _fmu_filename_ that has been created after running **step 3**.
-      
-   2. Besides the mentioned parameters, optional parameters can be modified:
-      - stop_time
-      - step_size
-      -	record = True, if we want to save the results of the simulation
-      -	record_interval. Sometimes the simulation step_size is small and a the size of the results file can be too big. For instance, if the simulation step_size is 0.01 seconds, we can increase the record_interval so as to reduce the result file size. 
-      -	record_variables: we can specify the list of variables that we want to record.
-      -	enable_send = True, if we want to send results to the OPC UA Server. 
+   3. Make sure that your are running the FMU that suits your Operating System. The easiest way is to provide the same _fmu_filename_ that has been created after running **step 3**.
+
+   4. Besides the mentioned parameters, optional parameters can be modified:
+      - _stop_time_
+      - _step_size_
+      - _record = True_, if we want to save the results of the simulation
+      - _record_interval_. Sometimes the simulation step_size is small and a the size of the results file can be too big. For instance, if the simulation step_size is 0.01 seconds, we can increase the record_interval so as to reduce the result file size. 
+      - _record_variables_: we can specify the list of variables that we want to record.
+      - _enable_send = True_, if we want to send results to the OPC UA Server. 
 
 1. Run any of the following client scripts: `client-opcua.py` or `client-asyncua.py`
 

@@ -26,9 +26,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=1</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>93.03392768373672</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=3" BrowseName="1:power_2" ParentNodeId="ns=1;i=1" DataType="Double">
     <DisplayName>power_2</DisplayName>
@@ -37,9 +34,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=1</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>3.218051162580615</uax:Double>
-    </Value>
   </UAVariable>
   <UAObject NodeId="ns=1;i=4" BrowseName="1:OUTPUTS" ParentNodeId="i=85">
     <DisplayName>OUTPUTS</DisplayName>
@@ -68,9 +62,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=6" BrowseName="1:conOutA1_2" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutA1_2</DisplayName>
@@ -79,9 +70,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=7" BrowseName="1:conOutA1_3" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutA1_3</DisplayName>
@@ -90,9 +78,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=8" BrowseName="1:conOutA1_4" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutA1_4</DisplayName>
@@ -101,9 +86,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=9" BrowseName="1:conOutA1_5" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutA1_5</DisplayName>
@@ -112,9 +94,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=10" BrowseName="1:conOutA1_6" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutA1_6</DisplayName>
@@ -123,9 +102,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=11" BrowseName="1:conOutA1_7" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutA1_7</DisplayName>
@@ -134,9 +110,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=12" BrowseName="1:conOutA3_3" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutA3_3</DisplayName>
@@ -145,9 +118,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=13" BrowseName="1:conOutA3_7" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutA3_7</DisplayName>
@@ -156,9 +126,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=14" BrowseName="1:conOutC_1" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutC_1</DisplayName>
@@ -167,9 +134,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=15" BrowseName="1:conOutC_3" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutC_3</DisplayName>
@@ -178,9 +142,6 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
   <UAVariable NodeId="ns=1;i=16" BrowseName="1:conOutC_7" ParentNodeId="ns=1;i=4" DataType="Double" AccessLevel="3" UserAccessLevel="3">
     <DisplayName>conOutC_7</DisplayName>
@@ -189,8 +150,5 @@
       <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=4</Reference>
       <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
     </References>
-    <Value>
-      <uax:Double>0.0</uax:Double>
-    </Value>
   </UAVariable>
 </UANodeSet>
