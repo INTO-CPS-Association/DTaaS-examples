@@ -111,14 +111,30 @@
 
       </ModelVariables>
       <ModelStructure>
-         <Outputs>
-            <Unknown index="1"/>
-            <Unknown index="2"/>
-         </Outputs>
-         <InitialUnknowns>
-            <Unknown index="1"/>
-            <Unknown index="2"/>
-         </InitialUnknowns>
-      </ModelStructure>
+        <Outputs>
+           <Unknown index="1" />
+           <Unknown index="2" />
+           <Unknown index="3" />
+           <Unknown index="4" />
+           <Unknown index="5" />
+           <Unknown index="6" />
+           <Unknown index="7" />
+           <Unknown index="8" />
+           <Unknown index="9" />
+           <Unknown index="10" />
+        </Outputs>
+        <InitialUnknowns>
+           <Unknown index="1" />
+           <Unknown index="2" />
+           <Unknown index="3" />
+           <Unknown index="4" />
+           <Unknown index="5" />
+           <Unknown index="6" />
+           <Unknown index="7" />
+           <Unknown index="8" />
+           <Unknown index="9" />
+           <Unknown index="10" />
+        </InitialUnknowns>
+     </ModelStructure>
 
 </fmiModelDescription>
