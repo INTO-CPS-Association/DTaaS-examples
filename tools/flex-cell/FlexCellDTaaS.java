@@ -11,7 +11,7 @@ import management.TwinManager;
 import model.TwinSchema;
 import services.DeviationChecker;
 
-public class FlexCell {
+public class FlexCellDTaaS {
 	static TwinManager twinManager;
 	static String modelFolderPrefix = "/workspace/examples/models/flex-cell/";
 	static String dtFolderPrefix = "/workspace/examples/digital_twins/flex-cell/";
