@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir -p /workspace/examples/data/water_tank_swap/output/plots
+python lifecycle/plot.py

@@ -1,0 +1,21 @@
+{
+  "startTime": 0,
+  "endTime": 100,
+  "reportProgress": true,
+  "liveLogInterval": 0,
+  "logVariables": {
+    "{x1}.controller": [
+      "valve"
+    ],
+    "{x2}.tank": [
+      "level",
+      "valvecontrol"
+    ],
+    "{x3}.leak_detector": [
+      "leak"
+    ],
+    "{x4}.leak_controller": [
+      "valve"
+    ]
+  }
+}

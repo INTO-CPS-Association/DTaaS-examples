@@ -1,0 +1,3 @@
+#!/bin/bash
+rm -rf debug.log target
+rm -rf "/workspace/examples/data/mass-spring-damper/output"

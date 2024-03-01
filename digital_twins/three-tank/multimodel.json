@@ -1,0 +1,45 @@
+{
+    "aliases": {
+        "tank1": "{tank}.tank1",
+        "tank2": "{tank}.tank2",
+        "tank3": "{tank}.tank3",
+        "Level": "level"
+    },
+    "fmus": {"{tank}": "/workspace/examples/models/three-tank/Linear.fmu"},
+    "logVariables": {
+        "{tank}.tank3": [
+            "level",
+            "inPort",
+            "outPort",
+            "leak",
+            "der(level)"
+        ],
+        "{tank}.tank2": [
+            "level",
+            "inPort",
+            "outPort",
+            "leak",
+            "der(level)"
+        ],
+        "{tank}.tank1": [
+            "level",
+            "inPort",
+            "outPort",
+            "leak",
+            "der(level)"
+        ]
+    },
+    "parameters": {
+        "{tank}.tank2.level": 10,
+        "{tank}.tank1.level": 2,
+        "{tank}.tank3.level": 35
+    },
+    "connections": {
+        "{tank}.tank1.outPort": ["{tank}.tank2.inPort"],
+        "{tank}.tank2.outPort": ["{tank}.tank3.inPort"]
+    },
+    "algorithm": {
+        "size": 0.5,
+        "type": "fixed-step"
+    }
+}

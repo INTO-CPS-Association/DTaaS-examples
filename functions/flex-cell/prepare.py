@@ -1,4 +1,4 @@
-from pyhocon import ConfigFactory
+from pyhocon import ConfigFactoryFlexCell
 from pyhocon import HOCONConverter
 import xml.etree.ElementTree as ET
 

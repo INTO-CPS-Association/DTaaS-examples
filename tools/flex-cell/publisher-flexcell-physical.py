@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from robots_flexcell import robots
-import kukalbrinterface
-import urinterface.robot_connection as urconn
+#import kukalbrinterface
+#import urinterface.robot_connection as urconn
 import paho.mqtt.client as mqtt
 import socket
 import numpy as np
@@ -15,6 +15,9 @@ import time
 from threading import Timer
 
 from pyhocon import ConfigFactory
+import logging
+
+logging.disable(logging.CRITICAL)
 
 
 ur_robot_model = robots.UR5e_RL()
@@ -23,7 +26,7 @@ use_real_robots = False
 mqtt_enabled = False
 
 ### pyhocon
-conf = ConfigFactory.parse_file('/workspace/examples/data/flex-cell/connections.conf')
+conf = ConfigFactory.parse_file('data/connections.conf')
 rabbitmq_host = conf.get_string('rabbitmq.hostname')
 rabbitmq_port = conf.get_int('rabbitmq.port')
 rabbitmq_username = conf.get_string('rabbitmq.username')
@@ -34,10 +37,10 @@ mqtt_port = conf.get_int('mqtt.port')
 mqtt_username = conf.get_string('mqtt.username')
 mqtt_password = conf.get_string('mqtt.password')
 
-if use_real_robots:
+'''if use_real_robots:
     # Kuka
     kuka_f_name = "kukalbriiwa7_actual.csv"
-    kuka_filename = "/workspace/examples/data/flex-cell/output/physical_twin/" + kuka_f_name
+    kuka_filename = "data/physical_twin/" + kuka_f_name
     kuka_robot = kukalbrinterface.RobotConnection("192.168.1.3",enabled_mqtt=mqtt_enabled,filename=kuka_filename)
     #kuka_robot.set_speed(0.01)
     # UR5e
@@ -47,12 +50,12 @@ if use_real_robots:
 
     ur5e_robot = urconn.RobotConnection(ur5e_ip,controller_socket=ur5e_controller_socket,dashboard_socket=ur5e_dashboard_socket) # Establish dashboard connection (port 29999) and controller connection (port 30002)
     f_name = "ur5e_actual.csv"
-    filename = "/workspace/examples/data/flex-cell/output/physical_twin/" + f_name
+    filename = "data/physical_twin/" + f_name
     config_file =  "/workspace/examples/tools/flex-cell/resources/record_configuration.xml"
     ur5e_robot.start_recording(filename=filename, overwrite=True, frequency=50, config_file=config_file)
     if mqtt_enabled:
         ur5e_mqtt_pub = ur5e_mqtt_publisher.UR5eMQTTPublisher(filename,addr_mqtt=mqtt_host,port_mqtt=mqtt_port,mqtt_username=mqtt_username,mqtt_password=mqtt_password)
-
+'''
 #### Robots ####
 def compute_ur_q(X,Y,Z):
     comp_x,comp_y,comp_z = ur_robot_model.compute_xyz_flexcell(X,Y,Z=Z)
@@ -111,12 +114,12 @@ def publish():
 #    channel.stop_consuming()
     dt=datetime.strptime('2019-01-04T16:41:24+0200', "%Y-%m-%dT%H:%M:%S%z")
 
-    target_X_ur5e = 6
-    target_Y_ur5e = 16
-    target_Z_ur5e = 1
-    target_X_kuka = 8
-    target_Y_kuka = 11
-    target_Z_kuka = 2
+    target_X_ur5e = 5
+    target_Y_ur5e = 14
+    target_Z_ur5e = 2
+    target_X_kuka = 3
+    target_Y_kuka = 10
+    target_Z_kuka = 1
 
     msg = {}
     msg['time']= dt.isoformat()
@@ -128,24 +131,26 @@ def publish():
     msg['target_Z_kuka'] = target_Z_kuka
     msg['command_move_ur5e'] = True
     msg['command_move_kuka'] = True
-    msg['motion_time_ur5e'] = 2.0
-    msg['motion_time_kuka'] = 2.0
+    msg['motion_time_ur5e'] = 1.0
+    msg['motion_time_kuka'] = 1.0
     q_ur5e = compute_ur_q(target_X_ur5e,target_Y_ur5e,target_Z_ur5e)
     q_kuka = compute_kuka_q(target_X_kuka,target_Y_kuka,target_Z_kuka)
-    Timer(0.05, transmit_robot_motion, args=(q_ur5e,"UR5e",)).start()
-    Timer(0.05, transmit_robot_motion, args=(q_kuka,"Kuka",)).start()
+    #Timer(0.05, transmit_robot_motion, args=(q_ur5e,"UR5e",)).start()
+    #Timer(0.05, transmit_robot_motion, args=(q_kuka,"Kuka",)).start()
     #transmit_robot_motion(q_ur5e,"UR5e")
     #transmit_robot_motion(q_kuka,"Kuka")
 
-    for  i in range(1,20):
+    for i in range(21):
             msg['time']= datetime.now(tz = datetime.now().astimezone().tzinfo).isoformat(timespec='milliseconds')
-            if (i==10):
-                target_X_ur5e = 5
-                target_Y_ur5e = 22
-                target_Z_ur5e = 0
-                target_X_kuka = 7
-                target_Y_kuka = 14
-                target_Z_kuka = 1
+            print("i:" + str(i))
+
+            if (i==9):
+                target_X_ur5e = 4
+                target_Y_ur5e = 18
+                target_Z_ur5e = 1
+                target_X_kuka = 4
+                target_Y_kuka = 7
+                target_Z_kuka = 2
                 msg['target_X_ur5e'] = target_X_ur5e
                 msg['target_Y_ur5e'] = target_Y_ur5e
                 msg['target_Z_ur5e'] = target_Z_ur5e
@@ -154,12 +159,12 @@ def publish():
                 msg['target_Z_kuka'] = target_Z_kuka
                 q_ur5e = compute_ur_q(target_X_ur5e,target_Y_ur5e,target_Z_ur5e)
                 q_kuka = compute_kuka_q(target_X_kuka,target_Y_kuka,target_Z_kuka)
-                Timer(0.05, transmit_robot_motion, args=(q_ur5e,"UR5e",)).start()
-                Timer(0.05, transmit_robot_motion, args=(q_kuka,"Kuka",)).start()
+                #Timer(0.05, transmit_robot_motion, args=(q_ur5e,"UR5e",)).start()
+                #Timer(0.05, transmit_robot_motion, args=(q_kuka,"Kuka",)).start()
                 #transmit_robot_motion(q_ur5e,"UR5e")
                 #transmit_robot_motion(q_kuka,"Kuka")
 
-            if(i==25):
+            if(i==35):
                 target_X_ur5e = 0
                 target_Y_ur5e = 20
                 target_Z_ur5e = 3
@@ -207,5 +212,5 @@ if __name__ == '__main__':
 
         connection.close()
     except KeyboardInterrupt:
-        ur5e_robot.stop_recording()
+        #ur5e_robot.stop_recording()
         pass
