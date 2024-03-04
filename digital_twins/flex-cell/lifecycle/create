@@ -5,7 +5,7 @@ apt-get install maven
 mvn -f /workspace/examples/tools/TwinManager/pom.xml package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
 cp /workspace/examples/tools/TwinManager/target/TwinManagerFramework-0.0.2.jar /workspace/examples/tools/
 python -m venv /workspace/examples/tools/flex-cell/requirements/venv
-/workspace/examples/tools/flex-cell/requirements/venv/bin/activate
+source /workspace/examples/tools/flex-cell/requirements/venv/bin/activate
 pip install -r /workspace/examples/tools/flex-cell/requirements/requirements.txt
 if [ ! -d /workspace/examples/data/flex-cell/output ]; then
     mkdir /workspace/examples/data/flex-cell/output
