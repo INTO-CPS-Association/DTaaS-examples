@@ -1,0 +1,6 @@
+#!/bin/bash
+## Run first the side tools and finally run the main.java file
+printf "Executing the Flex-cell Digital Twin case study... \n\n"
+source /workspace/examples/tools/flex-cell/requirements/venv/bin/activate
+python /workspace/examples/tools/flex-cell/publisher-flexcell-physical.py &
+java -cp "/workspace/examples/tools/TwinManagerFramework-0.0.2.jar:/workspace/examples/common/tools/maestro-2.3.0-jar-with-dependencies.jar" /workspace/examples/tools/flex-cell/FlexCellDTaaS.java

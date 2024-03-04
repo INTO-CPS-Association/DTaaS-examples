@@ -1,0 +1,14 @@
+Metadata-Version: 1.1
+Name: robots-flexcell
+Version: 0.0.1
+Summary: Flex-cell models
+Home-page: UNKNOWN
+Author: Santiago Gil
+Author-email: sgil@ece.au.dk
+License: UNKNOWN
+Description: UNKNOWN
+Keywords: python,ur robot,universal robot,flex-cell,flex-cell
+Platform: UNKNOWN
+Classifier: Development Status :: 1 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
