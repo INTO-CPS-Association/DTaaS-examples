@@ -33,9 +33,10 @@ bash getExamples.sh
 The digital twins provided in examples vary in their complexity. It is best
 to use the examples in the following order.
 
-1. [Mass Spring Damper](./mass-spring-damper/README.md)
-1. [Water Tank Fault Injection](./water_tank_FI/README.md)
-1. [Water Tank Model Swap](./water_tank_swap/README.md)
-1. [Desktop Robotti and RabbitMQ](./drobotti-rmqfmu/README.md)
-1. [Water Treatment Plant and OPC-UA](./opc-ua-waterplant/README.md)
-1. [Three Water Tanks with DT Manager Framework](./three-tank/README.md)
+1. [Mass Spring Damper](./digital_twins/mass-spring-damper/README.md)
+1. [Water Tank Fault Injection](./digital_twins/water_tank_FI/README.md)
+1. [Water Tank Model Swap](./digital_twins/water_tank_swap/README.md)
+1. [Desktop Robotti and RabbitMQ](./digital_twins/drobotti-rmqfmu/README.md)
+1. [Water Treatment Plant and OPC-UA](./digital_twins/opc-ua-waterplant/README.md)
+1. [Three Water Tanks with DT Manager Framework](./digital_twins/three-tank/README.md)
+1. [Flex Cell with Two Industrial Robots](./digital_twins/flex-cell/README.md)

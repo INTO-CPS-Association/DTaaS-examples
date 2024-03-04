@@ -1,7 +1,8 @@
 #!/bin/bash
 printf "Installing dependencies...\n\n"
-apt-get install default-jre ## Minimum java 1.8
-apt-get install maven
+apt-get update
+apt-get install -y default-jre ## Minimum java 1.8
+apt-get install -y maven
 mvn -f /workspace/examples/tools/TwinManager/pom.xml package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
 cp /workspace/examples/tools/TwinManager/target/TwinManagerFramework-0.0.2.jar /workspace/examples/tools/
 python -m venv /workspace/examples/tools/flex-cell/requirements/venv
