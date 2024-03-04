@@ -1,0 +1,5 @@
+setup.py
+src/robots_flexcell.egg-info/PKG-INFO
+src/robots_flexcell.egg-info/SOURCES.txt
+src/robots_flexcell.egg-info/dependency_links.txt
+src/robots_flexcell.egg-info/top_level.txt
