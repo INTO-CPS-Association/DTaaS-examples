@@ -63,7 +63,7 @@ The order the run this example is:
 4. (Optional) save the results with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/save```.
 5. (Optional) plot the results with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/analyze```, which saves the plots in the folder ```/workspace/examples/data/flex-cell/output```.
 6. Terminate the background processes with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/terminate```. This one is required before running an execution again.
-7. (Optional) clean up the output folder with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/clean```. **Remark**: This command can also remove the files in the ```physical_twin``` subfolder with the data from the real robots. See the script for further information.
+7. (Optional) clean up the output folder with the script file ```/workspace/examples/digital_twins/flex-cell/lifecycle/clean```. **Remark**: This command can also remove the files in the ```physical_twin``` subfolder with the data from the real robots and the ```python virtual environment```. See the script for further information.
 
 ## Examining the results
 Executing this Digital Twin will generate a co-simulation output, but the results can also be monitored from updating the ```/workspace/examples/tools/flex-cell/FlexCell.java``` with a specific set of ```getAttributeValue``` commands, such as shown in the code.
