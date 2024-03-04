@@ -20,7 +20,7 @@
     "size": 0.1
   },
 
-  "faultInjectConfigurationPath": "/workspace/examples/digital_twins/water_tank_FI/wt_fault.xml",
+  "faultInjectConfigurationPath": "/workspace/examples/data/water_tank_FI/input/wt_fault.xml",
   "faultInjectInstances": {
     "tank": "id-A"
   }
