@@ -13,8 +13,8 @@ font = {'font.family' : 'monospace',
 
 plt.rcParams.update(font)
 df_cosim = pd.read_csv("/workspace/examples/data/flex-cell/output/outputs.csv")
-df_kuka = pd.read_csv("/workspace/examples/data/flex-cell/output/physical_twin/kukalbriiwa7_actual.csv")
-df_ur5e = pd.read_csv("/workspace/examples/data/flex-cell/output/physical_twin/ur5e_actual.csv",sep=" ")
+df_kuka = pd.read_csv("/workspace/examples/data/flex-cell/input/physical_twin/kukalbriiwa7_actual.csv")
+df_ur5e = pd.read_csv("/workspace/examples/data/flex-cell/input/physical_twin/ur5e_actual.csv",sep=" ")
 
 
 fig, axes = plt.subplots(2,2, figsize=(16,12))
