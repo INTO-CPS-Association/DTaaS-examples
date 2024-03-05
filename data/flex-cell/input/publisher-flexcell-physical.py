@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from robots_flexcell import robots
-#import kukalbrinterface
-#import urinterface.robot_connection as urconn
+import kukalbrinterface
+import urinterface.robot_connection as urconn
 import paho.mqtt.client as mqtt
 import socket
 import numpy as np

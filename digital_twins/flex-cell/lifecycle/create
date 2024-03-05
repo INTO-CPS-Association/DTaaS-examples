@@ -8,6 +8,8 @@ cp /workspace/examples/tools/TwinManager/target/TwinManagerFramework-0.0.2.jar /
 python -m venv /workspace/examples/tools/flex-cell/requirements/venv
 source /workspace/examples/tools/flex-cell/requirements/venv/bin/activate
 pip install -r /workspace/examples/tools/flex-cell/requirements/requirements.txt
+pip install -e /workspace/examples/tools/flex-cell/robots_flexcell
+pip install -e /workspace/examples/tools/flex-cell/kukalbrinterface
 if [ ! -d /workspace/examples/data/flex-cell/output ]; then
     mkdir /workspace/examples/data/flex-cell/output
 fi
