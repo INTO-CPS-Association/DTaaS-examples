@@ -161,7 +161,8 @@ The following files are updated with the configuration information:
 
 Execute the flex-cell digital twin using TwinManager. TwinManager in-turn runs
 the co-simulation using Maestro. Generates the co-simulation output.csv file
-at `/workspace/examples/data/flex-cell/output`.
+at `/workspace/examples/data/flex-cell/output`.  
+The execution needs to be stopped with ```control + c``` since the ```TwinManager``` runs the application in a non-stopping loop.
 
 ```bash
 lifecycle/execute
