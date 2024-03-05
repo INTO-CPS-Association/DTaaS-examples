@@ -21,7 +21,7 @@ The ```TwinManager``` uses Maestro as a slave for co-simulation,
 so it generates the output of the co-simulation and can interact with
 the real robots at the same time (with the proper configuration and setup).
 The mainfile can be changed according to the application scope, i.e.,
-the ```/workspace/examples/tools/flex-cell/FlexCell.java``` can be
+the ```/workspace/examples/tools/flex-cell/FlexCellDTaaS.java``` can be
 manipulated to get a different result.
 
 The ```/workspace/examples/models/flex-cell/``` folder contains
