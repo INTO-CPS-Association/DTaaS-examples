@@ -3,32 +3,26 @@ This example is an implementation of the the paper Digital Twin for Rescue Missi
 
 ## Lifecycle
 
-### Create
 
-##### TeSSLa
-
-Before running the create script please download the `tessla-telegraf-connector.zip` from https://git.tessla.io/telegraf/tessla-telegraf-connector and extract its contents to `tools/tessla/tessla-telegraf-connector`.  
-
-Make sure the following files of this example are at the correct locations:
+Before runnnig this example please make sure the following files are at the correct locations:
 ```
-   /workspace/digital_twins/o5g/main.py
-   /workspace/digital_twins/o5g/sensorSimulation.py
-   /workspace/digital_twins/o5g/telegraf.conf
-   /workspace/digital_twins/o5g/runTessla.sh
-   /workspace/digital_twins/o5g/config.py
-   /workspace/data/lab.ifc
-   /workspace/models/graphToPath.py
-   /workspace/models/pathToTime.py
-   /workspace/models/PathOxygenEstimate.mo
-   /workspace/models/makefmu.mos
-   /workspace/tools/ifc_to_graph
-   /workspace/tools/tessla/tessla-telegraf-connector/     containing the contents of 
-       https://git.tessla.io/telegraf/tessla-telegraf-connector/-/blob/master/Release/tessla-telegraf-connector.zip
-   /workspace/tools/tessla/tessla-telegraf-connector/specification.tessla
+   digital_twins/o5g/main.py
+   digital_twins/o5g/sensorSimulation.py
+   digital_twins/o5g/telegraf.conf
+   digital_twins/o5g/runTessla.sh
+   digital_twins/o5g/config
+   data/lab.ifc
+   models/graphToPath.py
+   models/pathToTime.py
+   models/PathOxygenEstimate.mo
+   models/makefmu.mos
+   tools/ifc_to_graph
+   tools/tessla/tessla-telegraf-connector/
+   tools/tessla/tessla-telegraf-connector/specification.tessla
 ```
 
-##### MQTT
-Insert your MQTT server address, username, and password in `config.py` and `telegraf.conf`
+### Config
+All configuration for this example is contained in `digital_twins/o5g/config`.
 
 ##### InfluxDB
 This example uses InfuxDB as a data storage, which will need to be configured to use your Access data.
@@ -36,19 +30,28 @@ This example uses InfuxDB as a data storage, which will need to be configured to
     - Your org name below your username in the sidebar
     - Create a data bucket if you don't have one already in `Load Data -> Buckets`
     - Create an API access token in `Load Data -> API Tokens`, Copy and save this token somewhere immediately, you can not access it later!
-    Insert your InfluxDB configuration in `lifecycle\create` and `telegraf.conf`
 
 ##### Grafana
-This example can also use Grafana to visualize the data. To use it Log into the WEB UI (Default Port 8088 on DTaaS) and in `Administration -> Service Accounts` add a new service account. Create a Token for this Service Account an copy it to `lifecycle\create`. Also set USE_GRAFANA to true.
+This example can also use Grafana to visualize the data. If you don't need Grafana set `5G_SETUP_GRAFANA` to 'false' in the `config` file. To use Grafana Log into the WEB UI (Default Port 8088 on DTaaS) and in `Administration -> Service Accounts` add a new service account. Create a new Token for this Service Account to use and enter it in the config. 
 
-#### Running create
+
+
+The lifecycle of this digital twin is structured in the following phases:
+### Install
+
+Run the install script by executing
+```bash
+lifecycle/install
+```
+This will install all the required dependencies from apt and pip, aswell as OpenModellica and Telegraf from their respective repos.
+
+### Create
 
 Run the create script by executing
 ```bash
 lifecycle/create
 ```
-
-This will install all the required dependencies from apt and pip, install OpenModelica and compile the modelica modell to a Functional Mockup Unit (FMU) for the correct platform.
+This will compile the modelica modell to a Functional Mockup Unit (FMU) for the correct platform and setup Grafana, if enabled.
 
 ### Exceute
 
@@ -61,7 +64,9 @@ This will start all the required components in a single tmux session called `o5g
 ```bash
 tmux a -t o5g
 ```
-This session contains 4 components of the Example
+To detatch press `Ctrl-b` followed by `d`.
+
+The Tmux session contains 4 components of the Example
  - Top Left: Sensor simulator generating random location and O2-level data
  - Top Right: Main Digital Twin receives the sensor data and calculates an estimate of how many minutes of air remain
  - Bottom Left: Telegraf to convert between different message formats, also displays all messages between components

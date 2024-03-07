@@ -4,24 +4,30 @@ import subprocess
 import json
 import numpy as np
 import paho.mqtt.client as mqtt
-import config
 
-sys.path.append('/workspace/models')
+# Read config from env
+INSTALL_PATH = os.environ.get("O5G_INSTALL_PATH", "/workspace/examples")
+
+MQTT_SERVER = os.environ['O5G_MQTT_SERVER']
+MQTT_PORT = int(os.environ['O5G_MQTT_PORT'])
+MQTT_USER = os.environ['O5G_MQTT_USER']
+MQTT_PASS = os.environ['O5G_MQTT_PASS']
+
+MQTT_TOPIC_SENSOR = os.environ['O5G_MQTT_TOPIC_SENSOR']
+MQTT_TOPIC_AIR_PREDICTION = os.environ['O5G_MQTT_TOPIC_AIR_PREDICTION']
+
+model_path = INSTALL_PATH + '/models'
+sys.path.append(model_path)
+print(f"Importing models from {model_path}")
 from pathToTime import calc_oxygen
 from graphToPath import calculate_shortest_path
 
-# Directories and executable paths
-dir_ifc_to_graph = '/workspace/tools/'
-dir_bim_files = '/workspace/data/'
-dir_graph_to_nav = '/workspace/models/'
-dir_path_to_oxygen = '/workspace/models/'
-
-converter_exec = os.path.join(dir_ifc_to_graph, 'ifc_to_graph')
-ifc_file = os.path.join(dir_bim_files, 'lab.ifc')
+converter_exec = os.path.join(INSTALL_PATH, 'tools/ifc_to_graph')
+ifc_file = os.path.join(INSTALL_PATH, 'data/lab.ifc')
 output_file = 'graph.json'
 
-graph_script = os.path.join(dir_graph_to_nav, 'graphToPath.py')
-test_fmu = os.path.join(dir_path_to_oxygen, 'pathToTime.py')
+graph_script = os.path.join(INSTALL_PATH, 'models/graphToPath.py')
+test_fmu = os.path.join(INSTALL_PATH, 'models/pathToTime.py')
 # [Lat, Lon, Elevation]
 start_position = np.array([42, 0, 6])
 end_node = 0  # ToDo: Find all end nodes automatically and find the minimal shortest path
@@ -33,7 +39,7 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe(config.MQTT_TOPIC_SENSOR + '/#')
+    client.subscribe(MQTT_TOPIC_SENSOR + '/#')
 
 
 # The callback for when a PUBLISH message is received from the server.
@@ -64,7 +70,7 @@ def on_message(client, userdata, msg):
         # print(f"Final integer value from Test.fmu: {result['air-supply']['remaining']}")
 
         # publish the new value to the output topic
-        result_topic = config.MQTT_TOPIC_AIR_PREDICTION
+        result_topic = MQTT_TOPIC_AIR_PREDICTION
         # client.publish(result_topic, json.dumps(result))
         result_influx = "prediction air-remaining=" + str(result['air-supply']['remaining'])
         print(f'Publishing "{result_influx}" to {result_topic}')
@@ -84,10 +90,11 @@ with open(output_file, 'r') as content:
     graph = json.load(content)
 
 client = mqtt.Client("supplymon")
-client.username_pw_set(config.MQTT_USER, config.MQTT_PASS)
+client.username_pw_set(MQTT_USER, MQTT_PASS)
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect(config.MQTT_SERVER, config.MQTT_PORT, 60)
+print("Connecting to " + MQTT_SERVER + ":" + str(MQTT_PORT))
+client.connect(MQTT_SERVER, MQTT_PORT, 60)
 
 client.loop_forever()

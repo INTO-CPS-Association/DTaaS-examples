@@ -1,7 +1,11 @@
 #!/bin/bash
 
+if [ -z "$O5G_INSTALL_PATH" ]; then
+  O5G_INSTALL_PATH="/workspace/examples"
+fi
+
 printf "Compiling TeSSLa monitor from specification \n"
 
-cd /workspace/tools/tessla/tessla-telegraf-connector
+cd "${O5G_INSTALL_PATH}/tools/tessla/tessla-telegraf-connector"
 chmod +x TesslaTelegrafConnector
-./TesslaTelegrafConnector -i specification.tessla -c /workspace/digital_twins/o5g/telegraf.conf -r
+./TesslaTelegrafConnector -i specification.tessla -c "${O5G_INSTALL_PATH}/digital_twins/o5g/telegraf.conf" -r

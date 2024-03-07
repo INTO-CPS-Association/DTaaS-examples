@@ -6,11 +6,14 @@ import json
 import random
 from datetime import datetime
 import uuid
-import paho.mqtt.client as mqtt #import the client1
-import config
+import paho.mqtt.client as mqtt #import the client
 
-broker_address = config.MQTT_SERVER
-broker_port = config.MQTT_PORT
+MQTT_SERVER = os.environ['O5G_MQTT_SERVER']
+MQTT_PORT = int(os.environ['O5G_MQTT_PORT'])
+MQTT_USER = os.environ['O5G_MQTT_USER']
+MQTT_PASS = os.environ['O5G_MQTT_PASS']
+
+MQTT_TOPIC_SENSOR = os.environ['O5G_MQTT_TOPIC_SENSOR']
 
 endLoop: int = 0
 
@@ -20,8 +23,8 @@ def main() -> int:
 
   print('''UE Metric Topic''')
   uemep = mqtt.Client("uemetric_", uesnr) #create new instance
-  uemep.username_pw_set(config.MQTT_USER, config.MQTT_PASS)
-  uemep.connect(broker_address, broker_port, 60)  # connect to broker
+  uemep.username_pw_set(MQTT_USER, MQTT_PASS)
+  uemep.connect(MQTT_SERVER, MQTT_PORT, 60)  # connect to broker
 
   # nur einleifern, brauchen wir die loop ?
   uemep.loop_start()
@@ -69,9 +72,9 @@ def main() -> int:
       metric['timestamp']      = int(datetime.now().strftime("%s"))
 
     # telegraf muss dan auf vgiot/ue/#/metric subscriben
-    topic = config.MQTT_TOPIC_SENSOR + '/' + uesnr
+    topic = MQTT_TOPIC_SENSOR + '/' + uesnr
     uemep.publish(topic, json.dumps(iot_data))
-    print("Publishing to vgiot/ue/metric/" + uesnr)
+    print("Publishing to " + topic)
     # print(json.dumps(iot_data))
     time.sleep(1)
 

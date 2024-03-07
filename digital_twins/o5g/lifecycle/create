@@ -1,80 +1,23 @@
 #!/bin/bash 
 
-
-# Before executing adjust this configuration
-INFLUX_SERVER="https://<InfluxDB-URL>:<port>"
-INFLUX_TOKEN="<Your-InfluxDB-API-Access-Token>"
-INFLUX_ORG="<Your-InfluxDB-organization>"
-INFLUX_BUCKET="<Your-InfluxDB-Data-Bucket>"
-
-SETUP_GRAFANA=false
-GRAFANA_SERVER="http://<Your-Grafana-URL>:<port>"
-GRAFANA_TOKEN="<Your-Grafana-HTTP-API-Token>"
-
-
-# This script expects the following files to exist:
-#   /workspace/digital_twins/o5g/main.py
-#   /workspace/digital_twins/o5g/sensorSimulation.py
-#   /workspace/digital_twins/o5g/telegraf.conf
-#   /workspace/digital_twins/o5g/runTessla.sh
-#   /workspace/digital_twins/o5g/config.py
-#   /workspace/data/lab.ifc
-#   /workspace/models/graphToPath.py
-#   /workspace/models/pathToTime.py
-#   /workspace/models/PathOxygenEstimate.mo
-#   /workspace/models/makefmu.mos
-#   /workspace/tools/ifc_to_graph
-#   /workspace/tools/tessla/tessla-telegraf-connector/     containing the contents of 
-#       https://git.tessla.io/telegraf/tessla-telegraf-connector/-/blob/master/Release/tessla-telegraf-connector.zip
-#   /workspace/tools/tessla/tessla-telegraf-connector/specification.tessla
-
 # exit if a command fails
 set -e
 
-printf "Install apt dependencies \n"
-
-apt-get update
-apt-get install -y ca-certificates curl gnupg build-essential default-jre-headless cargo curl jq
-
-printf "Install OpenModelica \n"
-
-if dpkg -l | grep -qw "omc"; then
-  echo "OpenModelica is already installed"
-else
-  curl -fsSL http://build.openmodelica.org/apt/openmodelica.asc | gpg --dearmor -o /usr/share/keyrings/openmodelica-keyring.gpg
-  echo "deb [arch=amd64 signed-by=/usr/share/keyrings/openmodelica-keyring.gpg] \
-    https://build.openmodelica.org/apt \
-    $(cat /etc/os-release | grep "\(UBUNTU\\|DEBIAN\\|VERSION\)_CODENAME" | sort | cut -d= -f 2 | head -1) \
-    stable" | tee /etc/apt/sources.list.d/openmodelica.list
-  apt-get update && apt-get install --no-install-recommends omc
+if [ -z "$O5G_INSTALL_PATH" ]; then
+  O5G_INSTALL_PATH="/workspace/examples"
+  printf "Installing to ${O5G_INSTALL_PATH}, set O5G_INSTALL_PATH to overwrite"
 fi
 
-printf "Install telegraf \n"
-
-if dpkg -l | grep -qw "telegraf"; then
-  echo "Telegraf is already installed"
-else
-  # influxdata-archive_compat.key GPG Fingerprint: 9D539D90D3328DC7D6C8D3B9D8FF8E1F7DF8B07E
-  curl -s https://repos.influxdata.com/influxdata-archive_compat.key > influxdata-archive_compat.key
-  echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
-  echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
-  apt-get update && apt-get install telegraf
-  rm influxdata-archive_compat.key
-fi
-
-printf "Install required pip packages \n"
-
-# We expect pip to already be installed
-pip install numpy scipy networkx matplotlib fmpy pytest paho-mqtt
+source "${O5G_INSTALL_PATH}/digital_twins/o5g/config"
 
 printf "Compiling fmu from OpenModelica model \n"
 
-cd /workspace/models
-omc /workspace/models/makefmu.mos
+cd "${O5G_INSTALL_PATH}/models"
+omc "${O5G_INSTALL_PATH}/models/makefmu.mos"
 
-chmod +x /workspace/digital_twins/o5g/runTessla.sh
+chmod +x "${O5G_INSTALL_PATH}/digital_twins/o5g/runTessla.sh"
 
-if [ "$SETUP_GRAFANA" = "true" ]; then
+if [ "$O5G_SETUP_GRAFANA" = "true" ]; then
 
   printf "Create Grafana datasource\n\n"
 
@@ -82,16 +25,16 @@ if [ "$SETUP_GRAFANA" = "true" ]; then
     \"name\": \"o5g_influx\",\
     \"type\": \"influxdb\",\
     \"access\": \"proxy\",\
-    \"url\": \"$INFLUX_SERVER\",\
+    \"url\": \"$O5G_INFLUX_SERVER\",\
     \"jsonData\": 
       { \"httpMode\":\"POST\",\
-        \"organization\":\"$INFLUX_ORG\",\
+        \"organization\":\"$O5G_INFLUX_ORG\",\
         \"version\":\"Flux\"\
       },\
     \"secureJsonData\":{\
-      \"token\":\"$INFLUX_TOKEN\"\
+      \"token\":\"$O5G_INFLUX_TOKEN\"\
     }\
-  }" "$GRAFANA_SERVER/api/datasources" | tee | jq -r '.datasource.uid')
+  }" "$O5G_GRAFANA_SERVER/api/datasources" | tee | jq -r '.datasource.uid')
 
   printf "Create Grafana visulization dashboard"
 
@@ -184,7 +127,7 @@ if [ "$SETUP_GRAFANA" = "true" ]; then
               \"type\": \"influxdb\",\
               \"uid\": \"$source_uid\"\
             },\
-            \"query\": \"from(bucket: \\\"$INFLUX_BUCKET\\\")\\r\\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\\r\\n  |> filter(fn: (r) =>\\r\\n    r._measurement == \\\"prediction\\\" and\\r\\n    r._field == \\\"air-remaining\\\"\\r\\n  )\",\
+            \"query\": \"from(bucket: \\\"$O5G_INFLUX_BUCKET\\\")\\r\\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\\r\\n  |> filter(fn: (r) =>\\r\\n    r._measurement == \\\"prediction\\\" and\\r\\n    r._field == \\\"air-remaining\\\"\\r\\n  )\",\
             \"refId\": \"A\"\
           }\
         ],\
@@ -195,8 +138,7 @@ if [ "$SETUP_GRAFANA" = "true" ]; then
     \"overwrite\": false\
   }}"
 
-  echo $data | curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $GRAFANA_TOKEN" -d @- "$GRAFANA_SERVER/api/dashboards/db"
+  echo $data | curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $O5G_GRAFANA_TOKEN" -d @- "$O5G_GRAFANA_SERVER/api/dashboards/db"
 
 fi
-
 printf "\n\nDone installing, use execute script to run digital twin \n"

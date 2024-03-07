@@ -1,0 +1,37 @@
+#!/bin/bash
+
+printf "Install apt dependencies \n"
+
+apt-get update
+apt-get install -y ca-certificates curl gnupg build-essential default-jre-headless cargo curl jq
+
+printf "Install OpenModelica \n"
+
+if dpkg -l | grep -qw "omc"; then
+  echo "OpenModelica is already installed"
+else
+  curl -fsSL http://build.openmodelica.org/apt/openmodelica.asc | gpg --dearmor -o /usr/share/keyrings/openmodelica-keyring.gpg
+  echo "deb [arch=amd64 signed-by=/usr/share/keyrings/openmodelica-keyring.gpg] \
+    https://build.openmodelica.org/apt \
+    $(cat /etc/os-release | grep "\(UBUNTU\\|DEBIAN\\|VERSION\)_CODENAME" | sort | cut -d= -f 2 | head -1) \
+    stable" | tee /etc/apt/sources.list.d/openmodelica.list
+  apt-get update && apt-get install --no-install-recommends omc
+fi
+
+printf "Install telegraf \n"
+
+if dpkg -l | grep -qw "telegraf"; then
+  echo "Telegraf is already installed"
+else
+  # influxdata-archive_compat.key GPG Fingerprint: 9D539D90D3328DC7D6C8D3B9D8FF8E1F7DF8B07E
+  curl -s https://repos.influxdata.com/influxdata-archive_compat.key > influxdata-archive_compat.key
+  echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+  echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
+  apt-get update && apt-get install telegraf
+  rm influxdata-archive_compat.key
+fi
+
+printf "Install required pip packages \n"
+
+# We expect pip to already be installed
+pip install numpy scipy networkx matplotlib fmpy pytest paho-mqtt

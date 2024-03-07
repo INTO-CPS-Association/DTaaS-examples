@@ -1,4 +1,8 @@
 #!/bin/bash
 
+if [ -z "$O5G_INSTALL_PATH" ]; then
+  O5G_INSTALL_PATH="/workspace/examples"
+fi
+
 printf "Cleaning temporary file"
-rm /workspace/digital\ twins/o5g/lifecycle/graph.json
+rm "${O5G_INSTALL_PATH}/digital_twins/o5g/lifecycle/graph.json"

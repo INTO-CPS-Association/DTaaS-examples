@@ -1,12 +1,15 @@
+import os
 import fmpy
 import numpy as np
 import matplotlib.pyplot as plt
 
+INSTALL_PATH = os.environ.get("O5G_INSTALL_PATH", "/workspace/examples")
+
 # Mock Path Data
 mock_path = [5, 3, 6, 2, 9, 3]
 
-# Load the FMU
-model = '/workspace/models/PathOxygenEstimate.fmu'
+# Path to the FMU
+model = INSTALL_PATH + '/models/PathOxygenEstimate.fmu'
 
 
 def calc_oxygen(path, debug=False, plot=False):
