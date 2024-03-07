@@ -38,21 +38,43 @@ The ```TwinManager``` is in charge of reading the values from
 the co-simulation output and the current state of the physical twins.
 
 ## Example Structure
-The example structure represents the components of the flex-cell DT implementation using the ```TwinManager``` architecture.
-A summary of the diagram is as follows:  
-The TwinManager orchestrates the flex-cell DT via the *Flex-cell DT System*, which is composed of 2 smaller Digital Twins, namely, the *DT UR5e* and the *DT Kuka lbr iiwa 7*.
-The TwinManager also provides the interface for the Physical Twins, namely, *PT UR5e* and *PT Kuka lbr iiwa 7*. Each Digital Twin and Digital Twin System has a particular endpoint (with a different specialization), which is initialized from configuration files and data model (twin schema).
-The Flex-cell DT System uses another configuration to be integrated with the Maestro co-simulation engine.
-The current endpoints used in this implementation are: Flex-cell DT System -> MaestroEndpoint, DT UR5e -> FMIEndpoint, DT Kuka lbr iiwa 7 -> FMIEndpoint, PT UR5e -> MQTT/RabbitMQEndpoint, PT Kuka lbr iiwa 7 -> MQTT/RabbitMQEndpoint.
 
-In the lower part, the Flex-cell System represents the composed physical twin, including the two robotic arms and controller and the Flex-cell Simulation is the mock-up representation for the real system, which is implemented by FMU blocks and their connections.
+The example structure represents the components of the flex-cell
+DT implementation using the ```TwinManager``` architecture.
 
+The TwinManager orchestrates the flex-cell DT via the *Flex-cell DT System*,
+which is composed of 2 smaller Digital Twins, namely, the *DT UR5e* and the *DT Kuka lbr iiwa 7*.
+The TwinManager also provides the interface for the Physical Twins,
+namely, *PT UR5e* and *PT Kuka lbr iiwa 7*. Each Physical Twin
+and Digital Twin System has a particular endpoint (with a different
+specialization), which is initialized from configuration files and
+data model (twin schema).
+
+The current endpoints used in this implementation are:
+
+| Digital or Physical Twin | Endpoint |
+|:---|:---|
+| Flex-cell DT System | MaestroEndpoint |
+| DT UR5e | FMIEndpoint |
+| DT Kuka lbr iiwa 7 | FMIEndpoint |
+| PT UR5e | MQTTEndpoint and RabbitMQEndpoint |
+| PT Kuka lbr iiwa 7 | MQTTEndpoint and RabbitMQEndpoint |
+
+The Flex-cell DT System uses another configuration to be integrated
+with the Maestro co-simulation engine.
+
+In the lower part, the Flex-cell System represents the composed
+physical twin, including the two robotic arms and controller and
+the Flex-cell Simulation is the mock-up representation for the real system,
+which is implemented by FMU blocks and their connections.
 
 ![Flex-cell system architecture with the TwinManager](dt-structure.png)
 
+![Internals of PT and DT](pt-dt-details.png)
+
 ## Digital Twin Configuration
 
-This example uses seven models, five tools, six data, two functions,
+This example uses seven models, five tools, six data files, two functions,
 and one script. The specific assets used are:
 
 | Asset Type | Names of Assets | Visibility | Reuse in Other Examples |
@@ -82,6 +104,7 @@ and one script. The specific assets used are:
 ## Lifecycle Phases
 
 The lifecycles that are covered include:
+
 1. Installation of dependencies in the create phase.
 2. Preparing the credentials for connections in the prepare phase.
 3. Execution of the experiment in the execution phase.
@@ -176,8 +199,13 @@ The TwinManager executes the flex-cell digital twin and produces output
 in ```data/flex-cell/output/saved_experiments``` directory.
 
 ```bash
-lifecycle/execute
+lifecycle/save
 ```
+
+The `execute` and `save` scripts can be executed in that order any number of
+times. A new file ```data/flex-cell/output/saved_experiments``` directory
+with each iteration.
+
 
 ### Analyze
 
@@ -239,7 +267,8 @@ When connected to the real robots, the tools ```urinterface``` and
 github repository contains complete documentation and source code of
 the rmq-vhost.fmu.
 
-More information about the TwinManager (formerly DT Manager) and the case study is available in:
+More information about the TwinManager (formerly DT Manager) and
+the case study is available in:
 
 1. D. Lehner, S. Gil, P. H. Mikkelsen, P. G. Larsen and M. Wimmer, "An Architectural Extension for Digital Twin Platforms to Leverage Behavioral Models," 2023 IEEE 19th International Conference on Automation Science and Engineering (CASE), Auckland, New Zealand, 2023, pp. 1-8, doi: 10.1109/CASE56687.2023.10260417.
 2. S. Gil, P. H. Mikkelsen, D. Tola, C. Schou and P. G. Larsen, "A Modeling Approach for Composed Digital Twins in Cooperative Systems," 2023 IEEE 28th International Conference on Emerging Technologies and Factory Automation (ETFA), Sinaia, Romania, 2023, pp. 1-8, doi: 10.1109/ETFA54631.2023.10275601.
