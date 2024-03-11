@@ -3,7 +3,7 @@ from pyhocon import HOCONConverter
 import xml.etree.ElementTree as ET
 
 
-conf = ConfigFactory.parse_file('/workspace/examples/data/flex-cell/connections.conf')
+conf = ConfigFactory.parse_file('/workspace/examples/data/flex-cell/input/connections.conf')
 rabbitmq_host = conf.get_string('rabbitmq.hostname')
 rabbitmq_port = conf.get_int('rabbitmq.port')
 rabbitmq_username = conf.get_string('rabbitmq.username')

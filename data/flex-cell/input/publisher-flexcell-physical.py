@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from robots_flexcell import robots
-#import kukalbrinterface
-#import urinterface.robot_connection as urconn
+import kukalbrinterface
+import urinterface.robot_connection as urconn
 import paho.mqtt.client as mqtt
 import socket
 import numpy as np
@@ -26,7 +26,7 @@ use_real_robots = False
 mqtt_enabled = False
 
 ### pyhocon
-conf = ConfigFactory.parse_file('/workspace/examples/data/flex-cell/connections.conf')
+conf = ConfigFactory.parse_file('/workspace/examples/data/flex-cell/input/connections.conf')
 rabbitmq_host = conf.get_string('rabbitmq.hostname')
 rabbitmq_port = conf.get_int('rabbitmq.port')
 rabbitmq_username = conf.get_string('rabbitmq.username')
@@ -41,7 +41,7 @@ mqtt_password = conf.get_string('mqtt.password')
 '''if use_real_robots:
     # Kuka
     kuka_f_name = "kukalbriiwa7_actual.csv"
-    kuka_filename = "/workspace/examples/data/flex-cell/output/physical_twin/" + kuka_f_name
+    kuka_filename = "/workspace/examples/data/flex-cell/input/physical_twin/" + kuka_f_name
     kuka_robot = kukalbrinterface.RobotConnection("192.168.1.3",enabled_mqtt=mqtt_enabled,filename=kuka_filename)
     #kuka_robot.set_speed(0.01)
     # UR5e
@@ -51,7 +51,7 @@ mqtt_password = conf.get_string('mqtt.password')
 
     ur5e_robot = urconn.RobotConnection(ur5e_ip,controller_socket=ur5e_controller_socket,dashboard_socket=ur5e_dashboard_socket) # Establish dashboard connection (port 29999) and controller connection (port 30002)
     f_name = "ur5e_actual.csv"
-    filename = "/workspace/examples/data/flex-cell/output/physical_twin/" + f_name
+    filename = "/workspace/examples/data/flex-cell/input/physical_twin/" + f_name
     config_file =  "/workspace/examples/tools/flex-cell/resources/record_configuration.xml"
     ur5e_robot.start_recording(filename=filename, overwrite=True, frequency=50, config_file=config_file)
     if mqtt_enabled:
