@@ -132,18 +132,43 @@ def runScenario(event):
         time.sleep(0.1)
     event.set()
 
+def ensureNuRVRunning():
+    # Start omniNames
+    omniNamesProcess = None
+    nurvProcess = None
+    connectionEstablished = False
+    while not connectionEstablished:
+        try:
+            omniNamesProcess, ior = startOmniNames()
+            time.sleep(2)
+            # Start NuRV
+            nurvProcess, service = startNuRV(ior)
+            time.sleep(2)
+            result = service.heartbeat(to_any(0), "!anomaly & !energy_saving")
+            if verdictEnumToString(result) == "True":
+                connectionEstablished = True
+                print("Established connection with NuRV")
+                service.reset(to_any(0), False)
+                return omniNamesProcess, nurvProcess, service
+        except:
+            print("Failed to establish connection with NuRV. Retrying...")
+            if nurvProcess is not None:
+                nurvProcess.kill()
+                nurvProcess.wait()
+            if omniNamesProcess is not None:
+                omniNamesProcess.kill()
+                omniNamesProcess.wait()
+            time.sleep(1)
+
 if __name__ == "__main__":
 
     omniNamesProcess = None
     nurvProcess = None
     rabbitMq = None
     incubatorProcess = None
+    scenario_thread = None
     try:
-        # Start omniNames
-        omniNamesProcess, ior = startOmniNames()
-        # Start NuRV
-        nurvProcess, service = startNuRV(ior)
-        time.sleep(5)
+        omniNamesProcess, nurvProcess, service = ensureNuRVRunning()
         # Start incubator
         incubatorProcess = startIncubator()
         message = {}
@@ -167,12 +192,17 @@ if __name__ == "__main__":
         rabbitMq = startRabbitMQ(handleMessage)
         event = Event()
         scenario_thread = Thread(target=runScenario, args=(event,))
+        # Wait to ensure incubator running
+        #time.sleep(1)
         scenario_thread.start()
         rabbitMq.start_consuming()
         print("Finished simulation")
+    except KeyboardInterrupt:
+        event.set()
+        print("Stopping simulation...")
     except:
         event.set()
-        print("An error has occured")
+        print("An error has occurred")
     finally:
         if nurvProcess:
             print(f"Stopping nurvProcess with pid: {nurvProcess.pid}")
@@ -194,4 +224,5 @@ if __name__ == "__main__":
             # except:
             #     _ = 1
         os.system("pkill -f \"python -m startup.start_all_services\"")
-        scenario_thread.join()
+        if scenario_thread is not None:
+            scenario_thread.join()
