@@ -50,7 +50,7 @@ Then, first execute the _create_ script (this can take a few mins depending on y
 lifecycle/{script}
 ```
 
-The _execute_ script will then start outputting system states and the monitor verdict approx every 3 seconds. The output is printed as follows $State: {anomaly state} & {energy_saving state}, verdict: {Verdict}$ where "anomaly" indicates that an anomaly is detected and "!anomaly" indicates that an anomaly is not currently detected. The same format is used for the energy_saving state.
+The _execute_ script will then start outputting system states and the monitor verdict approx every 3 seconds. The output is printed as follows "__State: {anomaly state} & {energy_saving state}, verdict: {Verdict}__" where "_anomaly_" indicates that an anomaly is detected and "!anomaly" indicates that an anomaly is not currently detected. The same format is used for the energy_saving state.
 The monitor verdict can be True, False or Unknown, where the latter indicates that the monitor does not yet have sufficient information to determine the satisfaction of the property.
 
 There is currently some startup issues with connecting to the NuRV server, and it will likely take a few tries before the connection is established. This is however handled automatically.
@@ -58,4 +58,5 @@ There is currently some startup issues with connecting to the NuRV server, and i
 ## References
 
 [1]: Information on the NuRV monitor can be found here: https://es-static.fbk.eu/tools/nurv/
+
 [2]: The code used to simulate the Incubator can be found here: [https://github.com/INTO-CPS-Association/example_digital-twin_incubator/](https://github.com/INTO-CPS-Association/example_digital-twin_incubator/) (commit 989ccf5).
