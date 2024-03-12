@@ -119,7 +119,7 @@ tmux a -t o5g
 ```
 To detatch press `Ctrl-b` followed by `d`.
 
-![](img/o5g_running_screenshot)
+![](img/o5g_running_screenshot.png)
 
 The Tmux session contains 4 components of the Example
  - Top Left: Sensor simulator generating random location and O2-level data
