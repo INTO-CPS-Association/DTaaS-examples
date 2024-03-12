@@ -6,3 +6,4 @@ venv
 *.pyc
 *.log
 simulation.conf
+__pycache__
