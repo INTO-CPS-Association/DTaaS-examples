@@ -37,3 +37,7 @@
 # Temporary files
 .workspace
 .virtual_documents
+
+**/simulation.conf
+
+**/.venv
