@@ -8,7 +8,7 @@ This example demonstrates how a runtime monitoring service (in this example NuRV
 
 This example simulates a scenario where the lid of the Incubator is removed and later put back on. The Incubator is equipped with anomaly detection capabilities, which can detect anomalous behavior (i.e. the removal of the lid). When an anomaly is detected, the Incubator then triggers an energy saving mode where the heater is turned off. 
 
-From a monitoring perspective, we wish to verify that within 3 simulation steps of an anomaly detection, the energy saving mode is turned on. To verify this behavior, we construct the property: $anomaly \rightarrow (F [ 0, 3 ] energy\_saving)$. Whenever a True or False verdict is produced by the monitor, it is reset, allowing for the detection of repeated satisfaction/violation detections of the property.
+From a monitoring perspective, we wish to verify that within 3 simulation steps of an anomaly detection, the energy saving mode is turned on. To verify this behavior, we construct the property: $`anomaly \rightarrow (F_{[0,3]}\space energy\_saving)`$. Whenever a True or False verdict is produced by the monitor, it is reset, allowing for the detection of repeated satisfaction/violation detections of the property.
 
 The simulated scenario progresses as follows:
 
@@ -20,7 +20,7 @@ The simulated scenario progresses as follows:
 
 ## Digital Twin configuration
 
-Before running the example, please configure the _simulation.conf_ file (located in /digital_twins/incubator-monitor-server/incubator/) with your RabbitMQ credentials and address to your RabbitMQ instance (vhost is also required).
+Before running the example, please configure the _simulation.conf_ file (located in _/digital_twins/incubator-monitor-server/incubator/_) with your RabbitMQ credentials and address to your RabbitMQ instance (vhost is also required).
 
 ## Lifecycle phases
 
