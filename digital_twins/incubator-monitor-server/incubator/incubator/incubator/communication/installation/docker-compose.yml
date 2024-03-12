@@ -1,0 +1,11 @@
+version: '3.0'
+
+services:
+  rabbitmq:
+    container_name: rabbitmq-server
+    image: rabbitmq
+    build : ./
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 1883:1883

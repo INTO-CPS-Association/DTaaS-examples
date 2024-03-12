@@ -1,0 +1,4 @@
+#!/bin/bash
+source .venv/bin/activate
+export LD_LIBRARY_PATH=/workspace/examples/digital_twins/incubator-monitor-server/.venv/lib/python3.8/site-packages/omniorb_py.libs:$LD_LIBRARY_PATH
+python ./lifecycle/execute.py

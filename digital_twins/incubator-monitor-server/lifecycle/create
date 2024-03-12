@@ -1,0 +1,19 @@
+#!/bin/bash
+# install packages from Alberto
+cd orbit2 && dpkg -i *.deb; apt install -fy
+cd ..
+
+pip install omniorb-py
+
+# create .orbitrc file with correct contents
+echo -e "ORBIIOPUSock=1\\nORBIIOPIPv4=1\\nORBIIOPIPv6=0" > $HOME/.orbitrc
+
+# download NuRV tool
+curl -o ../../tools/NuRV.tar.bz2 "https://es-static.fbk.eu/tools/nurv/releases/NuRV-2.0.0-linuxx64.tar.bz2"
+tar xjf ../../tools/NuRV.tar.bz2 -C ../../tools/
+rm ../../tools/NuRV.tar.bz2
+mv ../../tools/NuRV-2.0.0-linuxx64 ../../tools/NuRV
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r ./incubator/incubator/requirements.txt -r requirements.txt
