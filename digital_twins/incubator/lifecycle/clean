@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# Go to lifecycle dir
-cd "$(dirname "${BASH_SOURCE[0]}")"
+# Go to Incubator path
+: ${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
+echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
+cd "${INCUBATOR_PATH}"
 
-rm ../incubator/log.log
+rm log.log
 
 echo "Removed log file"
