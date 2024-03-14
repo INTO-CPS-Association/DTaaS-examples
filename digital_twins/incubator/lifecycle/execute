@@ -1,12 +1,9 @@
 #!/bin/bash
 
-# Go to lifecycle dir and source venv
-cd "$(dirname "${BASH_SOURCE[0]}")"
-source ../.venv/bin/activate
-
 # Go to Incubator path
 : ${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
 echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
 cd "${INCUBATOR_PATH}"
 
+source .venv/bin/activate
 python -m startup.start_all_services
