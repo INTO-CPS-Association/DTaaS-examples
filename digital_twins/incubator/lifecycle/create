@@ -24,6 +24,9 @@ check_binary "python3-pip"
 check_binary "python3-venv"
 pip install wheel
 
+# Base relative paths off lifecycle dir
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
 # Go to Incubator path
 : ${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
 echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
