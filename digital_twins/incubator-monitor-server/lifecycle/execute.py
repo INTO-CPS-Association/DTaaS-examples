@@ -1,6 +1,6 @@
 import subprocess, os, time, sys, time
-incubator_location = "../../common/digital_twins/incubator"
-sys.path.append(os.path.join(os.getcwd() + f"/{incubator_location}/incubator"))
+incubator_location = os.getenv("INCUBATOR_PATH")
+sys.path.append(os.path.join(os.getcwd() + f"/{incubator_location}"))
 from threading import Thread, Event
 from omniORB import CORBA
 from omniORB.any import to_any
@@ -13,14 +13,15 @@ from digital_twin.communication.rabbitmq_protocol import ROUTING_KEY_ENERGY_SAVE
 
 def startNuRV(ior):
     # overwrite relevant commands
-    with open(os.getcwd() + "/commands", "r+") as f:
+    with open(os.getcwd() + "/../commands", "r+") as f:
         lines = f.readlines()
         lines[-1] = f"monitor_server -N {ior}"
         f.seek(0)
         f.writelines(lines)
         f.close()
     # Start NuRV monitor server    
-    nurvProcess = subprocess.Popen("exec /workspace/examples/tools/NuRV/NuRV_orbit -source commands safe-operation.smv", shell=True, cwd=os.getcwd(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    nurvPath = os.getenv("NURV_PATH")
+    nurvProcess = subprocess.Popen(f"exec {nurvPath}/NuRV_orbit -source ../commands ../safe-operation.smv", shell=True, cwd=os.getcwd(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     while True:
         output = nurvProcess.stdout.readline()
         if output == "" and nurvProcess.poll() is not None:
@@ -57,9 +58,9 @@ def startNuRV(ior):
 
 
 def startOmniNames():
-    if not os.path.exists("data"):
-        os.system("mkdir data")
-    cmd = "exec omniNames -datadir ./data -start -always"
+    if not os.path.exists("../data"):
+        os.system("mkdir ../data")
+    cmd = "exec omniNames -datadir ../data -start -always"
     omniNamesProcess = subprocess.Popen(cmd, shell=True, cwd=os.getcwd(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     ior = ""
     while True:
@@ -88,7 +89,7 @@ def startRabbitMQ(message_callback):
 
 def startIncubator():
     print("Starting incubator")
-    incubatorProcess = subprocess.Popen(f"cd {incubator_location}/incubator/; exec python -m startup.start_all_services", shell=True, cwd=os.getcwd(), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    incubatorProcess = subprocess.Popen(f"cd {incubator_location}/; exec python -m startup.start_all_services", shell=True, cwd=os.getcwd(), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
     time.sleep(5)
     result = incubatorProcess.poll()
     if result is not None:
@@ -103,29 +104,29 @@ def verdictEnumToString(verdict):
 
 def runScenario(event):
     print("Running scenario with initial state: lid closed and energy saver on", flush=True)
-    os.system(f"cd {incubator_location}/incubator; python -m cli.trigger_energy_saver")
-    os.system(f"cd {incubator_location}/incubator; python -m cli.mess_with_lid_mock 1")
+    os.system(f"cd {incubator_location}; python -m cli.trigger_energy_saver")
+    os.system(f"cd {incubator_location}; python -m cli.mess_with_lid_mock 1")
     for i in range(1200): # wait 2 minutes
         if event.is_set():
             return
         time.sleep(0.1)
     
     print("Opening lid...", flush=True)
-    os.system(f"cd {incubator_location}/incubator; python -m cli.mess_with_lid_mock 100")
+    os.system(f"cd {incubator_location}; python -m cli.mess_with_lid_mock 100")
     for i in range(300): # wait 30 seconds
         if event.is_set():
             return
         time.sleep(0.1)
     
     print("Disabling energy saver...", flush=True)
-    os.system(f"cd {incubator_location}/incubator; python -m cli.trigger_energy_saver --disable")
+    os.system(f"cd {incubator_location}; python -m cli.trigger_energy_saver --disable")
     for i in range(300):
         if event.is_set():
             return
         time.sleep(0.1)
     
     print("Putting lid back on...", flush=True)
-    os.system((f"cd {incubator_location}/incubator; python -m cli.mess_with_lid_mock 1"))
+    os.system((f"cd {incubator_location}; python -m cli.mess_with_lid_mock 1"))
     for i in range(300): # wait for the anomaly detection to determine that the lid is back on
         if event.is_set():
             return
