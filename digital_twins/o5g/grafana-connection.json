@@ -1,0 +1,14 @@
+{
+  "name": "o5g_influx",
+  "type": "influxdb",
+  "access": "proxy",
+  "url": "$O5G_INFLUX_SERVER",
+  "jsonData":
+    { "httpMode":"POST",
+      "organization":"$O5G_INFLUX_ORG",
+      "version":"Flux"
+    },
+  "secureJsonData":{
+    "token":"$O5G_INFLUX_TOKEN"
+  }
+}
