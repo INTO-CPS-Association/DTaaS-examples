@@ -41,3 +41,5 @@
 **/simulation.conf
 
 **/.venv
+
+**/__pycache__

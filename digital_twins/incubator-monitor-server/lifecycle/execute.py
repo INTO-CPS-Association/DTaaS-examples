@@ -1,6 +1,6 @@
 import subprocess, os, time, sys, time
-sys.path.append(os.path.join(os.getcwd() + "/incubator/incubator"))
-
+incubator_location = "../../common/digital_twins/incubator"
+sys.path.append(os.path.join(os.getcwd() + f"/{incubator_location}/incubator"))
 from threading import Thread, Event
 from omniORB import CORBA
 from omniORB.any import to_any
@@ -77,7 +77,7 @@ def startOmniNames():
 
 
 def startRabbitMQ(message_callback):
-    config = load_config("./incubator/simulation.conf")
+    config = load_config(f"{incubator_location}/simulation.conf")
     rabbitMq = Rabbitmq(**config["rabbitmq"])
     rabbitMq.connect_to_server()
     print("Connected to rabbitmq server.")
@@ -88,7 +88,7 @@ def startRabbitMQ(message_callback):
 
 def startIncubator():
     print("Starting incubator")
-    incubatorProcess = subprocess.Popen("cd incubator/incubator/; exec python -m startup.start_all_services", shell=True, cwd=os.getcwd(), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    incubatorProcess = subprocess.Popen(f"cd {incubator_location}/incubator/; exec python -m startup.start_all_services", shell=True, cwd=os.getcwd(), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
     time.sleep(5)
     result = incubatorProcess.poll()
     if result is not None:
@@ -103,29 +103,29 @@ def verdictEnumToString(verdict):
 
 def runScenario(event):
     print("Running scenario with initial state: lid closed and energy saver on", flush=True)
-    os.system("cd incubator/incubator; python -m cli.trigger_energy_saver")
-    os.system("cd incubator/incubator; python -m cli.mess_with_lid_mock 1")
+    os.system(f"cd {incubator_location}/incubator; python -m cli.trigger_energy_saver")
+    os.system(f"cd {incubator_location}/incubator; python -m cli.mess_with_lid_mock 1")
     for i in range(1200): # wait 2 minutes
         if event.is_set():
             return
         time.sleep(0.1)
     
     print("Opening lid...", flush=True)
-    os.system("cd incubator/incubator; python -m cli.mess_with_lid_mock 100")
+    os.system(f"cd {incubator_location}/incubator; python -m cli.mess_with_lid_mock 100")
     for i in range(300): # wait 30 seconds
         if event.is_set():
             return
         time.sleep(0.1)
     
     print("Disabling energy saver...", flush=True)
-    os.system("cd incubator/incubator; python -m cli.trigger_energy_saver --disable")
+    os.system(f"cd {incubator_location}/incubator; python -m cli.trigger_energy_saver --disable")
     for i in range(300):
         if event.is_set():
             return
         time.sleep(0.1)
     
     print("Putting lid back on...", flush=True)
-    os.system(("cd incubator/incubator; python -m cli.mess_with_lid_mock 1"))
+    os.system((f"cd {incubator_location}/incubator; python -m cli.mess_with_lid_mock 1"))
     for i in range(300): # wait for the anomaly detection to determine that the lid is back on
         if event.is_set():
             return
@@ -159,6 +159,7 @@ def ensureNuRVRunning():
                 omniNamesProcess.kill()
                 omniNamesProcess.wait()
             time.sleep(1)
+
 
 if __name__ == "__main__":
 
@@ -218,11 +219,6 @@ if __name__ == "__main__":
             print(f"Stopping incubator with pid: {incubatorProcess.pid}")
             incubatorProcess.kill()
             incubatorProcess.wait()
-            # try:
-            #     (incubator_output_stdout, std_err) = incubatorProcess.communicate(timeout=2)
-            #     print(incubator_output_stdout)
-            # except:
-            #     _ = 1
         os.system("pkill -f \"python -m startup.start_all_services\"")
         if scenario_thread is not None:
             scenario_thread.join()

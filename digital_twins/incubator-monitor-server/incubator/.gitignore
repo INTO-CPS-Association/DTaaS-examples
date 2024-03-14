@@ -1,9 +1,0 @@
-/incubator/digital_twin/data_access/influxdbserver/influxdb
-.venv
-venv
-.vscode
-.idea
-*.pyc
-*.log
-simulation.conf
-__pycache__
