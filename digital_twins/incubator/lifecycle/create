@@ -30,4 +30,10 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 # Create a virtual environment and install packages
 python3 -m venv ../.venv
 source ../.venv/bin/activate
-pip install -r ../incubator/requirements.txt
+
+# Go to Incubator path
+: ${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
+echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
+cd "${INCUBATOR_PATH}"
+
+pip install -r requirements.txt
