@@ -20,7 +20,7 @@ The simulated scenario progresses as follows:
 
 ## Digital Twin configuration
 
-Before running the example, please configure the _simulation.conf_ file (located in _/digital_twins/incubator-monitor-server/incubator/_) with your RabbitMQ credentials and address to your RabbitMQ instance (vhost is also required).
+Before running the example, please configure the _simulation.conf_ file (located in _common/digital_twins/incubator/_) with your RabbitMQ credentials and address to your RabbitMQ instance (vhost is also required).
 
 ## Lifecycle phases
 
@@ -28,9 +28,9 @@ The lifecycle phases for this example include:
 
 | Lifecycle phase | Completed tasks |
 | ------ | ------- |
-| Create    | Downloads the necessary tools and creates a virtual python environment with the necessary dependencies |
-| Execute   | Runs a python script that starts up the necessary services as well as the Incubator simulation. Various status messages are printed to the console, including the monitored system states and monitor verdict. |
-| Clean     | Removes created _data_ directory. |
+| create    | Downloads the necessary tools and creates a virtual python environment with the necessary dependencies |
+| execute   | Runs a python script that starts up the necessary services as well as the Incubator simulation. Various status messages are printed to the console, including the monitored system states and monitor verdict. |
+| clean     | Removes created _data_ directory and cleans up incubator log files.|
 
 If required, change the execute permissions of lifecycle scripts you need to execute. This can be done using the following command 
 ```bash
