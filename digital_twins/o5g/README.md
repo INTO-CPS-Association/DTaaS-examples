@@ -43,6 +43,10 @@ a warning if it drops under a certain threshold.
 
 This example is an implementation of the the paper [_Digital Twin for Rescue Missions--a Case Study_](https://ceur-ws.org/Vol-3507/paper4.pdf) by Leucker et al.
 
+The digital twin is executed in the user workspace and integrate the platform services provided by the DTaaS. The location of execution for DT inside the DTaaS platform is shown in the figure.
+
+![Digital Twin in User Workspace](img/dt-in-workspace.png)
+
 ### Quick Check
 
 Before runnnig this example please make sure the following files are at the correct locations:
