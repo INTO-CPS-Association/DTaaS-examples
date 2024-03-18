@@ -21,7 +21,7 @@ public class TankMainDTaaS {
 	public static void main(String[] args) {
 		//LogManager.shutdown();
 
-		TwinSchema schema = new TwinSchema(modelFolderPrefix+"TankSystem.aasx","TankSystem_AAS");
+		TwinSchema schema = TwinSchema.initializeFromAASX(modelFolderPrefix+"TankSystem.aasx","TankSystem_AAS");
 		TwinConfiguration tank1Config = new TwinConfiguration(dtFolderPrefix+"tank1.conf");
 		TwinConfiguration tank2Config = new TwinConfiguration(dtFolderPrefix+"tank2.conf");
 		TwinConfiguration tank3Config = new TwinConfiguration(dtFolderPrefix+"tank3.conf");
