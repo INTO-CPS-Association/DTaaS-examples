@@ -37,3 +37,7 @@
 # Temporary files
 .workspace
 .virtual_documents
+
+# Python virtual environments and temporary files
+**/.venv
+**/__pycache__
