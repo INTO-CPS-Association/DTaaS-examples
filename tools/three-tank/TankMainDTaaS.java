@@ -43,7 +43,7 @@ public class TankMainDTaaS {
 		
 		List<Object> arguments = new ArrayList<Object>();
 		arguments.add(0.0);
-		twinManager.executeOperationOnSystem("initializeSimulation", arguments, "TankSystem");
+		twinManager.executeOperationOnSystem("initializeSimulation", arguments, "ThreeTankSystem");
 		
 		twinManager.setAttributeValue("Level", 2.0, "tank1");
 		twinManager.setAttributeValue("DerLevel", 0.1, "tank1");
@@ -59,15 +59,15 @@ public class TankMainDTaaS {
 		Object levelTank3 = twinManager.getAttributeValue("Level","tank3");
 
 		
-		Object tank3Level = twinManager.getSystemAttributeValue("{tank}.tank3.level", "TankSystem");
-		tank3Level = twinManager.getSystemAttributeValue("Level", "TankSystem","tank3");
-		twinManager.setSystemAttributeValue("{tank}.tank1.level", 3.0, "TankSystem");
-		twinManager.setSystemAttributeValue("{tank}.tank2.level", 10.0, "TankSystem");
-		twinManager.setSystemAttributeValue("Level", 35.0, "TankSystem","tank3");
-		twinManager.setSystemAttributeValue("Level", 2.0, "TankSystem","tank1");
+		Object tank3Level = twinManager.getSystemAttributeValue("{tank}.tank3.level", "ThreeTankSystem");
+		tank3Level = twinManager.getSystemAttributeValue("Level", "ThreeTankSystem","tank3");
+		twinManager.setSystemAttributeValue("{tank}.tank1.level", 3.0, "ThreeTankSystem");
+		twinManager.setSystemAttributeValue("{tank}.tank2.level", 10.0, "ThreeTankSystem");
+		twinManager.setSystemAttributeValue("Level", 35.0, "ThreeTankSystem","tank3");
+		twinManager.setSystemAttributeValue("Level", 2.0, "ThreeTankSystem","tank1");
 		
-		//twinManager.executeOperationOnSystem("doStep", null, "TankSystem");
-		tank3Level = twinManager.getSystemAttributeValue("Level", "TankSystem","tank3"); 
+		//twinManager.executeOperationOnSystem("doStep", null, "ThreeTankSystem");
+		tank3Level = twinManager.getSystemAttributeValue("Level", "ThreeTankSystem","tank3"); 
 		System.out.println(tank3Level.toString());
 
 		
