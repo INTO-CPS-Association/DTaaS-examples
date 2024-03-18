@@ -14,13 +14,14 @@ This example contains only the simulated components for
 demonstration purposes; therefore, there is no configuration for
 the connection with the physical system.
 
-The three-tank system case study is managed using the ```DTManager```,
+The three-tank system case study is managed using the `TwinManager`
+(formerly `DT Manager`),
 which is packed as a jar library in the tools, and run from a java main file.
-The ```DTManager``` uses Maestro as a slave for co-simulation,
+The ```TwinManager``` uses Maestro as a slave for co-simulation,
 so it generates the output of the co-simulation.
 
 The main file can be changed according to the application scope, i.e.,
-the ```/workspace/examples/tools/three-tank/TankMain.java```
+the ```/workspace/examples/tools/three-tank/TankMainDTaaS.java```
 can be manipulated to get a different result.
 
 The ```/workspace/examples/models/three-tank/``` folder contains
@@ -29,12 +30,12 @@ with input and output and the ```TankSystem.aasx``` file for
 the schema representation with Asset Administration Shell.
 The three instances use the same ```.fmu``` file and the same schema
 due to being of the same object class.
-The ```DTManager``` is in charge of reading the values from
+The ```TwinManager``` is in charge of reading the values from
 the co-simulation output.
 
 ## Example Structure
 
-![Three-tank system architecture with DT Manager](./dt-structure.png)
+![Three-tank system architecture with TwinManager](./dt-structure.png)
 
 ## Digital Twin Configuration
 
@@ -45,9 +46,9 @@ The specific assets used are:
 |:---|:---|:---|:---|
 | Model | Linear.fmu | Private | No |
 |  | TankSystem.aasx | Private | No |
-| Tool | DTManager-0.0.1-Maestro.jar (wraps Maestro) | Common | Yes |
-|  | maestro-2.3.0-jar-with-dependencies.jar (used by DTManager) | Common | Yes |
-|  | TankMain.java (main script) | Private | No |
+| Tool | TwinManagerFramework-0.0.2.jar | Common | Yes |
+|  | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+|  | TankMainDTaaS.java (main script) | Private | No |
 | Data | outputs.csv | Private | No |
 
 This DT has multiple configuration files. The _coe.json_ and
@@ -62,7 +63,7 @@ The lifecycles that are covered include:
 | Lifecycle Phase    | Completed Tasks |
 | --------- | ------- |
 | Create    | Installs Java Development Kit for Maestro tool                                                                    |
-| Execute   | The DT Manager executes the three-tank digital twin and produces output in ```data/three-tank/output``` directory |
+| Execute   | The TwinManager executes the three-tank digital twin and produces output in ```data/three-tank/output``` directory |
 | Terminate | Terminating the background processes and cleaning up the output                                                   |
 
 ## Run the example
@@ -80,8 +81,9 @@ you need to execute, for example:
 chmod +x lifecycle/create
 ```
 
-This example requires Java 11. The **create** script installs Java 11;
-however if you have already installed other Java versions, your default _java_
+The **create** script installs the default Java runtime environment.
+Java 11 or a newer version is required.
+If you have already installed other Java versions, your default _java_
 might be pointing to another version. You can check and modify the default
 version using the following commands.
 
@@ -94,8 +96,8 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 11 and pip dependencies.
-Also creates ```DTManager``` tool (DTManager-0.0.1-Maestro.jar) from source code.
+Creates ```TwinManager``` tool (TwinManagerFramework-0.0.2.jar) from source code and directories.
+It also installs the requirements for Java and Maven.
 
 ```bash
 lifecycle/create
@@ -103,7 +105,7 @@ lifecycle/create
 
 ### Execute
 
-Execute the three-tank digital twin using DTManager. DTManager in-turn runs
+Execute the three-tank digital twin using TwinManager. TwinManager in-turn runs
 the co-simulation using Maestro. Generates the co-simulation output.csv file
 at `/workspace/examples/data/three-tank/output`.
 
@@ -132,7 +134,7 @@ lifecycle/terminate
 
 Executing this Digital Twin will generate a co-simulation output,
 but the results can also be monitored from updating
-the```/workspace/examples/tools/three-tank/TankMain.java``` with
+the```/workspace/examples/tools/three-tank/TankMainDTaaS.java``` with
 a specific set of ```getAttributeValue``` commands, such as shown in
 the code.
 
@@ -152,7 +154,7 @@ No data from the physical twin are generated/used.
 
 ## References
 
-More information about the DT Manager is available at:
+More information about the TwinManager is available at:
 
 ```txt
 D. Lehner, S. Gil, P. H. Mikkelsen, P. G. Larsen and M. Wimmer,
