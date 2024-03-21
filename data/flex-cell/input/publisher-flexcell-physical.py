@@ -216,7 +216,7 @@ if __name__ == '__main__':
     try:
         # MQTT
         mqtt_client.username_pw_set(username=mqtt_username, password=mqtt_password)
-        mqtt_client.connect(mqtt_broker_ip, mqtt_broker_port, 60)
+        mqtt_client.connect(mqtt_host, mqtt_port, 60)
         
         # RabbitMQ
         channel.basic_consume(
