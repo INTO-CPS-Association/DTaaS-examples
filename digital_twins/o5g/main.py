@@ -16,21 +16,22 @@ MQTT_PASS = os.environ['O5G_MQTT_PASS']
 MQTT_TOPIC_SENSOR = os.environ['O5G_MQTT_TOPIC_SENSOR']
 MQTT_TOPIC_AIR_PREDICTION = os.environ['O5G_MQTT_TOPIC_AIR_PREDICTION']
 
-model_path = INSTALL_PATH + '/models'
-sys.path.append(model_path)
-print(f"Importing models from {model_path}")
-from pathToTime import calc_oxygen
-from graphToPath import calculate_shortest_path
+tool_path = INSTALL_PATH + '/tools'
+sys.path.append(tool_path)
+print(f"Importing tools from {tool_path}")
+from path2Time import calc_oxygen
+from graph2Path import calculate_shortest_path
 
-converter_exec = os.path.join(INSTALL_PATH, 'tools/ifc_to_graph')
-ifc_file = os.path.join(INSTALL_PATH, 'data/lab.ifc')
+
+converter_exec = os.path.join(INSTALL_PATH, 'tools/ifc2graph')
+ifc_file = os.path.join(INSTALL_PATH, 'models/lab.ifc')
 output_file = 'graph.json'
 
-graph_script = os.path.join(INSTALL_PATH, 'models/graphToPath.py')
-test_fmu = os.path.join(INSTALL_PATH, 'models/pathToTime.py')
+graph_script = os.path.join(INSTALL_PATH, 'tools/graphToPath.py')
+test_fmu = os.path.join(INSTALL_PATH, 'tools/pathToTime.py')
 # [Lat, Lon, Elevation]
 start_position = np.array([42, 0, 6])
-end_node = 0  # ToDo: Find all end nodes automatically and find the minimal shortest path
+end_node = 0 
 
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -67,7 +68,6 @@ def on_message(client, userdata, msg):
         result = {}
         result['air-supply'] = {}
         result['air-supply']['remaining'] = calc_oxygen([route_dist])
-        # print(f"Final integer value from Test.fmu: {result['air-supply']['remaining']}")
 
         # publish the new value to the output topic
         result_topic = MQTT_TOPIC_AIR_PREDICTION

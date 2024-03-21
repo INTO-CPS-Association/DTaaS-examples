@@ -29,8 +29,8 @@ def main() -> int:
   # nur einleifern, brauchen wir die loop ?
   uemep.loop_start()
 
-  # endLoopmuss nicht syncronisiert werden.
-  #  Es ist egal ob nun eine Metric mehroderweniger angeliefert wird
+  # endLoopmuss does not have to be synchronised
+  #   It doesn't matter whether one metric more or less is delivered
   iot_data = {  'measurements': {  'measurements': [  {  'channelIndex': 0
                                                        , 'timestamp':    0
                                                        , 'gasName':      "ch4"
@@ -63,7 +63,7 @@ def main() -> int:
               , 'device':  uesnr
              }
   while (endLoop == 0):
-    # Der Gas Sensor bewegt sich
+    # movement of the firefighter
     iot_data['measurements']['position']['latitude']  = random.uniform(1, 58)
     iot_data['measurements']['position']['longitude'] = random.uniform(1, 9)
     iot_data['measurements']['position']['elevation'] = random.choice([-3, 0, 3, 6])
@@ -71,7 +71,7 @@ def main() -> int:
       metric['value']['value'] = metric['value']['value'] + (random.random()-0.5)
       metric['timestamp']      = int(datetime.now().strftime("%s"))
 
-    # telegraf muss dan auf vgiot/ue/#/metric subscriben
+    # telegraf must subscribe vgiot/ue/#/metric
     topic = MQTT_TOPIC_SENSOR + '/' + uesnr
     uemep.publish(topic, json.dumps(iot_data))
     print("Publishing to " + topic)

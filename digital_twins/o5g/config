@@ -15,8 +15,3 @@ export O5G_INFLUX_SERVER=
 export O5G_INFLUX_TOKEN=
 export O5G_INFLUX_ORG=
 export O5G_INFLUX_BUCKET=
-
-
-export O5G_SETUP_GRAFANA=true   # set to 'false' to skip grafana setup
-export O5G_GRAFANA_SERVER=
-export O5G_GRAFANA_TOKEN=

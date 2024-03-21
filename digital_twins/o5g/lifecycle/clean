@@ -6,3 +6,4 @@ fi
 
 printf "Cleaning temporary file"
 rm "${O5G_INSTALL_PATH}/digital_twins/o5g/lifecycle/graph.json"
+
