@@ -39,10 +39,10 @@ mqtt_username = conf.get_string('mqtt.username')
 mqtt_password = conf.get_string('mqtt.password')
 
 conf_ur5e = ConfigFactory.parse_file('/workspace/examples/digital_twins/flex-cell/ur5e_actual.conf')
-ur5e_base_topic = conf.get_string('mqtt.topic')
+ur5e_base_topic = conf_ur5e.get_string('mqtt.topic')
 
 conf_kuka = ConfigFactory.parse_file('/workspace/examples/digital_twins/flex-cell/kuka_actual.conf')
-kuka_base_topic = conf.get_string('mqtt.topic')
+kuka_base_topic = conf_kuka.get_string('mqtt.topic')
 
 '''if use_real_robots:
     # Kuka
