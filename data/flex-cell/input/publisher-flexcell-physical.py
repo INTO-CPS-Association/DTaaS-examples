@@ -86,7 +86,7 @@ def transmit_robot_motion(q,robot):
         #    pass
     elif (robot == "Kuka"):
         if use_real_robots:
-            mqtt_client.publish(kuka_base_topic + "moveptprad",str(q).replace("[","").replace("]",""))
+            mqtt_client.publish(kuka_base_topic + "moveptprad",str(q).replace("\n","").replace("[","").replace("]",""))
             #q_degrees = np.degrees(np.array(q))
             #kuka_robot.move_ptp_rad(q=q_degrees)
         #for j in range(len(joint_pos)):
