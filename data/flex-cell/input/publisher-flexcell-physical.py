@@ -80,13 +80,13 @@ def transmit_robot_motion(q,robot):
     if (robot == "UR5e"):
         if use_real_robots:
             #ur5e_robot.movej(q=np.array(q))
-            mqtt_client.publish(ur5e_base_topic,"movej("+str(q)+")")
+            mqtt_client.publish(ur5e_base_topic + "movej",str(q))
         #for j in range(len(joint_pos)):
             #queue_server.send_string_ur(f"actual_q_{j} {joint_pos[j]}")
         #    pass
     elif (robot == "Kuka"):
         if use_real_robots:
-            mqtt_client.publish(kuka_base_topic,"moveptprad("+str(q)+")")
+            mqtt_client.publish(kuka_base_topic + "moveptprad",str(q))
             #q_degrees = np.degrees(np.array(q))
             #kuka_robot.move_ptp_rad(q=q_degrees)
         #for j in range(len(joint_pos)):
