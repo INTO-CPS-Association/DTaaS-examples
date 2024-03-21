@@ -22,8 +22,7 @@ logging.disable(logging.CRITICAL)
 
 ur_robot_model = robots.UR5e_RL()
 kuka_robot_model = robots.KukaLBR_RL()
-use_real_robots = False
-mqtt_enabled = False
+use_real_robots = True
 
 ### pyhocon
 conf = ConfigFactory.parse_file('/workspace/examples/data/flex-cell/input/connections.conf')
@@ -33,10 +32,17 @@ rabbitmq_username = conf.get_string('rabbitmq.username')
 rabbitmq_password = conf.get_string('rabbitmq.password')
 rabbitmq_vhost = conf.get_string('rabbitmq.vhost')
 
+mqtt_client = mqtt.Client()
 mqtt_host = conf.get_string('mqtt.hostname')
 mqtt_port = conf.get_int('mqtt.port')
 mqtt_username = conf.get_string('mqtt.username')
 mqtt_password = conf.get_string('mqtt.password')
+
+conf_ur5e = ConfigFactory.parse_file('/workspace/examples/digital_twins/flex-cell/ur5e_actual.conf')
+ur5e_base_topic = conf.get_string('mqtt.topic')
+
+conf_kuka = ConfigFactory.parse_file('/workspace/examples/digital_twins/flex-cell/kuka_actual.conf')
+kuka_base_topic = conf.get_string('mqtt.topic')
 
 '''if use_real_robots:
     # Kuka
@@ -73,14 +79,16 @@ def compute_kuka_q(X,Y,Z):
 def transmit_robot_motion(q,robot):
     if (robot == "UR5e"):
         if use_real_robots:
-            ur5e_robot.movej(q=np.array(q))
+            #ur5e_robot.movej(q=np.array(q))
+            mqtt_client.publish(ur5e_base_topic,"movej("+str(q)+")")
         #for j in range(len(joint_pos)):
             #queue_server.send_string_ur(f"actual_q_{j} {joint_pos[j]}")
         #    pass
     elif (robot == "Kuka"):
         if use_real_robots:
-            q_degrees = np.degrees(np.array(q))
-            kuka_robot.move_ptp_rad(q=q_degrees)
+            mqtt_client.publish(kuka_base_topic,"moveptprad("+str(q)+")")
+            #q_degrees = np.degrees(np.array(q))
+            #kuka_robot.move_ptp_rad(q=q_degrees)
         #for j in range(len(joint_pos)):
             #queue_server.send_string_kuka(f"actual_q_{j} {joint_pos[j]}")
         #    pass
@@ -138,8 +146,8 @@ def publish():
     q_kuka = compute_kuka_q(target_X_kuka,target_Y_kuka,target_Z_kuka)
     #Timer(0.05, transmit_robot_motion, args=(q_ur5e,"UR5e",)).start()
     #Timer(0.05, transmit_robot_motion, args=(q_kuka,"Kuka",)).start()
-    #transmit_robot_motion(q_ur5e,"UR5e")
-    #transmit_robot_motion(q_kuka,"Kuka")
+    transmit_robot_motion(q_ur5e,"UR5e")
+    transmit_robot_motion(q_kuka,"Kuka")
 
     for i in range(21):
             msg['time']= datetime.now(tz = datetime.now().astimezone().tzinfo).isoformat(timespec='milliseconds')
@@ -162,8 +170,8 @@ def publish():
                 q_kuka = compute_kuka_q(target_X_kuka,target_Y_kuka,target_Z_kuka)
                 #Timer(0.05, transmit_robot_motion, args=(q_ur5e,"UR5e",)).start()
                 #Timer(0.05, transmit_robot_motion, args=(q_kuka,"Kuka",)).start()
-                #transmit_robot_motion(q_ur5e,"UR5e")
-                #transmit_robot_motion(q_kuka,"Kuka")
+                transmit_robot_motion(q_ur5e,"UR5e")
+                transmit_robot_motion(q_kuka,"Kuka")
 
             if(i==35):
                 target_X_ur5e = 0
@@ -182,8 +190,8 @@ def publish():
                 q_kuka = compute_kuka_q(target_X_kuka,target_Y_kuka,target_Z_kuka)
                 Timer(0.05, transmit_robot_motion, args=(q_ur5e,"UR5e",)).start()
                 Timer(0.05, transmit_robot_motion, args=(q_kuka,"Kuka",)).start()
-                #transmit_robot_motion(q_ur5e,"UR5e")
-                #transmit_robot_motion(q_kuka,"Kuka")
+                transmit_robot_motion(q_ur5e,"UR5e")
+                transmit_robot_motion(q_kuka,"Kuka")
 
             ## Real robots
 
@@ -206,6 +214,11 @@ def callback(ch, method, properties, body):
 
 if __name__ == '__main__':
     try:
+        # MQTT
+        mqtt_client.username_pw_set(username=mqtt_username, password=mqtt_password)
+        mqtt_client.connect(mqtt_broker_ip, mqtt_broker_port, 60)
+        
+        # RabbitMQ
         channel.basic_consume(
                     queue=queue_name, on_message_callback=callback, auto_ack=True)
 
