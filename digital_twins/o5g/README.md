@@ -18,7 +18,8 @@ We assume the following scenario:
 
 * a set of firefighters work to extinguish a burning building
 * they each use an SCBA with pressurised oxygen to breath
-* a mission commander on the outside coordinates the efforts and surveills the oxygen levels
+* a mission commander on the outside coordinates the efforts and
+  surveills the oxygen levels
 
 ## Digital Twin Overview
 
@@ -43,29 +44,35 @@ a warning if it drops under a certain threshold.
 
 This example is an implementation of the the paper [_Digital Twin for Rescue Missions--a Case Study_](https://ceur-ws.org/Vol-3507/paper4.pdf) by Leucker et al.
 
-The digital twin is executed in the user workspace and integrate the platform services provided by the DTaaS. The location of execution for DT inside the DTaaS platform is shown in the figure.
-
-![Digital Twin in User Workspace](img/dt-in-workspace.png)
-
 ### Quick Check
 
 Before runnnig this example please make sure the following files are at the correct locations:
 
 ```txt
 /workspace/examples/
-   digital_twins/o5g/main.py
-   digital_twins/o5g/sensorSimulation.py
-   digital_twins/o5g/telegraf.conf
-   digital_twins/o5g/runTessla.sh
-   digital_twins/o5g/config
-   data/lab.ifc
-   models/graphToPath.py
-   models/pathToTime.py
-   models/PathOxygenEstimate.mo
-   models/makefmu.mos
-   tools/ifc_to_graph
-   tools/tessla/tessla-telegraf-connector/
-   tools/tessla/tessla-telegraf-connector/specification.tessla
+   data/o5g/input/
+      runTessla.sh
+      sensorSimulation.py
+      telegraf.conf
+
+   models/
+    lab.ifc
+    makefmu.mos
+      PathOxygenEstimate.mo
+
+  tools/
+    graphToPath.py
+    ifc_to_graph
+    pathToTime.py
+    tessla-telegraf-connector/
+    tessla-telegraf-connector/
+      tessla.jar
+      specification.tessla (run-time specification)
+
+   digital_twins/o5g/
+      main.py
+      config
+      lifecycle/ (scripts)
 ```
 
 ### Digital Twin Configuration
@@ -101,21 +108,10 @@ steps are needed:
 
 ```ini
 export O5G_INFLUX_SERVER=
+export O5G_INFLUX_PORT=
 export O5G_INFLUX_TOKEN=
 export O5G_INFLUX_ORG=
 export O5G_INFLUX_BUCKET=
-```
-
-This example can also use Grafana to visualize the data. If you don't
-need Grafana set `5G_SETUP_GRAFANA` to `false` in the `config` file.
-To use Grafana Log into the WEB UI and in
-`Administration -> Service Accounts` add a new service account.
-Create a new Token for this Service Account to use and enter it in the config.
-
-```ini
-export O5G_SETUP_GRAFANA=true   # set to 'false' to skip grafana setup
-export O5G_GRAFANA_SERVER=
-export O5G_GRAFANA_TOKEN=
 ```
 
 ## Lifecycle Phases
@@ -125,7 +121,7 @@ The lifecycles that are covered include:
 | Lifecycle Phase    | Completed Tasks |
 | --------- | ------- |
 | Install    | Installs Open Modelica, Rust, Telegraf and the required pip dependencies |
-| Create    | Create FMU from Open Modelica file, Creates new Grafana dashboard                                     |
+| Create    | Create FMU from Open Modelica file                 |
 | Execute   | Execute the example in the background tmux terminal session                      |
 | Terminate | Terminate the tmux terminal session running in the background                                                  |
 | Clean | Delete the temporary files                                                 |
@@ -153,7 +149,7 @@ lifecycle/create
 ```
 
 This will compile the modelica model to an Functional Mockup Unit (FMU)
-for the correct platform and setup Grafana Dashboard, if enabled.
+for the correct platform.
 
 #### Exceute
 
@@ -184,10 +180,20 @@ The _tmux_ session contains 4 components of the digital twin:
 | Bottom Left | Telegraf to convert between different message formats, also displays all messages between components |
 | Bottom Right | TeSSLa monitor raises an alarm, if the remaining time is to low. |
 
-For additional mission awareness, we recommend utilising the Influx data visualisation. We provide a dashboard configuration in the file _influx-dashoard.json_. Log in to your Influx Server to import (usually port 8086).
+#### Examine the Results
 
+For additional mission awareness, we recommend utilising the Influx data
+visualisation. We provide a dashboard configuration in the file
+_influx-dashoard.json_. Log in to your Influx Server to import
+(usually port 8086). A screenshot of the dashboard is given here.
 
+![Firefighter remaining mission time](img/influx-dashboard.png)
 
+The data gets stored in 
+`o5g->prediction->air-remaining->37ae3e4fb3ea->true->vgiot/dt/prediction`
+variable of the InfluxDB. In addition to importing dashboard configuration
+given above, it is possible to create your custom dashboards using
+the stored data.
 
 #### Terminate
 
