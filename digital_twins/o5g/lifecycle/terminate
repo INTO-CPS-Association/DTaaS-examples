@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SESSION_NAME="o5g"
+
+# Kill the session
+tmux kill-session -t $SESSION_NAME
+killall telegraf
+
+echo "Tmux session $SESSION_NAME terminated."

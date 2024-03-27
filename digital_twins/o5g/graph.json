@@ -1,0 +1,325 @@
+{
+	"nodes":[
+		{
+			"referencedNode": "3edqgKSjf2gOgVx0AaPp9n",
+			"doorCoordinates": ["21.530000","0.490000","-0.180000"],
+			"Edges": [
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPpB4",
+					"cost": "1.185116"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPp2h",
+					"cost": "7.508830"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPp2g",
+					"cost": "7.879856"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPpzo",
+					"cost": "3.710647"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPpqS",
+					"cost": "11.669079"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPpta",
+					"cost": "15.844800"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPpB4",
+					"cost": "1.185116"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPp2h",
+					"cost": "7.508830"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPp2g",
+					"cost": "7.879856"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPpzo",
+					"cost": "3.710647"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPpqS",
+					"cost": "11.669079"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp9n",
+					"successor": "3edqgKSjf2gOgVx0AaPpta",
+					"cost": "15.844800"
+				}
+			]
+		},
+		{
+			"referencedNode": "3edqgKSjf2gOgVx0AaPpB4",
+			"doorCoordinates": ["20.520000","-0.130000","-0.180000"],
+			"Edges": [
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpB4",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "1.185116"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpB4",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "1.185116"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpB4",
+					"successor": "3edqgKSjf2gOgVx0AaPp2h",
+					"cost": "6.806859"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpB4",
+					"successor": "3edqgKSjf2gOgVx0AaPp2g",
+					"cost": "7.159268"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpB4",
+					"successor": "3edqgKSjf2gOgVx0AaPpzo",
+					"cost": "3.719489"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpB4",
+					"successor": "3edqgKSjf2gOgVx0AaPpqS",
+					"cost": "11.163516"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpB4",
+					"successor": "3edqgKSjf2gOgVx0AaPpta",
+					"cost": "14.831783"
+				}
+			]
+		},
+		{
+			"referencedNode": "3edqgKSjf2gOgVx0AaPp2h",
+			"doorCoordinates": ["14.405000","2.860000","-0.180000"],
+			"Edges": [
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2h",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "7.508830"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2h",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "7.508830"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2h",
+					"successor": "3edqgKSjf2gOgVx0AaPpB4",
+					"cost": "6.806859"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2h",
+					"successor": "3edqgKSjf2gOgVx0AaPp2g",
+					"cost": "0.390000"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2h",
+					"successor": "3edqgKSjf2gOgVx0AaPpzo",
+					"cost": "4.747339"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2h",
+					"successor": "3edqgKSjf2gOgVx0AaPpqS",
+					"cost": "4.607518"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2h",
+					"successor": "3edqgKSjf2gOgVx0AaPpta",
+					"cost": "9.141599"
+				}
+			]
+		},
+		{
+			"referencedNode": "3edqgKSjf2gOgVx0AaPp2g",
+			"doorCoordinates": ["14.015000","2.860000","-0.180000"],
+			"Edges": [
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2g",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "7.879856"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2g",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "7.879856"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2g",
+					"successor": "3edqgKSjf2gOgVx0AaPpB4",
+					"cost": "7.159268"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2g",
+					"successor": "3edqgKSjf2gOgVx0AaPp2h",
+					"cost": "0.390000"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2g",
+					"successor": "3edqgKSjf2gOgVx0AaPpzo",
+					"cost": "5.135643"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2g",
+					"successor": "3edqgKSjf2gOgVx0AaPpqS",
+					"cost": "4.370335"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPp2g",
+					"successor": "3edqgKSjf2gOgVx0AaPpta",
+					"cost": "8.770589"
+				}
+			]
+		},
+		{
+			"referencedNode": "3edqgKSjf2gOgVx0AaPpzo",
+			"doorCoordinates": ["19.130000","3.320000","-0.180000"],
+			"Edges": [
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpzo",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "3.710647"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpzo",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "3.710647"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpzo",
+					"successor": "3edqgKSjf2gOgVx0AaPpB4",
+					"cost": "3.719489"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpzo",
+					"successor": "3edqgKSjf2gOgVx0AaPp2h",
+					"cost": "4.747339"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpzo",
+					"successor": "3edqgKSjf2gOgVx0AaPp2g",
+					"cost": "5.135643"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpzo",
+					"successor": "3edqgKSjf2gOgVx0AaPpqS",
+					"cost": "8.254241"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpzo",
+					"successor": "3edqgKSjf2gOgVx0AaPpta",
+					"cost": "13.820347"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpzo",
+					"successor": "3edqgKSjf2gOgVx0AaPpqS",
+					"cost": "8.254241"
+				}
+			]
+		},
+		{
+			"referencedNode": "3edqgKSjf2gOgVx0AaPpqS",
+			"doorCoordinates": ["11.480000","6.420000","-0.180000"],
+			"Edges": [
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpqS",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "11.669079"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpqS",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "11.669079"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpqS",
+					"successor": "3edqgKSjf2gOgVx0AaPpB4",
+					"cost": "11.163516"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpqS",
+					"successor": "3edqgKSjf2gOgVx0AaPp2h",
+					"cost": "4.607518"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpqS",
+					"successor": "3edqgKSjf2gOgVx0AaPp2g",
+					"cost": "4.370335"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpqS",
+					"successor": "3edqgKSjf2gOgVx0AaPpzo",
+					"cost": "8.254241"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpqS",
+					"successor": "3edqgKSjf2gOgVx0AaPpta",
+					"cost": "8.571260"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpqS",
+					"successor": "3edqgKSjf2gOgVx0AaPpzo",
+					"cost": "8.254241"
+				}
+			]
+		},
+		{
+			"referencedNode": "3edqgKSjf2gOgVx0AaPpta",
+			"doorCoordinates": ["5.690000","0.100000","-0.180000"],
+			"Edges": [
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpta",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "15.844800"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpta",
+					"successor": "3edqgKSjf2gOgVx0AaPp9n",
+					"cost": "15.844800"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpta",
+					"successor": "3edqgKSjf2gOgVx0AaPpB4",
+					"cost": "14.831783"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpta",
+					"successor": "3edqgKSjf2gOgVx0AaPp2h",
+					"cost": "9.141599"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpta",
+					"successor": "3edqgKSjf2gOgVx0AaPp2g",
+					"cost": "8.770589"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpta",
+					"successor": "3edqgKSjf2gOgVx0AaPpzo",
+					"cost": "13.820347"
+				},
+				{
+					"predecessor": "3edqgKSjf2gOgVx0AaPpta",
+					"successor": "3edqgKSjf2gOgVx0AaPpqS",
+					"cost": "8.571260"
+				}
+			]
+		}
+	]}

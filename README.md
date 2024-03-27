@@ -41,3 +41,4 @@ to use the examples in the following order.
 1. [Three Water Tanks with DT Manager Framework](./digital_twins/three-tank/README.md)
 1. [Flex Cell with Two Industrial Robots](./digital_twins/flex-cell/README.md)
 1. [Incubator](./digital_twins/incubator/README.md)
+1. [Firefighters in Emergency Environments](./digital_twins/o5g/README.md)

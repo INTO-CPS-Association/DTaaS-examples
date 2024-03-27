@@ -1,0 +1,20 @@
+#!/bin/bash 
+
+# exit if a command fails
+set -e
+
+if [ -z "$O5G_INSTALL_PATH" ]; then
+  O5G_INSTALL_PATH="/workspace/examples"
+  printf "Installing to ${O5G_INSTALL_PATH}, set O5G_INSTALL_PATH to overwrite"
+fi
+
+source "${O5G_INSTALL_PATH}/digital_twins/o5g/config"
+
+printf "Compiling fmu from OpenModelica model \n"
+
+cd "${O5G_INSTALL_PATH}/models"
+omc "${O5G_INSTALL_PATH}/models/makefmu.mos"
+
+chmod +x "${O5G_INSTALL_PATH}/data/o5g/input/runTessla.sh"
+
+printf "\n\nDone installing, use execute script to run digital twin \n"
