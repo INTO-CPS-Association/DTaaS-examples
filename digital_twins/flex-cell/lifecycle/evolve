@@ -1,0 +1,2 @@
+#!/bin/bash
+printf "operation is not supported on this digital twin \n\n"

@@ -1,0 +1,81 @@
+{
+    "aliases": {
+        "kuka_experimental": "{kuka}.kuka",
+        "ur5e_experimental": "{ur5e}.ur5e"
+    },
+    "fmus": {
+        "{rabbitmq}": "/workspace/examples/models/flex-cell/rmqfmu_flexcell.fmu",
+        "{kuka}": "/workspace/examples/models/flex-cell/kukalbriiwa_model.fmu",
+        "{ur5e}": "/workspace/examples/models/flex-cell/ur5e_model.fmu"
+    },
+    "logVariables": {
+        "{kuka}.kuka": [
+            "actual_q0",
+            "actual_q1",
+            "actual_q2",
+            "actual_q3",
+            "actual_q4",
+            "actual_q5",
+            "actual_q6",
+            "actual_X",
+            "actual_Y",
+            "actual_Z",
+            "actual_x",
+            "actual_y",
+            "actual_z"
+        ],
+        "{ur5e}.ur5e": [
+            "actual_q0",
+            "actual_q1",
+            "actual_q2",
+            "actual_q3",
+            "actual_q4",
+            "actual_q5",
+            "actual_X",
+            "actual_Y",
+            "actual_Z",
+            "actual_x",
+            "actual_y",
+            "actual_z"
+        ]
+    },
+    "parameters": {
+        "{kuka}.kuka.prev_q4_param": -0.073072,
+        "{ur5e}.ur5e.prev_q2_param": 2.315173,
+        "{ur5e}.ur5e.prev_q3_param": -2.248468,
+        "{kuka}.kuka.prev_q3_param": -1.851805,
+        "{kuka}.kuka.prev_q1_param": 0.287188,
+        "{kuka}.kuka.prev_q0_param": 0.285609,
+        "{kuka}.kuka.prev_q2_param": 0.220264,
+        "{ur5e}.ur5e.prev_q4_param": -0.890721,
+        "{ur5e}.ur5e.prev_q0_param": -2.666677,
+        "{kuka}.kuka.prev_q6_param": 0.536052,
+        "{kuka}.kuka.prev_q5_param": 1.010198,
+        "{ur5e}.ur5e.prev_q1_param": -2.06638,
+        "{ur5e}.ur5e.prev_q5_param": -0.942086
+    },
+    "connections": {
+        "{rabbitmq}.rabbitmq.target_Z_kuka": ["{kuka}.kuka.target_Z"],
+        "{rabbitmq}.rabbitmq.target_X_ur5e": ["{ur5e}.ur5e.target_X"],
+        "{rabbitmq}.rabbitmq.target_Y_ur5e": ["{ur5e}.ur5e.target_Y"],
+        "{rabbitmq}.rabbitmq.target_Y_kuka": ["{kuka}.kuka.target_Y"],
+        "{rabbitmq}.rabbitmq.target_Z_ur5e": ["{ur5e}.ur5e.target_Z"],
+        "{rabbitmq}.rabbitmq.target_X_kuka": ["{kuka}.kuka.target_X"],
+        "{rabbitmq}.rabbitmq.motion_time_ur5e": ["{ur5e}.ur5e.motion_time"],
+        "{rabbitmq}.rabbitmq.motion_time_kuka": ["{kuka}.kuka.motion_time"]
+    },
+    "algorithm": {
+        "size": 0.2,
+        "type": "fixed-step"
+    },
+    "rabbitmq": {
+      "ip" : "localhost",
+      "port" : 5672,
+      "username" : "",
+      "password" : "",
+      "exchange" : "fmi_digital_twin",
+      "type" : "topic",
+      "vhost" : "/",
+      "routing_key": "data.from_cosim"
+    }
+}
