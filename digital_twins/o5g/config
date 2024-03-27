@@ -3,7 +3,7 @@
 # Before executing adjust this configuration
 
 export O5G_MQTT_SERVER=
-export O5G_MQTT_PORT=8090
+export O5G_MQTT_PORT=
 export O5G_MQTT_USER=
 export O5G_MQTT_PASS=
 
@@ -12,6 +12,7 @@ export O5G_MQTT_TOPIC_AIR_PREDICTION='vgiot/dt/prediction'
 export O5g_MQTT_TOPIC_ALERT='vgiot/dt/alerts'
 
 export O5G_INFLUX_SERVER=
+export O5G_INFLUX_PORT=
 export O5G_INFLUX_TOKEN=
 export O5G_INFLUX_ORG=
 export O5G_INFLUX_BUCKET=

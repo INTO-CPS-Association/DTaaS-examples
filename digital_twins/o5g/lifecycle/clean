@@ -4,6 +4,11 @@ if [ -z "$O5G_INSTALL_PATH" ]; then
   O5G_INSTALL_PATH="/workspace/examples"
 fi
 
-printf "Cleaning temporary file"
-rm "${O5G_INSTALL_PATH}/digital_twins/o5g/lifecycle/graph.json"
+printf "Cleaning temporary files\n"
+rm ${O5G_INSTALL_PATH}/models/PathOxygenEstimate_*
+rm ${O5G_INSTALL_PATH}/models/PathOxygenEstimate.fmu
+rm ${O5G_INSTALL_PATH}/models/PathOxygenEstimate.log
+rm -rf "${O5G_INSTALL_PATH}/tools/tessla-telegraf-connector/outputRustProject"
+rm "${O5G_INSTALL_PATH}/tools/tessla-telegraf-connector/annotation.json"
+rm -rf "${O5G_INSTALL_PATH}/tools/__pycache__"
 

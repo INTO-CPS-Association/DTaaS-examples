@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source o5g-venv/bin/activate
 SESSION_NAME="o5g"
 
 if [ -z "$O5G_INSTALL_PATH" ]; then

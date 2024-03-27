@@ -34,4 +34,6 @@ fi
 printf "Install required pip packages \n"
 
 # We expect pip to already be installed
-pip install numpy scipy networkx matplotlib fmpy pytest paho-mqtt
+python -m venv o5g-venv
+source o5g-venv/bin/activate
+pip install numpy scipy networkx matplotlib fmpy pytest "paho-mqtt<2.0.0"
