@@ -1,0 +1,7 @@
+MODULE main
+VAR
+    x1 : -100 .. 100; -- displacement of m1
+    x2 : -100 .. 100; -- displacement of m2
+
+LTLSPEC -- Safety
+    G (x1 - x2 <= 100 & x1 - x2 >= -100)

@@ -1,0 +1,48 @@
+{
+	"fmus":{
+		"{msd1}":"file:///workspace/examples/models/MassSpringDamper1.fmu",
+		"{msd2}":"file:///workspace/examples/models/MassSpringDamper2.fmu",
+		"{m2}": "file:///workspace/examples/models/m2.fmu",
+		"{rti}": "file:///workspace/examples/models/RtI.fmu"
+	},
+	"connections": {
+		"{msd1}.msd1i.x1": [
+      "{msd2}.msd2i.x1",
+	  "{rti}.rti1.u"
+    ],
+		"{rti}.rti1.y": [
+	  "{m2}.monitor.x1"
+	],
+		"{msd1}.msd1i.v1": [
+      "{msd2}.msd2i.v1"
+    ],
+		"{msd2}.msd2i.fk": [
+      "{msd1}.msd1i.fk"
+    ],
+		"{msd2}.msd2i.x2": [
+	  "{rti}.rti2.u"
+	],
+	"{rti}.rti2.y": [
+		"{m2}.monitor.x2"
+	  ]
+	},
+	"logVariables":{
+		"{msd2}.msd2i":["x2", "v2"],
+		"{rti}.rti1": ["y"],
+		"{rti}.rti2": ["y"],
+		"{m2}.monitor": ["_output"]
+	},
+  "parameters": {
+		"{msd2}.msd2i.c2": 1.0,
+		"{msd2}.msd2i.cc": 1.0,
+		"{msd2}.msd2i.d2": 1.0,
+		"{msd2}.msd2i.dc": 1.0,
+		"{msd2}.msd2i.m2": 1.0
+	},
+	"algorithm":{
+		"type":"fixed-step",
+		"size":0.001
+	},
+	"loggingOn": false,
+	"overrideLogLevel": "INFO"
+}

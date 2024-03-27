@@ -1,0 +1,6 @@
+MODULE main
+VAR
+    level : 0 .. 1000; -- models level
+
+LTLSPEC -- Safety
+    G (level <= 220)
