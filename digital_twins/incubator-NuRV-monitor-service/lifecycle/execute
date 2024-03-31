@@ -8,7 +8,7 @@ export LD_LIBRARY_PATH=/workspace/examples/digital_twins/incubator-NuRV-monitor-
 
 export INCUBATOR_PATH=${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
 echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
-export NURV_PATH=${NURV_PATH:=../../../tools/NuRV}
+export NURV_PATH=${NURV_PATH:=../../../common/services/NuRV}
 echo "Using NURV_PATH: ${NURV_PATH}"
 cp ../simulation.conf "${INCUBATOR_PATH}/simulation.conf" # copy simulation configuration.
 
