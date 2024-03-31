@@ -1,0 +1,9 @@
+include "Telegraf.tessla"
+
+@TelegrafIn("prediction","host=21a1ff96426b,output_exclude=true,topic=vgiot/dt/prediction", "air-remaining")
+in prediction: Events[Float]
+
+def lowAirAlert = prediction >. 3.0
+
+@TelegrafOut("lowAirAlert")
+out lowAirAlert
