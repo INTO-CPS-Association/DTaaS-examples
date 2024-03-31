@@ -6,7 +6,7 @@ This example demonstrates how a runtime monitoring service (in this example NuRV
 
 ## Simulated scenario
 
-This example simulates a scenario where the lid of the Incubator is removed and later put back on. The Incubator is equipped with anomaly detection capabilities, which can detect anomalous behavior (i.e. the removal of the lid). When an anomaly is detected, the Incubator then triggers an energy saving mode where the heater is turned off. 
+This example simulates a scenario where the lid of the Incubator is removed and later put back on. The Incubator is equipped with anomaly detection capabilities, which can detect anomalous behavior (i.e. the removal of the lid). When an anomaly is detected, the Incubator triggers an energy saving mode where the heater is turned off. 
 
 From a monitoring perspective, we wish to verify that within 3 simulation steps of an anomaly detection, the energy saving mode is turned on. To verify this behavior, we construct the property: $`anomaly \rightarrow (F_{[0,3]}\space energy\_saving)`$. Whenever a True or False verdict is produced by the monitor, it is reset, allowing for the detection of repeated satisfaction/violation detections of the property.
 
@@ -17,10 +17,30 @@ The simulated scenario progresses as follows:
 - *After another 30 seconds*: The energy saver is manually disabled producing a False verdict.
 - *After another 30 seconds*: The lid is put back on and the anomaly detection is given time to detect that the lid is back on. The simulation then ends. 
 
+## Example structure
+
+A diagram depicting the logical software structure of the example can be seen below.
+
+![DT structure](./figures/dt-structure-nurv.svg)
+
+The NuRV monitor server, utilizes a CORBA naming service where it registers under a specific name. A user can then query the naming service for the specific name, to obtain a reference to the monitor server. For more information on how the NuRV monitor server works, please refer to [1].
+The _execute.py_ script is responsible for orchestrating and starting all the relevant services in this example. This includes the Incubator DT, CORBA naming service (omniNames) and the NuRV monitor server as well as implementing the *Monitor connector* component that connects the DT output to the NuRV monitor server.
+After establishing connection with the NuRV monitor server, the Incubator DT is started and a RabbitMQ client is created that subscribes to changes in the *anomaly* and *energy_saving* states of the DT. Each time an update is received of either state, the full state (the new updated state and the previous other state) is pushed to the NuRV monitor server whereafter the verdict is printed to the console.   
+
 
 ## Digital Twin configuration
 
 Before running the example, please configure the _simulation.conf_ file with your RabbitMQ credentials.
+The example uses the following assets:
+
+| Asset Type | Names of Assets | Visibility | Reuse in other Examples |
+|:---|:---|:---|:---|
+| Service | common/services/NuRV_orbit | Common | Yes |
+| DT | common/digital_twins/incubator | Common | Yes |
+| Specification | safe-operation.smv | Private | No |
+| Script | execute.py | Private | No |
+
+The _safe-operation.smv_ file contains the default monitored specification as described in the [Simulated scenario section](#simulated-scenario). These can be configured as desired. 
 
 ## Lifecycle phases
 

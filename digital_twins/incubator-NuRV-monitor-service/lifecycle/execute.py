@@ -1,6 +1,7 @@
 import subprocess, os, time, sys, time
 incubator_location = os.getenv("INCUBATOR_PATH")
 sys.path.append(os.path.join(os.getcwd() + f"/{incubator_location}"))
+sys.path.append(os.path.join(os.getcwd() + "/../../../common/services/NuRV"))
 from threading import Thread, Event
 from omniORB import CORBA
 from omniORB.any import to_any
