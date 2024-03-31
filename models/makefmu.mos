@@ -1,0 +1,4 @@
+installPackage(Modelica, "4.0.0", exactMatch=false); getErrorString();
+loadModel(Modelica); getErrorString(); // load the Modelica Standard Library (MSL)
+loadFile("PathOxygenEstimate.mo");getErrorString();
+buildModelFMU(PathOxygenEstimate);getErrorString(); 
