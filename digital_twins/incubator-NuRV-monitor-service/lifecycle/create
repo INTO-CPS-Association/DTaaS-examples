@@ -15,7 +15,8 @@ if ! test -f "${NURV_PATH}/NuRV_orbit"; then
     curl -o ../../../common/services/NuRV.tar.bz2 "https://es-static.fbk.eu/tools/nurv/releases/NuRV-2.0.0-linuxx64.tar.bz2"
     tar xjf ../../../common/services/NuRV.tar.bz2 -C ../../../common/services/
     rm ../../../common/services/NuRV.tar.bz2
-    mv ../../../common/services/NuRV-2.0.0-linuxx64 $NURV_PATH
+    mv ../../../common/services/NuRV-2.0.0-linuxx64/* $NURV_PATH
+    rmdir ../../../common/services/NuRV-2.0.0-linuxx64
 fi
 
 : ${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
