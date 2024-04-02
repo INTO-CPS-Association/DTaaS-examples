@@ -1,5 +1,6 @@
 #!/bin/bash
 
+apt update
 cd "$(dirname "${BASH_SOURCE[0]}")"
 # install packages
 cd "../$(dirname "${BASH_SOURCE[0]}")"
