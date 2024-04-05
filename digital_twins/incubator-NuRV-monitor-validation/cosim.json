@@ -1,0 +1,42 @@
+{
+	"fmus": {
+		"{ad}": "file:///workspace/examples/models/anomaly_detection.fmu",
+		"{es}": "file:///workspace/examples/models/energy_saver.fmu",
+		"{src}": "file:///workspace/examples/models/Source.fmu",
+		"{dtc}": "file:///workspace/examples/models/Detector.fmu",
+		"{mon}": "file:///workspace/examples/models/safe-operation.fmu"
+	},
+	"connections": {
+		"{src}.src.sensor_data": [
+			"{ad}.ad.sensor_data"
+		],
+		"{src}.src.error_threshold": [
+			"{ad}.ad.error_threshold"
+		],
+		"{src}.src.kalman_input": [
+			"{ad}.ad.kalman_input"
+		],
+		"{ad}.ad.verdict": [
+			"{es}.es.lid_open",
+			"{mon}.mon.anomaly"
+		],
+		"{es}.es.ctrl_desired_temperature": [
+			"{dtc}.dtc.desired_temperature"
+		],
+		"{dtc}.dtc.energy_saving": [
+			"{mon}.mon.energy_saving"
+		]
+	},
+	"logVariables": {
+		"{mon}.mon": [
+			"_output"
+		]
+	},
+	"parameters": {},
+	"algorithm": {
+		"type": "fixed-step",
+		"size": 1.0
+	},
+	"loggingOn": false,
+	"overrideLogLevel": "INFO"
+}

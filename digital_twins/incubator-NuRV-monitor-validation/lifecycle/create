@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e # Exit on command failure
+
+
+NURV="/usr/bin/NuRV"
+FMI2_HEADERS="/workspace/examples/common/fmi2_headers"
+
+
+echo "Installing dependencies and create configuration \n\n"
+
+sudo apt-get update
+sudo apt-get install -y openjdk-17-jre
+pip install pandas matplotlib
+sudo apt-get install -y zip
+
+
+if [ ! -f "$NURV" ]; then
+    echo "Downloading and installing NuRV"
+    sudo apt-get install -y curl
+    tmp_nurv=$(mktemp -u)
+    curl 'https://es-static.fbk.eu/tools/nurv/releases/NuRV_2024_01_31_maestro'\
+        -o $tmp_nurv
+    sudo install -m 755 $tmp_nurv "$NURV"
+    rm $tmp_nurv
+fi
+
+"$NURV" -quiet -source lifecycle/synthesis_incubator_monitor_fmu.cmd
+sed -i 's\Enumeration declaredType="eu.fbk.nurv.RV_value"\Integer\g' \
+    safe-operation/modelDescription.xml
+
+FMI2_HOME=$FMI2_HEADERS make -C safe-operation linux64
+mv safe-operation.fmu /workspace/examples/models/
