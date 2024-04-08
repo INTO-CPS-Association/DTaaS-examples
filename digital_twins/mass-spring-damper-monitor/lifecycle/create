@@ -31,6 +31,3 @@ sed -i 's\Enumeration declaredType="eu.fbk.nurv.RV_value"\Integer\g' \
 
 FMI2_HOME=$FMI2_HEADERS make -C m2 linux64
 mv m2.fmu /workspace/examples/models/m2.fmu
-
-omc lifecycle/create-fmu.mos
-cp RtI.fmu /workspace/examples/models
