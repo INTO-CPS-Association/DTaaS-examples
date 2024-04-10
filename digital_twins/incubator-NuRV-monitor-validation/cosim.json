@@ -3,7 +3,7 @@
 		"{ad}": "file:///workspace/examples/models/anomaly_detection.fmu",
 		"{es}": "file:///workspace/examples/models/energy_saver.fmu",
 		"{src}": "file:///workspace/examples/models/Source.fmu",
-		"{dtc}": "file:///workspace/examples/models/Detector.fmu",
+		"{wtc}": "file:///workspace/examples/models/Watcher.fmu",
 		"{mon}": "file:///workspace/examples/models/safe-operation.fmu"
 	},
 	"connections": {
@@ -21,9 +21,9 @@
 			"{mon}.mon.anomaly"
 		],
 		"{es}.es.ctrl_desired_temperature": [
-			"{dtc}.dtc.desired_temperature"
+			"{wtc}.dtc.desired_temperature"
 		],
-		"{dtc}.dtc.energy_saving": [
+		"{wtc}.dtc.energy_saving": [
 			"{mon}.mon.energy_saving"
 		]
 	},
