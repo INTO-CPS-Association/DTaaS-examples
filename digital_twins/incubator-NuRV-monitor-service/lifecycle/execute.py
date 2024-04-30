@@ -155,18 +155,8 @@ def ensureNuRVRunning():
                 print("Established connection with NuRV")
                 service.reset(to_any(0), False)
                 return omniNamesProcess, nurvProcess, service
-        except Exception as ex:
-            print(f"Exception: {ex}")
-            print("Failed to establish connection with NuRV. Retrying...")
-            if nurvProcess is not None:
-                nurvProcess.kill()
-                nurvProcess.wait()
-            if omniNamesProcess is not None:
-                omniNamesProcess.kill()
-                omniNamesProcess.wait()
-            time.sleep(4)
         except:
-            print("unknown error")
+            print("Failed to establish connection with NuRV. Retrying...")
             if nurvProcess is not None:
                 nurvProcess.kill()
                 nurvProcess.wait()
