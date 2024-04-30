@@ -103,7 +103,7 @@ def startIncubator():
 def verdictEnumToString(verdict):
     return f"{verdict}".split("_")[-1]
 
-def runScenario(event):
+def runScenario(event, service):
     print("Running scenario with initial state: lid closed and energy saver on", flush=True)
     os.system(f"cd {incubator_location}; python -m cli.trigger_energy_saver")
     os.system(f"cd {incubator_location}; python -m cli.mess_with_lid_mock 1")
@@ -132,6 +132,9 @@ def runScenario(event):
         if event.is_set():
             return
         time.sleep(0.1)
+        if i == 61:
+            print("Resetting monitor...")
+            service.reset(to_any(0), False)
     event.set()
 
 def ensureNuRVRunning():
@@ -145,14 +148,15 @@ def ensureNuRVRunning():
             time.sleep(2)
             # Start NuRV
             nurvProcess, service = startNuRV(ior)
-            time.sleep(2)
+            time.sleep(10)
             result = service.heartbeat(to_any(0), "!anomaly & !energy_saving")
-            if verdictEnumToString(result) == "True":
+            if verdictEnumToString(result) == "Unknown":
                 connectionEstablished = True
                 print("Established connection with NuRV")
                 service.reset(to_any(0), False)
                 return omniNamesProcess, nurvProcess, service
-        except:
+        except Exception as ex:
+            print(f"Exception: {ex}")
             print("Failed to establish connection with NuRV. Retrying...")
             if nurvProcess is not None:
                 nurvProcess.kill()
@@ -160,7 +164,16 @@ def ensureNuRVRunning():
             if omniNamesProcess is not None:
                 omniNamesProcess.kill()
                 omniNamesProcess.wait()
-            time.sleep(1)
+            time.sleep(4)
+        except:
+            print("unknown error")
+            if nurvProcess is not None:
+                nurvProcess.kill()
+                nurvProcess.wait()
+            if omniNamesProcess is not None:
+                omniNamesProcess.kill()
+                omniNamesProcess.wait()
+            time.sleep(4)
 
 
 if __name__ == "__main__":
@@ -187,14 +200,16 @@ if __name__ == "__main__":
             states = f"{message['anomaly']} & {message['energy_saving']}"
             result = service.heartbeat(to_any(0), states)
             print(f"State: {states}, verdict: {verdictEnumToString(result)}")
-            if verdictEnumToString(result) == "True" or verdictEnumToString(result) == "False":
+
+            #if verdictEnumToString(result) == "True" or verdictEnumToString(result) == "False":
                 #print("Resetting monitor...")
-                service.reset(to_any(0), False) # soft reset
+                #service.reset(to_any(0), False) # soft reset
+
             if event.is_set():
                 rabbitMq.close()
         rabbitMq = startRabbitMQ(handleMessage)
         event = Event()
-        scenario_thread = Thread(target=runScenario, args=(event,))
+        scenario_thread = Thread(target=runScenario, args=(event,service))
         # Wait to ensure incubator running
         #time.sleep(1)
         scenario_thread.start()
