@@ -1,7 +1,9 @@
 import subprocess, os, time, sys, time
 incubator_location = os.getenv("INCUBATOR_PATH")
-sys.path.append(os.path.join(os.getcwd() + f"/{incubator_location}"))
-sys.path.append(os.path.join(os.getcwd() + "/../../../common/services/NuRV"))
+nurv_location = os.getenv("NURV_PATH")
+lifecycle_location = os.getenv("LIFECYCLE_PATH")
+sys.path.append(os.path.join(f"{incubator_location}"))
+sys.path.append(os.path.join(f"{nurv_location}"))
 from threading import Thread, Event
 from omniORB import CORBA
 from omniORB.any import to_any
@@ -14,15 +16,14 @@ from digital_twin.communication.rabbitmq_protocol import ROUTING_KEY_ENERGY_SAVE
 
 def startNuRV(ior):
     # overwrite relevant commands
-    with open(os.getcwd() + "/../commands", "r+") as f:
+    with open(lifecycle_location + "/../commands", "r+") as f:
         lines = f.readlines()
         lines[-1] = f"monitor_server -N {ior}"
         f.seek(0)
         f.writelines(lines)
         f.close()
     # Start NuRV monitor server    
-    nurvPath = os.getenv("NURV_PATH")
-    nurvProcess = subprocess.Popen(f"exec {nurvPath}/NuRV_orbit -source ../commands ../safe-operation.smv", shell=True, cwd=os.getcwd(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    nurvProcess = subprocess.Popen(f"exec {nurv_location}/NuRV_orbit -source ../commands ../safe-operation.smv", shell=True, cwd=os.getcwd(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     while True:
         output = nurvProcess.stdout.readline()
         if output == "" and nurvProcess.poll() is not None:
@@ -156,7 +157,8 @@ def ensureNuRVRunning():
                 print("Established connection with NuRV")
                 service.reset(to_any(0), False)
                 return omniNamesProcess, nurvProcess, service
-        except:
+        except Exception as e:
+            print(f"Received exception {e}")
             print("Failed to establish connection with NuRV. Retrying...")
             if nurvProcess is not None:
                 nurvProcess.kill()

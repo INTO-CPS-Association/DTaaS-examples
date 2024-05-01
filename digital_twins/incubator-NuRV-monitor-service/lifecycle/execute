@@ -2,14 +2,16 @@
 if [ -d ./data ]; then
     rm -r ./data/*
 fi
-cd "$(dirname "${BASH_SOURCE[0]}")"
+export LIFECYCLE_PATH=${LIFECYCLE_PATH:=$(realpath "$(dirname "${BASH_SOURCE[0]}")")}
+echo "Using LIFECYCLE_PATH: ${LIFECYCLE_PATH}"
+cd "$LIFECYCLE_PATH"
 source .venv/bin/activate
-export LD_LIBRARY_PATH=/workspace/examples/digital_twins/incubator-NuRV-monitor-service/lifecycle/.venv/lib/python3.8/site-packages/omniorb_py.libs:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/workspace/examples/common/services/NuRV:$LD_LIBRARY_PATH
-export INCUBATOR_PATH=${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
-echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
-export NURV_PATH=${NURV_PATH:=../../../common/services/NuRV}
+export LD_LIBRARY_PATH=$LIFECYCLE_PATH/.venv/lib/python3.8/site-packages/omniorb_py.libs:$LD_LIBRARY_PATH
+export NURV_PATH=${NURV_PATH:=$LIFECYCLE_PATH/../../../common/services/NuRV} # Set variable if not manually exported
 echo "Using NURV_PATH: ${NURV_PATH}"
+export LD_LIBRARY_PATH=$NURV_PATH:$LD_LIBRARY_PATH
+export INCUBATOR_PATH=${INCUBATOR_PATH:=$LIFECYCLE_PATH/../../../common/digital_twins/incubator} # Set variable if not manually exported
+echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
 cp ../simulation.conf "${INCUBATOR_PATH}/simulation.conf" # copy simulation configuration.
 
 python execute.py
