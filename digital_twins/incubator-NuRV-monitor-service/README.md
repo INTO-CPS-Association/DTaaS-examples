@@ -18,10 +18,8 @@ turned off.
 From a monitoring perspective, we wish to verify that within 3 simulation steps
 of an anomaly detection, the energy saving mode is turned on. To verify this
 behavior, we construct the property:
-$`anomaly \rightarrow (F_{[0,3]}\space energy\_saving)`$.
-Whenever a True or False verdict is produced by the monitor, it is reset,
-allowing for the detection of repeated satisfaction/violation detections of
-the property.
+$`G(anomaly \rightarrow (F_{[0,3]}\space energy\_saving))`$.
+The monitor will output the _Unknown_ state as long as the property is satisfied and will transition to the _False_ state once a violation is detected.
 
 The simulated scenario progresses as follows:
 
@@ -34,7 +32,7 @@ The simulated scenario progresses as follows:
 - *After another 30 seconds*: The energy saver is manually disabled producing
   a False verdict.
 - *After another 30 seconds*: The lid is put back on and the anomaly detection
-  is given time to detect that the lid is back on. The simulation then ends.
+  is given time to detect that the lid is back on. The monitor is then reset producing an Unknown verdict again. The simulation then ends.
 
 ## Example structure
 
@@ -122,9 +120,9 @@ where "_anomaly_" indicates that an anomaly is detected and "!anomaly"
 indicates that an anomaly is not currently detected. The same format
 is used for the energy_saving state.
 
-The monitor verdict can be True, False or Unknown, where the latter
+The monitor verdict can be False or Unknown, where the latter
 indicates that the monitor does not yet have sufficient information
-to determine the satisfaction of the property.
+to determine the satisfaction of the property. The monitor will never produce a True verdict as the entire trace must be verified to ensure satisfaction due to the G operator. Thus the Unknown state can be viewed as a tentative True verdict. 
 
 An example output trace is provided below:
 
@@ -133,12 +131,19 @@ An example output trace is provided below:
 Running scenario with initial state: lid closed and energy saver on
 Setting energy saver mode: enable
 Setting G_box to: 0.5763498
-State: !anomaly & !energy_saving, verdict: True
-State: !anomaly & !energy_saving, verdict: True
+State: !anomaly & !energy_saving, verdict: Unknown
+State: !anomaly & !energy_saving, verdict: Unknown
 ....
 State: anomaly & !energy_saving, verdict: Unknown
-State: anomaly & energy_saving, verdict: True
-State: anomaly & energy_saving, verdict: True
+State: anomaly & energy_saving, verdict: Unknown
+State: anomaly & energy_saving, verdict: Unknown
+....
+State: anomaly & energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: False
 ````
 
 There is currently some startup issues with connecting to the NuRV server,

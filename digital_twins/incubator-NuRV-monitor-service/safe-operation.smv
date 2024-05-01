@@ -4,4 +4,4 @@ VAR
     energy_saving : boolean;
 
 LTLSPEC -- Safety
-    anomaly -> F [ 0, 3 ] energy_saving
+    G ( anomaly -> F [ 0, 3 ] energy_saving )

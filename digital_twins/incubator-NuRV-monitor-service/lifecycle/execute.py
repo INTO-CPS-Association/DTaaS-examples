@@ -1,7 +1,9 @@
 import subprocess, os, time, sys, time
 incubator_location = os.getenv("INCUBATOR_PATH")
-sys.path.append(os.path.join(os.getcwd() + f"/{incubator_location}"))
-sys.path.append(os.path.join(os.getcwd() + "/../../../common/services/NuRV"))
+nurv_location = os.getenv("NURV_PATH")
+lifecycle_location = os.getenv("LIFECYCLE_PATH")
+sys.path.append(os.path.join(f"{incubator_location}"))
+sys.path.append(os.path.join(f"{nurv_location}"))
 from threading import Thread, Event
 from omniORB import CORBA
 from omniORB.any import to_any
@@ -14,15 +16,14 @@ from digital_twin.communication.rabbitmq_protocol import ROUTING_KEY_ENERGY_SAVE
 
 def startNuRV(ior):
     # overwrite relevant commands
-    with open(os.getcwd() + "/../commands", "r+") as f:
+    with open(lifecycle_location + "/../commands", "r+") as f:
         lines = f.readlines()
         lines[-1] = f"monitor_server -N {ior}"
         f.seek(0)
         f.writelines(lines)
         f.close()
     # Start NuRV monitor server    
-    nurvPath = os.getenv("NURV_PATH")
-    nurvProcess = subprocess.Popen(f"exec {nurvPath}/NuRV_orbit -source ../commands ../safe-operation.smv", shell=True, cwd=os.getcwd(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    nurvProcess = subprocess.Popen(f"exec {nurv_location}/NuRV_orbit -source ../commands ../safe-operation.smv", shell=True, cwd=os.getcwd(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     while True:
         output = nurvProcess.stdout.readline()
         if output == "" and nurvProcess.poll() is not None:
@@ -30,6 +31,7 @@ def startNuRV(ior):
             break
         if "NuRV/Monitor/Service" in output:
             print("Started NuRV server")
+            time.sleep(1) # Made connecting to NuRV server more reliable on DTaaS...
             break
 
     orb = CORBA.ORB_init(["ORBInitRef", f"NameService={ior}"], CORBA.ORB_ID)
@@ -103,7 +105,7 @@ def startIncubator():
 def verdictEnumToString(verdict):
     return f"{verdict}".split("_")[-1]
 
-def runScenario(event):
+def runScenario(event, service):
     print("Running scenario with initial state: lid closed and energy saver on", flush=True)
     os.system(f"cd {incubator_location}; python -m cli.trigger_energy_saver")
     os.system(f"cd {incubator_location}; python -m cli.mess_with_lid_mock 1")
@@ -132,6 +134,9 @@ def runScenario(event):
         if event.is_set():
             return
         time.sleep(0.1)
+        if i == 61:
+            print("Resetting monitor...")
+            service.reset(to_any(0), False)
     event.set()
 
 def ensureNuRVRunning():
@@ -145,14 +150,15 @@ def ensureNuRVRunning():
             time.sleep(2)
             # Start NuRV
             nurvProcess, service = startNuRV(ior)
-            time.sleep(2)
+            time.sleep(10)
             result = service.heartbeat(to_any(0), "!anomaly & !energy_saving")
-            if verdictEnumToString(result) == "True":
+            if verdictEnumToString(result) == "Unknown":
                 connectionEstablished = True
                 print("Established connection with NuRV")
                 service.reset(to_any(0), False)
                 return omniNamesProcess, nurvProcess, service
-        except:
+        except Exception as e:
+            print(f"Received exception {e}")
             print("Failed to establish connection with NuRV. Retrying...")
             if nurvProcess is not None:
                 nurvProcess.kill()
@@ -160,7 +166,7 @@ def ensureNuRVRunning():
             if omniNamesProcess is not None:
                 omniNamesProcess.kill()
                 omniNamesProcess.wait()
-            time.sleep(1)
+            time.sleep(4)
 
 
 if __name__ == "__main__":
@@ -187,14 +193,16 @@ if __name__ == "__main__":
             states = f"{message['anomaly']} & {message['energy_saving']}"
             result = service.heartbeat(to_any(0), states)
             print(f"State: {states}, verdict: {verdictEnumToString(result)}")
-            if verdictEnumToString(result) == "True" or verdictEnumToString(result) == "False":
+
+            #if verdictEnumToString(result) == "True" or verdictEnumToString(result) == "False":
                 #print("Resetting monitor...")
-                service.reset(to_any(0), False) # soft reset
+                #service.reset(to_any(0), False) # soft reset
+
             if event.is_set():
                 rabbitMq.close()
         rabbitMq = startRabbitMQ(handleMessage)
         event = Event()
-        scenario_thread = Thread(target=runScenario, args=(event,))
+        scenario_thread = Thread(target=runScenario, args=(event,service))
         # Wait to ensure incubator running
         #time.sleep(1)
         scenario_thread.start()
