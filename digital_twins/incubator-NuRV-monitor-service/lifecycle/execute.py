@@ -30,6 +30,7 @@ def startNuRV(ior):
             break
         if "NuRV/Monitor/Service" in output:
             print("Started NuRV server")
+            time.sleep(1) # Made connecting to NuRV server more reliable on DTaaS...
             break
 
     orb = CORBA.ORB_init(["ORBInitRef", f"NameService={ior}"], CORBA.ORB_ID)
