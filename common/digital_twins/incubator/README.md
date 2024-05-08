@@ -63,8 +63,14 @@ time           execution_interval  elapsed  heater_on  fan_on   room   box_air_t
 19/11 16:18:11  3.00                0.01     True       True    10.69  19.41                Heating
 ````
 
-An InfluxDB dashboard is automatically configured based on [the json configuration](digital_twin/data_access/influxdbserver/dashboards/incubator_data.json).
-In the InfluxDB dashboard the following visualization can be seen:
+An InfluxDB dashboard can be setup based on [the json configuration](digital_twin/data_access/influxdbserver/dashboards/incubator_data.json).
+The dashboard can be imported by following these steps:
+- Logging into the InfluxDB server
+- Clicking the "Dashboard" icon
+- Clicking on the "Create Dashboard" button and selecting "Upload File"
+- Uploading the file found [here](digital_twin/data_access/influxdbserver/dashboards/incubator_data.json).
+
+If the dashboard on the InfluxDB is setup properly, the following visualization can be seen:
 
 ![Influx Dashboard](figures/visualization.png)
 
