@@ -3,7 +3,7 @@
 set -e # Exit on command failure
 
 
-NURV="/usr/bin/NuRV"
+NURV="/workspace/examples/common/tools/NuRV/NuRV"
 FMI2_HEADERS="/workspace/examples/common/fmi2_headers"
 
 
@@ -14,16 +14,6 @@ sudo apt-get install -y openjdk-17-jre
 pip install pandas matplotlib
 sudo apt-get install -y zip
 
-
-if [ ! -f "$NURV" ]; then
-    echo "Downloading and installing NuRV"
-    sudo apt-get install -y curl
-    tmp_nurv=$(mktemp -u)
-    curl 'https://es-static.fbk.eu/tools/nurv/releases/NuRV_2024_01_31_maestro'\
-        -o $tmp_nurv
-    sudo install -m 755 $tmp_nurv "$NURV"
-    rm $tmp_nurv
-fi
 
 "$NURV" -quiet -source lifecycle/synthesis_m2_fmu.cmd
 sed -i 's\Enumeration declaredType="eu.fbk.nurv.RV_value"\Integer\g' \
