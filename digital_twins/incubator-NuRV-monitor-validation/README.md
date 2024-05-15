@@ -91,7 +91,7 @@ lifecycle/create
 
 Run the the Digital Twin. Since this is a co-simulation based
 digital twin, the Maestro co-simulation tool executes co-simulation
-using the two FMU models.
+using the FMU models.
 
 ```bash
 lifecycle/execute
