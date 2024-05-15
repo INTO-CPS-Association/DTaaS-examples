@@ -24,8 +24,8 @@ The second simulator calculates force $F_k$ given a displacement and speed of
 mass $m_1$. By coupling these simulators, the evolution of the position of
 the two masses is computed.
 
-Additionally, a monitor in inserted in the simulation to checks at runtime
-whether the displacement of the two stays below a maximum threshold.
+Additionally, a monitor is inserted in the simulation to checks at runtime
+whether the displacement of the two masses stays below a maximum threshold.
 
 ![Mass Spring Damper Structure](dt-structure.png)
 
