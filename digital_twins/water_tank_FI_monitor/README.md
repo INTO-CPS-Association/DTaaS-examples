@@ -26,7 +26,7 @@ whether the level of the water stays below a maximum threshold.
 
 ## Example Structure
 
-![Water Tank Structure](dt_structure.png)
+![Water Tank Structure](dt-structure.png)
 
 ## Digital Twin Configuration
 
