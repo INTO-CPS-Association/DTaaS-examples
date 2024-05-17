@@ -1,0 +1,22 @@
+#!/bin/bash
+printf "Installing dependencies...\n\n"
+apt-get update
+apt-get install -y default-jre ## Minimum java 1.8
+apt-get install -y maven
+apt-get install -y libguice-java
+mvn -f /workspace/examples/tools/TwinManager/pom.xml package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
+cp /workspace/examples/tools/TwinManager/target/TwinManagerFramework-0.0.2.jar /workspace/examples/tools/
+python -m venv /workspace/examples/tools/flex-cell/requirements/venv
+source /workspace/examples/tools/flex-cell/requirements/venv/bin/activate
+pip install -r /workspace/examples/tools/flex-cell/requirements/requirements.txt
+pip install -e /workspace/examples/tools/flex-cell/robots_flexcell
+pip install -e /workspace/examples/tools/flex-cell/kukalbrinterface
+if [ ! -d /workspace/examples/data/flex-cell/output ]; then
+    mkdir -p /workspace/examples/data/flex-cell/output
+fi
+if [ ! -d /workspace/examples/data/flex-cell/input ]; then
+    mkdir -p /workspace/examples/data/flex-cell/input
+fi
+if [ ! -d /workspace/examples/data/flex-cell/input/physical_twin ]; then
+    mkdir -p /workspace/examples/data/flex-cell/input/physical_twin
+fi

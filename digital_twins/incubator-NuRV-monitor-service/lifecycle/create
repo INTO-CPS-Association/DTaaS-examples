@@ -1,0 +1,28 @@
+#!/bin/bash
+
+apt update
+cd "$(dirname "${BASH_SOURCE[0]}")"
+# install packages
+cd "../$(dirname "${BASH_SOURCE[0]}")"
+
+# create .orbitrc file with correct contents
+echo -e "ORBIIOPUSock=1\\nORBIIOPIPv4=1\\nORBIIOPIPv6=0" > $HOME/.orbitrc
+
+: ${NURV_PATH:=../../../common/services/NuRV}
+echo "Using NURV_PATH: ${NURV_PATH}"
+dpkg -i $NURV_PATH/orbit2/*.deb; apt install -fy
+# download NuRV tool if necessary
+if ! test -f "${NURV_PATH}/NuRV_orbit"; then
+    curl -o ../../../common/services/NuRV.tar.bz2 "https://es-static.fbk.eu/tools/nurv/releases/NuRV-2.0.0-linuxx64.tar.bz2"
+    tar xjf ../../../common/services/NuRV.tar.bz2 -C ../../../common/services/
+    rm ../../../common/services/NuRV.tar.bz2
+    mv ../../../common/services/NuRV-2.0.0-linuxx64/* $NURV_PATH
+    rmdir ../../../common/services/NuRV-2.0.0-linuxx64
+fi
+
+: ${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
+echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r "${INCUBATOR_PATH}/requirements.txt" -r ../requirements.txt
