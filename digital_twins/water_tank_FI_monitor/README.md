@@ -101,7 +101,7 @@ Process the output of co-simulation to produce a plot at:
 lifecycle/analyze
 ```
 
-In the plot, three color-coded indicators are used to represent different
+In the plot, four color-coded indicators are used to represent different
 values. The blue line shows the water tank level, while orange represents
 the control output and green indicates the monitor's verdict. A red dashed
 line serves as a reference point, marking the level checked by the
