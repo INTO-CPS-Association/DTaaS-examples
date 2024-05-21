@@ -112,7 +112,7 @@ target temperature set by the energy saver component. The green line shows
 the monitor's output verdict. As observed, when there is a disparity
 between the estimated and actual temperatures, the energy saver adjusts
 the target temperature downward, indicating that the component is working
-properly. Thus, the output of the monitor is fixed at 'unknown' (0),
+properly. Thus, the output of the monitor is fixed at `unknown` (`0`),
 signifying that the monitoring property is not violated.
 
 #### Examine the results

@@ -106,7 +106,7 @@ values. The blue line shows the water tank level, while orange represents
 the control output and green indicates the monitor's verdict. A red dashed
 line serves as a reference point, marking the level checked by the
 monitor. As the water level exceeds this threshold, the monitor's verdict
-changes from 'unknown' (0) to 'false' (2).
+changes from `unknown` (`0`) to `false` (`2`).
 
 #### Examine the results
 
