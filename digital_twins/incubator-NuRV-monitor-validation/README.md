@@ -105,6 +105,10 @@ Process the output of co-simulation to produce a plot at:
 lifecycle/analyze
 ```
 
+A sample plot is given here.
+
+![output plot](incubator-NuRV-monitor-validation_plot.png)
+
 In the plot, four color-coded indicators provide a visual representation of
 distinct values. The blue line depicts the simulated temperature, while orange
 one represents the temperature estimate. A red dashed line indicates the

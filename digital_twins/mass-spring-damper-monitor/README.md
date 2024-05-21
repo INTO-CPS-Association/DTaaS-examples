@@ -99,6 +99,10 @@ Process the output of co-simulation to produce a plot at:
 lifecycle/analyze
 ```
 
+A sample plot is given here.
+
+![sample plot](mass-spring-damper-monitor_plot.png)
+
 In the plot, three color-coded indicators are used to represent different
 values. The blue line shows the distance between the two masses, while the
 green indicates the monitor's verdict. A red dashed
