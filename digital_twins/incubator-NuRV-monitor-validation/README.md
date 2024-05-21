@@ -99,10 +99,9 @@ lifecycle/execute
 #### Examine the results
 
 The results can be found in the
-_/workspace/examples/data/incubator-NuRV-monitor-validation/output directory_.
+_/workspace/examples/data/incubator-NuRV-monitor-validation/output_ directory where the logs are also included.
 
-You can also view run logs in the
-_/workspace/examples/data/incubator-NuRV-monitor-validation_.
+Figures of the output results can be found in the _/workspace/examples/data/incubator-NuRV-monitor-validation/output_ directory.
 
 ### Terminate phase
 
