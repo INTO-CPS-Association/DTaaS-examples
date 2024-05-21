@@ -1,0 +1,6 @@
+#!/bin/bash
+
+printf "Plotting results"
+mkdir -p /workspace/examples/data/incubator-NuRV-monitor-validation/output/plots
+python lifecycle/plot.py
+mv result*.png /workspace/examples/data/incubator-NuRV-monitor-validation/output/plots

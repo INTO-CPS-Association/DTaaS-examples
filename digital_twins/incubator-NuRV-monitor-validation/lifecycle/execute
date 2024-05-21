@@ -1,0 +1,10 @@
+#!/bin/bash
+OUTDIR=/workspace/examples/data/incubator-NuRV-monitor-validation/output
+mkdir -p $OUTDIR
+
+java -jar /workspace/examples/common/tools/maestro-2.3.0-jar-with-dependencies.jar\
+  import -output $OUTDIR\
+  --dump-intermediate sg1 cosim.json time.json\
+  -i -vi FMI2 output-dir>debug.log 2>&1
+
+python plot.py
