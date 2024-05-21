@@ -13,7 +13,7 @@ from vibration measurements.
 
 This application shows a sensitivity-based model updating technique
 on a 5 degrees of freedom (DOF) spring-dashpot series system.
-The system is the same as used in the previous example `(which one??)`.
+The system is the same as used in the system identification example.
 A repetition is followed for clarity. The system, which is simulated with
 a sampling frequency of 100 Hz, is subjected to stochastic input, u(t),
 that has been low-pass-filtered such that it excites the first
@@ -42,14 +42,16 @@ i.e. from SSI method and the subjected parameters are :
 1. FS: sampling frequencies,
 1. otype: response type
 
-The initialization of parameters needs to be provided by users and here,
-it is given as follows: `(how??)`
+The initialization would be changed depending on the system;
+so user need to update these parameters if based on their selected system.
+The initialization of parameters to be provided by users are:
+`(how do users provide these - via a file, or input at terminal??)`
 
 1. Initial mass of the model
    m  = [1]*5
-1. Initial stiffness of the model
+2. Initial stiffness of the model
    k  = [1000]*5
-1. Number of parameters will be updated in stiffness matrix
+3. Number of parameters will be updated in stiffness matrix
    PaR = np.array([1,2,4,5])
 
 The output of the code is stored in `modUpd.json` containing
