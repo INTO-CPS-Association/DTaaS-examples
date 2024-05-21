@@ -90,6 +90,22 @@ using the two FMU models.
 lifecycle/execute
 ```
 
+### Analyze phase
+
+Process the output of co-simulation to produce a plot at:
+`/workspace/examples/data/mass-spring-damper-monitor/output/plots`.
+
+```bash
+lifecycle/analyze
+```
+
+In the plot, three color-coded indicators are used to represent different
+values. The blue line shows the distance between the two masses, while the
+green indicates the monitor's verdict. A red dashed
+line serves as a reference point, marking the distance checked by the
+monitor. Since the distance of the masses is always below the threshold, the
+output of the monitor is fixed to 'unknown' (0).
+
 #### Examine the results
 
 The results can be found in the

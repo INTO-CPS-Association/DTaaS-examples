@@ -1,3 +1,6 @@
 #!/bin/bash
 
-printf "operation is not supported on this digital twin \n\n"
+printf "Plotting results"
+mkdir -p /workspace/examples/data/mass-spring-damper-monitor/output/plots
+python lifecycle/plot.py
+mv result*.png /workspace/examples/data/mass-spring-damper-monitor/output/plots
