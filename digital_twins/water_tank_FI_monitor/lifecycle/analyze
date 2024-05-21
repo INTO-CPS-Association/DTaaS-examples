@@ -3,4 +3,4 @@
 printf "Plotting results"
 mkdir -p /workspace/examples/data/water_tank_FI_monitor/output/plots
 python lifecycle/plot.py
-mv *.png /workspace/examples/data/water_tank_FI_monitor/output/plots
+mv result*.png /workspace/examples/data/water_tank_FI_monitor/output/plots
