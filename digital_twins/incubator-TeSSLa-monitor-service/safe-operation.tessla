@@ -1,0 +1,15 @@
+include "./Telegraf.tessla"
+
+@TelegrafIn("amqp_consumer","host=<HOST>", "lid_open")
+in lid_open: Events[Bool]
+
+@TelegrafIn("amqp_consumer","host=<HOST>", "energy_saver_on")
+in energy_saver: Events[Bool] 
+
+def delayedOpen = raisingDelay(lid_open, 3) 
+def critical = lid_open && delayedOpen 
+def alert = critical && !energy_saver 
+
+@TelegrafOut("alert") 
+out alert
+def raisingDelay(e: Events[Bool], d: Int): Events[Bool] = merge3(false, const(true, delay(const(d, boolFilter(e)), e)), const(false, falling(e)))
