@@ -1,0 +1,9 @@
+{
+  "mqtt": {
+    "host": "hostname",
+    "port": 1883,
+    "username": "username",
+    "password": "password",
+    "topics": ["topic1", "topic2"]
+  }
+}
