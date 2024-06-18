@@ -26,9 +26,6 @@ def on_connect(mqttc, userdata, flags, rc, properties=None):
     print("connected with response code %s" %rc)
 
 def main():
-    print('HOST:', HOST)
-    print('PORT:', PORT)
-    print('USERNAME:', USERNAME)
     mqttc.connect(HOST, PORT, 60)
 
     mqttc.loop_start()
