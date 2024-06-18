@@ -39,20 +39,25 @@ def on_connect(mqttc, userdata, flags, rc, properties=None):
 def on_subscribe(self, mqttc, userdata, msg, granted_qos):
     print("mid/response = " + str(msg) + " / " + str(granted_qos))
 
+# function collects acceleration values from all the topics
+# and stores them in a dictionary with timestamp as key
+# and the values as the dictionary of measurement topic and
+# 640 bytes of data as values.
 def on_message(client, userdata, msg):
     payload = msg.payload
     print(msg.topic)
     data = []
     timestamp = struct.unpack('Q', payload[4:12])[0]
     data = struct.unpack_from('640f', payload, 20)
-    acceleration_values[timestamp] = {msg.topic: data}
-    timestamp_key = acceleration_values.get(timestamp)
     if timestamp not in acceleration_values:
         acceleration_values[timestamp] = {}
+    #acceleration_values[timestamp][msg.topic] = 'hello'
     acceleration_values[timestamp][msg.topic] = data
     print(datetime.fromtimestamp(timestamp).strftime("%y-%m-%d %H-%M-%S %f"))
-    print(acceleration_values.values().keys())
+    #print(acceleration_values)
     #print(acceleration_values.keys())
+    #for value in acceleration_values.values():
+    #    print(value.keys())
 
 mqttc = MQTTClient(
             callback_api_version=CallbackAPIVersion.VERSION2,
