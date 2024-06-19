@@ -2,7 +2,7 @@
 
 ## Overview
 
-This example demonstrates how a runtime monitoring service (in this example NuRV[1])
+This example demonstrates how a runtime monitoring service (in this example TeSSLa[1])
 can be connected with
 the [Incubator digital twin](../../common/digital_twins/incubator/README.md) to
 verify runtime behavior of the Incubator.
@@ -42,22 +42,9 @@ A diagram depicting the logical software structure of the example can be seen be
 
 The _execute.py_ script is responsible for orchestrating and starting all
 the relevant services in this example. This includes the Incubator DT,
-CORBA naming service (omniNames) and the NuRV monitor server as well as
-implementing the *Monitor connector* component that connects the DT output
-to the NuRV monitor server.
+the TeSSLa monitor as well as telegraf and the TeSSLa-Telegraf-Connector for communication between the DT and TeSSLa monitor.
 
-The NuRV monitor server utilizes a CORBA naming service where it registers
-under a specific name. A user can then query the naming service for
-the specific name, to obtain a reference to the monitor server.
-For more information on how the NuRV monitor server works,
-please refer to [1].
-
-After establishing connection with the NuRV monitor server, the Incubator DT
-is started and a RabbitMQ client is created that subscribes to changes in
-the *anomaly* and *energy_saving* states of the DT. Each time an update is
-received of either state, the full state (the new updated state and
-the previous other state) is pushed to the NuRV monitor server whereafter
-the verdict is printed to the console.
+The telegraf client subscribes to the RabbitMQ server used for communication by the DT and relays the messages on the *incubator.diagnosis.plant.lidopen* and *incubator.energysaver.status* topics to the TeSSLa-Telegraf-Connector which feeds them as inputs to the TeSSLa monitor. TeSSLa then reaches a verdict based on this new state together with previously received states. The verdict is then output back to telegraf via the connector and published to the *incubator.energysaver.alert* topic and printed on the console.
 
 ## Digital Twin configuration
 
@@ -70,10 +57,11 @@ The example uses the following assets:
 |:---|:---|:---|:---|
 | Service | common/services/NuRV_orbit | Common | Yes |
 | DT | common/digital_twins/incubator | Common | Yes |
-| Specification | safe-operation.smv | Private | No |
+| Specification | safe-operation.tessla | Private | No |
+| Configuration | telegraf.conf | Private | No
 | Script | execute.py | Private | No |
 
-The _safe-operation.smv_ file contains the default monitored specification as
+The _safe-operation.tessla_ file contains the default monitored specification as
 described in the [Simulated scenario section](#simulated-scenario).
 These can be configured as desired.
 
@@ -101,7 +89,7 @@ where {script} is the name of the script, e.g. _create_, _execute_ etc.
 To run the example, first run the following command in a terminal:
 
 ```bash
-cd /workspace/examples/digital_twins/incubator-monitor-server/
+cd /workspace/examples/digital_twins/incubator-tessla-monitor-service/
 ```
 
 Then, first execute the _create_ script (this can take a few mins
@@ -120,9 +108,7 @@ where "_anomaly_" indicates that an anomaly is detected and "!anomaly"
 indicates that an anomaly is not currently detected. The same format
 is used for the energy_saving state.
 
-The monitor verdict can be False or Unknown, where the latter
-indicates that the monitor does not yet have sufficient information
-to determine the satisfaction of the property. The monitor will never produce a True verdict as the entire trace must be verified to ensure satisfaction due to the G operator. Thus the Unknown state can be viewed as a tentative True verdict. 
+*The monitor verdict can be False or Unknown, where the latte indicates that the monitor does not yet have sufficient informationto determine the satisfaction of the property. The monitor will never produce a True verdict as the entire trace must be verified to ensure satisfaction due to the G operator. Thus the Unknown state can be viewed as a tentative True verdict.*
 
 An example output trace is provided below:
 
@@ -146,11 +132,6 @@ State: anomaly & !energy_saving, verdict: Unknown
 State: anomaly & !energy_saving, verdict: False
 ````
 
-There is currently some startup issues with connecting to the NuRV server,
-and it will likely take a few tries before the connection is established.
-This is however handled automatically.
-
 ## References
 
-1. Information on the NuRV monitor can be found on
-   [FBK website](https://es-static.fbk.eu/tools/nurv/).
+1.    [tessla.io](https://tessla.io)
