@@ -1,0 +1,16 @@
+#!/bin/bash
+
+export LIFECYCLE_PATH=${LIFECYCLE_PATH:=$(realpath "$(dirname "${BASH_SOURCE[0]}")")}
+echo "Using LIFECYCLE_PATH: ${LIFECYCLE_PATH}"
+cd "$LIFECYCLE_PATH"
+source .venv/bin/activate
+
+export TESSLA_PATH=${TESSLA_PATH:=$LIFECYCLE_PATH/../../../tools/tessla-telegraf-connector} # Set variable if not manually exported
+echo "Using TESSLA_PATH: ${TESSLA_PATH}"
+sed "s/<HOST>/$(hostname)/g" <../safe-operation.tessla >$TESSLA_PATH/safe-operation.tessla # fill & copy tessla specification
+
+export INCUBATOR_PATH=${INCUBATOR_PATH:=$LIFECYCLE_PATH/../../../common/digital_twins/incubator} # Set variable if not manually exported
+echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
+cp ../simulation.conf "${INCUBATOR_PATH}/simulation.conf" # copy simulation configuration.
+
+python execute.py
