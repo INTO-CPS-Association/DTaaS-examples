@@ -1,4 +1,4 @@
-import subprocess, os, time, sys
+import subprocess, os, time, sys, traceback
 incubator_location = os.getenv("INCUBATOR_PATH")
 tessla_location = os.getenv("TESSLA_PATH")
 lifecycle_location = os.getenv("LIFECYCLE_PATH")
@@ -67,6 +67,7 @@ def startRabbitMQ(message_callback):
     print("Connected to rabbitmq server.")
     rabbitMq.subscribe(ROUTING_KEY_ENERGY_SAVER_STATUS, handleMessage)
     rabbitMq.subscribe(ROUTING_KEY_LIDOPEN, handleMessage)
+    rabbitMq.subscribe("incubator.energysaver.alert", handleMessage)
     return rabbitMq
 
 
@@ -135,12 +136,13 @@ if __name__ == "__main__":
 
         # setup RabbitMQ
         def handleMessage(channel, method, properties, body_json):
+            print(body_json)
             if "lid_open" in body_json:
                 message["anomaly"] = "anomaly" if body_json["lid_open"] else "!anomaly"
             elif "energy_saver_on" in body_json:
                 message["energy_saving"] = "energy_saving" if body_json["energy_saver_on"] else "!energy_saving"
             elif "alert" in body_json:
-                message["alert"] = "alert" if body_json["alert"] else "unknown"
+                message["alert"] = "alert" if body_json["alert"] else "normal"
                 print(f"Message from TeSSLa: {body_json['alert']}")
             states = f"{message['anomaly']} & {message['energy_saving']}"
             print(f"State: {states}, verdict: {message['alert']}")
@@ -158,9 +160,10 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         event.set()
         print("Stopping simulation...")
-    except:
+    except Exception as e:
         event.set()
-        print("An error has occurred")
+        print("An error has occurred:")
+        traceback.print_exc()
     finally:
         if tesslaProcess:
             print(f"Stopping TeSSLa with pid: {tesslaProcess.pid}")
