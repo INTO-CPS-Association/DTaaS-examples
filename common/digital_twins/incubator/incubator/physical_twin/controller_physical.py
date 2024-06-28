@@ -93,7 +93,7 @@ class ControllerPhysical:
                 "heater_on": self.heater_ctrl,
                 "fan_on": data["fields"]["fan_on"],
                 "current_state": self.state_machine.current_state,
-                "next_time": self.state_machine.next_time,
+                "next_time": float(self.state_machine.next_time),
                 "temperature_desired": self.state_machine.temperature_desired,
                 "lower_bound": self.state_machine.lower_bound,
                 "heating_time": self.state_machine.heating_time,

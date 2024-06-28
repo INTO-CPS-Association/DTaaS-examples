@@ -136,7 +136,7 @@ if __name__ == "__main__":
 
         # setup RabbitMQ
         def handleMessage(channel, method, properties, body_json):
-            #print(body_json)
+            print(f"Channel: {channel}. Method: {method}. Properties: {properties}. Body: {body_json}.")
             if "lid_open" in body_json:
                 message["anomaly"] = "anomaly" if body_json["lid_open"] else "!anomaly"
             elif "energy_saver_on" in body_json:
