@@ -136,7 +136,7 @@ if __name__ == "__main__":
 
         # setup RabbitMQ
         def handleMessage(channel, method, properties, body_json):
-            print(f"Channel: {channel}. Method: {method}. Properties: {properties}. Body: {body_json}.")
+            #print(f"Channel: {channel}. Method: {method}. Properties: {properties}. Body: {body_json}.")
             if "lid_open" in body_json:
                 message["anomaly"] = "anomaly" if body_json["lid_open"] else "!anomaly"
             elif "energy_saver_on" in body_json:
@@ -169,6 +169,7 @@ if __name__ == "__main__":
             print(f"Stopping TeSSLa with pid: {tesslaProcess.pid}")
             tesslaProcess.kill()
             tesslaProcess.wait()
+        os.system("pkill -f \"tessla_monitor\"")
         if telegrafProcess:
             print(f"Stopping telegraf with pid: {telegrafProcess.pid}")
             telegrafProcess.kill()
