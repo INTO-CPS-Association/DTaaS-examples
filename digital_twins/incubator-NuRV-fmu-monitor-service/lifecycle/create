@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -e # Exit on command failure
+
+apt_updated=false
+
+check_binary() {
+    if dpkg -l "$1" &> /dev/null; then
+        echo "$1 is installed."
+    else
+        echo "$1 is not installed. Installing."
+        if [ "$apt_updated" = false ]; then
+            sudo apt update
+            sudo apt upgrade
+            apt_updated=true
+        fi
+        sudo apt install "${2:-$1}" # Install argument 2 if provided, otherwise 1
+    fi
+}
+
+export LIFECYCLE_PATH=${LIFECYCLE_PATH:=$(realpath "$(dirname "${BASH_SOURCE[0]}")")}
+echo "Using LIFECYCLE_PATH: ${LIFECYCLE_PATH}"
+export NURV=${NURV:=$LIFECYCLE_PATH/../../../common/tools/NuRV/NuRV} # Set variable if not manually exported
+echo "Using NURV: ${NURV}"
+export FMI2_HEADERS=${FMI2_HEADERS:=$LIFECYCLE_PATH/../../../common/fmi2_headers} # Set variable if not manually exported
+echo "Using FMI2_HEADERS: ${FMI2_HEADERS}"
+
+echo "Checking dependencies"
+
+# Install stuff
+check_binary "python3"
+check_binary "python3-pip"
+check_binary "python3-venv"
+check_binary "openjdk-17-jre"
+pip install pandas matplotlib
+check_binary "zip"
+
+# Change path inside the command script
+NURV_SPEC=$(realpath "$LIFECYCLE_PATH/../model/safe-operation.smv")
+sed -i "1s|\".*\"|\"$NURV_SPEC\"|" $LIFECYCLE_PATH/synthesis_incubator_monitor_fmu.cmd
+
+"$NURV" -quiet -source $LIFECYCLE_PATH/synthesis_incubator_monitor_fmu.cmd
+sed -i 's\Enumeration declaredType="eu.fbk.nurv.RV_value"\Integer\g' \
+    safe-operation/modelDescription.xml
+
+FMI2_HOME=$FMI2_HEADERS make -C safe-operation linux64
+
+DTAAS_MODEL_PATH=$(realpath "$LIFECYCLE_PATH/../../../models")
+mv safe-operation.fmu $DTAAS_MODEL_PATH
