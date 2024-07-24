@@ -24,8 +24,15 @@ export NURV=${NURV:=$LIFECYCLE_PATH/../../../common/tools/NuRV/NuRV} # Set varia
 echo "Using NURV: ${NURV}"
 export FMI2_HEADERS=${FMI2_HEADERS:=$LIFECYCLE_PATH/../../../common/fmi2_headers} # Set variable if not manually exported
 echo "Using FMI2_HEADERS: ${FMI2_HEADERS}"
+export INCUBATOR_PATH=${INCUBATOR_PATH:=$LIFECYCLE_PATH/../../../common/digital_twins/incubator} # Set variable if not manually exported
+echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
 
 echo "Checking dependencies"
+
+# Create venv
+cd $LIFECYCLE_PATH
+python3 -m venv .venv
+source .venv/bin/activate
 
 # Install stuff
 check_binary "python3"
@@ -35,7 +42,10 @@ check_binary "openjdk-17-jre"
 pip install pandas matplotlib
 check_binary "zip"
 
-# Change path inside the command script
+# Install incubator dependencies
+pip install -r "${INCUBATOR_PATH}/requirements.txt" -r ../src/requirements.txt
+
+# Change the path written inside the command script
 NURV_SPEC=$(realpath "$LIFECYCLE_PATH/../model/safe-operation.smv")
 sed -i "1s|\".*\"|\"$NURV_SPEC\"|" $LIFECYCLE_PATH/synthesis_incubator_monitor_fmu.cmd
 
