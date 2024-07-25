@@ -11,6 +11,7 @@ from digital_twin.communication.rabbitmq_protocol import ROUTING_KEY_ENERGY_SAVE
 
 
 def makeTelegrafConfig(template_path, dest_path):
+    print("Generating telegraf config ... ", end=None)
     config = load_config(f"{incubator_location}/simulation.conf")
     try:
         with open(template_path, 'r') as file:
@@ -25,13 +26,15 @@ def makeTelegrafConfig(template_path, dest_path):
 
         with open(dest_path, 'w') as file:
             file.write(content)
+        print("Done!")
 
     except Exception as e:
-        print(f"An error occurred while generating the telegraf config file: {e}")
+        print(f"Error \n An error occurred while generating the telegraf config file: {e}")
         sys.exit(1)
 
 
 def startTessla():
+    print("Starting Tessla-Telegraf-Connector")
     tesslaProcess = subprocess.Popen(f"cd {tessla_location}/; exec ./TesslaTelegrafConnector -i safe-operation.tessla -c telegraf.conf -r 2>&1 | tee /tmp/tessla.log", shell=True, cwd=os.getcwd(), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
     output = ""
     while True:
@@ -169,7 +172,7 @@ if __name__ == "__main__":
             print(f"Stopping TeSSLa with pid: {tesslaProcess.pid}")
             tesslaProcess.kill()
             tesslaProcess.wait()
-        os.system("pkill -f \"tessla_monitor\"")
+        #os.system("pkill -f \"tessla_monitor\"")
         if telegrafProcess:
             print(f"Stopping telegraf with pid: {telegrafProcess.pid}")
             telegrafProcess.kill()

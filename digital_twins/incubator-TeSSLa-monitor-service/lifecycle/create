@@ -3,7 +3,7 @@
 apt update
 cd "$(dirname "${BASH_SOURCE[0]}")"
 # install packages
-apt-get install -y build-essential default-jre-headless cargo
+apt-get install -y build-essential default-jre-headless python3-venv cargo
 
 if dpkg -l | grep -qw "telegraf"; then
   echo "Telegraf is already installed"
