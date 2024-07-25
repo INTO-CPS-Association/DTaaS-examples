@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e # Exit on command failure
+
+export LIFECYCLE_PATH=${LIFECYCLE_PATH:=$(realpath "$(dirname "${BASH_SOURCE[0]}")")}
+echo "Using LIFECYCLE_PATH: ${LIFECYCLE_PATH}"
+cd "$LIFECYCLE_PATH"
+source .venv/bin/activate
+
+export INCUBATOR_PATH=${INCUBATOR_PATH:=$LIFECYCLE_PATH/../../../common/digital_twins/incubator} # Set variable if not manually exported
+echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
+cp ../simulation.conf "${INCUBATOR_PATH}/simulation.conf" # copy simulation configuration.
+
+python execute.py
