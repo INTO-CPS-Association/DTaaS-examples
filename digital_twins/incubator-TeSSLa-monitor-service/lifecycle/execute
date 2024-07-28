@@ -13,4 +13,17 @@ export INCUBATOR_PATH=${INCUBATOR_PATH:=$LIFECYCLE_PATH/../../../common/digital_
 echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
 cp ../simulation.conf "${INCUBATOR_PATH}/simulation.conf" # copy simulation configuration.
 
+python make-telegraf-config.py
+
+cd "$TESSLA_PATH"
+echo "Starting TeSSLa-Telegraf-Connector, see output at /tmp/tessla.log"
+./TesslaTelegrafConnector -i safe-operation.tessla -c telegraf.conf -r 2>&1 > /tmp/tessla.log &
+sleep 10
+
+echo "Starting Telegraf "
+telegraf --config telegraf.conf 2>&1 > /tmp/telegraf.log &
+sleep 10
+
+cd "$LIFECYCLE_PATH"
+
 python execute.py

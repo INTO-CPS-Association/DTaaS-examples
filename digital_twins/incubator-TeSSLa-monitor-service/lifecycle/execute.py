@@ -1,66 +1,10 @@
 import subprocess, os, time, sys, traceback
 incubator_location = os.getenv("INCUBATOR_PATH")
-tessla_location = os.getenv("TESSLA_PATH")
-lifecycle_location = os.getenv("LIFECYCLE_PATH")
 sys.path.append(os.path.join(f"{incubator_location}"))
-sys.path.append(os.path.join(f"{tessla_location}"))
 from threading import Thread, Event
 from incubator.communication.server.rabbitmq import Rabbitmq
 from incubator.config.config import load_config
 from digital_twin.communication.rabbitmq_protocol import ROUTING_KEY_ENERGY_SAVER_ENABLE, ROUTING_KEY_ENERGY_SAVER_STATUS, ROUTING_KEY_LIDOPEN
-
-
-def makeTelegrafConfig(template_path, dest_path):
-    print("Generating telegraf config ... ", end=None)
-    config = load_config(f"{incubator_location}/simulation.conf")
-    try:
-        with open(template_path, 'r') as file:
-            content = file.read()
-
-        content = content.replace('<AMQP_HOST>', config.get_string('rabbitmq.ip'))
-        content = content.replace('<AMQP_PORT>', config.get_string('rabbitmq.port'))
-        content = content.replace('<AMQP_VHOST>', config.get_string('rabbitmq.vhost'))
-        content = content.replace('<AMQP_USER>', config.get_string('rabbitmq.username'))
-        content = content.replace('<AMQP_PASS>', config.get_string('rabbitmq.password'))
-        content = content.replace('<AMQP_EXCHANGE>', config.get_string('rabbitmq.exchange'))
-
-        with open(dest_path, 'w') as file:
-            file.write(content)
-        print("Done!")
-
-    except Exception as e:
-        print(f"Error \n An error occurred while generating the telegraf config file: {e}")
-        sys.exit(1)
-
-
-def startTessla():
-    print("Starting Tessla-Telegraf-Connector")
-    tesslaProcess = subprocess.Popen(f"cd {tessla_location}/; exec ./TesslaTelegrafConnector -i safe-operation.tessla -c telegraf.conf -r 2>&1 | tee /tmp/tessla.log", shell=True, cwd=os.getcwd(), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-    output = ""
-    while True:
-        line = tesslaProcess.stdout.readline()
-        output += line
-        if line == "" and tesslaProcess.poll() is not None:
-            print("Error starting TeSSLa-Telegraf-Connector:")
-            print(output)
-            print(tesslaProcess.stderr.readlines())
-            sys.exit(1)
-        if "Start listening..." in line :
-            print("Started TeSSLa-Telegraf-Connector")
-            break
-
-    return tesslaProcess
-
-
-def startTelegraf(conf_path):
-    print("Starting Telegraf")
-    telegrafProcess = subprocess.Popen(f"exec telegraf --config {conf_path}", shell=True, cwd=os.getcwd(), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-    time.sleep(5)
-    if telegrafProcess.poll() is not None:
-        print("Failed to start telegraf server")
-        print(telegrafProcess.stdout.readlines())
-        sys.exit(1)
-    return telegrafProcess
 
 
 def startRabbitMQ(message_callback):
@@ -121,15 +65,11 @@ def runScenario(event):
 
 if __name__ == "__main__":
 
-    tesslaProcess = None
-    telegrafProcess = None
     rabbitMq = None
     incubatorProcess = None
     scenario_thread = None
+    event = Event()
     try:
-        makeTelegrafConfig(f"{lifecycle_location}/../telegraf.conf", f"{tessla_location}/telegraf.conf")
-        tesslaProcess = startTessla()
-        telegrafProcess = startTelegraf(f"{tessla_location}/telegraf.conf")
         # Start incubator
         incubatorProcess = startIncubator()
         message = {}
@@ -146,14 +86,13 @@ if __name__ == "__main__":
                 message["energy_saving"] = "energy_saving" if body_json["energy_saver_on"] else "!energy_saving"
             elif "alert" in body_json:
                 message["alert"] = "alert" if body_json["alert"] else "normal"
-                print(f"Message from TeSSLa: {body_json['alert']}")
+                #print(f"Message from TeSSLa: {body_json['alert']}")
             states = f"{message['anomaly']} & {message['energy_saving']}"
             print(f"State: {states}, verdict: {message['alert']}")
 
             if event.is_set():
                 rabbitMq.close()
         rabbitMq = startRabbitMQ(handleMessage)
-        event = Event()
         scenario_thread = Thread(target=runScenario, args=[event])
         # Wait to ensure incubator running
         # time.sleep(1)
@@ -168,15 +107,6 @@ if __name__ == "__main__":
         print("An error has occurred:")
         traceback.print_exc()
     finally:
-        if tesslaProcess:
-            print(f"Stopping TeSSLa with pid: {tesslaProcess.pid}")
-            tesslaProcess.kill()
-            tesslaProcess.wait()
-        #os.system("pkill -f \"tessla_monitor\"")
-        if telegrafProcess:
-            print(f"Stopping telegraf with pid: {telegrafProcess.pid}")
-            telegrafProcess.kill()
-            telegrafProcess.wait()
         if rabbitMq and not event.is_set():
             rabbitMq.close()
         if incubatorProcess:
