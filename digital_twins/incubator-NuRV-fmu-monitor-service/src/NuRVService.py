@@ -4,8 +4,6 @@ from fmuinterface import FMUInterface
 import logging
 import os
 
-# TODO: Fix hard-coded paths (FMUInterface and simulation.conf)
-# TODO: General code cleanup
 # TODO: Make it possible to reset through scenario and implement in execute.py
 
 ANOMALY_TOPIC = "incubator.diagnosis.plant.lidopen"
