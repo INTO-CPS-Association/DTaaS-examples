@@ -7,50 +7,61 @@ import logging
 # TODO: General code cleanup
 # TODO: Make it possible to reset through scenario and implement in execute.py
 
-f = FMUInterface(
-    fileName="/home/au610920/repos/DTaaS-examples/models/safe-operation.fmu",
-    startTime=0,
-)
-anomaly = False
-anomaly_key = "lid_open"
-anomaly_topic = "incubator.diagnosis.plant.lidopen"
-energy_saving = False
-energy_saving_key = "energy_saver_on"
-energy_saving_topic = "incubator.energysaver.status"
-energy_saver_alert_topic = "incubator.energysaver.alert"
+ANOMALY_TOPIC = "incubator.diagnosis.plant.lidopen"
+ANOMALY_KEY = "lid_open"
+ENERGY_SAVING_KEY = "energy_saver_on"
+ENERGY_SAVING_TOPIC = "incubator.energysaver.status"
+ENERGY_SAVER_ALERT_TOPIC = "incubator.energysaver.alert"
 
-config = ConfigFactory.parse_file("../simulation.conf")["rabbitmq"]
-rabbit = Rabbitmq(**config)
+class NuRVService:
+    def __init__(self, rabbit):
+        # Initialize FMUInterface with the given file path and start time
+        self.fmu = FMUInterface(
+            fileName="/home/au610920/repos/DTaaS-examples/models/safe-operation.fmu",
+            startTime=0,
+        )
+        # Initial states
+        self.anomaly = False
+        self.energy_saving = False
+        self.rabbit = rabbit
 
-def on_read(ch, method, properties, body):
-    global anomaly, energy_saving, rabbit
-    if anomaly_key in body:
-        anomaly = body[anomaly_key]
-    if energy_saving_key in body:
-        energy_saving = body[energy_saving_key]
+    def on_read(self, ch, method, properties, body):
+        # Update state based on incoming message body
+        if ANOMALY_KEY in body:
+            self.anomaly = body[ANOMALY_KEY]
+        if ENERGY_SAVING_KEY in body:
+            self.energy_saving = body[ENERGY_SAVING_KEY]
 
-    inputs = {
-        "Boolean": {
-            "anomaly": anomaly,
-            "energy_saving": energy_saving,
-            "_soft_reset": False,
-        },
-    }
-    f.setInputs(inputs)
-    f.callback_doStep(0, 1)
-    res = f.getAllOutputs()
-    print(f"Inputs: {inputs}. Outputs: {res}")
-    alert_int = {"alert": res["Integer"]["_output"]}
-    if energy_saving_key in body: # Don't print twice in a row 
-        rabbit.send_message(routing_key=energy_saver_alert_topic, message=alert_int)
+        # Define FMU inputs
+        inputs = {
+            "Boolean": {
+                "anomaly": self.anomaly,
+                "energy_saving": self.energy_saving,
+                "_soft_reset": False,
+            },
+        }
+        # Perform simulation step
+        self.fmu.setInputs(inputs)
+        self.fmu.callback_doStep(0, 1)
+        res = self.fmu.getAllOutputs()
+        print(f"Inputs: {inputs}. Outputs: {res}")
+        alert_int = {"alert": res["Integer"]["_output"]}
 
+        # Send alert if energy saving status is updated
+        if ENERGY_SAVING_KEY in body:
+            self.rabbit.send_message(routing_key=ENERGY_SAVER_ALERT_TOPIC, message=alert_int)
 
-def main():
+def main():    
     logging.basicConfig(level=logging.INFO, format="%(message)s")
+    # Load RabbitMQ configuration
+    config = ConfigFactory.parse_file("../simulation.conf")["rabbitmq"]
+    rabbit = Rabbitmq(**config)
+
+    service = NuRVService(rabbit)
 
     rabbit.connect_to_server()
-    rabbit.subscribe(routing_key=anomaly_topic, on_message_callback=on_read)
-    rabbit.subscribe(routing_key=energy_saving_topic, on_message_callback=on_read)
+    rabbit.subscribe(routing_key=ANOMALY_TOPIC, on_message_callback=service.on_read)
+    rabbit.subscribe(routing_key=ENERGY_SAVING_TOPIC, on_message_callback=service.on_read)
     rabbit.start_consuming()
 
 
