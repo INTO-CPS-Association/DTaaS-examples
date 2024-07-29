@@ -2,6 +2,7 @@ from rabbitmq import Rabbitmq
 from pyhocon import ConfigFactory
 from fmuinterface import FMUInterface
 import logging
+import os
 
 # TODO: Fix hard-coded paths (FMUInterface and simulation.conf)
 # TODO: General code cleanup
@@ -14,10 +15,10 @@ ENERGY_SAVING_TOPIC = "incubator.energysaver.status"
 ENERGY_SAVER_ALERT_TOPIC = "incubator.energysaver.alert"
 
 class NuRVService:
-    def __init__(self, rabbit):
+    def __init__(self, rabbit, fmu_path):
         # Initialize FMUInterface with the given file path and start time
         self.fmu = FMUInterface(
-            fileName="/home/au610920/repos/DTaaS-examples/models/safe-operation.fmu",
+            fileName=fmu_path,
             startTime=0,
         )
         # Initial states
@@ -51,13 +52,27 @@ class NuRVService:
         if ENERGY_SAVING_KEY in body:
             self.rabbit.send_message(routing_key=ENERGY_SAVER_ALERT_TOPIC, message=alert_int)
 
-def main():    
+def main():
     logging.basicConfig(level=logging.INFO, format="%(message)s")
+
+    # Base path from environment variable
+    lifecycle_path = os.getenv('LIFECYCLE_PATH')
+    if not lifecycle_path:
+        raise EnvironmentError("The LIFECYCLE_PATH environment variable is not defined.")
+
+    # Construct default paths
+    default_fmu_path = os.path.abspath(os.path.join(lifecycle_path, '../../../models/safe-operation.fmu'))
+    default_config_path = os.path.abspath(os.path.join(lifecycle_path, '../simulation.conf'))
+
+    # Load paths from environment variables with defaults
+    fmu_path = os.getenv('FMU_PATH', default_fmu_path)
+    config_path = os.getenv('CONFIG_PATH', default_config_path)
+
     # Load RabbitMQ configuration
-    config = ConfigFactory.parse_file("../simulation.conf")["rabbitmq"]
+    config = ConfigFactory.parse_file(config_path)["rabbitmq"]
     rabbit = Rabbitmq(**config)
 
-    service = NuRVService(rabbit)
+    service = NuRVService(rabbit, fmu_path)
 
     rabbit.connect_to_server()
     rabbit.subscribe(routing_key=ANOMALY_TOPIC, on_message_callback=service.on_read)
