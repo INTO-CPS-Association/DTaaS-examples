@@ -13,7 +13,7 @@ from digital_twin.communication.rabbitmq_protocol import (
     ROUTING_KEY_ENERGY_SAVER_STATUS,
     ROUTING_KEY_LIDOPEN,
 )
-from NuRVService import main as monitor_main
+from NuRVService import main as monitor_main, MONITOR_RESET_TOPIC, MONITOR_RESET_KEY
 
 
 def startRabbitMQ(message_callback):
@@ -37,7 +37,7 @@ def startIncubator():
         stdout=subprocess.PIPE,
         text=True,
     )
-    time.sleep(5)
+    time.sleep(20)
     result = incubatorProcess.poll()
     if result is not None:
         print("Failed to start incubator")
@@ -95,8 +95,21 @@ def runScenario(event):
 
     print("Putting lid back on...", flush=True)
     os.system((f"cd {incubator_location}; python -m cli.mess_with_lid_mock 1"))
+
+    # Wait a bit before resetting the monitor
+    for i in range(100):
+        if event.is_set():
+            return
+        time.sleep(0.1)
+    print("Resetting FMU state.", flush=True)
+    config = load_config(f"{incubator_location}/simulation.conf")
+    rabbitMq = Rabbitmq(**config["rabbitmq"])
+    rabbitMq.connect_to_server()
+    msg = {MONITOR_RESET_KEY: True}
+    rabbitMq.send_message(routing_key=MONITOR_RESET_TOPIC, message=msg)
+
     for i in range(
-        300
+        200
     ):  # wait for the anomaly detection to determine that the lid is back on
         if event.is_set():
             return

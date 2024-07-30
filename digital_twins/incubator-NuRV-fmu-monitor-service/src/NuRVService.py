@@ -4,13 +4,14 @@ from fmuinterface import FMUInterface
 import logging
 import os
 
-# TODO: Make it possible to reset through scenario and implement in execute.py
-
 ANOMALY_TOPIC = "incubator.diagnosis.plant.lidopen"
 ANOMALY_KEY = "lid_open"
 ENERGY_SAVING_KEY = "energy_saver_on"
 ENERGY_SAVING_TOPIC = "incubator.energysaver.status"
 ENERGY_SAVER_ALERT_TOPIC = "incubator.energysaver.alert"
+MONITOR_RESET_TOPIC = "monitor_reset"
+MONITOR_RESET_KEY = "reset"
+
 
 class NuRVService:
     def __init__(self, rabbit, fmu_path):
@@ -30,13 +31,14 @@ class NuRVService:
             self.anomaly = body[ANOMALY_KEY]
         if ENERGY_SAVING_KEY in body:
             self.energy_saving = body[ENERGY_SAVING_KEY]
+        soft_reset = MONITOR_RESET_KEY in body
 
         # Define FMU inputs
         inputs = {
             "Boolean": {
                 "anomaly": self.anomaly,
                 "energy_saving": self.energy_saving,
-                "_soft_reset": False,
+                "_soft_reset": soft_reset,
             },
         }
         # Perform simulation step
@@ -48,23 +50,32 @@ class NuRVService:
 
         # Send alert if energy saving status is updated
         if ENERGY_SAVING_KEY in body:
-            self.rabbit.send_message(routing_key=ENERGY_SAVER_ALERT_TOPIC, message=alert_int)
+            self.rabbit.send_message(
+                routing_key=ENERGY_SAVER_ALERT_TOPIC, message=alert_int
+            )
+
 
 def main():
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 
     # Base path from environment variable
-    lifecycle_path = os.getenv('LIFECYCLE_PATH')
+    lifecycle_path = os.getenv("LIFECYCLE_PATH")
     if not lifecycle_path:
-        raise EnvironmentError("The LIFECYCLE_PATH environment variable is not defined.")
+        raise EnvironmentError(
+            "The LIFECYCLE_PATH environment variable is not defined."
+        )
 
     # Construct default paths
-    default_fmu_path = os.path.abspath(os.path.join(lifecycle_path, '../../../models/safe-operation.fmu'))
-    default_config_path = os.path.abspath(os.path.join(lifecycle_path, '../simulation.conf'))
+    default_fmu_path = os.path.abspath(
+        os.path.join(lifecycle_path, "../../../models/safe-operation.fmu")
+    )
+    default_config_path = os.path.abspath(
+        os.path.join(lifecycle_path, "../simulation.conf")
+    )
 
     # Load paths from environment variables with defaults
-    fmu_path = os.getenv('FMU_PATH', default_fmu_path)
-    config_path = os.getenv('CONFIG_PATH', default_config_path)
+    fmu_path = os.getenv("FMU_PATH", default_fmu_path)
+    config_path = os.getenv("CONFIG_PATH", default_config_path)
 
     # Load RabbitMQ configuration
     config = ConfigFactory.parse_file(config_path)["rabbitmq"]
@@ -74,7 +85,13 @@ def main():
 
     rabbit.connect_to_server()
     rabbit.subscribe(routing_key=ANOMALY_TOPIC, on_message_callback=service.on_read)
-    rabbit.subscribe(routing_key=ENERGY_SAVING_TOPIC, on_message_callback=service.on_read)
+    rabbit.subscribe(
+        routing_key=ENERGY_SAVING_TOPIC, on_message_callback=service.on_read
+    )
+    rabbit.subscribe(
+        routing_key=MONITOR_RESET_TOPIC, on_message_callback=service.on_read
+    )
+
     rabbit.start_consuming()
 
 
