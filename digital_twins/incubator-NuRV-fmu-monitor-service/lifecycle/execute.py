@@ -37,7 +37,7 @@ def startIncubator():
         stdout=subprocess.PIPE,
         text=True,
     )
-    time.sleep(20)
+    time.sleep(5)
     result = incubatorProcess.poll()
     if result is not None:
         print("Failed to start incubator")
@@ -45,26 +45,6 @@ def startIncubator():
         print(output)
         exit()
     return incubatorProcess
-
-
-def startNuRVMonitor():
-    print("Starting NuRV Monitor")
-    nurvProcess = subprocess.Popen(
-        f"cd {source_location}/; exec python NuRVService.py",
-        shell=True,
-        cwd=os.getcwd(),
-        stderr=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        text=True,
-    )
-    time.sleep(5)
-    result = nurvProcess.poll()
-    if result is not None:
-        print("Failed to start incubator")
-        output = nurvProcess.stderr.readlines()
-        print(output)
-        exit()
-    return nurvProcess
 
 
 def runScenario(event):
@@ -126,7 +106,6 @@ if __name__ == "__main__":
     try:
         # Start incubator
         incubatorProcess = startIncubator()
-        nurvProcess = startNuRVMonitor()
         message = {}
         message["anomaly"] = "!anomaly"
         message["energy_saving"] = "!energy_saving"
