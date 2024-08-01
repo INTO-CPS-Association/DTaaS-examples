@@ -34,8 +34,14 @@ def startNuRV(ior):
             time.sleep(1) # Made connecting to NuRV server more reliable on DTaaS...
             break
 
-    orb = CORBA.ORB_init(["ORBInitRef", f"NameService={ior}"], CORBA.ORB_ID)
-    obj = orb.resolve_initial_references("NameService")
+    orb = CORBA.ORB_init(["-ORBInitRef", f"NameService={ior}"], CORBA.ORB_ID)
+    try:
+        obj = orb.resolve_initial_references("NameService")
+    except Exception as e:
+        nurvProcess.kill()
+        nurvProcess.wait()
+        raise e
+
     rootContext = obj._narrow(CosNaming.NamingContext)
     if rootContext is None:
         print("Failed to narrow the root naming context")
@@ -150,7 +156,7 @@ def ensureNuRVRunning():
             time.sleep(2)
             # Start NuRV
             nurvProcess, service = startNuRV(ior)
-            time.sleep(10)
+            time.sleep(2)
             result = service.heartbeat(to_any(0), "!anomaly & !energy_saving")
             if verdictEnumToString(result) == "Unknown":
                 connectionEstablished = True
@@ -176,6 +182,7 @@ if __name__ == "__main__":
     rabbitMq = None
     incubatorProcess = None
     scenario_thread = None
+    event = Event()
     try:
         omniNamesProcess, nurvProcess, service = ensureNuRVRunning()
         # Start incubator
@@ -201,7 +208,6 @@ if __name__ == "__main__":
             if event.is_set():
                 rabbitMq.close()
         rabbitMq = startRabbitMQ(handleMessage)
-        event = Event()
         scenario_thread = Thread(target=runScenario, args=(event,service))
         # Wait to ensure incubator running
         #time.sleep(1)
