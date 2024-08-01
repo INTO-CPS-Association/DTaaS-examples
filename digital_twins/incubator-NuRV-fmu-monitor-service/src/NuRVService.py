@@ -1,7 +1,6 @@
 from rabbitmq import Rabbitmq
 from pyhocon import ConfigFactory
 from fmuinterface import FMUInterface
-import logging
 import os
 
 ANOMALY_TOPIC = "incubator.diagnosis.plant.lidopen"
@@ -46,18 +45,23 @@ class NuRVService:
         self.fmu.callback_doStep(0, 1)
         res = self.fmu.getAllOutputs()
         print(f"Inputs: {inputs}. Outputs: {res}")
-        alert_int = {"alert": res["Integer"]["_output"]}
 
         # Send alert if energy saving status is updated
         if ENERGY_SAVING_KEY in body:
+            alert_int = res["Integer"]["_output"]
+            if alert_int == 0:
+                alert_str = "unknown"
+            elif alert_int == 2:
+                alert_str = "false"
+            else:
+                alert_str = "Error - unexpected"
+            alert_msg = {"alert": alert_str}
             self.rabbit.send_message(
-                routing_key=ENERGY_SAVER_ALERT_TOPIC, message=alert_int
+                routing_key=ENERGY_SAVER_ALERT_TOPIC, message=alert_msg
             )
 
 
 def main():
-    logging.basicConfig(level=logging.INFO, format="%(message)s")
-
     # Base path from environment variable
     lifecycle_path = os.getenv("LIFECYCLE_PATH")
     if not lifecycle_path:

@@ -124,9 +124,10 @@ if __name__ == "__main__":
                 )
             elif "alert" in body_json:
                 message["alert"] = body_json["alert"]
-                print(f"Message from NuRV: {body_json['alert']}")
-            states = f"{message['anomaly']} & {message['energy_saving']}"
-            print(f"State: {states}, verdict: {message['alert']}")
+                print(f"Verdict from NuRV: {body_json['alert']}")
+            if not ("alert" in body_json):
+                states = f"{message['anomaly']} & {message['energy_saving']}"
+                print(f"State: {states}")
 
             if event.is_set():
                 rabbitMq.close()

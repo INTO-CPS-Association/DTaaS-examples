@@ -16,9 +16,6 @@ class Rabbitmq:
         type,
         ssl=None,
     ):
-        self._l = logging.getLogger("RabbitMQClass")
-        self._l.setLevel(logging.DEBUG)
-
         self.vhost = vhost
         self.exchange_name = exchange
         self.exchange_type = type
@@ -42,15 +39,14 @@ class Rabbitmq:
         self.queue_name = []
 
     def __del__(self):
-        self._l.debug("Deleting queues, close channel and connection")
         if self.channel is not None:
             if not self.channel.is_closed and not self.connection.is_closed:
                 self.close()
-        self._l.info("Connection closed.")
+        print("Connection closed.")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
-        self._l.info("Connection closed.")
+        print("Connection closed.")
 
     def __enter__(self):
         self.connect_to_server()
@@ -58,7 +54,7 @@ class Rabbitmq:
 
     def connect_to_server(self):
         self.connection = pika.BlockingConnection(self.parameters)
-        self._l.info("Connected.")
+        print("Connected.")
         self.channel = self.connection.channel()
         self.channel.exchange_declare(
             exchange=self.exchange_name, exchange_type=self.exchange_type
@@ -71,15 +67,11 @@ class Rabbitmq:
             body=json.dumps(message).encode("ascii"),
             properties=properties,
         )
-        self._l.debug(f"Message sent to {routing_key}.")
-        self._l.debug(message)
 
     def get_message(self, queue_name):
         (method, properties, body) = self.channel.basic_get(
             queue=queue_name, auto_ack=True
         )
-
-        self._l.debug(f"Received message is {body} {method} {properties}")
         if body is not None:
             return json.loads(body.decode("ascii"))
         else:
@@ -96,22 +88,18 @@ class Rabbitmq:
             routing_key=routing_key,
         )
         self.queue_name.append(created_queue_name)
-        self._l.info(f"Bound {routing_key}--> {created_queue_name}")
+        print(f"Bound {routing_key}--> {created_queue_name}")
         return created_queue_name
 
     def queues_delete(self):
         self.queue_name = list(set(self.queue_name))
         for name in self.queue_name:
-            self._l.debug(f"Deleting queue:{name}")
             self.channel.queue_unbind(queue=name, exchange=self.exchange_name)
             self.channel.queue_delete(queue=name)
 
     def close(self):
-        self._l.debug("Deleting created queues by Rabbitmq class")
         self.queues_delete()
-        self._l.debug("Closing channel in rabbitmq")
         self.channel.close()
-        self._l.debug("Closing connection in rabbitmq")
         self.connection.close()
 
     def subscribe(self, routing_key, on_message_callback):
