@@ -1,10 +1,18 @@
 import subprocess, os, time, sys, traceback
+
 incubator_location = os.getenv("INCUBATOR_PATH")
 sys.path.append(os.path.join(f"{incubator_location}"))
 from threading import Thread, Event
 from incubator.communication.server.rabbitmq import Rabbitmq
 from incubator.config.config import load_config
-from digital_twin.communication.rabbitmq_protocol import ROUTING_KEY_ENERGY_SAVER_ENABLE, ROUTING_KEY_ENERGY_SAVER_STATUS, ROUTING_KEY_LIDOPEN
+from digital_twin.communication.rabbitmq_protocol import (
+    ROUTING_KEY_ENERGY_SAVER_ENABLE,
+    ROUTING_KEY_ENERGY_SAVER_STATUS,
+    ROUTING_KEY_LIDOPEN,
+)
+
+MONITOR_RESET_KEY = "reset"
+MONITOR_RESET_TOPIC = "monitor_reset"
 
 
 def startRabbitMQ(message_callback):
@@ -20,7 +28,14 @@ def startRabbitMQ(message_callback):
 
 def startIncubator():
     print("Starting incubator")
-    incubatorProcess = subprocess.Popen(f"cd {incubator_location}/; exec python -m startup.start_all_services", shell=True, cwd=os.getcwd(), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    incubatorProcess = subprocess.Popen(
+        f"cd {incubator_location}/; exec python -m startup.start_all_services",
+        shell=True,
+        cwd=os.getcwd(),
+        stderr=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        text=True,
+    )
     time.sleep(5)
     result = incubatorProcess.poll()
     if result is not None:
@@ -32,7 +47,10 @@ def startIncubator():
 
 
 def runScenario(event):
-    print("Running scenario with initial state: lid closed and energy saver on", flush=True)
+    print(
+        "Running scenario with initial state: lid closed and energy saver on",
+        flush=True,
+    )
     os.system(f"cd {incubator_location}; python -m cli.trigger_energy_saver")
     os.system(f"cd {incubator_location}; python -m cli.mess_with_lid_mock 1")
     for i in range(1200):  # wait 2 minutes
@@ -56,7 +74,22 @@ def runScenario(event):
 
     print("Putting lid back on...", flush=True)
     os.system((f"cd {incubator_location}; python -m cli.mess_with_lid_mock 1"))
-    for i in range(300):  # wait for the anomaly detection to determine that the lid is back on
+
+    # Wait a bit before resetting the monitor
+    for i in range(100):
+        if event.is_set():
+            return
+        time.sleep(0.1)
+    print("Resetting monitor state.", flush=True)
+    config = load_config(f"{incubator_location}/simulation.conf")
+    rabbitMq = Rabbitmq(**config["rabbitmq"])
+    rabbitMq.connect_to_server()
+    msg = {MONITOR_RESET_KEY: True}
+    rabbitMq.send_message(routing_key=MONITOR_RESET_TOPIC, message=msg)
+
+    for i in range(
+        200
+    ):  # wait for the anomaly detection to determine that the lid is back on
         if event.is_set():
             return
         time.sleep(0.1)
@@ -79,19 +112,24 @@ if __name__ == "__main__":
 
         # setup RabbitMQ
         def handleMessage(channel, method, properties, body_json):
-            #print(f"Channel: {channel}. Method: {method}. Properties: {properties}. Body: {body_json}.")
+            # print(f"Channel: {channel}. Method: {method}. Properties: {properties}. Body: {body_json}.")
             if "lid_open" in body_json:
                 message["anomaly"] = "anomaly" if body_json["lid_open"] else "!anomaly"
             elif "energy_saver_on" in body_json:
-                message["energy_saving"] = "energy_saving" if body_json["energy_saver_on"] else "!energy_saving"
+                message["energy_saving"] = (
+                    "energy_saving"
+                    if body_json["energy_saver_on"]
+                    else "!energy_saving"
+                )
             elif "alert" in body_json:
                 message["alert"] = "alert" if body_json["alert"] else "normal"
-                #print(f"Message from TeSSLa: {body_json['alert']}")
+                # print(f"Message from TeSSLa: {body_json['alert']}")
             states = f"{message['anomaly']} & {message['energy_saving']}"
             print(f"State: {states}, verdict: {message['alert']}")
 
             if event.is_set():
                 rabbitMq.close()
+
         rabbitMq = startRabbitMQ(handleMessage)
         scenario_thread = Thread(target=runScenario, args=[event])
         # Wait to ensure incubator running
@@ -113,6 +151,6 @@ if __name__ == "__main__":
             print(f"Stopping incubator with pid: {incubatorProcess.pid}")
             incubatorProcess.kill()
             incubatorProcess.wait()
-        os.system("pkill -f \"python -m startup.start_all_services\"")
+        os.system('pkill -f "python -m startup.start_all_services"')
         if scenario_thread is not None:
             scenario_thread.join()
