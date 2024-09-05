@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e # Exit on command failure
+
 apt_updated=false
 
 check_binary() {
@@ -12,7 +14,7 @@ check_binary() {
             sudo apt upgrade
             apt_updated=true
         fi
-        sudo apt install "${2:-1}" # Install argument 2 if provided, otherwise 1
+        sudo apt install "${2:-$1}" # Install argument 2 if provided, otherwise 1
     fi
 }
 
