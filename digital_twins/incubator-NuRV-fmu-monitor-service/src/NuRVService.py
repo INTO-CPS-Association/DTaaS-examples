@@ -71,7 +71,7 @@ def main():
 
     # Construct default paths
     default_fmu_path = os.path.abspath(
-        os.path.join(lifecycle_path, "../../../models/safe-operation.fmu")
+        os.path.join(lifecycle_path, "../../../models/incubator/safe-operation.fmu")
     )
     default_config_path = os.path.abspath(
         os.path.join(lifecycle_path, "../simulation.conf")
