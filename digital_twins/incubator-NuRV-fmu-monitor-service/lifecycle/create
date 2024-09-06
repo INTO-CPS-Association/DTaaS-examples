@@ -45,15 +45,16 @@ check_binary "zip"
 # Install incubator dependencies
 pip install -r "${INCUBATOR_PATH}/requirements.txt" -r ../src/requirements.txt
 
+DTAAS_MODEL_PATH=$(realpath "$LIFECYCLE_PATH/../../../models/incubator")
+
 # Change the path written inside the command script
-NURV_SPEC=$(realpath "$LIFECYCLE_PATH/../model/safe-operation.smv")
+NURV_SPEC=$(realpath "$DTAAS_MODEL_PATH/models/incubator/nurv-specification.smv")
 sed -i "1s|\".*\"|\"$NURV_SPEC\"|" $LIFECYCLE_PATH/synthesis_incubator_monitor_fmu.cmd
 
 "$NURV" -quiet -source $LIFECYCLE_PATH/synthesis_incubator_monitor_fmu.cmd
 sed -i 's\Enumeration declaredType="eu.fbk.nurv.RV_value"\Integer\g' \
     safe-operation/modelDescription.xml
 
-FMI2_HOME=$FMI2_HEADERS make -C safe-operation linux64
+FMI2_HOME=$FMI2_HEADERS make -C nurv-specification linux64
 
-DTAAS_MODEL_PATH=$(realpath "$LIFECYCLE_PATH/../../../models")
-mv safe-operation.fmu $DTAAS_MODEL_PATH
+mv nurv-specification.fmu $DTAAS_MODEL_PATH
