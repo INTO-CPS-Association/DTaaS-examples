@@ -20,6 +20,10 @@ The simulated scenario progresses as follows:
 - *After another 30 seconds*: The lid is put back on and the anomaly detection is given time to detect that the lid is back on. The monitor is then reset producing an Unknown verdict again. The simulation then ends.
 
 ## Example structure
+A diagram depicting the logical software structure of the example can be seen below.
+
+![DT structure](./figures/dt-structure-nurv-fmu.png)
+
 The _execute_ script is responsible for starting the NuRV service and running the Python script that controls the scenario (_execute.py_).
 
 The _execute.py_ script starts the Incubator services and runs the example scenario. Once the Incubator DT is started, a RabbitMQ client is created that subscribes to changes in the *anomaly* and *energy_saving* states of the DT, as well as the verdicts produced by the NuRV service.
