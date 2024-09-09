@@ -1,7 +1,0 @@
-MODULE main
-VAR
-    anomaly : boolean;
-    energy_saving : boolean;
-
-LTLSPEC -- Safety
-    G ( anomaly -> F [ 0, 3 ] energy_saving )
