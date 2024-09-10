@@ -5,6 +5,7 @@ set -e # Exit on command failure
 
 NURV="/workspace/examples/common/tools/NuRV/NuRV"
 FMI2_HEADERS="/workspace/examples/common/fmi2_headers"
+NURV_SPEC="/workspace/examples/models/incubator/safe-operation.smv"
 
 
 echo "Installing dependencies and create configuration \n\n"
@@ -14,6 +15,8 @@ sudo apt-get install -y openjdk-17-jre
 pip install pandas matplotlib
 sudo apt-get install -y zip
 
+# Change the path written inside the command script
+sed -i "1s|\".*\"|\"$NURV_SPEC\"|" lifecycle/synthesis_incubator_monitor_fmu.cmd
 
 "$NURV" -quiet -source lifecycle/synthesis_incubator_monitor_fmu.cmd
 sed -i 's\Enumeration declaredType="eu.fbk.nurv.RV_value"\Integer\g' \
