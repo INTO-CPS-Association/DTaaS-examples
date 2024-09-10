@@ -1,22 +1,22 @@
 include "./Telegraf.tessla"
 
 @TelegrafIn("amqp_consumer","host=<HOST>", "lid_open")
-in lid_open: Events[Bool]
+in lidOpen: Events[Bool]
 
 @TelegrafIn("amqp_consumer","host=<HOST>", "energy_saver_on")
-in energy_saver: Events[Bool] 
+in energySaver: Events[Bool] 
 
 @TelegrafIn("amqp_consumer","host=<HOST>", "monitor_reset")
 in reset: Events[Bool] 
 
-def delayedOpen = raisingDelay(lid_open, 3) 
-def critical = lid_open && delayedOpen 
-def alert = critical && !energy_saver 
+def delayedEvents = delay(const(3,lidOpen),lidOpen)
+def delayedLidOpen = last(lidOpen,delayedEvents)
 
-def resetSignal = merge(false,merge(last(false, merge(lid_open,energy_saver)), reset))
-def persistentAlert: Events[Bool] = merge(last(persistentAlert, merge(lid_open,energy_saver)) || alert, false) && ! resetSignal
+def demandForEnergySaver = lidOpen && delayedLidOpen
+
+def alarm = demandForEnergySaver && ! merge2(false,energySaver)
+def continuousAlarm = merge2(!reset,boolFilter(alarm))
+def continuousAlarmTick = merge2(continuousAlarm,last(continuousAlarm, lidOpen))
 
 @TelegrafOut("alert") 
-out persistentAlert
-
-def raisingDelay(e: Events[Bool], d: Int): Events[Bool] = merge3(false, const(true, delay(const(d, boolFilter(e)), e)), const(false, falling(e)))
+out continuousAlarmTick
