@@ -1,11 +1,10 @@
-# Incubator Digital Twin with NuRV monitoring service
+# Incubator Digital Twin with TeSSLa monitoring service
+
+adapted from [NuRV](../incubator-NuRV-monitor-service/README.md)
 
 ## Overview
 
-This example demonstrates how a runtime monitoring service (in this example TeSSLa[1])
-can be connected with
-the [Incubator digital twin](../../common/digital_twins/incubator/README.md) to
-verify runtime behavior of the Incubator.
+This example demonstrates how a runtime monitoring service (in this example TeSSLa[1]) can be connected with the [Incubator digital twin](../../common/digital_twins/incubator/README.md) to verify runtime behavior of the Incubator. It is describes the active and passive example, as only the TeSSLa specification and Telegraf configuration change between the examples and the overall setup and handling persists.
 
 ## Simulated scenario
 
@@ -38,7 +37,7 @@ The simulated scenario progresses as follows:
 
 A diagram depicting the logical software structure of the example can be seen below.
 
-![DT structure](./figures/dt-structure-nurv.svg)
+![DT structure](TeSSLa-integration.png)
 
 The _execute.py_ script is responsible for orchestrating and starting all
 the relevant services in this example. This includes the Incubator DT,
@@ -89,7 +88,7 @@ where {script} is the name of the script, e.g. _create_, _execute_ etc.
 To run the example, first run the following command in a terminal:
 
 ```bash
-cd /workspace/examples/digital_twins/incubator-tessla-monitor-service/
+cd /workspace/examples/digital_twins/incubator-tessla-active-monitor/
 ```
 
 Then, first execute the _create_ script (this can take a few mins
@@ -101,36 +100,8 @@ lifecycle/{script}
 ```
 
 The _execute_ script will then start outputting system states and
-the monitor verdict approx every 3 seconds. The output is printed
-as follows
-"__State: {anomaly state} & {energy_saving state}, verdict: {Verdict}__"
-where "_anomaly_" indicates that an anomaly is detected and "!anomaly"
-indicates that an anomaly is not currently detected. The same format
-is used for the energy_saving state.
+the monitor verdict approx every 3 seconds. 
 
-*The monitor verdict can be False or Unknown, where the latte indicates that the monitor does not yet have sufficient informationto determine the satisfaction of the property. The monitor will never produce a True verdict as the entire trace must be verified to ensure satisfaction due to the G operator. Thus the Unknown state can be viewed as a tentative True verdict.*
-
-An example output trace is provided below:
-
-````log
-....
-Running scenario with initial state: lid closed and energy saver on
-Setting energy saver mode: enable
-Setting G_box to: 0.5763498
-State: !anomaly & !energy_saving, verdict: Unknown
-State: !anomaly & !energy_saving, verdict: Unknown
-....
-State: anomaly & !energy_saving, verdict: Unknown
-State: anomaly & energy_saving, verdict: Unknown
-State: anomaly & energy_saving, verdict: Unknown
-....
-State: anomaly & energy_saving, verdict: Unknown
-State: anomaly & !energy_saving, verdict: Unknown
-State: anomaly & !energy_saving, verdict: Unknown
-State: anomaly & !energy_saving, verdict: Unknown
-State: anomaly & !energy_saving, verdict: Unknown
-State: anomaly & !energy_saving, verdict: False
-````
 
 ## References
 

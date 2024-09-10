@@ -1,76 +1,136 @@
 # Incubator Digital Twin with TeSSLa monitoring service
 
+adapted from [NuRV](../incubator-NuRV-monitor-service/README.md)
+
 ## Overview
 
-This example demonstrates how the runtime monitoring service [TeSSLa](https://www.tessla.io) can be connected with the [Incubator digital twin](../../common/digital_twins/incubator/README.md) to verify the runtime behavior of the Incubator. TeSSLa provides passive monitoring capabilities to observe state changes and trigger alerts based on specific conditions. This example is designed to illustrate the application of runtime monitoring to ensure that the Incubator's operations align with desired safety and efficiency parameters.
+This example demonstrates how a runtime monitoring service (in this example TeSSLa[1]) can be connected with the [Incubator digital twin](../../common/digital_twins/incubator/README.md) to verify runtime behavior of the Incubator. It is describes the active and passive example, as only the TeSSLa specification and Telegraf configuration change between the examples and the overall setup and handling persists.
 
-In this scenario, the Incubator is tasked with maintaining a controlled environment for sensitive biological samples. The primary focus is on monitoring the status of the incubator's lid and the activation state of its energy-saving mode. The monitoring system ensures that if the lid is open, the energy-saving mode activates within three simulation steps to mitigate any loss of controlled environment, conserving energy and maintaining stability. This setup models a typical safety and operational protocol in biological sample storage, where maintaining constant internal conditions is critical.
+## Simulated scenario
 
-The TeSSLa monitor uses event streams to detect changes in the lid state and energy-saving mode. It computes these states to determine compliance with the operational rules specified. If the TeSSLa monitor detects that the energy-saving mode does not activate promptly after the lid is opened, it triggers an alert, indicating a potential safety violation. This monitoring is crucial as it provides real-time oversight, allowing for immediate corrective actions to be taken before any damage to the biological samples can occur.
+This example simulates a scenario where the lid of the Incubator is removed and
+later put back on. The Incubator is equipped with anomaly detection capabilities,
+which can detect anomalous behavior (i.e. the removal of the lid). When an anomaly
+is detected, the Incubator triggers an energy saving mode where the heater is
+turned off.
 
-The setup includes a Telegraf component that facilitates the connection between the physical components of the Incubator and the TeSSLa monitor. Telegraf collects data from the Incubator's sensors and forwards this data to the TeSSLa monitor for analysis. This integration not only ensures seamless data flow but also enhances the system's ability to adapt to configuration changes without needing a system restart, making the monitoring system both robust and flexible.
+From a monitoring perspective, we wish to verify that within 3 simulation steps
+of an anomaly detection, the energy saving mode is turned on. To verify this
+behavior, we construct the property:
+$`G(anomaly \rightarrow (F_{[0,3]}\space energy\_saving))`$.
+The monitor will output the _Unknown_ state as long as the property is satisfied and will transition to the _False_ state once a violation is detected.
 
-By monitoring these critical aspects of the Incubator’s operation, the TeSSLa-based system helps maintain the necessary conditions for sample integrity and energy efficiency, illustrating an effective application of digital twin technology in a high-stakes environment.
+The simulated scenario progresses as follows:
 
-## Key Components and Their Roles
+- *Initialization*: The services are initialized and the Kalman filter in
+  the Incubator is given 2 minutes to stabilize. Sometimes, the anomaly detection
+  algorithm will detect an anomaly at startup even though the lid is still on.
+  It will disappear after approx 15 seconds.
+- *After 2 minutes*: The lid is lifted and an anomaly is detected.
+  The energy saver is turned on shortly after
+- *After another 30 seconds*: The energy saver is manually disabled producing
+  a False verdict.
+- *After another 30 seconds*: The lid is put back on and the anomaly detection
+  is given time to detect that the lid is back on. The monitor is then reset producing an Unknown verdict again. The simulation then ends.
 
-![](https://md.isp.uni-luebeck.de/uploads/upload_6501e52a2ec8501f183272afc3c26c17.png)
+## Example structure
 
+A diagram depicting the logical software structure of the example can be seen below.
 
-The diagram illustrates the integration of various components within a Digital Twins as a Service (DTaaS) platform, designed to monitor and control a physical system (Physical Twin).
+![DT structure](TeSSLa-integration.png)
 
-1. **Physical Twin:**
-   - This is the actual physical object or system being monitored, sending data to the RabbitMQ server which relays it to the digital counterpart.
+The _execute.py_ script is responsible for orchestrating and starting all
+the relevant services in this example. This includes the Incubator DT,
+the TeSSLa monitor as well as telegraf and the TeSSLa-Telegraf-Connector for communication between the DT and TeSSLa monitor.
 
-2. **Digital Twin:**
-   - A virtual model of the Physical Twin, receiving and processing real-time data from the RabbitMQ server to simulate and analyse the physical system’s state.
+The telegraf client subscribes to the RabbitMQ server used for communication by the DT and relays the messages on the *incubator.diagnosis.plant.lidopen* and *incubator.energysaver.status* topics to the TeSSLa-Telegraf-Connector which feeds them as inputs to the TeSSLa monitor. TeSSLa then reaches a verdict based on this new state together with previously received states. The verdict is then output back to telegraf via the connector and published to the *incubator.energysaver.alert* topic and printed on the console.
 
-3. **RabbitMQ Server (Platform Service):**
-   - Acts as a message broker, coordinating data communication between the Physical Twin and the Digital Twin, along with other services.
+## Digital Twin configuration
 
-4. **Telegraf:**
-   - A server agent used for collecting, processing, and passing on metrics and data from the Digital Twin to TeSSLa.
+Before running the example, please configure the _simulation.conf_ file with
+your RabbitMQ credentials.
 
-5. **Connector:**
-   - Facilitates data transfer between Telegraf and TeSSLa, ensuring smooth integration of data streams into the monitoring process.
+The example uses the following assets:
 
-6. **TeSSLa:**
-   - Monitors the state and activities of the Physical Twin based on predefined specifications and outputs results indicating system performance.
+| Asset Type | Names of Assets | Visibility | Reuse in other Examples |
+|:---|:---|:---|:---|
+| Service | common/services/NuRV_orbit | Common | Yes |
+| DT | common/digital_twins/incubator | Common | Yes |
+| Specification | safe-operation.tessla | Private | No |
+| Configuration | telegraf.conf | Private | No
+| Script | execute.py | Private | No |
 
-### Interaction Overview:
-Data flows from the Physical Twin to the RabbitMQ Server, and onward to the Digital Twin. It is then channelled through Telegraf and the Connector to TeSSLa for analysis. The outcomes of this analysis are sent back, helping make operational or maintenance decisions regarding the Physical Twin.
+The _safe-operation.tessla_ file contains the default monitored specification as
+described in the [Simulated scenario section](#simulated-scenario).
+These can be configured as desired.
 
+## Lifecycle phases
 
-## Lifecycle Phases
+The lifecycle phases for this example include:
 
-The lifecycle for this example includes the setup, execution, and cleanup of the monitoring environment:
+| Lifecycle phase | Completed tasks |
+| ------ | ------- |
+| create    | Downloads the necessary tools and creates a virtual python environment with the necessary dependencies |
+| execute   | Runs a python script that starts up the necessary services as well as the Incubator simulation. Various status messages are printed to the console, including the monitored system states and monitor verdict. |
+| clean     | Removes created _data_ directory and incubator log files. |
 
-| Lifecycle phase | Completed tasks                                    |
-|-----------------|----------------------------------------------------|
-| create          | Set up the environment and install necessary tools |
-| execute         | Start the monitoring service and simulate scenarios |
-| terminate       | Remove temporary files and logs                    |
+If required, change the execute permissions of lifecycle scripts you need to execute.
+This can be done using the following command
 
-To adjust the script execution permissions, use:
 ```bash
 chmod +x lifecycle/{script}
 ```
 
-## Running the Example
+where {script} is the name of the script, e.g. _create_, _execute_ etc.
 
-Navigate to the example directory and execute the lifecycle scripts:
+## Running the example
+
+To run the example, first run the following command in a terminal:
+
 ```bash
 cd /workspace/examples/digital_twins/incubator-tessla-monitor-service/
 ```
 
-Run the _create_ script to install necessary components:
+Then, first execute the _create_ script (this can take a few mins
+depending on your network connection) followed by the _execute_
+script using the following command:
+
 ```bash
-lifecycle/create
+lifecycle/{script}
 ```
 
-Execute the _execute_ script to start the simulation:
-```bash
-lifecycle/execute
-```
+The _execute_ script will then start outputting system states and
+the monitor verdict approx every 3 seconds. The output is printed
+as follows
+"__State: {anomaly state} & {energy_saving state}, verdict: {Verdict}__"
+where "_anomaly_" indicates that an anomaly is detected and "!anomaly"
+indicates that an anomaly is not currently detected. The same format
+is used for the energy_saving state.
 
-The output is printed every few seconds, showing the current state and the verdict.
+*The monitor verdict can be False or Unknown, where the latte indicates that the monitor does not yet have sufficient informationto determine the satisfaction of the property. The monitor will never produce a True verdict as the entire trace must be verified to ensure satisfaction due to the G operator. Thus the Unknown state can be viewed as a tentative True verdict.*
+
+An example output trace is provided below:
+
+````log
+....
+Running scenario with initial state: lid closed and energy saver on
+Setting energy saver mode: enable
+Setting G_box to: 0.5763498
+State: !anomaly & !energy_saving, verdict: Unknown
+State: !anomaly & !energy_saving, verdict: Unknown
+....
+State: anomaly & !energy_saving, verdict: Unknown
+State: anomaly & energy_saving, verdict: Unknown
+State: anomaly & energy_saving, verdict: Unknown
+....
+State: anomaly & energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: Unknown
+State: anomaly & !energy_saving, verdict: False
+````
+
+## References
+
+1.    [tessla.io](https://tessla.io)
