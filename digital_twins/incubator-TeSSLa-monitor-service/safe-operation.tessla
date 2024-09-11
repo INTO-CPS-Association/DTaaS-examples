@@ -6,8 +6,10 @@ in lidOpen: Events[Bool]
 @TelegrafIn("amqp_consumer","host=<HOST>", "energy_saver_on")
 in energySaver: Events[Bool] 
 
-@TelegrafIn("amqp_consumer","host=<HOST>", "monitor_reset")
+@TelegrafIn("amqp_consumer","host=<HOST>", "reset")
 in reset: Events[Bool] 
+
+def smoothStart = !boolFilter(count(lidOpen) < 10)
 
 def delayedEvents = delay(const(3,lidOpen),lidOpen)
 def delayedLidOpen = last(lidOpen,delayedEvents)
@@ -15,8 +17,8 @@ def delayedLidOpen = last(lidOpen,delayedEvents)
 def demandForEnergySaver = lidOpen && delayedLidOpen
 
 def alarm = demandForEnergySaver && ! merge2(false,energySaver)
-def continuousAlarm = merge2(!reset,boolFilter(alarm))
-def continuousAlarmTick = merge2(continuousAlarm,last(continuousAlarm, lidOpen))
+
+def continuousAlarm = merge3(smoothStart,!reset,boolFilter(alarm))
 
 @TelegrafOut("alert") 
-out continuousAlarmTick
+out continuousAlarm
