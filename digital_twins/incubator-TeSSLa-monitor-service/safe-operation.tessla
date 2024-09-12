@@ -9,16 +9,36 @@ in energySaver: Events[Bool]
 @TelegrafIn("amqp_consumer","host=<HOST>", "reset")
 in reset: Events[Bool] 
 
-def smoothStart = !boolFilter(count(lidOpen) < 10)
+def prev_prev[D](s : Events[D]) : Events[D] = {
+  prev(prev(s))
+}
 
-def delayedEvents = delay(const(3,lidOpen),lidOpen)
-def delayedLidOpen = last(lidOpen,delayedEvents)
+def prev_prev_prev[D](s : Events[D]) = {
+  prev(prev_prev(s))
+}
 
-def demandForEnergySaver = lidOpen && delayedLidOpen
+# Checks if v is `check`. If v is not defined then default to `check`
+def eq_with_default(s : Events[Bool], check : Bool) = merge(s, check) == check
 
-def alarm = demandForEnergySaver && ! merge2(false,energySaver)
+def es_turns_on = energySaver || eq_with_default(prev(energySaver), true) || eq_with_default(prev_prev(energySaver), true) || eq_with_default(prev_prev_prev(energySaver), true)
 
-def continuousAlarm = merge3(smoothStart,!reset,boolFilter(alarm))
+# Indicates if the lid has been closed for more than three samples
+def lid_closed_long = !lidOpen || eq_with_default(prev(lidOpen), false) || eq_with_default(prev_prev(lidOpen), false) || eq_with_default(prev_prev_prev(lidOpen), false)
+
+# Turn on alert when the lid was opened for more than three samples and energy-saving never turned on
+def alert = !lid_closed_long && !es_turns_on
+
+def is_reset_event = merge(time(reset),0) >= merge(time(alert), 0)
+
+# Issue: we need the current value of reset not the stream...
+def continuousAlarm : Events[Bool] = {
+  def rst = merge(reset, false)
+  if alert then
+    true
+  else if is_reset_event && rst == true  then
+    false
+  else merge(last(continuousAlarm, alert), false)
+}
 
 @TelegrafOut("alert") 
 out continuousAlarm
