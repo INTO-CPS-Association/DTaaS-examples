@@ -9,26 +9,16 @@ in energySaver: Events[Bool]
 @TelegrafIn("amqp_consumer","host=<HOST>", "reset")
 in reset: Events[Bool] 
 
-def prev_prev[D](s : Events[D]) : Events[D] = {
-  prev(prev(s))
-}
+# Indicates if energy saver was turned on within the last three events
+def es_turned_on = default(energySaver || prev(energySaver) || prev(prev(energySaver)) || prev(prev(prev(energySaver))), true)
 
-def prev_prev_prev[D](s : Events[D]) = {
-  prev(prev_prev(s))
-}
+# Indicates if the lid has been open for more than three events
+def lid_open_long = default(lidOpen && prev(lidOpen) && prev(prev(lidOpen)) && prev(prev(prev(lidOpen))), false)
 
-# Checks if v is `check`. If v is not defined then default to `check`
-def eq_with_default(s : Events[Bool], check : Bool) = merge(s, check) == check
+# Turn on alert when the lid was opened for more than three events and energy-saving never turned on
+def alert = default(lid_open_long && !es_turned_on, false)
 
-def es_turns_on = energySaver || eq_with_default(prev(energySaver), true) || eq_with_default(prev_prev(energySaver), true) || eq_with_default(prev_prev_prev(energySaver), true)
-
-# Indicates if the lid has been closed for more than three samples
-def lid_closed_long = !lidOpen || eq_with_default(prev(lidOpen), false) || eq_with_default(prev_prev(lidOpen), false) || eq_with_default(prev_prev_prev(lidOpen), false)
-
-# Turn on alert when the lid was opened for more than three samples and energy-saving never turned on
-def alert = !lid_closed_long && !es_turns_on
-
-# Simultaneous events? Prioritize first.
+# Simultaneous events? Prioritize reset.
 # When reset = true - stream = false
 # boolFilter filters out all false values. So only care about alert when it becomes true.
 # False is the default value.
