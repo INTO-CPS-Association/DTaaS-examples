@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Sometimes Rust UDP connection is not gracefully shutdown. Kill it if it exists...
+pkill -9 -f outputRustPr
+
 export LIFECYCLE_PATH=${LIFECYCLE_PATH:=$(realpath "$(dirname "${BASH_SOURCE[0]}")")}
 echo "Using LIFECYCLE_PATH: ${LIFECYCLE_PATH}"
 cd "$LIFECYCLE_PATH"
