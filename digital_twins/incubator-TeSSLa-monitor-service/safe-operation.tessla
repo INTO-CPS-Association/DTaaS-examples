@@ -28,17 +28,14 @@ def lid_closed_long = !lidOpen || eq_with_default(prev(lidOpen), false) || eq_wi
 # Turn on alert when the lid was opened for more than three samples and energy-saving never turned on
 def alert = !lid_closed_long && !es_turns_on
 
-def is_reset_event = merge(time(reset),0) >= merge(time(alert), 0)
+# Simultaneous events? Prioritize first.
+# When reset = true - stream = false
+# boolFilter filters out all false values. So only care about alert when it becomes true.
+# False is the default value.
+def continousAlarm : Events[Bool] = merge3(!reset, boolFilter(alert), false)
 
-# Issue: we need the current value of reset not the stream...
-def continuousAlarm : Events[Bool] = {
-  def rst = merge(reset, false)
-  if alert then
-    true
-  else if is_reset_event && rst == true  then
-    false
-  else merge(last(continuousAlarm, alert), false)
-}
+# Send a verdict whenever lidOpen, energySaver or reset updates
+def continousAlarmTick = merge3(on(lidOpen, continousAlarm), on(energySaver, continousAlarm), on(reset, continousAlarm))
 
 @TelegrafOut("alert") 
-out continuousAlarm
+out continousAlarmTick
