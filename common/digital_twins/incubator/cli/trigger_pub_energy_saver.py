@@ -5,7 +5,7 @@ from digital_twin.communication.rabbitmq_protocol import ROUTING_KEY_PUB_ENERGY_
 import argparse
 
 
-def send_energy_saver(config, enable):
+def send_pub_energy_saver(config, enable):
     with Rabbitmq(**config) as rabbitmq:
         rabbitmq.send_message(
             ROUTING_KEY_PUB_ENERGY_SAVER, {"pub_energy_saver": enable}
@@ -29,4 +29,4 @@ if __name__ == "__main__":
 
     enable_str = "enable" if enable == True else "disable"
     print(f"Setting pub_energy_saver: {enable_str}")
-    send_energy_saver(config["rabbitmq"], enable)
+    send_pub_energy_saver(config["rabbitmq"], enable)

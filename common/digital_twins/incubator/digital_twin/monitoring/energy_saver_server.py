@@ -28,6 +28,8 @@ class EnergySaverServer:
 
         self.rabbitmq.subscribe(routing_key=ROUTING_KEY_ENERGY_SAVER_ENABLE, on_message_callback=self.change_energy_saver)
 
+        self.rabbitmq.subscribe(routing_key=ROUTING_KEY_PUB_ENERGY_SAVER, on_message_callback=self.change_pub_energy_saver)
+
         self.rabbitmq.subscribe(routing_key=ROUTING_KEY_KF_PLANT_STATE,
                                 on_message_callback=self.determine_lid_open)
         
