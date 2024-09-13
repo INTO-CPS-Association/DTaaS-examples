@@ -51,7 +51,9 @@ def runScenario(event):
         flush=True,
     )
     print("(Energy saving is handled directly by TeSSLa)", flush=True)
-    os.system(f"cd {incubator_location}; python -m cli.trigger_energy_saver --disable")
+    os.system(
+        f"cd {incubator_location}; python -m cli.trigger_pub_energy_saver --disable"
+    )
     os.system(f"cd {incubator_location}; python -m cli.mess_with_lid_mock 1")
     for i in range(1200):  # wait 2 minutes
         if event.is_set():
@@ -104,7 +106,7 @@ if __name__ == "__main__":
             elif "temperature_desired" in body_json:
                 message["temp"] = int(body_json["temperature_desired"])
                 # print(f"Message from TeSSLa: {body_json}")
-            states = f"{message['anomaly']} & {message['energy_saving']}"
+            states = f"{message['anomaly']}"
             print(f"State: {states}, Desired Temp: {message['temp']}")
 
             if event.is_set():
