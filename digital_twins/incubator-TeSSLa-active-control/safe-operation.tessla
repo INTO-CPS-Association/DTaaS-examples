@@ -1,0 +1,15 @@
+include "./Telegraf.tessla"
+
+@TelegrafIn("amqp_consumer","host=<HOST>", "lid_open")
+in lidOpen: Events[Bool]
+
+@TelegrafIn("amqp_consumer","host=<HOST>", "energy_saver_on")
+in energySaver: Events[Bool] 
+
+@TelegrafIn("amqp_consumer","host=<HOST>", "reset")
+in reset: Events[Bool] 
+
+def demandForEnergySaver = if lidOpen then 21.0 else 35.0
+
+@TelegrafOut("alert") 
+out demandForEnergySaver

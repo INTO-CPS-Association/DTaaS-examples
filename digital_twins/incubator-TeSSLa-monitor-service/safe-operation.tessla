@@ -1,0 +1,31 @@
+include "./Telegraf.tessla"
+
+@TelegrafIn("amqp_consumer","host=<HOST>", "lid_open")
+in lidOpen: Events[Bool]
+
+@TelegrafIn("amqp_consumer","host=<HOST>", "energy_saver_on")
+in energySaver: Events[Bool] 
+
+@TelegrafIn("amqp_consumer","host=<HOST>", "reset")
+in reset: Events[Bool] 
+
+# Indicates if energy saver was turned on within the last three events
+def es_turned_on = default(energySaver || prev(energySaver) || prev(prev(energySaver)) || prev(prev(prev(energySaver))), true)
+
+# Indicates if the lid has been open for more than three events
+def lid_open_long = default(lidOpen && prev(lidOpen) && prev(prev(lidOpen)) && prev(prev(prev(lidOpen))), false)
+
+# Turn on alert when the lid was opened for more than three events and energy-saving never turned on
+def alert = default(lid_open_long && !es_turned_on, false)
+
+# Simultaneous events? Prioritize reset.
+# When reset = true - stream = false
+# boolFilter filters out all false values. So only care about alert when it becomes true.
+# False is the default value.
+def continousAlarm : Events[Bool] = merge3(!reset, boolFilter(alert), false)
+
+# Send a verdict whenever lidOpen, energySaver or reset updates
+def continousAlarmTick = merge3(on(lidOpen, continousAlarm), on(energySaver, continousAlarm), on(reset, continousAlarm))
+
+@TelegrafOut("alert") 
+out continousAlarmTick
