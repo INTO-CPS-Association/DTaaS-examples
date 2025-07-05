@@ -14,8 +14,15 @@ create:
     - docker:dind
   script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - docker build -t $IMAGE_TAG -f digital_twins/mass-spring-damper/Dockerfile digital_twins/mass-spring-damper
-    - docker push $IMAGE_TAG
+    # Try pulling the image
+    - |
+      if docker pull $IMAGE_TAG; then
+        echo "Image exists in registry. Skipping build."
+      else
+        echo "Image not found. Building and pushing."
+        docker build -t $IMAGE_TAG -f digital_twins/mass-spring-damper/Dockerfile digital_twins/mass-spring-damper
+        docker push $IMAGE_TAG
+      fi
   # tags:
   #   - $RunnerTag
   only:
@@ -31,7 +38,7 @@ execute:
     - cd digital_twins/mass-spring-damper
   artifacts:
     paths:
-      - digital_twins/mass-spring-damper/output/*
+      - data/mass-spring-damper/output/*
     expire_in: 1 hour
   rules:
     - when: always
