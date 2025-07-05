@@ -1,0 +1,24 @@
+image: fedora:41
+
+stages:
+  - triggers
+
+trigger_mass-spring-damper:
+  stage: triggers
+  trigger:
+    include: digital_twins/mass-spring-damper/.gitlab-ci.yml
+  rules: 
+    - if: '$DTName == "mass-spring-damper"'
+      when: always
+  variables:
+    RunnerTag: $RunnerTag
+
+trigger_water-tank-FI:
+  stage: triggers
+  trigger:
+    include: digital_twins/water_tank_FI/.gitlab-ci.yml
+  rules:
+    - if: '$DTName == "water_tank_FI"'
+      when: always
+  variables:
+    RunnerTag: $RunnerTag
