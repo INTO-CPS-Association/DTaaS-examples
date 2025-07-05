@@ -38,7 +38,8 @@ execute:
     - cd digital_twins/water_tank_FI
   artifacts:
     paths:
-      - digital_twins/water_tank_FI/output/outputs.csv
+      - data/water_tank_FI/output/outputs.csv
+      
     expire_in: 1 hour
   rules:
     - when: always
