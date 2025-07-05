@@ -58,7 +58,7 @@ analyze:
     - cd digital_twins/water_tank_FI
   artifacts:
     paths:
-      - data/water_tank_FI/output/plots/
+      - data/water_tank_FI/output/plots
     when: always
     expire_in: 1 week
   # tags:
