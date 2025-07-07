@@ -1,21 +1,23 @@
 #!/bin/sh
 
-printf Configuring extension
-export MAESTRO="/builds/pranjayyelkotwar26/dtaas_examples/common/tools"
-export FSP="/builds/pranjayyelkotwar26/dtaas_examples/models"
-printf "\t Maestro path: $MAESTRO"
-printf "\t FMU search path: $FSP"
+echo "Configuring extension"
 
-printf "Generating Mabl specifications - DT with FI"
+# Set paths relative to the project directory
+export MAESTRO="$CI_PROJECT_DIR/common/tools"
+export FSP="$CI_PROJECT_DIR/models"
 
-$MAESTRO/maestro import sg1 $MAESTRO/FaultInject.mabl ./multimodelFI.json \
-  ./simulation-config.json -fsp $FSP \
-  -output ./generateFI/
+echo "Maestro path: $MAESTRO"
+echo "FMU search path: $FSP"
 
-printf "Simulating specification with FI"
+echo "Generating Mabl specifications - DT with FI"
 
-$MAESTRO/maestro interpret \
-  ./generateFI/spec.mabl \
-  $MAESTRO/FaultInject.mabl \
-  -output /builds/pranjayyelkotwar26/dtaas_examples/data/water_tank_FI/output/ 2>&1 | tee out.txt
+"$MAESTRO/maestro" import sg1 "$MAESTRO/FaultInject.mabl" "$CI_PROJECT_DIR/digital_twins/water_tank_FI/multimodelFI.json" \
+  "$CI_PROJECT_DIR/digital_twins/water_tank_FI/simulation-config.json" -fsp "$FSP" \
+  -output "$CI_PROJECT_DIR/data/water_tank_FI/output/generateFI/"
 
+echo "Simulating specification with FI"
+
+"$MAESTRO/maestro" interpret \
+  "$CI_PROJECT_DIR/data/water_tank_FI/output/generateFI/spec.mabl" \
+  "$MAESTRO/FaultInject.mabl" \
+  -output "$CI_PROJECT_DIR/data/water_tank_FI/output/" 2>&1 | tee "$CI_PROJECT_DIR/data/water_tank_FI/output/out.txt"
