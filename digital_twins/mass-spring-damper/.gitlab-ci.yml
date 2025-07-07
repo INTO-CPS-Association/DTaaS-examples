@@ -10,6 +10,8 @@ build_and_run:
     - ./lifecycle/create
     - ./lifecycle/execute
     - ./lifecycle/clean
+  before_script:
+    - cd digital_twins/mass-spring-damper
   artifacts:
     paths:
       - data/mass-spring-damper/output/*
