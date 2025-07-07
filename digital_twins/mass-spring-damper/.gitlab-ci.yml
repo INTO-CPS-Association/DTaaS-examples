@@ -1,19 +1,19 @@
 stages:
-  - create
-  - execute
-  - clean
+  - build_and_run
 
 variables:
   IMAGE_TAG: "$CI_REGISTRY_IMAGE/mass-spring-damper:latest"
 
-create:
-  stage: create
+build_and_run:
+  stage: build_and_run
   image: docker:latest
   services:
     - docker:dind
   script:
+    # Login to registry
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    # Try pulling the image
+
+    # Check and build image if needed
     - |
       if docker pull $IMAGE_TAG; then
         echo "Image exists in registry. Skipping build."
@@ -22,37 +22,17 @@ create:
         docker build -t $IMAGE_TAG -f digital_twins/mass-spring-damper/Dockerfile digital_twins/mass-spring-damper
         docker push $IMAGE_TAG
       fi
-  # tags:
-  #   - $RunnerTag
-  only:
-    - main
 
-execute:
-  stage: execute
-  image: $CI_REGISTRY_IMAGE/mass-spring-damper:latest
-  script:
-    - chmod +x lifecycle/execute
-    - ./lifecycle/execute
-  before_script:
-    - cd digital_twins/mass-spring-damper
+    # Run scripts from inside container
+    - docker run --rm -v "$CI_PROJECT_DIR:/app" -w /app/digital_twins/mass-spring-damper \
+        "$IMAGE_TAG" /bin/bash -c "
+          chmod +x /app/lifecycle/execute /app/lifecycle/clean &&
+          /app/lifecycle/execute &&
+          /app/lifecycle/clean
+        "
   artifacts:
     paths:
       - data/mass-spring-damper/output/*
     expire_in: 1 hour
-  rules:
-    - when: always
-  variables:
-    GIT_STRATEGY: fetch
-  # tags:
-  #   - $RunnerTag
-
-clean:
-  stage: clean
-  image: $CI_REGISTRY_IMAGE/mass-spring-damper:latest
-  script:
-    - chmod +x lifecycle/clean
-    - ./lifecycle/clean
-  before_script:
-    - cd digital_twins/mass-spring-damper
-  # tags:
-  #   - $RunnerTag
+  only:
+    - main
