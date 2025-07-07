@@ -1,35 +1,15 @@
 stages:
   - build_and_run
 
-variables:
-  IMAGE_TAG: "$CI_REGISTRY_IMAGE/mass-spring-damper:latest"
-
 build_and_run:
   stage: build_and_run
-  image: docker:latest
-  services:
-    - docker:dind
+  image: ubuntu:24.04
   script:
-    # Login to registry
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-
-    # Check and build image if needed
-    - |
-      if docker pull $IMAGE_TAG; then
-        echo "Image exists in registry. Skipping build."
-      else
-        echo "Image not found. Building and pushing."
-        docker build -t $IMAGE_TAG -f digital_twins/mass-spring-damper/Dockerfile digital_twins/mass-spring-damper
-        docker push $IMAGE_TAG
-      fi
-
-    # Run scripts from inside container
-    - docker run --rm -v "$CI_PROJECT_DIR:/app" -w /app/digital_twins/mass-spring-damper \
-        "$IMAGE_TAG" /bin/bash -c "
-          chmod +x /app/lifecycle/execute /app/lifecycle/clean &&
-          /app/lifecycle/execute &&
-          /app/lifecycle/clean
-        "
+    - apt update && apt install -y curl git python3 python3-pip  # Add more if lifecycle/create needs it
+    - chmod +x lifecycle/create lifecycle/execute lifecycle/clean
+    - ./lifecycle/create
+    - ./lifecycle/execute
+    - ./lifecycle/clean
   artifacts:
     paths:
       - data/mass-spring-damper/output/*
