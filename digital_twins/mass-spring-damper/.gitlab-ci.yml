@@ -5,15 +5,12 @@ build_and_run:
   stage: build_and_run
   image: ubuntu:24.04
   script:
-    - chmod +x lifecycle/create lifecycle/execute
+    - chmod +x lifecycle/create lifecycle/execute lifecycle/clean
     - ./lifecycle/create
     - ./lifecycle/execute
+    # - ./lifecycle/clean 
   before_script:
     - cd digital_twins/mass-spring-damper
-  after_script:
-    - cd digital_twins/mass-spring-damper
-    - chmod +x lifecycle/clean
-    - ./lifecycle/clean
   artifacts:
     paths:
       - data/mass-spring-damper/output/*
