@@ -8,9 +8,10 @@ build_and_run:
     - chmod +x lifecycle/create lifecycle/execute lifecycle/clean
     - ./lifecycle/create
     - ./lifecycle/execute
-    - ./lifecycle/clean
   before_script:
     - cd digital_twins/mass-spring-damper
+  after_script:
+    - ./lifecycle/clean
   artifacts:
     paths:
       - data/mass-spring-damper/output/*
