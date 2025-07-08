@@ -15,5 +15,7 @@ build_and_run:
     paths:
       - data/mass-spring-damper/output/*
     expire_in: 1 hour
-  only:
-    - main
+  # only:
+  #   - main
+  # tags:
+  #   - $RunnerTag

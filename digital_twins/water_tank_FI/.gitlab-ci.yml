@@ -25,8 +25,8 @@ create:
       fi
   # tags:
   #   - $RunnerTag
-  only:
-    - main
+  # only:
+  #   - main
 
 execute:
   stage: execute
