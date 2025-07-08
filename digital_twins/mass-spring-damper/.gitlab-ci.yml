@@ -5,7 +5,6 @@ build_and_run:
   stage: build_and_run
   image: ubuntu:24.04
   script:
-    - apt update && apt install -y curl git python3 python3-pip  # Add more if lifecycle/create needs it
     - chmod +x lifecycle/create lifecycle/execute lifecycle/clean
     - ./lifecycle/create
     - ./lifecycle/execute
