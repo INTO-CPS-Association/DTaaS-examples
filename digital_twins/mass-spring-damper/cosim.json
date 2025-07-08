@@ -1,7 +1,7 @@
 {
 	"fmus":{
-		"{msd1}":"file:///builds/pranjayyelkotwar26/dtaas_examples/models/MassSpringDamper1.fmu",
-		"{msd2}":"file:///builds/pranjayyelkotwar26/dtaas_examples/models/MassSpringDamper2.fmu"
+		"{msd1}":"file:///builds/user/dtaas_examples/models/MassSpringDamper1.fmu",
+		"{msd2}":"file:///builds/user/dtaas_examples/models/MassSpringDamper2.fmu"
 	},
 	"connections": {
 		"{msd1}.msd1i.x1": [
