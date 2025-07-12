@@ -1,6 +1,0 @@
-#!/bin/bash
-
-printf "Plotting results"
-mkdir -p $CI_PROJECT_DIR/data/water_tank_FI/output/plots
-python3 lifecycle/plot.py
-mv *.png $CI_PROJECT_DIR/data/water_tank_FI/output/plots

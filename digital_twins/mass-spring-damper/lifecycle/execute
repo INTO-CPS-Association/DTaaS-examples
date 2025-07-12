@@ -1,6 +1,8 @@
 #!/bin/bash
 mkdir -p $CI_PROJECT_DIR/data/mass-spring-damper/output
 
+cp ../../models/MassSpringDamper1.fmu .
+cp ../../models/MassSpringDamper2.fmu .
 java -jar $CI_PROJECT_DIR/common/tools/maestro-2.3.0-jar-with-dependencies.jar\
   import -output $CI_PROJECT_DIR/data/mass-spring-damper/output\
   --dump-intermediate sg1 cosim.json time.json\

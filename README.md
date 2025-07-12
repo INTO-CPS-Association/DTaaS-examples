@@ -4,20 +4,16 @@
 
 # DTaaS Examples
 
-This repository contains examples for
+This repository contains DevOps-based examples for
 [DTaaS software](https://github.com/into-cps-association/DTaaS)
 
 Use these examples and follow the steps given in the example READMEs
 to experience features of the DTaaS software platform and understand
 best practices for managing digital twins within the platform.
 
-## Clone Examples
-
-
-## Example List
+# Example List
 
 The digital twins provided in examples vary in their complexity. It is best
 to use the examples in the following order.
 
 1. [Mass Spring Damper](./digital_twins/mass-spring-damper/README.md)
-1. [Water Tank Fault Injection](./digital_twins/water_tank_FI/README.md)

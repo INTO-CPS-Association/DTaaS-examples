@@ -12,13 +12,3 @@ trigger_mass-spring-damper:
       when: always
   variables:
     RunnerTag: $RunnerTag
-
-trigger_water-tank-FI:
-  stage: triggers
-  trigger:
-    include: digital_twins/water_tank_FI/.gitlab-ci.yml
-  rules:
-    - if: '$DTName == "water_tank_FI"'
-      when: always
-  variables:
-    RunnerTag: $RunnerTag
