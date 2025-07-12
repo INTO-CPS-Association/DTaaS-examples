@@ -1,0 +1,3 @@
+#!/bin/bash
+rm -rf debug.log target
+rm -rf "$CI_PROJECT_DIR/data/mass-spring-damper/output"

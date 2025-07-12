@@ -1,0 +1,76 @@
+stages:
+  - create
+  - execute
+  - analyze
+  - clean
+
+variables:
+  IMAGE_TAG: "$CI_REGISTRY_IMAGE/water-tank-ci:latest"
+
+create:
+  stage: create
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    # Try pulling the image
+    - |
+      if docker pull $IMAGE_TAG; then
+        echo "Image exists in registry. Skipping build."
+      else
+        echo "Image not found. Building and pushing."
+        docker build -t $IMAGE_TAG -f digital_twins/water_tank_FI/Dockerfile digital_twins/water_tank_FI
+        docker push $IMAGE_TAG
+      fi
+  # tags:
+  #   - $RunnerTag
+  # only:
+  #   - main
+
+execute:
+  stage: execute
+  image: $CI_REGISTRY_IMAGE/water-tank-ci:latest
+  script:
+    - chmod +x lifecycle/execute
+    - ./lifecycle/execute
+  before_script:
+    - cd digital_twins/water_tank_FI
+  artifacts:
+    paths:
+      - data/water_tank_FI/output/outputs.csv
+      
+    expire_in: 1 hour
+  rules:
+    - when: always
+  variables:
+    GIT_STRATEGY: fetch
+  # tags:
+  #   - $RunnerTag
+
+analyze:
+  stage: analyze
+  image: $CI_REGISTRY_IMAGE/water-tank-ci:latest
+  script:
+    - chmod +x lifecycle/analyze
+    - ./lifecycle/analyze
+  before_script:
+    - cd digital_twins/water_tank_FI
+  artifacts:
+    paths:
+      - data/water_tank_FI/output/plots
+    when: always
+    expire_in: 1 week
+  # tags:
+  #   - $RunnerTag
+
+clean:
+  stage: clean
+  image: $CI_REGISTRY_IMAGE/water-tank-ci:latest
+  script:
+    - chmod +x lifecycle/clean
+    - ./lifecycle/clean
+  before_script:
+    - cd digital_twins/water_tank_FI
+  # tags:
+  #   - $RunnerTag
