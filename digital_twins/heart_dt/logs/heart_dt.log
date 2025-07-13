@@ -1,0 +1,281 @@
+Initializing data directory...
+Data directory: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/data/heart_twin_data
+Data directory initialized: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/data/heart_twin_data
+Using static folder: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static
+Reading record 108 from /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/data/heart_twin_data/108...
+
+========== ECG ANOMALIES DETECTED ==========
+Record: 108
+
+Beat classification symbols:
+N: Normal beat
+L: Left bundle branch block beat
+R: Right bundle branch block beat
+A: Atrial premature beat
+V: Premature ventricular contraction
+!: Ventricular flutter wave
+/: Paced beat
+F: Fusion of paced and normal beat
+E: Ventricular escape beat
+j: Nodal (junctional) escape beat
+a: Aberrated atrial premature beat
+S: Supraventricular premature beat
+Anomaly '+' detected at sample 23 (time: 0.06s)
+Anomaly 'V' detected at sample 4105 (time: 11.40s)
+Anomaly 'x' detected at sample 4197 (time: 11.66s)
+Anomaly '~' detected at sample 9924 (time: 27.57s)
+Anomaly '~' detected at sample 10519 (time: 29.22s)
+Anomaly 'V' detected at sample 10876 (time: 30.21s)
+Anomaly 'x' detected at sample 11000 (time: 30.56s)
+Anomaly '~' detected at sample 46506 (time: 129.18s)
+Anomaly '~' detected at sample 49153 (time: 136.54s)
+Anomaly '~' detected at sample 49480 (time: 137.44s)
+Anomaly 'V' detected at sample 83824 (time: 232.84s)
+Anomaly '|' detected at sample 97198 (time: 269.99s)
+Anomaly 'V' detected at sample 107330 (time: 298.14s)
+Anomaly '|' detected at sample 117581 (time: 326.61s)
+Anomaly '|' detected at sample 121398 (time: 337.22s)
+Anomaly '|' detected at sample 167119 (time: 464.22s)
+Anomaly 'V' detected at sample 180041 (time: 500.11s)
+Anomaly 'x' detected at sample 180184 (time: 500.51s)
+Anomaly 'F' detected at sample 180621 (time: 501.73s)
+Anomaly 'x' detected at sample 193696 (time: 538.04s)
+Anomaly 'x' detected at sample 221307 (time: 614.74s)
+Anomaly 'A' detected at sample 263192 (time: 731.09s)
+Anomaly '|' detected at sample 280515 (time: 779.21s)
+Anomaly 'F' detected at sample 392847 (time: 1091.24s)
+Anomaly 'j' detected at sample 435657 (time: 1210.16s)
+Anomaly 'A' detected at sample 528246 (time: 1467.35s)
+Anomaly 'A' detected at sample 528960 (time: 1469.33s)
+Anomaly 'A' detected at sample 631433 (time: 1753.98s)
+
+========== ANOMALY SUMMARY ==========
+Total normal beats: 1739
+
+Anomalies detected:
+  +: 1 instances
+  V: 17 instances
+  x: 11 instances
+  ~: 41 instances
+  |: 8 instances
+  F: 2 instances
+  A: 4 instances
+  j: 1 instances
+=====================================
+
+Record signal names: ['MLII', 'V1']
+Added channel: Channel 0: Modified Limb Lead II (MLII)
+Added channel: Channel 1: Precordial Lead V1
+Record loaded: 650000 samples, 2 channels, 360 Hz sampling rate
+Available channels: Channel 0: Modified Limb Lead II (MLII), Channel 1: Precordial Lead V1
+App static folder: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static
+Digital twins static folder: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static
+Found digital_twins/static directory at: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static
+Files in digital_twins/static: ['bits.png', 'into-cps.png', '.gitkeep']
+Found bits.png at: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static/bits.png
+Found into-cps.png at: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static/into-cps.png
+Starting Flask server...
+Server running at http://localhost:5001
+If running in WSL, access from Windows at http://localhost:5001 or http://<WSL-IP-address>:5001
+ * Serving Flask app 'digital_twins.heart_dt.app'
+ * Debug mode: off
+[2025-07-18 12:09:57,613] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.29.177:5001
+[2025-07-18 12:09:57,613] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2025-07-18 12:09:57,936] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:57] "GET / HTTP/1.1" 200 -
+[2025-07-18 12:09:58,036] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /static/bits.png HTTP/1.1" 200 -
+[2025-07-18 12:09:58,036] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /static/into-cps.png HTTP/1.1" 200 -
+[2025-07-18 12:09:58,304] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /ecg-data HTTP/1.1" 200 -
+[2025-07-18 12:09:58,312] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /static/heart-model HTTP/1.1" 200 -
+[2025-07-18 12:09:58,443] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2025-07-18 12:09:58,444] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:09:58,454] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:09:58,595] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /ecg-data?t=1752820798446 HTTP/1.1" 200 -
+[2025-07-18 12:09:59,132] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /ecg-data?t=1752820799001 HTTP/1.1" 200 -
+[2025-07-18 12:09:59,478] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET / HTTP/1.1" 200 -
+[2025-07-18 12:09:59,535] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "[36mGET /static/bits.png HTTP/1.1[0m" 304 -
+[2025-07-18 12:09:59,535] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "[36mGET /static/into-cps.png HTTP/1.1[0m" 304 -
+[2025-07-18 12:09:59,563] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /static/heart-model HTTP/1.1" 200 -
+[2025-07-18 12:09:59,640] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /ecg-data HTTP/1.1" 200 -
+[2025-07-18 12:09:59,786] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:09:59,802] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:09:59,888] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /ecg-data?t=1752820799787 HTTP/1.1" 200 -
+[2025-07-18 12:10:00,620] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:00] "GET /ecg-data?t=1752820800496 HTTP/1.1" 200 -
+[2025-07-18 12:10:01,647] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:01] "GET /ecg-data?t=1752820801497 HTTP/1.1" 200 -
+[2025-07-18 12:10:02,620] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:02] "GET /ecg-data?t=1752820802496 HTTP/1.1" 200 -
+[2025-07-18 12:10:03,624] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:03] "GET /ecg-data?t=1752820803495 HTTP/1.1" 200 -
+[2025-07-18 12:10:04,624] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:04] "GET /ecg-data?t=1752820804496 HTTP/1.1" 200 -
+[2025-07-18 12:10:05,621] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:05] "GET /ecg-data?t=1752820805496 HTTP/1.1" 200 -
+[2025-07-18 12:10:06,623] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:06] "GET /ecg-data?t=1752820806496 HTTP/1.1" 200 -
+[2025-07-18 12:10:07,622] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:07] "GET /ecg-data?t=1752820807496 HTTP/1.1" 200 -
+[2025-07-18 12:10:08,633] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:08] "GET /ecg-data?t=1752820808496 HTTP/1.1" 200 -
+[2025-07-18 12:10:11,284] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:11] "GET /ecg-data?t=1752820811144 HTTP/1.1" 200 -
+[2025-07-18 12:10:16,698] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:16] "GET /ecg-data?t=1752820816573 HTTP/1.1" 200 -
+[2025-07-18 12:10:21,712] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:21] "GET /ecg-data?t=1752820821572 HTTP/1.1" 200 -
+[2025-07-18 12:10:26,712] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:26] "GET /ecg-data?t=1752820826572 HTTP/1.1" 200 -
+[2025-07-18 12:10:31,709] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:31] "GET /ecg-data?t=1752820831572 HTTP/1.1" 200 -
+[2025-07-18 12:10:36,710] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:36] "GET /ecg-data?t=1752820836572 HTTP/1.1" 200 -
+[2025-07-18 12:10:41,692] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:41] "GET /ecg-data?t=1752820841572 HTTP/1.1" 200 -
+[2025-07-18 12:10:46,709] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:46] "GET /ecg-data?t=1752820846572 HTTP/1.1" 200 -
+[2025-07-18 12:10:51,708] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:51] "GET /ecg-data?t=1752820851572 HTTP/1.1" 200 -
+[2025-07-18 12:10:56,701] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:56] "GET /ecg-data?t=1752820856572 HTTP/1.1" 200 -
+[2025-07-18 12:11:01,700] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:11:01] "GET /ecg-data?t=1752820861572 HTTP/1.1" 200 -
+[2025-07-18 12:11:06,696] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:11:06] "GET /ecg-data?t=1752820866572 HTTP/1.1" 200 -
+[2025-07-18 12:11:11,711] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:11:11] "GET /ecg-data?t=1752820871571 HTTP/1.1" 200 -
+[2025-07-18 12:35:17,982] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:17] "GET / HTTP/1.1" 200 -
+[2025-07-18 12:35:18,052] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:18] "[36mGET /static/bits.png HTTP/1.1[0m" 304 -
+[2025-07-18 12:35:18,065] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:18] "[36mGET /static/into-cps.png HTTP/1.1[0m" 304 -
+[2025-07-18 12:35:18,169] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:18] "GET /ecg-data HTTP/1.1" 200 -
+[2025-07-18 12:35:18,225] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:18] "GET /static/heart-model HTTP/1.1" 200 -
+[2025-07-18 12:35:18,328] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:18] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:35:18,337] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:18] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:35:18,447] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:18] "GET /ecg-data?t=1752822318329 HTTP/1.1" 200 -
+[2025-07-18 12:35:19,152] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:19] "GET /ecg-data?t=1752822319026 HTTP/1.1" 200 -
+[2025-07-18 12:35:20,150] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:20] "GET /ecg-data?t=1752822320027 HTTP/1.1" 200 -
+[2025-07-18 12:35:21,227] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:21] "GET /ecg-data?t=1752822321027 HTTP/1.1" 200 -
+[2025-07-18 12:35:22,152] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:22] "GET /ecg-data?t=1752822322027 HTTP/1.1" 200 -
+[2025-07-18 12:35:23,153] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:23] "GET /ecg-data?t=1752822323026 HTTP/1.1" 200 -
+[2025-07-18 12:35:24,183] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:24] "GET /ecg-data?t=1752822324027 HTTP/1.1" 200 -
+[2025-07-18 12:35:25,151] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:25] "GET /ecg-data?t=1752822325027 HTTP/1.1" 200 -
+[2025-07-18 12:35:26,154] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:26] "GET /ecg-data?t=1752822326026 HTTP/1.1" 200 -
+[2025-07-18 12:35:27,150] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:27] "GET /ecg-data?t=1752822327027 HTTP/1.1" 200 -
+[2025-07-18 12:35:28,150] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:28] "GET /ecg-data?t=1752822328027 HTTP/1.1" 200 -
+[2025-07-18 12:35:29,154] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:29] "GET /ecg-data?t=1752822329027 HTTP/1.1" 200 -
+[2025-07-18 12:35:30,151] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:30] "GET /ecg-data?t=1752822330027 HTTP/1.1" 200 -
+[2025-07-18 12:35:31,152] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:31] "GET /ecg-data?t=1752822331026 HTTP/1.1" 200 -
+[2025-07-18 12:35:32,149] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:32] "GET /ecg-data?t=1752822332026 HTTP/1.1" 200 -
+[2025-07-18 12:35:33,148] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:33] "GET /ecg-data?t=1752822333027 HTTP/1.1" 200 -
+[2025-07-18 12:35:34,144] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:34] "GET /ecg-data?t=1752822334027 HTTP/1.1" 200 -
+[2025-07-18 12:35:35,151] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:35] "GET /ecg-data?t=1752822335026 HTTP/1.1" 200 -
+[2025-07-18 12:35:36,130] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:36] "GET /ecg-data?t=1752822336026 HTTP/1.1" 200 -
+[2025-07-18 12:35:37,200] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:37] "GET /ecg-data?t=1752822337033 HTTP/1.1" 200 -
+[2025-07-18 12:35:38,134] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:38] "GET /ecg-data?t=1752822338027 HTTP/1.1" 200 -
+[2025-07-18 12:35:39,829] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:39] "GET /ecg-data?t=1752822339720 HTTP/1.1" 200 -
+[2025-07-18 12:35:40,819] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:40] "GET /ecg-data?t=1752822340720 HTTP/1.1" 200 -
+[2025-07-18 12:35:41,824] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:41] "GET /ecg-data?t=1752822341720 HTTP/1.1" 200 -
+[2025-07-18 12:35:42,849] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:42] "GET /ecg-data?t=1752822342720 HTTP/1.1" 200 -
+[2025-07-18 12:35:43,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:43] "GET /ecg-data?t=1752822343720 HTTP/1.1" 200 -
+[2025-07-18 12:35:44,854] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:44] "GET /ecg-data?t=1752822344720 HTTP/1.1" 200 -
+[2025-07-18 12:35:45,846] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:45] "GET /ecg-data?t=1752822345719 HTTP/1.1" 200 -
+[2025-07-18 12:35:46,871] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:46] "GET /ecg-data?t=1752822346721 HTTP/1.1" 200 -
+[2025-07-18 12:35:47,964] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:47] "GET /ecg-data?t=1752822347720 HTTP/1.1" 200 -
+[2025-07-18 12:35:48,878] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:48] "GET /ecg-data?t=1752822348720 HTTP/1.1" 200 -
+[2025-07-18 12:35:49,872] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:49] "GET /ecg-data?t=1752822349720 HTTP/1.1" 200 -
+[2025-07-18 12:35:50,876] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:50] "GET /ecg-data?t=1752822350720 HTTP/1.1" 200 -
+[2025-07-18 12:35:51,834] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:51] "GET /ecg-data?t=1752822351719 HTTP/1.1" 200 -
+[2025-07-18 12:35:52,847] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:52] "GET /ecg-data?t=1752822352720 HTTP/1.1" 200 -
+[2025-07-18 12:35:53,842] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:53] "GET /ecg-data?t=1752822353719 HTTP/1.1" 200 -
+[2025-07-18 12:35:54,846] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:54] "GET /ecg-data?t=1752822354720 HTTP/1.1" 200 -
+[2025-07-18 12:35:55,842] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:55] "GET /ecg-data?t=1752822355720 HTTP/1.1" 200 -
+[2025-07-18 12:35:56,850] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:56] "GET /ecg-data?t=1752822356720 HTTP/1.1" 200 -
+[2025-07-18 12:35:57,849] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:57] "GET /ecg-data?t=1752822357719 HTTP/1.1" 200 -
+[2025-07-18 12:35:58,830] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:58] "GET /ecg-data?t=1752822358719 HTTP/1.1" 200 -
+[2025-07-18 12:35:59,813] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:35:59] "GET /ecg-data?t=1752822359719 HTTP/1.1" 200 -
+[2025-07-18 12:36:00,851] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:00] "GET /ecg-data?t=1752822360719 HTTP/1.1" 200 -
+[2025-07-18 12:36:01,837] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:01] "GET /ecg-data?t=1752822361719 HTTP/1.1" 200 -
+[2025-07-18 12:36:02,851] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:02] "GET /ecg-data?t=1752822362720 HTTP/1.1" 200 -
+[2025-07-18 12:36:03,849] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:03] "GET /ecg-data?t=1752822363720 HTTP/1.1" 200 -
+[2025-07-18 12:36:04,845] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:04] "GET /ecg-data?t=1752822364720 HTTP/1.1" 200 -
+[2025-07-18 12:36:05,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:05] "GET /ecg-data?t=1752822365719 HTTP/1.1" 200 -
+[2025-07-18 12:36:06,811] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:06] "GET /ecg-data?t=1752822366720 HTTP/1.1" 200 -
+[2025-07-18 12:36:07,836] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:07] "GET /ecg-data?t=1752822367721 HTTP/1.1" 200 -
+[2025-07-18 12:36:08,817] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:08] "GET /ecg-data?t=1752822368719 HTTP/1.1" 200 -
+[2025-07-18 12:36:09,840] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:09] "GET /ecg-data?t=1752822369719 HTTP/1.1" 200 -
+[2025-07-18 12:36:10,823] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:10] "GET /ecg-data?t=1752822370719 HTTP/1.1" 200 -
+[2025-07-18 12:36:11,810] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:11] "GET /ecg-data?t=1752822371719 HTTP/1.1" 200 -
+[2025-07-18 12:36:12,829] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:12] "GET /ecg-data?t=1752822372719 HTTP/1.1" 200 -
+[2025-07-18 12:36:13,892] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:13] "GET /ecg-data?t=1752822373719 HTTP/1.1" 200 -
+[2025-07-18 12:36:14,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:14] "GET /ecg-data?t=1752822374719 HTTP/1.1" 200 -
+[2025-07-18 12:36:15,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:15] "GET /ecg-data?t=1752822375719 HTTP/1.1" 200 -
+[2025-07-18 12:36:16,847] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:16] "GET /ecg-data?t=1752822376719 HTTP/1.1" 200 -
+[2025-07-18 12:36:17,843] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:17] "GET /ecg-data?t=1752822377719 HTTP/1.1" 200 -
+[2025-07-18 12:36:18,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:18] "GET /ecg-data?t=1752822378719 HTTP/1.1" 200 -
+[2025-07-18 12:36:19,839] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:19] "GET /ecg-data?t=1752822379719 HTTP/1.1" 200 -
+[2025-07-18 12:36:20,850] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:20] "GET /ecg-data?t=1752822380719 HTTP/1.1" 200 -
+[2025-07-18 12:36:21,846] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:21] "GET /ecg-data?t=1752822381719 HTTP/1.1" 200 -
+[2025-07-18 12:36:22,846] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:22] "GET /ecg-data?t=1752822382719 HTTP/1.1" 200 -
+[2025-07-18 12:36:23,932] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:23] "GET /ecg-data?t=1752822383830 HTTP/1.1" 200 -
+[2025-07-18 12:36:24,830] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:24] "GET /ecg-data?t=1752822384719 HTTP/1.1" 200 -
+[2025-07-18 12:36:25,835] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:25] "GET /ecg-data?t=1752822385719 HTTP/1.1" 200 -
+[2025-07-18 12:36:26,843] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:26] "GET /ecg-data?t=1752822386718 HTTP/1.1" 200 -
+[2025-07-18 12:36:27,834] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:27] "GET /ecg-data?t=1752822387718 HTTP/1.1" 200 -
+[2025-07-18 12:36:28,840] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:28] "GET /ecg-data?t=1752822388719 HTTP/1.1" 200 -
+[2025-07-18 12:36:29,828] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:29] "GET /ecg-data?t=1752822389719 HTTP/1.1" 200 -
+[2025-07-18 12:36:30,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:30] "GET /ecg-data?t=1752822390719 HTTP/1.1" 200 -
+[2025-07-18 12:36:31,843] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:31] "GET /ecg-data?t=1752822391718 HTTP/1.1" 200 -
+[2025-07-18 12:36:32,853] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:32] "GET /ecg-data?t=1752822392719 HTTP/1.1" 200 -
+[2025-07-18 12:36:33,855] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:33] "GET /ecg-data?t=1752822393719 HTTP/1.1" 200 -
+[2025-07-18 12:36:34,836] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:34] "GET /ecg-data?t=1752822394719 HTTP/1.1" 200 -
+[2025-07-18 12:36:35,840] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:35] "GET /ecg-data?t=1752822395718 HTTP/1.1" 200 -
+[2025-07-18 12:36:36,858] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:36] "GET /ecg-data?t=1752822396718 HTTP/1.1" 200 -
+[2025-07-18 12:36:37,833] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:37] "GET /ecg-data?t=1752822397718 HTTP/1.1" 200 -
+[2025-07-18 12:36:40,885] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:36:40] "GET /ecg-data?t=1752822400719 HTTP/1.1" 200 -
+[2025-07-18 12:37:40,929] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:37:40] "GET /ecg-data?t=1752822460717 HTTP/1.1" 200 -
+[2025-07-18 12:38:40,887] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:40] "GET /ecg-data?t=1752822520718 HTTP/1.1" 200 -
+[2025-07-18 12:38:47,061] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:47] "GET /ecg-data?t=1752822526911 HTTP/1.1" 200 -
+[2025-07-18 12:38:48,854] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:48] "GET /ecg-data?t=1752822528716 HTTP/1.1" 200 -
+[2025-07-18 12:38:49,843] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:49] "GET /ecg-data?t=1752822529715 HTTP/1.1" 200 -
+[2025-07-18 12:38:50,843] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:50] "GET /ecg-data?t=1752822530715 HTTP/1.1" 200 -
+[2025-07-18 12:38:51,837] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:51] "GET /ecg-data?t=1752822531714 HTTP/1.1" 200 -
+[2025-07-18 12:38:52,844] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:52] "GET /ecg-data?t=1752822532714 HTTP/1.1" 200 -
+[2025-07-18 12:38:53,825] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:53] "GET /ecg-data?t=1752822533714 HTTP/1.1" 200 -
+[2025-07-18 12:38:54,845] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:54] "GET /ecg-data?t=1752822534714 HTTP/1.1" 200 -
+[2025-07-18 12:38:55,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:55] "GET /ecg-data?t=1752822535715 HTTP/1.1" 200 -
+[2025-07-18 12:38:56,845] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:56] "GET /ecg-data?t=1752822536715 HTTP/1.1" 200 -
+[2025-07-18 12:38:57,850] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:57] "GET /ecg-data?t=1752822537714 HTTP/1.1" 200 -
+[2025-07-18 12:38:58,846] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:58] "GET /ecg-data?t=1752822538714 HTTP/1.1" 200 -
+[2025-07-18 12:38:59,849] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:38:59] "GET /ecg-data?t=1752822539715 HTTP/1.1" 200 -
+[2025-07-18 12:39:00,839] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:00] "GET /ecg-data?t=1752822540714 HTTP/1.1" 200 -
+[2025-07-18 12:39:01,845] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:01] "GET /ecg-data?t=1752822541715 HTTP/1.1" 200 -
+[2025-07-18 12:39:02,839] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:02] "GET /ecg-data?t=1752822542714 HTTP/1.1" 200 -
+[2025-07-18 12:39:03,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:03] "GET /ecg-data?t=1752822543715 HTTP/1.1" 200 -
+[2025-07-18 12:39:04,816] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:04] "GET /ecg-data?t=1752822544713 HTTP/1.1" 200 -
+[2025-07-18 12:39:05,842] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:05] "GET /ecg-data?t=1752822545714 HTTP/1.1" 200 -
+[2025-07-18 12:39:06,839] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:06] "GET /ecg-data?t=1752822546714 HTTP/1.1" 200 -
+[2025-07-18 12:39:07,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:07] "GET /ecg-data?t=1752822547715 HTTP/1.1" 200 -
+[2025-07-18 12:39:08,842] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:08] "GET /ecg-data?t=1752822548714 HTTP/1.1" 200 -
+[2025-07-18 12:39:09,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:09] "GET /ecg-data?t=1752822549714 HTTP/1.1" 200 -
+[2025-07-18 12:39:10,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:10] "GET /ecg-data?t=1752822550715 HTTP/1.1" 200 -
+[2025-07-18 12:39:11,886] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:11] "GET /ecg-data?t=1752822551714 HTTP/1.1" 200 -
+[2025-07-18 12:39:12,840] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:12] "GET /ecg-data?t=1752822552714 HTTP/1.1" 200 -
+[2025-07-18 12:39:13,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:13] "GET /ecg-data?t=1752822553714 HTTP/1.1" 200 -
+[2025-07-18 12:39:14,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:14] "GET /ecg-data?t=1752822554715 HTTP/1.1" 200 -
+[2025-07-18 12:39:15,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:15] "GET /ecg-data?t=1752822555714 HTTP/1.1" 200 -
+[2025-07-18 12:39:16,831] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:16] "GET /ecg-data?t=1752822556714 HTTP/1.1" 200 -
+[2025-07-18 12:39:17,839] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:17] "GET /ecg-data?t=1752822557715 HTTP/1.1" 200 -
+[2025-07-18 12:39:18,828] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:18] "GET /ecg-data?t=1752822558714 HTTP/1.1" 200 -
+[2025-07-18 12:39:19,839] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:19] "GET /ecg-data?t=1752822559714 HTTP/1.1" 200 -
+[2025-07-18 12:39:20,827] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:20] "GET /ecg-data?t=1752822560714 HTTP/1.1" 200 -
+[2025-07-18 12:39:21,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:21] "GET /ecg-data?t=1752822561714 HTTP/1.1" 200 -
+[2025-07-18 12:39:22,836] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:22] "GET /ecg-data?t=1752822562714 HTTP/1.1" 200 -
+[2025-07-18 12:39:23,837] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:23] "GET /ecg-data?t=1752822563714 HTTP/1.1" 200 -
+[2025-07-18 12:39:24,840] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:24] "GET /ecg-data?t=1752822564714 HTTP/1.1" 200 -
+[2025-07-18 12:39:25,834] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:25] "GET /ecg-data?t=1752822565714 HTTP/1.1" 200 -
+[2025-07-18 12:39:26,844] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:26] "GET /ecg-data?t=1752822566714 HTTP/1.1" 200 -
+[2025-07-18 12:39:27,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:27] "GET /ecg-data?t=1752822567714 HTTP/1.1" 200 -
+[2025-07-18 12:39:28,844] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:28] "GET /ecg-data?t=1752822568714 HTTP/1.1" 200 -
+[2025-07-18 12:39:29,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:29] "GET /ecg-data?t=1752822569713 HTTP/1.1" 200 -
+[2025-07-18 12:39:30,843] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:30] "GET /ecg-data?t=1752822570714 HTTP/1.1" 200 -
+[2025-07-18 12:39:31,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:31] "GET /ecg-data?t=1752822571713 HTTP/1.1" 200 -
+[2025-07-18 12:39:32,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:32] "GET /ecg-data?t=1752822572714 HTTP/1.1" 200 -
+[2025-07-18 12:39:33,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:33] "GET /ecg-data?t=1752822573714 HTTP/1.1" 200 -
+[2025-07-18 12:39:34,842] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:34] "GET /ecg-data?t=1752822574714 HTTP/1.1" 200 -
+[2025-07-18 12:39:35,840] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:35] "GET /ecg-data?t=1752822575713 HTTP/1.1" 200 -
+[2025-07-18 12:39:36,840] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:36] "GET /ecg-data?t=1752822576713 HTTP/1.1" 200 -
+[2025-07-18 12:39:37,838] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:37] "GET /ecg-data?t=1752822577713 HTTP/1.1" 200 -
+[2025-07-18 12:39:38,836] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:38] "GET /ecg-data?t=1752822578713 HTTP/1.1" 200 -
+[2025-07-18 12:39:39,877] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:39] "GET /ecg-data?t=1752822579713 HTTP/1.1" 200 -
+[2025-07-18 12:39:40,840] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:40] "GET /ecg-data?t=1752822580715 HTTP/1.1" 200 -
+[2025-07-18 12:39:41,841] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:41] "GET /ecg-data?t=1752822581714 HTTP/1.1" 200 -
+[2025-07-18 12:39:42,847] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:42] "GET /ecg-data?t=1752822582713 HTTP/1.1" 200 -
+[2025-07-18 12:39:43,837] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:43] "GET /ecg-data?t=1752822583714 HTTP/1.1" 200 -
+[2025-07-18 12:39:44,835] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:44] "GET /ecg-data?t=1752822584714 HTTP/1.1" 200 -
+[2025-07-18 12:39:45,837] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:45] "GET /ecg-data?t=1752822585715 HTTP/1.1" 200 -
+[2025-07-18 12:39:46,835] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:39:46] "GET /ecg-data?t=1752822586713 HTTP/1.1" 200 -
+[2025-07-18 12:40:40,828] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:40:40] "GET /ecg-data?t=1752822640720 HTTP/1.1" 200 -
+[2025-07-18 12:41:40,860] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:41:40] "GET /ecg-data?t=1752822700714 HTTP/1.1" 200 -
+[2025-07-18 12:42:40,861] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:42:40] "GET /ecg-data?t=1752822760715 HTTP/1.1" 200 -
+[2025-07-18 12:43:40,861] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:43:40] "GET /ecg-data?t=1752822820708 HTTP/1.1" 200 -
+[2025-07-18 12:44:40,904] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:44:40] "GET /ecg-data?t=1752822880708 HTTP/1.1" 200 -

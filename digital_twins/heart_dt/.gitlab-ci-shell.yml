@@ -1,0 +1,15 @@
+image: python:3.10
+
+stages:
+  - execute
+
+execute_heart_dt:
+  stage: execute
+  script:
+    - cd digital_twins/heart_dt
+    - chmod +x lifecycle/create
+    - ./lifecycle/create
+    - chmod +x lifecycle/execute
+    - ./lifecycle/execute
+  tags:
+    - $RunnerTag
