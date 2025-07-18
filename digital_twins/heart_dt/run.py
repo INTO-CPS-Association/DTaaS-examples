@@ -9,7 +9,7 @@ import sys
 # Add project root directory to path for imports
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)  # digital_twins
-project_root = os.path.dirname(parent_dir)  # pranjay directory
+project_root = os.path.dirname(parent_dir) 
 if project_root not in sys.path:
     sys.path.append(project_root)
 
