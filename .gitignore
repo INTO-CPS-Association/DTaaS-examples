@@ -41,7 +41,3 @@
 # Python virtual environments and temporary files
 **/.venv
 **/__pycache__
-
-# Python cache files
-__pycache__/
-*.py[cod]
