@@ -8,7 +8,7 @@ if current_dir not in sys.path:
 
 # Initialize the data directory
 print("Initializing data directory...")
-from data.heart_twin_data.initialize import ensure_data_directory
+from data.heart_dt.initialize import ensure_data_directory
 data_dir = ensure_data_directory()
 print(f"Data directory initialized: {data_dir}")
 

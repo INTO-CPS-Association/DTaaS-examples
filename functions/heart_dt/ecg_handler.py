@@ -17,7 +17,7 @@ import matplotlib
 matplotlib.use('Agg')  # Use Agg backend for non-interactive saving
 
 # Import data handling functions
-from data.heart_twin_data.record_loader import download_record, get_record_path
+from data.heart_dt.record_loader import download_record, get_record_path
 
 # Global variables to store ECG data
 record_data = {}
