@@ -1,0 +1,24 @@
+image: python:3.10
+
+stages:
+  - execute 
+
+# create_heart_dt:
+#   stage: create
+#   script:
+#     - echo "creating stuff"
+#   tags:
+#     - $RunnerTag
+
+execute_heart_dt:
+  stage: execute
+  script:
+    - echo "prepping env"
+    - python --version
+    - pip install --upgrade pip
+    - cd digital_twins/heart_dt
+    - pip install -r requirements.txt
+    - python run.py
+    # - pkill -f run.py 
+  tags:
+    - $RunnerTag

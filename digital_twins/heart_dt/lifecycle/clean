@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Cleaning up..."
+VENV_DIR=".venv"
+
+pkill -f run.py || true
+rm -rf $VENV_DIR

@@ -1,0 +1,126 @@
+Initializing data directory...
+Data directory: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/data/heart_twin_data
+Data directory initialized: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/data/heart_twin_data
+Using static folder: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static
+Reading record 108 from /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/data/heart_twin_data/108...
+
+========== ECG ANOMALIES DETECTED ==========
+Record: 108
+
+Beat classification symbols:
+N: Normal beat
+L: Left bundle branch block beat
+R: Right bundle branch block beat
+A: Atrial premature beat
+V: Premature ventricular contraction
+!: Ventricular flutter wave
+/: Paced beat
+F: Fusion of paced and normal beat
+E: Ventricular escape beat
+j: Nodal (junctional) escape beat
+a: Aberrated atrial premature beat
+S: Supraventricular premature beat
+Anomaly '+' detected at sample 23 (time: 0.06s)
+Anomaly 'V' detected at sample 4105 (time: 11.40s)
+Anomaly 'x' detected at sample 4197 (time: 11.66s)
+Anomaly '~' detected at sample 9924 (time: 27.57s)
+Anomaly '~' detected at sample 10519 (time: 29.22s)
+Anomaly 'V' detected at sample 10876 (time: 30.21s)
+Anomaly 'x' detected at sample 11000 (time: 30.56s)
+Anomaly '~' detected at sample 46506 (time: 129.18s)
+Anomaly '~' detected at sample 49153 (time: 136.54s)
+Anomaly '~' detected at sample 49480 (time: 137.44s)
+Anomaly 'V' detected at sample 83824 (time: 232.84s)
+Anomaly '|' detected at sample 97198 (time: 269.99s)
+Anomaly 'V' detected at sample 107330 (time: 298.14s)
+Anomaly '|' detected at sample 117581 (time: 326.61s)
+Anomaly '|' detected at sample 121398 (time: 337.22s)
+Anomaly '|' detected at sample 167119 (time: 464.22s)
+Anomaly 'V' detected at sample 180041 (time: 500.11s)
+Anomaly 'x' detected at sample 180184 (time: 500.51s)
+Anomaly 'F' detected at sample 180621 (time: 501.73s)
+Anomaly 'x' detected at sample 193696 (time: 538.04s)
+Anomaly 'x' detected at sample 221307 (time: 614.74s)
+Anomaly 'A' detected at sample 263192 (time: 731.09s)
+Anomaly '|' detected at sample 280515 (time: 779.21s)
+Anomaly 'F' detected at sample 392847 (time: 1091.24s)
+Anomaly 'j' detected at sample 435657 (time: 1210.16s)
+Anomaly 'A' detected at sample 528246 (time: 1467.35s)
+Anomaly 'A' detected at sample 528960 (time: 1469.33s)
+Anomaly 'A' detected at sample 631433 (time: 1753.98s)
+
+========== ANOMALY SUMMARY ==========
+Total normal beats: 1739
+
+Anomalies detected:
+  +: 1 instances
+  V: 17 instances
+  x: 11 instances
+  ~: 41 instances
+  |: 8 instances
+  F: 2 instances
+  A: 4 instances
+  j: 1 instances
+=====================================
+
+Record signal names: ['MLII', 'V1']
+Added channel: Channel 0: Modified Limb Lead II (MLII)
+Added channel: Channel 1: Precordial Lead V1
+Record loaded: 650000 samples, 2 channels, 360 Hz sampling rate
+Available channels: Channel 0: Modified Limb Lead II (MLII), Channel 1: Precordial Lead V1
+App static folder: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static
+Digital twins static folder: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static
+Found digital_twins/static directory at: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static
+Files in digital_twins/static: ['bits.png', 'into-cps.png', '.gitkeep']
+Found bits.png at: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static/bits.png
+Found into-cps.png at: /Users/pranjayyelkotwar/Desktop/Pranjay_DTaaS files/dtaas_example_devops/heart_pr/DTaaS-examples/digital_twins/heart_dt/static/into-cps.png
+Starting Flask server...
+Server running at http://localhost:5001
+If running in WSL, access from Windows at http://localhost:5001 or http://<WSL-IP-address>:5001
+ * Serving Flask app 'digital_twins.heart_dt.app'
+ * Debug mode: off
+[2025-07-18 12:09:57,613] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.29.177:5001
+[2025-07-18 12:09:57,613] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2025-07-18 12:09:57,936] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:57] "GET / HTTP/1.1" 200 -
+[2025-07-18 12:09:58,036] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /static/bits.png HTTP/1.1" 200 -
+[2025-07-18 12:09:58,036] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /static/into-cps.png HTTP/1.1" 200 -
+[2025-07-18 12:09:58,304] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /ecg-data HTTP/1.1" 200 -
+[2025-07-18 12:09:58,312] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /static/heart-model HTTP/1.1" 200 -
+[2025-07-18 12:09:58,443] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2025-07-18 12:09:58,444] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:09:58,454] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:09:58,595] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:58] "GET /ecg-data?t=1752820798446 HTTP/1.1" 200 -
+[2025-07-18 12:09:59,132] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /ecg-data?t=1752820799001 HTTP/1.1" 200 -
+[2025-07-18 12:09:59,478] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET / HTTP/1.1" 200 -
+[2025-07-18 12:09:59,535] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "[36mGET /static/bits.png HTTP/1.1[0m" 304 -
+[2025-07-18 12:09:59,535] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "[36mGET /static/into-cps.png HTTP/1.1[0m" 304 -
+[2025-07-18 12:09:59,563] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /static/heart-model HTTP/1.1" 200 -
+[2025-07-18 12:09:59,640] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /ecg-data HTTP/1.1" 200 -
+[2025-07-18 12:09:59,786] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:09:59,802] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /get-info HTTP/1.1" 200 -
+[2025-07-18 12:09:59,888] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:09:59] "GET /ecg-data?t=1752820799787 HTTP/1.1" 200 -
+[2025-07-18 12:10:00,620] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:00] "GET /ecg-data?t=1752820800496 HTTP/1.1" 200 -
+[2025-07-18 12:10:01,647] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:01] "GET /ecg-data?t=1752820801497 HTTP/1.1" 200 -
+[2025-07-18 12:10:02,620] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:02] "GET /ecg-data?t=1752820802496 HTTP/1.1" 200 -
+[2025-07-18 12:10:03,624] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:03] "GET /ecg-data?t=1752820803495 HTTP/1.1" 200 -
+[2025-07-18 12:10:04,624] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:04] "GET /ecg-data?t=1752820804496 HTTP/1.1" 200 -
+[2025-07-18 12:10:05,621] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:05] "GET /ecg-data?t=1752820805496 HTTP/1.1" 200 -
+[2025-07-18 12:10:06,623] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:06] "GET /ecg-data?t=1752820806496 HTTP/1.1" 200 -
+[2025-07-18 12:10:07,622] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:07] "GET /ecg-data?t=1752820807496 HTTP/1.1" 200 -
+[2025-07-18 12:10:08,633] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:08] "GET /ecg-data?t=1752820808496 HTTP/1.1" 200 -
+[2025-07-18 12:10:11,284] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:11] "GET /ecg-data?t=1752820811144 HTTP/1.1" 200 -
+[2025-07-18 12:10:16,698] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:16] "GET /ecg-data?t=1752820816573 HTTP/1.1" 200 -
+[2025-07-18 12:10:21,712] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:21] "GET /ecg-data?t=1752820821572 HTTP/1.1" 200 -
+[2025-07-18 12:10:26,712] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:26] "GET /ecg-data?t=1752820826572 HTTP/1.1" 200 -
+[2025-07-18 12:10:31,709] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:31] "GET /ecg-data?t=1752820831572 HTTP/1.1" 200 -
+[2025-07-18 12:10:36,710] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:36] "GET /ecg-data?t=1752820836572 HTTP/1.1" 200 -
+[2025-07-18 12:10:41,692] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:41] "GET /ecg-data?t=1752820841572 HTTP/1.1" 200 -
+[2025-07-18 12:10:46,709] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:46] "GET /ecg-data?t=1752820846572 HTTP/1.1" 200 -
+[2025-07-18 12:10:51,708] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:51] "GET /ecg-data?t=1752820851572 HTTP/1.1" 200 -
+[2025-07-18 12:10:56,701] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:10:56] "GET /ecg-data?t=1752820856572 HTTP/1.1" 200 -
+[2025-07-18 12:11:01,700] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:11:01] "GET /ecg-data?t=1752820861572 HTTP/1.1" 200 -
+[2025-07-18 12:11:06,696] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:11:06] "GET /ecg-data?t=1752820866572 HTTP/1.1" 200 -
+[2025-07-18 12:11:11,711] INFO in _internal: 127.0.0.1 - - [18/Jul/2025 12:11:11] "GET /ecg-data?t=1752820871571 HTTP/1.1" 200 -
