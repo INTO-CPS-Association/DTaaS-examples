@@ -41,3 +41,8 @@
 # Python virtual environments and temporary files
 **/.venv
 **/__pycache__
+
+# Log files
+**.log
+**/logs/
+logs/
