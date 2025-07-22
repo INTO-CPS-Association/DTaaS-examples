@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VENV_DIR=".venv"
+VENV_DIR=".heart_venv"
 source $VENV_DIR/bin/activate
 mkdir -p logs
 echo "Launching app..."

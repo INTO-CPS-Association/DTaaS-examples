@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VENV_DIR=".venv"
+VENV_DIR=".heart_venv"
 echo 'Initializing project...'
 python3 -m venv $VENV_DIR
 source $VENV_DIR/bin/activate
