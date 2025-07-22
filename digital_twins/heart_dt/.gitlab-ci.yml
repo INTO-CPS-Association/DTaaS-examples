@@ -11,15 +11,9 @@ create_heart_dt:
     - ./lifecycle/create
   # tags:
   #   - $RunnerTag
-  artifacts:
-    paths:
-      - digital_twins/heart_dt/.venv
-    expire_in: 1 hour
 
 execute_heart_dt:
   stage: execute
-  dependencies:
-    - create_heart_dt
   script:
     - cd digital_twins/heart_dt
     - chmod +x lifecycle/execute
