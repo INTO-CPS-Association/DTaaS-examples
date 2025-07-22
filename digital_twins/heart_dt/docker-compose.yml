@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  heart_dt:
+    build:
+      context: ../../  # Build context from project root to access all dependencies
+      dockerfile: digital_twins/heart_dt/Dockerfile
+    container_name: heart_dt_app
+    ports:
+      - "5000:5000"  # Expose Flask port (adjust if different)
+    volumes:
+      # Mount logs directory for persistent logging
+      - ./logs:/app/digital_twins/heart_dt/logs
+      # Mount data directory for persistent data
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - heart_dt_network
+
+networks:
+  heart_dt_network:
+    driver: bridge
+
+volumes:
+  heart_dt_data:
+    driver: local
+  heart_dt_logs:
+    driver: local
