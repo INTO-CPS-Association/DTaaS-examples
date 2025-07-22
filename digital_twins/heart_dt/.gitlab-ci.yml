@@ -9,8 +9,8 @@ create_heart_dt:
     - cd digital_twins/heart_dt
     - chmod +x lifecycle/create
     - ./lifecycle/create
-  tags:
-    - $RunnerTag
+  # tags:
+  #   - $RunnerTag
   artifacts:
     paths:
       - digital_twins/heart_dt/.venv
@@ -24,8 +24,8 @@ execute_heart_dt:
     - cd digital_twins/heart_dt
     - chmod +x lifecycle/execute
     - ./lifecycle/execute
-  tags:
-    - $RunnerTag
+  # tags:
+  #   - $RunnerTag
 
 # clean_heart_dt:
 #   stage: clean

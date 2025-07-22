@@ -20,5 +20,5 @@ trigger_heart_dt:
   rules:
     - if: '$DTName == "heart_dt"'
       when: always
-  variables:
-    RunnerTag: $RunnerTag
+  # variables:
+  #   RunnerTag: $RunnerTag
