@@ -5,13 +5,16 @@ heart_dt_run:
   stage: run
   image: docker:latest
   services:
-    - docker:dind
+    - name: docker:dind
+      alias: docker
   variables:
-    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
     IMAGE_NAME: heart_dt_image
   script:
+    - docker info
     - cd digital_twins/heart_dt
-    - cd ../../  # move to project root
+    - cd ../../
     - docker build -f digital_twins/heart_dt/Dockerfile -t $IMAGE_NAME .
     - docker run -d -p 5001:5001 --name heart_dt_container $IMAGE_NAME
   # tags:
