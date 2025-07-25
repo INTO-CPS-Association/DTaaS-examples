@@ -14,5 +14,5 @@ heart_dt_run:
     - cd ../../  # move to project root
     - docker build -f digital_twins/heart_dt/Dockerfile -t $IMAGE_NAME .
     - docker run -d -p 5001:5001 --name heart_dt_container $IMAGE_NAME
-  tags:
-    - $RunnerTag
+  # tags:
+  #   - $RunnerTag
