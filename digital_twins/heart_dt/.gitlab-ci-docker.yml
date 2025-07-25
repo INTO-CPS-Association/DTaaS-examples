@@ -1,17 +1,17 @@
-image: python:3.10
-
 stages:
-  - execute
+  - run
 
-execute_heart_dt:
-  stage: execute
+heart_dt_run:
+  stage: run
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    IMAGE_NAME: heart_dt_image
   script:
-    - echo "prepping env"
-    - python --version
-    - pip install --upgrade pip
     - cd digital_twins/heart_dt
-    - pip install -r requirements.txt
-    - python run.py
-    # - pkill -f run.py 
+    - docker build -t $IMAGE_NAME .
+    - docker run -d -p 5001:5001 --name heart_dt_container $IMAGE_NAME
   tags:
     - $RunnerTag
