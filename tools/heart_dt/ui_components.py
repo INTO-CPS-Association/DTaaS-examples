@@ -406,6 +406,22 @@ def render_main_page():
                 }, 3000);
             }
             
+            // Function to get current mode name based on updateInterval
+            function getCurrentMode() {
+                switch(updateInterval) {
+                    case 10: return 'Very Fast';
+                    case 1000: return 'Fast';
+                    case 2000: return 'Medium';
+                    case 5000: return 'Slow';
+                    default: return `Custom (${updateInterval}ms)`;
+                }
+            }
+            
+            // Function to get timestamp
+            function getTimestamp() {
+                return new Date().toISOString();
+            }
+            
             // Function to update ECG display
             async function updateECG() {
                 if (isUpdating || isPaused) return;
@@ -413,10 +429,20 @@ def render_main_page():
                 try {
                     isUpdating = true;
                     
+                    // Log when frontend sends data request
+                    const currentMode = getCurrentMode();
+                    const requestTimestamp = getTimestamp();
+                    console.log(`[${requestTimestamp}] Frontend sending ECG data request - Mode: ${currentMode} (${updateInterval}ms)`);
+                    
                     const response = await fetch('/ecg-data?t=' + new Date().getTime());
                     if (!response.ok) throw new Error('Network response was not ok');
                     
                     const imageData = await response.text();
+                    
+                    // Log when frontend receives data response
+                    const responseTimestamp = getTimestamp();
+                    console.log(`[${responseTimestamp}] Frontend received ECG data response - Mode: ${currentMode} (${updateInterval}ms)`);
+                    
                     const img = document.getElementById('ecg-image');
                     
                     // Create a new image element to preload
@@ -425,6 +451,10 @@ def render_main_page():
                         // Only replace the image once it's fully loaded
                         img.src = imageData;
                         isUpdating = false;
+                        
+                        // Log when image is fully loaded and displayed
+                        const displayTimestamp = getTimestamp();
+                        console.log(`[${displayTimestamp}] ECG image displayed - Mode: ${currentMode} (${updateInterval}ms)`);
                     };
                     newImg.onerror = function() {
                         console.error("Failed to load ECG image");
@@ -445,6 +475,8 @@ def render_main_page():
                 const simulationStatus = document.getElementById('simulation-status');
                 const simulationIndicator = document.getElementById('simulation-indicator');
                 const heartModel = document.getElementById('heart-model');
+                const currentMode = getCurrentMode();
+                const toggleTimestamp = getTimestamp();
                 
                 if (isPaused) {
                     pauseButton.textContent = 'Resume Simulation';
@@ -463,6 +495,8 @@ def render_main_page():
                         clearInterval(updateTimer);
                         updateTimer = null;
                     }
+                    
+                    console.log(`[${toggleTimestamp}] Simulation PAUSED - Mode: ${currentMode} (${updateInterval}ms) - Timer stopped`);
                 } else {
                     pauseButton.textContent = 'Pause Simulation';
                     pauseButton.classList.remove('paused');
@@ -478,6 +512,8 @@ def render_main_page():
                     // Restart the timer
                     updateECG(); // Update immediately
                     updateTimer = setInterval(updateECG, updateInterval);
+                    
+                    console.log(`[${toggleTimestamp}] Simulation RESUMED - Mode: ${currentMode} (${updateInterval}ms) - Timer restarted`);
                 }
                 
                 showNotification(isPaused ? 'Simulation paused' : 'Simulation resumed');
@@ -489,6 +525,7 @@ def render_main_page():
                 const windowSize = document.getElementById('windowSize').value;
                 const recordSelect = document.getElementById('record');
                 const recordId = recordSelect.value;
+                const currentMode = getCurrentMode();
                 
                 try {
                     // Check if record has changed
@@ -500,6 +537,10 @@ def render_main_page():
                         }
                         
                         showNotification(`Loading record ${recordId}...`);
+                        
+                        // Log record change request
+                        const recordRequestTimestamp = getTimestamp();
+                        console.log(`[${recordRequestTimestamp}] Frontend sending record change request - Mode: ${currentMode} - New Record: ${recordId}`);
                         
                         // Load the new record
                         const recordResponse = await fetch('/set-parameters', {
@@ -513,6 +554,11 @@ def render_main_page():
                         });
                         
                         const recordResult = await recordResponse.json();
+                        
+                        // Log record change response
+                        const recordResponseTimestamp = getTimestamp();
+                        console.log(`[${recordResponseTimestamp}] Frontend received record change response - Mode: ${currentMode} - Success: ${recordResult.success}`);
+                        
                         if (recordResult.success) {
                             showNotification(`Record ${recordId} loaded successfully`);
                             currentRecord = recordId;
@@ -550,6 +596,10 @@ def render_main_page():
                         }
                     }
                     
+                    // Log other parameters request
+                    const paramsRequestTimestamp = getTimestamp();
+                    console.log(`[${paramsRequestTimestamp}] Frontend sending parameters update request - Mode: ${currentMode} - Channel: ${channel}, Window: ${windowSize}s`);
+                    
                     // Apply other settings (channel and window size)
                     const response = await fetch('/set-parameters', {
                         method: 'POST',
@@ -563,6 +613,11 @@ def render_main_page():
                     });
                     
                     const result = await response.json();
+                    
+                    // Log other parameters response
+                    const paramsResponseTimestamp = getTimestamp();
+                    console.log(`[${paramsResponseTimestamp}] Frontend received parameters update response - Mode: ${currentMode} - Success: ${result.success}`);
+                    
                     if (result.success) {
                         showNotification('Settings applied successfully');
                         
@@ -598,6 +653,10 @@ def render_main_page():
             // Function to reset ECG position
             async function resetPosition() {
                 try {
+                    const currentMode = getCurrentMode();
+                    const resetRequestTimestamp = getTimestamp();
+                    console.log(`[${resetRequestTimestamp}] Frontend sending reset position request - Mode: ${currentMode}`);
+                    
                     const response = await fetch('/set-parameters', {
                         method: 'POST',
                         headers: {
@@ -609,6 +668,10 @@ def render_main_page():
                     });
                     
                     const result = await response.json();
+                    
+                    const resetResponseTimestamp = getTimestamp();
+                    console.log(`[${resetResponseTimestamp}] Frontend received reset position response - Mode: ${currentMode} - Success: ${result.success}`);
+                    
                     if (result.success) {
                         showNotification('ECG position reset');
                         updateECG(); // Force immediate update
@@ -623,8 +686,17 @@ def render_main_page():
             
             // Function to change update rate
             function changeUpdateRate() {
+                const oldMode = getCurrentMode();
+                const oldInterval = updateInterval;
+                
                 const rate = parseInt(document.getElementById('updateRate').value);
                 updateInterval = rate;
+                
+                const newMode = getCurrentMode();
+                const changeTimestamp = getTimestamp();
+                
+                // Log mode change
+                console.log(`[${changeTimestamp}] Mode changed from ${oldMode} (${oldInterval}ms) to ${newMode} (${updateInterval}ms)`);
                 
                 // Reset the interval timer if not paused
                 if (!isPaused) {
@@ -632,6 +704,7 @@ def render_main_page():
                         clearInterval(updateTimer);
                     }
                     updateTimer = setInterval(updateECG, updateInterval);
+                    console.log(`[${changeTimestamp}] Timer restarted with new interval: ${updateInterval}ms`);
                 }
                 showNotification(`Refresh rate changed to ${rate/1000}s`);
             }
@@ -643,6 +716,9 @@ def render_main_page():
             document.getElementById('pauseButton').addEventListener('click', togglePause);
             
             // Start the update timer
+            const initialMode = getCurrentMode();
+            const startTimestamp = getTimestamp();
+            console.log(`[${startTimestamp}] Application started - Initial Mode: ${initialMode} (${updateInterval}ms) - Timer starting`);
             updateTimer = setInterval(updateECG, updateInterval);
         </script>
     </body>
