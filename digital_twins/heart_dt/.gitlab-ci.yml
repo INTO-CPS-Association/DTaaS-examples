@@ -1,0 +1,37 @@
+stages:
+  - create
+  - execute
+  # - clean
+
+create_heart_dt:
+  stage: create
+  script:
+    - cd digital_twins/heart_dt
+    - chmod +x lifecycle/create
+    - ./lifecycle/create
+  # tags:
+  #   - $RunnerTag
+  artifacts:
+    paths:
+      - digital_twins/heart_dt/.heart_venv
+    expire_in: 1 hour
+
+execute_heart_dt:
+  stage: execute
+  dependencies:
+    - create_heart_dt
+  script:
+    - cd digital_twins/heart_dt
+    - chmod +x lifecycle/execute
+    - ./lifecycle/execute
+  # tags:
+  #   - $RunnerTag
+
+# clean_heart_dt:
+#   stage: clean
+#   script:
+#     - cd digital_twins/heart_dt
+#     - chmod +x lifecycle/clean
+#     - ./lifecycle/clean
+#   tags:
+#     - $RunnerTag

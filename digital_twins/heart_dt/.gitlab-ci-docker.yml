@@ -1,0 +1,10 @@
+stages:
+  - run
+
+heart_dt_run:
+  stage: run
+  script:
+    - IMAGE_NAME=heart-dt
+    - docker info
+    - docker build -f digital_twins/heart_dt/Dockerfile -t $IMAGE_NAME .
+    - docker run -d -p 5001:5001 --name heart_dt_container $IMAGE_NAME
