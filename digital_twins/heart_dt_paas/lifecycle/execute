@@ -1,0 +1,8 @@
+#!/bin/bash
+
+VENV_DIR=".venv"
+source $VENV_DIR/bin/activate
+mkdir -p logs
+echo "Launching app..."
+nohup python3 run.py > logs/heart_dt.log 2>&1 &
+# python3 run.py

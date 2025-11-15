@@ -1,0 +1,20 @@
+stages:
+  - mirror
+
+variables:
+  GIT_DEPTH: 0
+
+mirror_to_github:
+  stage: mirror
+  tags:
+    - linux
+  script:
+    - git config --global user.email "ci@example.com"
+    - git config --global user.name "CI Bot"
+    - |
+      if git remote | grep -q github; then
+        git remote set-url github "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/heart-digital-twin.git"
+      else
+        git remote add github "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/heart-digital-twin.git"
+      fi
+    - git push --force github HEAD:main
