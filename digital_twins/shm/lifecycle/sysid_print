@@ -1,0 +1,14 @@
+#!/bin/bash
+printf "executes execute script"
+
+python3 -m venv venv
+
+source venv/bin/activate
+
+echo "current path: $(pwd)"
+
+python3 -m pip install example_shm-0.6.1-py3-none-any.whl > /dev/null 2>&1
+
+nohup example-shm --config "replay.json" replay &
+nohup example-shm --config "replay.json" sysid-and-print &
+wait

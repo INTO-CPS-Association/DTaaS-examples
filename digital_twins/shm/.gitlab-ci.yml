@@ -1,0 +1,13 @@
+image: python:3.12
+
+stages:
+    - execute
+
+execute_shm:
+    stage: execute
+    script:
+        - cd digital_twins/shm
+        - bash lifecycle/sysid_print
+        - bash lifecycle/model_update_local_sysid
+    tags:
+        - $RunnerTag

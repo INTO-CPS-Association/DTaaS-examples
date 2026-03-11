@@ -1,0 +1,63 @@
+{
+    "MQTT": {
+        "host": "",
+        "port": 1883,
+        "userId": "",
+        "password": "",
+        "ClientID": "ReplaySubscriber",
+        "QoS": 1,
+        "TopicsToSubscribe": {
+            "shm/1/acc/raw/data": "acc1",
+            "shm/1/acc/raw/metadata": "metadata1",
+            "shm/2/acc/raw/data": "acc2",
+            "shm/3/acc/raw/data": "acc3",
+            "shm/4/acc/raw/data": "acc4"
+        },
+        "TopicsToPublish": {
+            "acc1": "cpsens/recorded/1/data",
+            "metadata1": "cpsens/recorded/1/metadata",
+            "acc2": "cpsens/recorded/2/data",
+            "acc3": "cpsens/recorded/3/data",
+            "acc4": "cpsens/recorded/4/data"
+        }
+      },
+ 
+    "sysid": {
+        "host": "",
+        "port": 1883,
+        "userId": "",
+        "password": "",
+        "ClientID": "NOT_NEEDED",
+        "QoS": 1,
+        "MetadataToSubscribe": ["cpsens/recorded/1/metadata"],
+        "TopicsToSubscribe": [
+            "cpsens/recorded/1/data",
+            "cpsens/recorded/2/data",
+            "cpsens/recorded/3/data",
+            "cpsens/recorded/4/data"
+        ],
+        "TopicsToPublish": ["cpsens/recorded/sysid/data"]
+      },
+ 
+    "mode_cluster": {
+      "host": "",
+      "port": 1883,
+      "userId": "",
+      "password": "",
+      "ClientID": "NOT_NEEDED",
+      "QoS": 2,
+      "TopicsToSubscribe": ["cpsens/recorded/sysid/data"],
+      "TopicsToPublish": ["cpsens/recorded/mode_cluster/data"]
+    },
+ 
+    "model_update": {
+      "host": "",
+      "port": 1883,
+      "userId": "",
+      "password": "",
+      "ClientID": "NOT_NEEDED",
+      "QoS": 2,
+      "TopicsToSubscribe": ["cpsens/recorded/mode_cluster/data"],
+      "TopicsToPublish": ["cpsens/recorded/model_update/data"]
+    }
+}

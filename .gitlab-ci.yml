@@ -23,13 +23,13 @@ trigger_heart_dt:
   # variables:
   #   RunnerTag: $RunnerTag
 
-trigger_heart_dt:
-  stage: triggers
-  trigger:
-    include: digital_twins/heart_dt/.gitlab-ci-docker.yml
-  rules:
-    - if: '$DTName == "heart_dt_docker"'
-      when: always
+#trigger_heart_dt:
+#  stage: triggers
+#  trigger:
+#    include: digital_twins/heart_dt/.gitlab-ci-docker.yml
+#  rules:
+#    - if: '$DTName == "heart_dt_docker"'
+#      when: always
   # variables:
   #   RunnerTag: $RunnerTag
 
@@ -39,6 +39,16 @@ trigger_heart_dt_paas:
     include: digital_twins/heart_dt_paas/.gitlab-ci.yml
   rules:
     - if: '$DTName == "heart_dt_paas"'
+      when: always
+  variables:
+    RunnerTag: $RunnerTag
+
+trigger_shm:
+  stage: triggers
+  trigger:
+    include: digital_twins/shm/.gitlab-ci.yml
+  rules:
+    - if: '$DTName == "shm"'
       when: always
   variables:
     RunnerTag: $RunnerTag
