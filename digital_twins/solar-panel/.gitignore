@@ -1,0 +1,65 @@
+# =========================
+# Node.js
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# =========================
+# Python
+# =========================
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.local
+.env.*.local
+
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+
+.vscode/
+.idea/
+
+# =========================
+# Runtime / Temp
+# =========================
+*.pid
+*.seed
+*.pid.lock
+tmp/
+temp/
+
+# =========================
+# Your Project Specific
+# =========================
+files/tanaysheth0108/digital_twins/solar-panel/frontend/dist/
+files/tanaysheth0108/digital_twins/solar-panel/frontend/node_modules/
+files/tanaysheth0108/digital_twins/solar-panel/venv/
+files/tanaysheth0108/digital_twins/solar-panel/.run_pids
+files/tanaysheth0108/digital_twins/solar-panel/coe.log
+
+# Rust target folder
+target/
+
+# Docker
+docker-data/

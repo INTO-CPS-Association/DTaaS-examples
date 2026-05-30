@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_ROOT"
+
+PID_FILE=".run.pids"
+
+if [ -f "$PID_FILE" ]; then
+    echo "==> Terminating Digital Twin background services..."
+    while read -r pid; do
+        # Kill process if it exists, suppress error if already dead
+        kill "$pid" 2>/dev/null || true
+    done < "$PID_FILE"
+    
+    # Remove the PID file
+    rm -f "$PID_FILE"
+    # Extra cleanup: ensure no processes are left listening on known ports
+    for port in 5173 4000 4001; do
+        if command -v lsof >/dev/null 2>&1; then
+            pids=$(lsof -ti tcp:$port 2>/dev/null || true)
+            if [ -n "$pids" ]; then
+                echo "Terminating processes listening on port $port: $pids"
+                echo "$pids" | xargs -r kill 2>/dev/null || true
+                sleep 1
+                # Force kill any remaining
+                echo "$pids" | xargs -r kill -9 2>/dev/null || true
+            fi
+        fi
+    done
+
+    echo "✅ Cleanup complete. All services stopped."
+else
+    echo "⚠️  No running services found (could not find $PID_FILE)."
+fi

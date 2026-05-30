@@ -1,0 +1,71 @@
+#!/bin/bash
+set -e
+
+# Resolve the project root relative to this script so GitLab Runner can run it
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_ROOT"
+
+PID_FILE=".run.pids"
+# Clear old PIDs if they exist
+rm -f "$PID_FILE"
+
+echo "==> Loading environments (NVM & Python venv)..."
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm use --lts
+source venv/bin/activate
+
+mkdir -p logs
+
+# 1. Start the Gateway (The Heart)
+echo "Starting Gateway..."
+nohup node gateway/server.js > logs/gateway.log 2>&1 &
+GATEWAY_PID=$!
+echo "$GATEWAY_PID" >> "$PID_FILE"
+
+# 2. Start the Frontend (The UI)
+echo "Starting Frontend..."
+cd frontend
+nohup npm run dev > ../logs/frontend.log 2>&1 &
+FRONTEND_PID=$!
+echo "$FRONTEND_PID" >> "../$PID_FILE"
+cd ..
+
+# Attempt to detect the actual process listening on the frontend port (5173)
+# and record its PID as well — npm may spawn children and exit, leaving
+# vite running under a different PID. This ensures terminate kills the
+# real server process instead of an exited wrapper.
+sleep 2
+if command -v lsof >/dev/null 2>&1; then
+	ACTUAL_FRONTEND_PIDS=$(lsof -ti tcp:5173 2>/dev/null || true)
+	if [ -n "$ACTUAL_FRONTEND_PIDS" ]; then
+		for p in $ACTUAL_FRONTEND_PIDS; do
+			echo "$p" >> "$PID_FILE"
+		done
+	fi
+fi
+
+# 3. Start the Hardware Mock (The Physical Body)
+HARDWARE_SCRIPT="${HARDWARE_SCRIPT:-hardware/mock_panel.py}"
+echo "Starting Hardware Interface: $HARDWARE_SCRIPT"
+nohup python3 "$HARDWARE_SCRIPT" > logs/mock_panel.log 2>&1 &
+MOCK_PID=$!
+echo "$MOCK_PID" >> "$PID_FILE"
+
+# Give the physical body and gateway a second to boot before attaching the brains
+sleep 2
+
+# 4. Start the Digital Twins (The Brains)
+# Start the AI Optimizer (direct Python runner)
+echo "Starting AI Optimizer (Python source)..."
+nohup python3 ../../../models/solar-panel/optimizer.py > logs/optimizer.log 2>&1 &
+OPTIMIZER_PID=$!
+echo "$OPTIMIZER_PID" >> "$PID_FILE"
+
+echo ""
+echo "============================================================"
+echo "✅ All Digital Twin microservices started in the background!"
+echo "👉 Open your browser to: http://localhost:5173"
+echo "🛑 When you are done, run your terminate script to shut down."
+echo "============================================================"
