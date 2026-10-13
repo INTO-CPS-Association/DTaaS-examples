@@ -43,3 +43,4 @@ to use the examples in the following order.
 1. [Incubator](./digital_twins/incubator/README.md)
 1. [Firefighters in Emergency Environments](./digital_twins/o5g/README.md)
 1. [Incubator with NuRV run-time monitor service](./incubator-NuRV-monitor-service/README.md)
+1. [BIM - Building Information Modeling](./digital_twins/fzk_haus/README.md)

@@ -1,0 +1,3 @@
+ifc-explorer @ git+https://github.com/INTO-CPS-Association/ifc-utils@9899c1549f2ba7a2218dc4810185b917a95fa03c#subdirectory=python/ifc-explorer
+ifc-converter @ git+https://github.com/INTO-CPS-Association/ifc-utils@9899c1549f2ba7a2218dc4810185b917a95fa03c#subdirectory=python/ifc-converter
+paho-mqtt==2.1.0
