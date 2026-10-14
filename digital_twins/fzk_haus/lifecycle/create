@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+# The Building Models page of DTaaS reads models from common/models in the
+# user's library, so the model and the files derived from it go there.
+WORKSPACE="${WORKSPACE:-/workspace}"
+MODEL="${WORKSPACE}/examples/models/fzk_haus.ifc"
+TARGET="${WORKSPACE}/common/models"
+
+# The workspace image does not allow pip to install into the system Python,
+# so the tools go into a virtual environment beside the lifecycle scripts.
+printf "Installing the IFC converters and the MQTT client into .venv\n\n"
+python3 -m venv .venv
+.venv/bin/pip install --quiet -r lifecycle/requirements.txt
+
+printf "Placing the model in %s\n\n" "${TARGET}"
+mkdir -p "${TARGET}"
+cp "${MODEL}" "${TARGET}/fzk_haus.ifc"
+
+printf "Proposing one temperature sensor per room\n\n"
+.venv/bin/python lifecycle/make_manifest.py "${TARGET}/fzk_haus.ifc" \
+  "${TARGET}/fzk_haus.manifest.json"
+
+printf "Converting the geometry and the property tree\n\n"
+.venv/bin/ifc-to-glb "${TARGET}/fzk_haus.ifc" "${TARGET}/fzk_haus.glb"
+.venv/bin/ifc-to-metadata "${TARGET}/fzk_haus.ifc" "${TARGET}/fzk_haus.json"

@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+# Publishes simulated room temperatures in the background until terminate.
+WORKSPACE="${WORKSPACE:-/workspace}"
+MANIFEST="${WORKSPACE}/common/models/fzk_haus.manifest.json"
+
+if [ -f publisher.pid ] && kill -0 "$(cat publisher.pid)" 2>/dev/null; then
+  printf "The publisher is already running\n"
+  exit 0
+fi
+
+printf "Publishing to %s:%s, log in publisher.log\n" \
+  "${MQTT_HOST:-localhost}" "${MQTT_PORT:-1883}"
+nohup .venv/bin/python lifecycle/publish_readings.py "${MANIFEST}" > publisher.log 2>&1 &
+echo $! > publisher.pid
