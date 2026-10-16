@@ -27,7 +27,8 @@
 	  ]
 	},
 	"logVariables":{
-		"{msd2}.msd2i":["x2", "v2"],
+		"{msd1}.msd1i":["x1", "v1"],
+		"{msd2}.msd2i":["x2", "v2", "fk"],
 		"{rti}.rti1": ["y"],
 		"{rti}.rti2": ["y"],
 		"{m2}.monitor": ["_output"]

@@ -28,6 +28,13 @@
 		]
 	},
 	"logVariables": {
+		"{src}.src": [
+			"sensor_data",
+			"kalman_input"
+		],
+		"{es}.es": [
+			"ctrl_desired_temperature"
+		],
 		"{mon}.mon": [
 			"_output"
 		]

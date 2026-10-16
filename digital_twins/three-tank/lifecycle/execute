@@ -3,7 +3,7 @@
 cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
 : "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
 TOOLS_PATH="${EXAMPLES_PATH}/tools"
-MAESTRO_JAR="${EXAMPLES_PATH}/common/tools/maestro-2.3.0-jar-with-dependencies.jar"
+MAESTRO_JAR="${EXAMPLES_PATH}/common/tools/maestro-4.1.0-jar-with-dependencies.jar"
 
 ## Runs the main.java file
 printf "Executing the Three-Tank Digital Twin case study... \n\n"

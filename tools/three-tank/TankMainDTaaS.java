@@ -74,7 +74,8 @@ public class TankMainDTaaS {
 
 		
 		Thread eventThread = new Thread(() -> {
-			new Timer().scheduleAtFixedRate(new TimerTask() {
+			// daemon timer so that the program ends after the co-simulation
+			new Timer(true).scheduleAtFixedRate(new TimerTask() {
 				@Override
 				public void run() {
 					try {

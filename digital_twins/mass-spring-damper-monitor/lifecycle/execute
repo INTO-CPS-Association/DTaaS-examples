@@ -7,7 +7,7 @@ OUTPUT_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
 
 mkdir -p "$OUTPUT_PATH"
 
-java -jar "${MAESTRO}/maestro-2.3.0-jar-with-dependencies.jar" \
+java -jar "${MAESTRO}/maestro-4.1.0-jar-with-dependencies.jar" \
   import -output "$OUTPUT_PATH" \
   --dump-intermediate sg1 cosim.json time.json \
   -i -vi FMI2 output-dir>debug.log 2>&1

@@ -40,7 +40,7 @@ This example uses two models and one tool. The specific assets used are:
 |        | m2.fmu | Private | No |
 |        | RtI.fmu                   | Private | Yes |
 | Specification | m2.smv | Private | No |
-| Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+| Tool | maestro-4.1.0-jar-with-dependencies.jar | Common | Yes |
 
 The `co-sim.json` and `time.json`
 are two DT configuration files used for executing the digital twin.
@@ -73,7 +73,7 @@ Now, run the following scripts:
 
 ### Create
 
- -  Installs Open Java Development Kit 17 in the workspace.
+ -  Installs Open Java Development Kit 21 in the workspace.
  -  Generates and compiles the monitor FMU from the NuRV specification
 
 ```bash

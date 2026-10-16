@@ -38,7 +38,7 @@ source .venv/bin/activate
 check_binary "python3"
 check_binary "python3-pip"
 check_binary "python3-venv"
-check_binary "openjdk-17-jre"
+check_binary "openjdk-21-jre"
 sudo apt-get install -y python3-pandas python3-matplotlib
 check_binary "zip"
 

@@ -40,7 +40,7 @@ The specific assets used are:
 |        | m1.fmu                    | Private | No  |
 |        | RtI.fmu                   | Private | Yes |
 | Specification | m1.smv | Private | No |
-| Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+| Tool | maestro-4.1.0-jar-with-dependencies.jar | Common | Yes |
 
 The `multimodelFI.json` and `simulation-config.json`
 are two DT configuration files used for executing the digital twin.
@@ -75,7 +75,7 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 17 and the Python plotting libraries.
+Installs Open Java Development Kit 21 and the Python plotting libraries.
 The pandas and matplotlib Python packages are installed from the Ubuntu
 repositories (`python3-pandas` and `python3-matplotlib`).
 The monitor FMU from the NuRV specification is generated and compiled.

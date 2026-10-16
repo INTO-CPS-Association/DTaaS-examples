@@ -87,7 +87,7 @@ and one script. The specific assets used are:
 |  | ur5e_gripper_2fg7.urdf | Private | No |
 |  | ur5e.aasx | Private | No |
 |  | rmq-vhost.fmu | Private | Yes |
-| Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+| Tool | maestro-4.1.0-jar-with-dependencies.jar | Common | Yes |
 |  | TwinManagerFramework-0.0.2.jar | Private | Yes |
 |  | urinterface (installed with pip) | Private | No |
 |  | kukalbrinterface | Private | No |
@@ -140,7 +140,7 @@ you need to execute, for example:
 chmod +x lifecycle/create
 ```
 
-This example requires Java 11. The **create** script installs Java 11;
+This example requires Java 21. The **create** script installs Java 21;
 however if you have already installed other Java versions, your default _java_
 might be pointing to another version. You can check and modify the default
 version using the following commands.
@@ -154,7 +154,8 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 11 and a python virtual environment with pip dependencies.
+Installs Open Java Development Kit 21 and a python virtual environment
+with pip dependencies.
 Also builds the ```TwinManager``` tool (TwinManagerFramework-0.0.2.jar)
 from source code.
 

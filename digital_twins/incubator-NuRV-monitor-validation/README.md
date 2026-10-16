@@ -39,7 +39,7 @@ The example uses the following assets:
 |        | Source.fmu            | Private | No |
 |        | Watcher.fmu           | Private | No |
 | Specification | safe-operation.smv | Private | No |
-| Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+| Tool | maestro-4.1.0-jar-with-dependencies.jar | Common | Yes |
 
 The _safe-operation.smv_ file contains the default monitored specification as
 described in the [Simulated scenario section](#simulated-scenario).
@@ -82,7 +82,7 @@ Now, run the following scripts:
 
 ### Create
 
-- Installs Open Java Development Kit 17 in the workspace.
+- Installs Open Java Development Kit 21 in the workspace.
 - Generates and compiles the monitor FMU from the NuRV specification
 
 ```bash

@@ -7,9 +7,8 @@ OUTPUT_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
 
 printf "Installing dependencies...\n\n"
 sudo apt-get update
-# Maestro needs Java 17; install it before maven so that maven does not
-# pull in the newer default Java runtime
-sudo apt-get install -y openjdk-17-jdk-headless
+# Maestro 4.1.0 needs Java 21
+sudo apt-get install -y openjdk-21-jdk-headless
 sudo apt-get install -y maven
 mvn -f "${TOOLS_PATH}/TwinManager/pom.xml" package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
 cp "${TOOLS_PATH}/TwinManager/target/TwinManagerFramework-0.0.2.jar" "${TOOLS_PATH}/"

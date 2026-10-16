@@ -49,7 +49,7 @@ mock physical twin. The specific assets used are:
 |:---|:---|:---|:---|
 | Models | distance-from-zero.fmu | Private | No |
 |  | rmq-vhost.fmu | Private | Yes |
-| Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+| Tool | maestro-4.1.0-jar-with-dependencies.jar | Common | Yes |
 | Data | drobotti_playback_data.csv | private | No |
 | Mock PT | rmq-publisher.py | Private | No |
 |  | consume.py | Private | No |
@@ -90,7 +90,7 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 17 in the workspace. Also install
+Installs Open Java Development Kit 21 in the workspace. Also install
 the required python pip packages for _rmq-publisher.py_ and
 _consume.py_ scripts.
 

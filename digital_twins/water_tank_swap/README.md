@@ -24,7 +24,7 @@ This example uses four models and one tool. The specific assets used are:
 |  | Singlewatertank-20sim.fmu | Private | Yes |
 |  | Leak_detector.fmu | Private | No |
 |  | Leak_controller.fmu | Private | No |
-| Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+| Tool | maestro-4.1.0-jar-with-dependencies.jar | Common | Yes |
 
 This DT has many configuration files. The DT is executed in two stages.
 There exist separate DT configuration files for each stage.
@@ -64,7 +64,7 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 17 and the Python packages
+Installs Open Java Development Kit 21 and the Python packages
 used by the plotting script and the Python FMUs.
 The `python3-pandas`, `python3-matplotlib`, `python3-protobuf` and
 `python3-zmq` packages are installed from the Ubuntu repositories.

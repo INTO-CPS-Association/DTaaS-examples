@@ -12,7 +12,7 @@ MODELS_PATH="${EXAMPLES_PATH}/models"
 echo "Installing dependencies and create configuration"
 
 sudo apt-get update
-sudo apt-get install -y openjdk-17-jre
+sudo apt-get install -y openjdk-21-jre
 sudo apt-get install -y python3-pandas python3-matplotlib
 sudo apt-get install -y zip make gcc
 

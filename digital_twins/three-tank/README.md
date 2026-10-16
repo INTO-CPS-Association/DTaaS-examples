@@ -47,7 +47,7 @@ The specific assets used are:
 | Model | Linear.fmu | Private | No |
 |  | TankSystem.aasx | Private | No |
 | Tool | TwinManagerFramework-0.0.2.jar | Common | Yes |
-|  | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+|  | maestro-4.1.0-jar-with-dependencies.jar | Common | Yes |
 |  | TankMainDTaaS.java (main script) | Private | No |
 | Data | outputs.csv | Private | No |
 
@@ -82,7 +82,7 @@ chmod +x lifecycle/create
 ```
 
 The **create** script installs the default Java runtime environment.
-Java 11 or a newer version is required.
+Java 21 or a newer version is required by Maestro 4.1.0.
 If you have already installed other Java versions, your default _java_
 might be pointing to another version. You can check and modify the default
 version using the following commands.

@@ -33,7 +33,7 @@ The specific assets used are:
 |:---|:---|:---|:---|
 | Models | watertankcontroller-c.fmu | Private | Yes |
 |  | singlewatertank-20sim.fmu | Private | Yes |
-| Tool | maestro-2.3.0-jar-with-dependencies.jar | Common | Yes |
+| Tool | maestro-4.1.0-jar-with-dependencies.jar | Common | Yes |
 
 The `multimodelFI.json` and `simulation-config.json`
 are two DT configuration files used for executing the digital twin.
@@ -68,7 +68,7 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 17 and the Python plotting libraries.
+Installs Open Java Development Kit 21 and the Python plotting libraries.
 The pandas and matplotlib Python packages are installed from the Ubuntu
 repositories (`python3-pandas` and `python3-matplotlib`).
 
