@@ -1,8 +1,8 @@
 # Firefighter Mission in a Burning Building
 
-In an firefighter mission it is important to monitor the oxygen levels of
-each firefighters Self Contained Breating Aparatus (SCBA) in context of
-their mission.
+During a firefighter mission, the oxygen level of each firefighter's
+Self Contained Breathing Apparatus (SCBA) must be monitored in the
+context of the mission.
 
 ## Physical Twin Overview
 
@@ -14,39 +14,42 @@ their mission.
 > the burning building. This image was created with the assistance of
 > DALL·E.
 
-We assume the following scenario:
+The following scenario is assumed:
 
 * a set of firefighters work to extinguish a burning building
-* they each use an SCBA with pressurised oxygen to breath
-* a mission commander on the outside coordinates the efforts and
-  surveills the oxygen levels
+* they each use an SCBA with pressurised oxygen to breathe
+* a mission commander outside coordinates the efforts and
+  monitors the oxygen levels
 
 ## Digital Twin Overview
 
-In this example a monitor is implemented, that calculates how much time
-the firefighers have left, until they need to leave the building.
-To that end, the inputs used are:
+This example implements a monitor that calculates how much time the
+firefighters have left before they need to leave the building.
+It uses these inputs:
 
-* 3D-model of the building in which the mission takes place,
-* pressure data of a firefighters SCBA and
-* firefighters location inside of the building
+* a 3D model of the building in which the mission takes place,
+* pressure data from a firefighter's SCBA, and
+* the firefighter's location inside the building
 
-are used to estimate:
+to estimate:
 
 * the shortest way out,
-* how much time this will need and
-* how much time is left until all oxygen from the SCBA is used up.
+* how long it takes, and
+* how much time is left until the SCBA runs out of oxygen.
 
-The remaining mission time is monitored and the firefighter receive
-a warning if it drops under a certain threshold.
+The remaining mission time is monitored, and the firefighters receive
+a warning if it drops below a threshold.
 
 ![Digital Twin Structure](img/o5g_digital_twin_architecture.png)
 
-This example is an implementation of the the paper [_Digital Twin for Rescue Missions--a Case Study_](https://ceur-ws.org/Vol-3507/paper4.pdf) by Leucker et al.
+This example implements the paper
+[_Digital Twin for Rescue Missions--a Case Study_](https://ceur-ws.org/Vol-3507/paper4.pdf)
+by Leucker et al.
 
 ### Quick Check
 
-Before runnnig this example please make sure the following files are at the correct locations:
+Before running this example, check that the following files are in
+the correct locations:
 
 ```txt
 /workspace/examples/
@@ -56,18 +59,17 @@ Before runnnig this example please make sure the following files are at the corr
       telegraf.conf
 
    models/
-    lab.ifc
-    makefmu.mos
+      lab.ifc
+      makefmu.mos
       PathOxygenEstimate.mo
 
-  tools/
-    graphToPath.py
-    ifc_to_graph
-    pathToTime.py
-    tessla-telegraf-connector/
-    tessla-telegraf-connector/
-      tessla.jar
-      specification.tessla (run-time specification)
+   tools/
+      graph2Path.py
+      ifc2graph
+      path2Time.py
+      tessla-telegraf-connector/
+         tessla.jar
+         specification.tessla (run-time specification)
 
    digital_twins/o5g/
       main.py
@@ -77,15 +79,15 @@ Before runnnig this example please make sure the following files are at the corr
 
 ### Digital Twin Configuration
 
-All configuration for this example is contained in `digital_twins/o5g/config`.
+All configuration for this example is in `digital_twins/o5g/config`.
 
-To use the MQTT-Server, account information needs to be provided.
-The topics are set to their default values, which allow the DT to
-access the mock physical twins sensor metrics and to send back alerts.
+The MQTT server needs account information.
+The topics have default values that let the DT read the sensor metrics
+of the mock physical twin and send back alerts.
 
 ```ini
 export O5G_MQTT_SERVER=
-export O5G_MQTT_PORT=8090
+export O5G_MQTT_PORT=
 export O5G_MQTT_USER=
 export O5G_MQTT_PASS=
 
@@ -94,17 +96,16 @@ export O5G_MQTT_TOPIC_AIR_PREDICTION='vgiot/dt/prediction'
 export O5g_MQTT_TOPIC_ALERT='vgiot/dt/alerts'
 ```
 
-This example uses InfuxDB as a data storage, which will need to be
-configured to use your Access data. The following configuration
-steps are needed:
+This example stores data in InfluxDB, which needs the matching access
+details. Configure it as follows:
 
-* Log into the InfluxDB Web UI
-* Obtain **org** name (is below your _username_ in the sidebar)
-* Create a data bucket if you don't have one already in
-  `Load Data -> Buckets`
-* Create an API access token in `Load Data -> API Tokens`,
-  Copy and save this token somewhere immediately, you can not access it
-  later!
+* Log into the InfluxDB Web UI.
+* Note the **org** name (below the _username_ in the sidebar).
+* Create a data bucket in `Load Data -> Buckets` if one does not
+  already exist.
+* Create an API access token in `Load Data -> API Tokens`.
+  Copy and save this token immediately, because it cannot be viewed
+  again later.
 
 ```ini
 export O5G_INFLUX_SERVER=
@@ -116,17 +117,26 @@ export O5G_INFLUX_BUCKET=
 
 ## Lifecycle Phases
 
-The lifecycles that are covered include:
+The example covers these lifecycle phases:
 
-| Lifecycle Phase    | Completed Tasks |
-| --------- | ------- |
-| Install    | Installs Open Modelica, Rust, Telegraf and the required pip dependencies |
-| Create    | Create FMU from Open Modelica file                 |
-| Execute   | Execute the example in the background tmux terminal session                      |
-| Terminate | Terminate the tmux terminal session running in the background                                                  |
-| Clean | Delete the temporary files                                                 |
+| Lifecycle Phase | Completed Tasks                                                          |
+| --------------- | ------------------------------------------------------------------------ |
+| Install         | Installs Open Modelica, Rust, Telegraf and the required pip dependencies |
+| Create          | Create FMU from Open Modelica file                                       |
+| Execute         | Execute the example in the background tmux terminal session              |
+| Terminate       | Terminate the tmux terminal session running in the background            |
+| Clean           | Delete the temporary files                                               |
 
 ## Run the example
+
+The _install_ script creates the Python virtual environment _o5g-venv_
+in the directory of the example, and the _execute_ script activates it
+from there. The lifecycle scripts can be run from any directory, for
+example from the directory of the example.
+
+```bash
+cd /workspace/examples/digital_twins/o5g
+```
 
 ### Install
 
@@ -136,9 +146,9 @@ Run the install script by executing
 lifecycle/install
 ```
 
-This will install all the required dependencies from apt and pip, as well as
-Open Modelica, Rust, Telegraf and the required pip dependencies
-from their respective repos.
+This installs the required apt packages, including Rust, as well as
+Open Modelica and Telegraf from their own repositories and the required
+pip packages.
 
 #### Create
 
@@ -148,56 +158,55 @@ Run the create script by executing
 lifecycle/create
 ```
 
-This will compile the modelica model to an Functional Mockup Unit (FMU)
+This compiles the Modelica model to a Functional Mockup Unit (FMU)
 for the correct platform.
 
-#### Exceute
+#### Execute
 
-To run the Digital Twin execute
+To run the digital twin, execute
 
 ```bash
 lifecycle/execute
 ```
 
-This will start all the required components in a single tmux session
+This starts all the required components in a single tmux session
 called `o5g` in the background.
-To view the running Digital Twin attatch to this tmux session by executing
+To view the running digital twin, attach to this tmux session by executing
 
 ```bash
 tmux a -t o5g
 ```
 
-To detatch press `Ctrl-b` followed by `d`.
+To detach, press `Ctrl-b` followed by `d`.
 
 ![Tmux session of live digital twin](img/o5g_running_screenshot.png)
 
-The _tmux_ session contains 4 components of the digital twin:
+The _tmux_ session contains four components of the digital twin:
 
-| Panel location | Purpose |
-|:---|:---|
-| Top Left | Sensor simulator generating random location and O2-level data |
-| Top Right | Main Digital Twin receives the sensor data and calculates an estimate of how many minutes of air remain |
-| Bottom Left | Telegraf to convert between different message formats, also displays all messages between components |
-| Bottom Right | TeSSLa monitor raises an alarm, if the remaining time is to low. |
+| Panel location | Purpose                                                                                                 |
+| :------------- | :------------------------------------------------------------------------------------------------------ |
+| Top Left       | Sensor simulator generating random location and O2-level data                                           |
+| Top Right      | Main Digital Twin receives the sensor data and calculates an estimate of how many minutes of air remain |
+| Bottom Left    | Telegraf to convert between different message formats, also displays all messages between components    |
+| Bottom Right   | TeSSLa monitor raises an alarm if the remaining time is too low.                                        |
 
 #### Examine the Results
 
-For additional mission awareness, we recommend utilising the Influx data
-visualisation. We provide a dashboard configuration in the file
-_influx-dashoard.json_. Log in to your Influx Server to import
-(usually port 8086). A screenshot of the dashboard is given here.
+For more mission awareness, use the InfluxDB data visualisation.
+The file _influx-dashboard.json_ has a dashboard configuration. Log in
+to the InfluxDB server (usually on port 8086) to import it. A screenshot
+of the dashboard is given here.
 
 ![Firefighter remaining mission time](img/influx-dashboard.png)
 
-The data gets stored in 
+The data is stored in the
 `o5g->prediction->air-remaining->37ae3e4fb3ea->true->vgiot/dt/prediction`
-variable of the InfluxDB. In addition to importing dashboard configuration
-given above, it is possible to create your custom dashboards using
-the stored data.
+variable of InfluxDB. Besides importing the dashboard configuration
+above, you can create custom dashboards from the stored data.
 
 #### Terminate
 
-To stop the all components and close the _tmux_ session execute
+To stop all components and close the _tmux_ session, execute
 
 ```bash
 lifecycle/terminate
@@ -205,7 +214,7 @@ lifecycle/terminate
 
 #### Clean
 
-To remove temoporary files created during execution
+To remove the temporary files created during execution, execute
 
 ```bash
 lifecycle/clean
