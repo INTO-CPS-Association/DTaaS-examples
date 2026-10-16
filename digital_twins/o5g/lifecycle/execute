@@ -4,7 +4,7 @@ source o5g-venv/bin/activate
 SESSION_NAME="o5g"
 
 if [ -z "$O5G_INSTALL_PATH" ]; then
-  O5G_INSTALL_PATH="/workspace/examples"
+  O5G_INSTALL_PATH="/workspace"
 fi
 
 # Check if the session exists, discarding output

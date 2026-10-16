@@ -1,4 +1,4 @@
 #!/bin/bash
 ## Runs the main.java file
 printf "Executing the Three-Tank Digital Twin case study... \n\n"
-java -cp "/workspace/examples/tools/TwinManagerFramework-0.0.2.jar:/workspace/examples/common/tools/maestro-2.3.0-jar-with-dependencies.jar" /workspace/examples/tools/three-tank/TankMainDTaaS.java
+java -cp "/workspace/tools/TwinManagerFramework-0.0.2.jar:/workspace/common/tools/maestro-2.3.0-jar-with-dependencies.jar" /workspace/tools/three-tank/TankMainDTaaS.java

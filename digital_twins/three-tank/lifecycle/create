@@ -1,10 +1,10 @@
 #!/bin/bash
 printf "Installing dependencies...\n\n"
-apt-get update
-apt-get install -y default-jre ## Minimum java 1.8
-apt-get install -y maven
-mvn -f /workspace/examples/tools/TwinManager/pom.xml package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
-cp /workspace/examples/tools/TwinManager/target/TwinManagerFramework-0.0.2.jar /workspace/examples/tools/
-if [ ! -d /workspace/examples/data/three-tank/output ]; then
-    mkdir -p /workspace/examples/data/three-tank/output
+sudo apt-get update
+sudo apt-get install -y default-jre ## Minimum java 1.8
+sudo apt-get install -y maven
+mvn -f /workspace/tools/TwinManager/pom.xml package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
+cp /workspace/tools/TwinManager/target/TwinManagerFramework-0.0.2.jar /workspace/tools/
+if [ ! -d /workspace/data/three-tank/output ]; then
+    mkdir -p /workspace/data/three-tank/output
 fi

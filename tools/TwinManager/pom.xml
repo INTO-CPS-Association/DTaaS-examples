@@ -77,7 +77,7 @@
 			<artifactId>maestro</artifactId>
 			<version>2.3.0</version>
 			<scope>system</scope>
-			<systemPath>/workspace/examples/common/tools/maestro-2.3.0-jar-with-dependencies.jar</systemPath>
+			<systemPath>/workspace/common/tools/maestro-2.3.0-jar-with-dependencies.jar</systemPath>
 		  </dependency>
 		<dependency>
 		  <groupId>com.opencsv</groupId>

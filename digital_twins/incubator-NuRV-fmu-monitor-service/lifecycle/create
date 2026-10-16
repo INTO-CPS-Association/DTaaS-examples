@@ -39,7 +39,7 @@ check_binary "python3"
 check_binary "python3-pip"
 check_binary "python3-venv"
 check_binary "openjdk-17-jre"
-pip install pandas matplotlib
+sudo apt-get install -y python3-pandas python3-matplotlib
 check_binary "zip"
 
 # Install incubator dependencies

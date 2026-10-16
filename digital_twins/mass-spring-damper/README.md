@@ -47,7 +47,7 @@ You can change these two files to customize the DT to your needs.
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/examples/digital_twins/mass-spring-damper
+cd /workspace/digital_twins/mass-spring-damper
 ```
 
 If required, change the execute permission of lifecycle scripts
@@ -80,10 +80,10 @@ lifecycle/execute
 #### Examine the results
 
 The results can be found in the
-_/workspace/examples/data/mass-spring-damper/output directory_.
+_/workspace/data/mass-spring-damper/output directory_.
 
 You can also view run logs in the
-_/workspace/examples/digital_twins/mass-spring-damper_.
+_/workspace/digital_twins/mass-spring-damper_.
 
 ### Terminate phase
 

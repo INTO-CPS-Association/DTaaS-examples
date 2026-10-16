@@ -74,7 +74,7 @@ The 3D heart provides visual feedback that correlates with the electrical activi
 To run the example, change your present directory:
 
 ```bash
-cd /workspace/examples/digital_twins/heart_dt
+cd /workspace/digital_twins/heart_dt
 ```
 
 If required, change the execute permission of lifecycle scripts you need to execute:

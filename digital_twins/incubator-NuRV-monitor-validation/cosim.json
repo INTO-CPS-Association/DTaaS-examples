@@ -1,10 +1,10 @@
 {
 	"fmus": {
-		"{ad}": "file:///workspace/examples/models/anomaly_detection.fmu",
-		"{es}": "file:///workspace/examples/models/energy_saver.fmu",
-		"{src}": "file:///workspace/examples/models/Source.fmu",
-		"{wtc}": "file:///workspace/examples/models/Watcher.fmu",
-		"{mon}": "file:///workspace/examples/models/safe-operation.fmu"
+		"{ad}": "file:///workspace/models/anomaly_detection.fmu",
+		"{es}": "file:///workspace/models/energy_saver.fmu",
+		"{src}": "file:///workspace/models/Source.fmu",
+		"{wtc}": "file:///workspace/models/Watcher.fmu",
+		"{mon}": "file:///workspace/models/safe-operation.fmu"
 	},
 	"connections": {
 		"{src}.src.sensor_data": [

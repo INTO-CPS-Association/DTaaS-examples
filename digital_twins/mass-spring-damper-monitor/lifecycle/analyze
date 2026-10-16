@@ -1,6 +1,6 @@
 #!/bin/bash
 
 printf "Plotting results"
-mkdir -p /workspace/examples/data/mass-spring-damper-monitor/output/plots
+mkdir -p /workspace/data/mass-spring-damper-monitor/output/plots
 python lifecycle/plot.py
-mv result*.png /workspace/examples/data/mass-spring-damper-monitor/output/plots
+mv result*.png /workspace/data/mass-spring-damper-monitor/output/plots

@@ -14,9 +14,9 @@ import services.DeviationChecker;
 
 public class TankMainDTaaS {
 	static TwinManager twinManager;
-	static String modelFolderPrefix = "/workspace/examples/models/three-tank/";
-	static String dtFolderPrefix = "/workspace/examples/digital_twins/three-tank/";
-	static String dataFolderPrefix = "/workspace/examples/data/three-tank/";
+	static String modelFolderPrefix = "/workspace/models/three-tank/";
+	static String dtFolderPrefix = "/workspace/digital_twins/three-tank/";
+	static String dataFolderPrefix = "/workspace/data/three-tank/";
 
 	public static void main(String[] args) {
 		//LogManager.shutdown();

@@ -1,25 +1,24 @@
 #!/bin/bash
 
+set -e # Exit on command failure
+
 # install openmodelica
 sudo apt-get update
-sudo apt-get install ca-certificates curl gnupg
-sudo curl -fsSL http://build.openmodelica.org/apt/openmodelica.asc | \
-  sudo gpg --dearmor -o /usr/share/keyrings/openmodelica-keyring.gpg
+sudo apt-get install -y ca-certificates curl gnupg
+curl -fsSL --retry 5 --retry-all-errors https://build.openmodelica.org/apt/openmodelica.asc | \
+  sudo gpg --dearmor --yes -o /usr/share/keyrings/openmodelica-keyring.gpg
+# shellcheck disable=SC1091
+. /etc/os-release
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/openmodelica-keyring.gpg] \
   https://build.openmodelica.org/apt \
-  focal \
+  ${VERSION_CODENAME} \
   stable" | sudo tee /etc/apt/sources.list.d/openmodelica.list
-sudo apt update
-sudo apt install --no-install-recommends omc
+sudo apt-get update
+# the OpenModelica server can be slow; retry the downloads
+sudo apt-get install -y -o Acquire::Retries=5 --no-install-recommends omc
 
-# install python3.10
-sudo apt install software-properties-common -y
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt install python3.10
-sudo curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
-sudo python3.10 -m pip install --upgrade pip
-
-# install requirements for the project
-apt-get install build-essential libssl-dev libffi-dev python3-dev
-python3.10 -m pip install -r lifecycle/requirements_linux.txt
-
+# install python virtual environment with the project requirements
+sudo apt-get install -y build-essential python3-venv python3-dev
+python3 -m venv .venv
+.venv/bin/pip install --upgrade pip
+.venv/bin/pip install -r lifecycle/requirements_linux.txt

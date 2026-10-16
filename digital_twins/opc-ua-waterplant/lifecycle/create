@@ -1,6 +1,8 @@
 #!/bin/bash
 
+set -e # Exit on command failure
+
 printf "create fmu from modelica file\n"
 omc lifecycle/create-fmu.mos
 
-mkdir -p "/workspace/examples/data/opc-ua-waterplant/output/"
+mkdir -p "/workspace/data/opc-ua-waterplant/output/"

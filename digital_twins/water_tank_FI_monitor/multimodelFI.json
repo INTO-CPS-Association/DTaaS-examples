@@ -1,9 +1,9 @@
 {
   "fmus": {
-    "{x1}": "file:///workspace/examples/models/watertankcontroller-c.fmu",
-    "{x2}": "file:///workspace/examples/models/singlewatertank-20sim.fmu",
-    "{x3}": "file:///workspace/examples/models/RtI.fmu",
-    "{x4}": "file:///workspace/examples/models/m1.fmu"
+    "{x1}": "file:///workspace/models/watertankcontroller-c.fmu",
+    "{x2}": "file:///workspace/models/singlewatertank-20sim.fmu",
+    "{x3}": "file:///workspace/models/RtI.fmu",
+    "{x4}": "file:///workspace/models/m1.fmu"
   },
   "connections": {
     "{x1}.controller.valve": [
@@ -26,7 +26,7 @@
     "size": 0.1
   },
 
-  "faultInjectConfigurationPath": "/workspace/examples/digital_twins/water_tank_FI_monitor/wt_fault.xml",
+  "faultInjectConfigurationPath": "/workspace/digital_twins/water_tank_FI_monitor/wt_fault.xml",
   "faultInjectInstances": {
     "tank": "id-A"
   }

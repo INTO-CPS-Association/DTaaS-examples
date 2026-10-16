@@ -61,7 +61,7 @@ You can change these two files to customize the DT to your needs.
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/examples/digital_twins/water_tank_FI_monitor
+cd /workspace/digital_twins/water_tank_FI_monitor
 ```
 
 If required, change the execute permission of lifecycle scripts
@@ -75,8 +75,9 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 17 and pip dependencies.
-The pandas and matplotlib are the pip dependencies installated.
+Installs Open Java Development Kit 17 and the Python plotting libraries.
+The pandas and matplotlib Python packages are installed from the Ubuntu
+repositories (`python3-pandas` and `python3-matplotlib`).
 The monitor FMU from the NuRV specification is generated and compiled.
 
 ```bash
@@ -86,7 +87,7 @@ lifecycle/create
 ### Execute
 
 Run the co-simulation. Generates the co-simulation output.csv file
-at `/workspace/examples/data/water_tank_FI_monitor/output`.
+at `/workspace/data/water_tank_FI_monitor/output`.
 
 ```bash
 lifecycle/execute
@@ -95,7 +96,7 @@ lifecycle/execute
 ### Analyze phase
 
 Process the output of co-simulation to produce a plot at:
-`/workspace/examples/data/water_tank_FI_monitor/output/plots/`.
+`/workspace/data/water_tank_FI_monitor/output/plots/`.
 
 ```bash
 lifecycle/analyze
@@ -115,10 +116,10 @@ changes from `unknown` (`0`) to `false` (`2`).
 #### Examine the results
 
 The results can be found in the
-_/workspace/examples/data/water_tank_FI_monitor/output directory_.
+_/workspace/data/water_tank_FI_monitor/output directory_.
 
 You can also view run logs in the
-_/workspace/examples/digital_twins/water_tank_FI_monitor_.
+_/workspace/digital_twins/water_tank_FI_monitor_.
 
 ### Terminate phase
 

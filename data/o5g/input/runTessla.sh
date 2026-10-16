@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$O5G_INSTALL_PATH" ]; then
-  O5G_INSTALL_PATH="/workspace/examples"
+  O5G_INSTALL_PATH="/workspace"
 fi
 
 printf "Compiling TeSSLa monitor from specification \n"

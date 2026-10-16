@@ -64,7 +64,7 @@ where {script} is the name of the script, e.g. _create_, _execute_, etc.
 To run the example, first run the following command in a terminal
 
 ```bash
-cd /workspace/examples/digital_twins/incubator-tessla-active-monitor/
+cd /workspace/digital_twins/incubator-tessla-active-monitor/
 ```
 
 Then run the _create_ script (this may take a few minutes depending on your network connection) followed by the _execute_ script using the following command

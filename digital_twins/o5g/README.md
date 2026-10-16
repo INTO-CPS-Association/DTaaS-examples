@@ -49,7 +49,7 @@ This example is an implementation of the the paper [_Digital Twin for Rescue Mis
 Before runnnig this example please make sure the following files are at the correct locations:
 
 ```txt
-/workspace/examples/
+/workspace/
    data/o5g/input/
       runTessla.sh
       sensorSimulation.py

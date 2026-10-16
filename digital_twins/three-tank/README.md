@@ -21,10 +21,10 @@ The ```TwinManager``` uses Maestro as a slave for co-simulation,
 so it generates the output of the co-simulation.
 
 The main file can be changed according to the application scope, i.e.,
-the ```/workspace/examples/tools/three-tank/TankMainDTaaS.java```
+the ```/workspace/tools/three-tank/TankMainDTaaS.java```
 can be manipulated to get a different result.
 
-The ```/workspace/examples/models/three-tank/``` folder contains
+The ```/workspace/models/three-tank/``` folder contains
 the ```Linear.fmu``` file, which is a non-realistic model for a tank
 with input and output and the ```TankSystem.aasx``` file for
 the schema representation with Asset Administration Shell.
@@ -71,7 +71,7 @@ The lifecycles that are covered include:
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/examples/digital twins/three-tank
+cd /workspace/digital_twins/three-tank
 ```
 
 If required, change the execute permission of lifecycle scripts
@@ -107,7 +107,7 @@ lifecycle/create
 
 Execute the three-tank digital twin using TwinManager. TwinManager in-turn runs
 the co-simulation using Maestro. Generates the co-simulation output.csv file
-at `/workspace/examples/data/three-tank/output`.
+at `/workspace/data/three-tank/output`.
 
 ```bash
 lifecycle/execute
@@ -134,7 +134,7 @@ lifecycle/terminate
 
 Executing this Digital Twin will generate a co-simulation output,
 but the results can also be monitored from updating
-the```/workspace/examples/tools/three-tank/TankMainDTaaS.java``` with
+the```/workspace/tools/three-tank/TankMainDTaaS.java``` with
 a specific set of ```getAttributeValue``` commands, such as shown in
 the code.
 
@@ -142,7 +142,7 @@ That main file enables the online execution of the Digital Twin and
 its internal components.
 
 The output of the co-simulation is generated to
-the ```/workspace/examples/data/three-tank/output``` folder.
+the ```/workspace/data/three-tank/output``` folder.
 
 In the default example, the co-simulation is run for 10 seconds in
 steps of 0.5 seconds.

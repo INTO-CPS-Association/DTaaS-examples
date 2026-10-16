@@ -5,8 +5,8 @@ import os
 print("Creating data plots")
 
 # Read the CSV file
-CSV_PATH = '/workspace/examples/data/incubator-NuRV-monitor-validation/output/outputs.csv'
-FIGS_PATH = '/workspace/examples/data/incubator-NuRV-monitor-validation/figs'
+CSV_PATH = '/workspace/data/incubator-NuRV-monitor-validation/output/outputs.csv'
+FIGS_PATH = '/workspace/data/incubator-NuRV-monitor-validation/figs'
 
 # Create the directory if it doesn't exist
 if not os.path.exists(FIGS_PATH):

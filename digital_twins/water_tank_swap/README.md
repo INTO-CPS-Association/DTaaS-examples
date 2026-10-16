@@ -51,7 +51,7 @@ The following table shows the configuration files and their purpose.
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/examples/digital_twins/water_tank_swap
+cd /workspace/digital_twins/water_tank_swap
 ```
 
 If required, change the permission of files you need to execute, for example:
@@ -64,8 +64,10 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 17 and pip dependencies.
-The matplotlib pip package is also installated.
+Installs Open Java Development Kit 17 and the Python packages
+used by the plotting script and the Python FMUs.
+The `python3-pandas`, `python3-matplotlib`, `python3-protobuf` and
+`python3-zmq` packages are installed from the Ubuntu repositories.
 
 ```bash
 lifecycle/create
@@ -90,7 +92,7 @@ This swapping of FMU models demonstrates the dynamic reconfiguration
 of a DT.
 
 The end of execution phase generates the co-simulation output.csv file
-at `/workspace/examples/data/water_tank_swap/output`.
+at `/workspace/data/water_tank_swap/output`.
 
 ```bash
 lifecycle/execute
@@ -99,7 +101,7 @@ lifecycle/execute
 ### Analyze phase
 
 Process the output of co-simulation to produce a plot at:
-`/workspace/examples/data/water_tank_FI/output/plots/`.
+`/workspace/data/water_tank_FI/output/plots/`.
 
 ```bash
 lifecycle/analyze

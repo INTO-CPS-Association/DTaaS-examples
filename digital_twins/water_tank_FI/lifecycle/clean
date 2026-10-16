@@ -3,5 +3,6 @@ rm -rf events_xml_log.xml\
   targetFI\
   generateFI\
   debug.log\
-  out.txt
+  out.txt\
+  target
 

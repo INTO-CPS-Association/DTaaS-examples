@@ -23,7 +23,7 @@ The lifecycles that are covered include:
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/examples/digital_twins/incubator
+cd /workspace/digital_twins/incubator
 ```
 
 If required, change the execute permission of lifecycle scripts

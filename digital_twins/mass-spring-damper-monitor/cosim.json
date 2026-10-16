@@ -1,9 +1,9 @@
 {
 	"fmus":{
-		"{msd1}":"file:///workspace/examples/models/MassSpringDamper1.fmu",
-		"{msd2}":"file:///workspace/examples/models/MassSpringDamper2.fmu",
-		"{m2}": "file:///workspace/examples/models/m2.fmu",
-		"{rti}": "file:///workspace/examples/models/RtI.fmu"
+		"{msd1}":"file:///workspace/models/MassSpringDamper1.fmu",
+		"{msd2}":"file:///workspace/models/MassSpringDamper2.fmu",
+		"{m2}": "file:///workspace/models/m2.fmu",
+		"{rti}": "file:///workspace/models/RtI.fmu"
 	},
 	"connections": {
 		"{msd1}.msd1i.x1": [

@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # OpenModelica Build FMU auxiliary files
-rm Test_DTCONEDAR.fmu
-rm Test_DTCONEDAR_FMU.libs
-rm Test_DTCONEDAR_FMU.log
-rm Test_DTCONEDAR_FMU.makefile
-rm Test_DTCONEDAR_info.json
-rm Test_DTCONEDAR.log
-rm -rf "/workspace/examples/data/opc-ua-waterplant/output"
-rm "/workspace/examples/tools/opc-ua-waterplant/model_description.csv"
+rm -f Test_DTCONEDAR.fmu \
+  Test_DTCONEDAR_FMU.libs \
+  Test_DTCONEDAR_FMU.log \
+  Test_DTCONEDAR_FMU.makefile \
+  Test_DTCONEDAR_info.json \
+  Test_DTCONEDAR_external_functions.json \
+  Test_DTCONEDAR.log \
+  index.html
+rm -rf "/workspace/data/opc-ua-waterplant/output"
+rm -f "/workspace/tools/opc-ua-waterplant/model_description.csv"

@@ -76,7 +76,7 @@ for mock PT python scripts. Please add your credentials in both these files.
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/examples/digital_twins/drobotti_rmqfmu
+cd /workspace/digital_twins/drobotti_rmqfmu
 ```
 
 If required, change the execute permission of lifecycle scripts
@@ -112,7 +112,7 @@ lifecycle/execute
 #### Examine the results
 
 The results can be found in the
-_/workspace/examples/digital\_twins/drobotti\_rmqfmu directory_.
+_/workspace/digital\_twins/drobotti\_rmqfmu directory_.
 
 Executing the DT will generate and launch a co-simulation
 (RMQFMU and distance FMU), and two python scripts.
@@ -121,7 +121,7 @@ And one to consume what is sent by the distance FMU.
 
 In this examples the DT will run for 10 seconds, with a stepsize of 100ms.
 Thereafter it is possible to examine the logs produce in
-```/workspace/examples/digital_twins/drobotti_rmqfmu/target```.
+```/workspace/digital_twins/drobotti_rmqfmu/target```.
 The outputs for each FMU, xpos and ypos for the RMQFMU, and the distance for
 the distance FMU are recorded in the ```outputs.csv``` file.
 Other logs can be examined for each FMU and the publisher scripts.
