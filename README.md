@@ -28,15 +28,10 @@ wget https://raw.githubusercontent.com/INTO-CPS-Association/DTaaS-examples/main/
 bash getExamples.sh
 ```
 
-The lifecycle scripts of the examples that do not need external services
-locate the models, tools, data and common assets relative to
-their own location. These examples work from `/workspace/examples` and
-from any other directory that contains a copy of this repository.
-The location of the examples can also be set by exporting
-the `EXAMPLES_PATH` environment variable before running
-the lifecycle scripts.
-The examples that need external services use absolute paths
-and must be placed in `/workspace/examples`.
+The lifecycle scripts locate the models, tools, data and common assets
+relative to their own location. The examples work from
+`/workspace/examples` and from any other directory that contains
+a copy of this repository.
 
 ## Try the Examples Locally
 

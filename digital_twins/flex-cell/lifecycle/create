@@ -1,22 +1,24 @@
 #!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+TOOLS_PATH="${EXAMPLES_PATH}/tools"
+DATA_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")"
+VENV_PATH="${TOOLS_PATH}/flex-cell/requirements/venv"
+
 printf "Installing dependencies...\n\n"
 sudo apt-get update
 sudo apt-get install -y openjdk-21-jdk-headless ## Maestro 4.1.0 needs Java 21
 sudo apt-get install -y maven
 sudo apt-get install -y libguice-java
-mvn -f /workspace/examples/tools/TwinManager/pom.xml package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
-cp /workspace/examples/tools/TwinManager/target/TwinManagerFramework-0.0.2.jar /workspace/examples/tools/
-python -m venv /workspace/examples/tools/flex-cell/requirements/venv
-source /workspace/examples/tools/flex-cell/requirements/venv/bin/activate
-pip install -r /workspace/examples/tools/flex-cell/requirements/requirements.txt
-pip install -e /workspace/examples/tools/flex-cell/robots_flexcell
-pip install -e /workspace/examples/tools/flex-cell/kukalbrinterface
-if [ ! -d /workspace/examples/data/flex-cell/output ]; then
-    mkdir -p /workspace/examples/data/flex-cell/output
-fi
-if [ ! -d /workspace/examples/data/flex-cell/input ]; then
-    mkdir -p /workspace/examples/data/flex-cell/input
-fi
-if [ ! -d /workspace/examples/data/flex-cell/input/physical_twin ]; then
-    mkdir -p /workspace/examples/data/flex-cell/input/physical_twin
-fi
+# compilers and headers for the Python packages built from source; zip for prepare
+sudo apt-get install -y build-essential python3-dev python3-venv zip unzip
+mvn -f "${TOOLS_PATH}/TwinManager/pom.xml" package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
+cp "${TOOLS_PATH}/TwinManager/target/TwinManagerFramework-0.0.2.jar" "${TOOLS_PATH}/"
+python3 -m venv "$VENV_PATH"
+source "$VENV_PATH/bin/activate"
+pip install --upgrade pip
+pip install -r "${TOOLS_PATH}/flex-cell/requirements/requirements.txt"
+pip install -e "${TOOLS_PATH}/flex-cell/robots_flexcell"
+pip install -e "${TOOLS_PATH}/flex-cell/kukalbrinterface"
+mkdir -p "${DATA_PATH}/output" "${DATA_PATH}/input/physical_twin"

@@ -1,39 +1,54 @@
 #!/bin/bash
 
+# exit if a command fails
+set -e
+
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
 printf "Install apt dependencies \n"
 
-apt-get update
-apt-get install -y ca-certificates curl gnupg build-essential default-jre-headless cargo curl jq
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg build-essential default-jre-headless cargo jq tmux python3-venv
 
 printf "Install OpenModelica \n"
 
-if dpkg -l | grep -qw "omc"; then
+if dpkg -s omc &> /dev/null; then
   echo "OpenModelica is already installed"
 else
-  curl -fsSL http://build.openmodelica.org/apt/openmodelica.asc | gpg --dearmor -o /usr/share/keyrings/openmodelica-keyring.gpg
+  curl -fsSL --retry 5 --retry-all-errors https://build.openmodelica.org/apt/openmodelica.asc \
+    | sudo gpg --dearmor --yes -o /usr/share/keyrings/openmodelica-keyring.gpg
+  # shellcheck disable=SC1091
+  . /etc/os-release
   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/openmodelica-keyring.gpg] \
     https://build.openmodelica.org/apt \
-    $(cat /etc/os-release | grep "\(UBUNTU\\|DEBIAN\\|VERSION\)_CODENAME" | sort | cut -d= -f 2 | head -1) \
-    stable" | tee /etc/apt/sources.list.d/openmodelica.list
-  apt-get update && apt-get install --no-install-recommends omc
+    ${VERSION_CODENAME} \
+    stable" | sudo tee /etc/apt/sources.list.d/openmodelica.list
+  sudo apt-get update
+  # the OpenModelica server can be slow; retry the downloads
+  sudo apt-get install -y -o Acquire::Retries=5 --no-install-recommends omc
 fi
 
 printf "Install telegraf \n"
 
-if dpkg -l | grep -qw "telegraf"; then
+if dpkg -s telegraf &> /dev/null; then
   echo "Telegraf is already installed"
 else
-  # influxdata-archive_compat.key GPG Fingerprint: 9D539D90D3328DC7D6C8D3B9D8FF8E1F7DF8B07E
-  curl -s https://repos.influxdata.com/influxdata-archive_compat.key > influxdata-archive_compat.key
-  echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
-  echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
-  apt-get update && apt-get install telegraf
-  rm influxdata-archive_compat.key
+  # influxdata-archive.key GPG Fingerprint: 24C975CBA61A024EE1B631787C3D57159FC2F927
+  curl -fsSL -o influxdata-archive.key https://repos.influxdata.com/influxdata-archive.key
+  gpg --show-keys --with-fingerprint --with-colons ./influxdata-archive.key 2>&1 \
+    | grep -q '^fpr:\+24C975CBA61A024EE1B631787C3D57159FC2F927:$'
+  gpg --dearmor < influxdata-archive.key \
+    | sudo tee /etc/apt/keyrings/influxdata-archive.gpg > /dev/null
+  echo 'deb [signed-by=/etc/apt/keyrings/influxdata-archive.gpg] https://repos.influxdata.com/debian stable main' \
+    | sudo tee /etc/apt/sources.list.d/influxdata.list
+  sudo apt-get update && sudo apt-get install -y telegraf
+  rm influxdata-archive.key
 fi
 
 printf "Install required pip packages \n"
 
-# We expect pip to already be installed
-python -m venv o5g-venv
+python3 -m venv o5g-venv
 source o5g-venv/bin/activate
+pip install --upgrade pip
 pip install numpy scipy networkx matplotlib fmpy pytest "paho-mqtt<2.0.0"

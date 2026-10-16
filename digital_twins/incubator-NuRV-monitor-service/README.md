@@ -83,7 +83,7 @@ The lifecycle phases for this example include:
 
 | Lifecycle phase | Completed tasks |
 | ------ | ------- |
-| create    | Downloads the necessary tools and creates a virtual python environment with the necessary dependencies |
+| create    | Downloads the necessary tools and creates a virtual python environment with the necessary dependencies. The omniORBpy CORBA library is compiled from source because there are no packages of it for Python 3.12 |
 | execute   | Runs a python script that starts up the necessary services as well as the Incubator simulation. Various status messages are printed to the console, including the monitored system states and monitor verdict. |
 | clean     | Removes created _data_ directory and incubator log files. |
 
@@ -101,7 +101,7 @@ where {script} is the name of the script, e.g. _create_, _execute_ etc.
 To run the example, first run the following command in a terminal:
 
 ```bash
-cd /workspace/examples/digital_twins/incubator-monitor-server/
+cd /workspace/examples/digital_twins/incubator-NuRV-monitor-service/
 ```
 
 Then, first execute the _create_ script (this can take a few mins

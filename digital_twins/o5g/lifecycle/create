@@ -4,7 +4,7 @@
 set -e
 
 if [ -z "$O5G_INSTALL_PATH" ]; then
-  O5G_INSTALL_PATH="/workspace/examples"
+  O5G_INSTALL_PATH=$(realpath "$(dirname "${BASH_SOURCE[0]}")/../../..")
   printf "Installing to ${O5G_INSTALL_PATH}, set O5G_INSTALL_PATH to overwrite"
 fi
 
@@ -14,6 +14,11 @@ printf "Compiling fmu from OpenModelica model \n"
 
 cd "${O5G_INSTALL_PATH}/models"
 omc "${O5G_INSTALL_PATH}/models/makefmu.mos"
+# omc does not report failures through its exit code
+if [ ! -f "${O5G_INSTALL_PATH}/models/PathOxygenEstimate.fmu" ]; then
+  printf "Failed to create PathOxygenEstimate.fmu, see the omc output above\n"
+  exit 1
+fi
 
 chmod +x "${O5G_INSTALL_PATH}/data/o5g/input/runTessla.sh"
 

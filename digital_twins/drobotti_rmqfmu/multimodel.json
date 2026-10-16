@@ -1,7 +1,7 @@
 {
     "fmus": {
-        "{rbmq}": "file:///workspace/examples/models/rmqfmu-vhost.fmu",
-        "{distance}": "file:///workspace/examples/models/distance_from_zero.fmu"
+        "{rbmq}": "../../models/rmqfmu-vhost.fmu",
+        "{distance}": "../../models/distance_from_zero.fmu"
     },
     "connections": {
         "{distance}.distanceInstance.distance":[

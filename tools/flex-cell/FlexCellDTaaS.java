@@ -13,9 +13,11 @@ import services.DeviationChecker;
 
 public class FlexCellDTaaS {
 	static TwinManager twinManager;
-	static String modelFolderPrefix = "/workspace/examples/models/flex-cell/";
-	static String dtFolderPrefix = "/workspace/examples/digital_twins/flex-cell/";
-	static String dataFolderPrefix = "/workspace/examples/data/flex-cell/";
+	// Root of the examples; relative to the flex-cell digital twin directory by default
+	static String examplesPath = System.getProperty("examples.path", "../..");
+	static String modelFolderPrefix = examplesPath + "/models/flex-cell/";
+	static String dtFolderPrefix = examplesPath + "/digital_twins/flex-cell/";
+	static String dataFolderPrefix = examplesPath + "/data/flex-cell/";
 
 	public static void main(String[] args) {
 		TwinSchema kukaSchema = TwinSchema.initializeFromAASX(modelFolderPrefix+"kuka.aasx","Kuka_LBR_iiwa7_AAS");

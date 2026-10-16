@@ -67,7 +67,7 @@ for mock PT python scripts. Please add your credentials in both these files.
 
 | Lifecycle Phase    | Completed Tasks |
 | -------- | ------- |
-| Create  | Installs Java Development Kit for Maestro tool and pip packages for python scripts |
+| Create  | Installs Java Development Kit for Maestro tool and Python packages for python scripts |
 | Execute | Runs both DT and mock PT |
 | Clean   | Clears run logs and outputs |
 
@@ -90,9 +90,10 @@ Now, run the following scripts:
 
 ### Create
 
-Installs Open Java Development Kit 21 in the workspace. Also install
-the required python pip packages for _rmq-publisher.py_ and
-_consume.py_ scripts.
+Installs Open Java Development Kit 21 in the workspace. Also installs
+the Python packages required by the _rmq-publisher.py_ and
+_consume.py_ scripts and by the _distance\_from\_zero.fmu_ model
+(`python3-pika`, `python3-protobuf` and `python3-zmq`).
 
 ```bash
 lifecycle/create

@@ -1,6 +1,14 @@
 #!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+TOOLS_PATH="${EXAMPLES_PATH}/tools"
+MAESTRO_JAR="${EXAMPLES_PATH}/common/tools/maestro-4.1.0-jar-with-dependencies.jar"
+
 ## Run first the side tools and finally run the main.java file
 printf "Executing the Flex-cell Digital Twin case study... \n\n"
-source /workspace/examples/tools/flex-cell/requirements/venv/bin/activate
-python /workspace/examples/data/flex-cell/input/publisher-flexcell-physical.py &
-java -cp "/workspace/examples/tools/TwinManagerFramework-0.0.2.jar:/workspace/examples/common/tools/maestro-4.1.0-jar-with-dependencies.jar" /workspace/examples/tools/flex-cell/FlexCellDTaaS.java
+source "${TOOLS_PATH}/flex-cell/requirements/venv/bin/activate"
+python "${EXAMPLES_PATH}/data/flex-cell/input/publisher-flexcell-physical.py" &
+java -cp "${TOOLS_PATH}/TwinManagerFramework-0.0.2.jar:${MAESTRO_JAR}" \
+  -Dexamples.path="${EXAMPLES_PATH}" \
+  "${TOOLS_PATH}/flex-cell/FlexCellDTaaS.java"
