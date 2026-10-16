@@ -1,4 +1,12 @@
 #!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+TOOLS_PATH="${EXAMPLES_PATH}/tools"
+MAESTRO_JAR="${EXAMPLES_PATH}/common/tools/maestro-2.3.0-jar-with-dependencies.jar"
+
 ## Runs the main.java file
 printf "Executing the Three-Tank Digital Twin case study... \n\n"
-java -cp "/workspace/tools/TwinManagerFramework-0.0.2.jar:/workspace/common/tools/maestro-2.3.0-jar-with-dependencies.jar" /workspace/tools/three-tank/TankMainDTaaS.java
+java -cp "${TOOLS_PATH}/TwinManagerFramework-0.0.2.jar:${MAESTRO_JAR}" \
+  -Dexamples.path="${EXAMPLES_PATH}" \
+  "${TOOLS_PATH}/three-tank/TankMainDTaaS.java"

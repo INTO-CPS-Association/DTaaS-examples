@@ -59,7 +59,7 @@ You can change these two files to customize the DT to your needs.
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/digital_twins/mass-spring-damper-monitor
+cd /workspace/examples/digital_twins/mass-spring-damper-monitor
 ```
 
 If required, change the execute permission of lifecycle scripts
@@ -93,7 +93,7 @@ lifecycle/execute
 ### Analyze phase
 
 Process the output of co-simulation to produce a plot at:
-`/workspace/data/mass-spring-damper-monitor/output/plots`.
+`/workspace/examples/data/mass-spring-damper-monitor/output/plots`.
 
 ```bash
 lifecycle/analyze
@@ -113,10 +113,10 @@ output of the monitor is fixed to `unknown` (`0`).
 #### Examine the results
 
 The results can be found in the
-_/workspace/data/mass-spring-damper-monitor/output directory_.
+_/workspace/examples/data/mass-spring-damper-monitor/output directory_.
 
 You can also view run logs in the
-_/workspace/digital_twins/mass-spring-damper-monitor_.
+_/workspace/examples/digital_twins/mass-spring-damper-monitor_.
 
 ### Terminate phase
 

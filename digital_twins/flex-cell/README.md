@@ -21,10 +21,10 @@ The `TwinManager` uses Maestro as a slave for co-simulation,
 so it generates the output of the co-simulation and can interact with
 the real robots at the same time (with the proper configuration and setup).
 The mainfile can be changed according to the application scope, i.e.,
-the `/workspace/tools/flex-cell/FlexCellDTaaS.java` can be
+the `/workspace/examples/tools/flex-cell/FlexCellDTaaS.java` can be
 manipulated to get a different result.
 
-The `/workspace/models/flex-cell/` folder contains
+The `/workspace/examples/models/flex-cell/` folder contains
 the `.fmu` files for the kinematic models of the robotic arms,
 the `.urdf` files for visualization (including the grippers), and
 the `.aasx` files for the schema representation with
@@ -130,7 +130,7 @@ The lifecycles that are covered include:
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/digital_twins/flex-cell
+cd /workspace/examples/digital_twins/flex-cell
 ```
 
 If required, change the execute permission of lifecycle scripts
@@ -167,7 +167,7 @@ lifecycle/create
 Configure different assets of DT with these credentials.
 The `functions/flex-cell/prepare.py` script is used for this purpose.
 The only thing needed to set up the connection is to update the file
-`/workspace/data/flex-cell/input/connections.conf` with
+`/workspace/examples/data/flex-cell/input/connections.conf` with
 the connection parameters for MQTT and RabbitMQ and then execute
 the `prepare` script.
 
@@ -177,9 +177,9 @@ lifecycle/prepare
 
 The following files are updated with the configuration information:
 
-1. `/workspace/digital_twins/flex-cell/kuka_actual.conf`
-1. `/workspace/digital_twins/flex-cell/ur5e_actual.conf`
-1. `/workspace/data/flex-cell/input/publisher-flexcell-physical.py`
+1. `/workspace/examples/digital_twins/flex-cell/kuka_actual.conf`
+1. `/workspace/examples/digital_twins/flex-cell/ur5e_actual.conf`
+1. `/workspace/examples/data/flex-cell/input/publisher-flexcell-physical.py`
 1. `modelDescription.xml` for the RabbitMQFMU require special credentials
    to connect to the RabbitMQ and the MQTT brokers.
 
@@ -187,7 +187,7 @@ The following files are updated with the configuration information:
 
 Execute the flex-cell digital twin using TwinManager. TwinManager in-turn runs
 the co-simulation using Maestro. Generates the co-simulation output.csv file
-at `/workspace/data/flex-cell/output`.
+at `/workspace/examples/data/flex-cell/output`.
 The execution needs to be stopped with `control + c` since
 the `TwinManager` runs the application in a non-stopping loop.
 
@@ -241,16 +241,16 @@ lifecycle/clean
 
 Executing this Digital Twin will generate a co-simulation output,
 but the results can also be monitored from updating
-the `/workspace/tools/flex-cell/FlexCellDTaaS.java` with
+the `/workspace/examples/tools/flex-cell/FlexCellDTaaS.java` with
 a specific set of `getAttributeValue` commands, such as shown in the code.
 That main file enables the online execution and comparison on Digital Twin
 and Physical Twin at the same time and at the same abstraction level.
 
 The output is generated to the
-`/workspace/data/flex-cell/output` folder.
+`/workspace/examples/data/flex-cell/output` folder.
 In case a specific experiments is to be saved, the **save**
 lifecycle script stores the co-simulation results into
-the `/workspace/data/flex-cell/output/saved_experiments` folder.
+the `/workspace/examples/data/flex-cell/output/saved_experiments` folder.
 
 In the default example, the co-simulation is run for 11 seconds in
 steps of 0.2 seconds.

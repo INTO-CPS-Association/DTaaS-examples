@@ -1,2 +1,2 @@
 #!/bin/bash
-lifecycle/clean
+"$(dirname "${BASH_SOURCE[0]}")/clean"

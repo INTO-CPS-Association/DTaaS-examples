@@ -242,13 +242,19 @@ async def runFMU(client       : ClientOPCUA,
 
 #%% ============ MAIN ============
 async def main():
+    # Usage: python client-opcua.py <path to config.json>
+    config_path = os.path.realpath(sys.argv[1])
     working_directory = os.path.dirname(os.path.realpath(__file__))
     os.chdir(working_directory)
     cwd = os.getcwd()
     assert cwd == working_directory, f"working directory expected {working_directory}, got: {cwd}"
     # ================ Read configuration 'config.json' file ===============   
-    with open('/workspace/digital_twins/opc-ua-waterplant/config.json', 'r') as f:
+    with open(config_path, 'r') as f:
         DATA = json.load(f)       
+    # Relative file paths in the configuration are relative to the configuration file
+    config_dir = os.path.dirname(config_path)
+    for key in ('config_ods', 'fmu_filename'):
+        DATA[key] = os.path.join(config_dir, DATA[key])
     # ================ Read configuration Excel .ods file ===============   
     inputs = pd.read_excel(DATA['config_ods'],sheet_name="inputs",index_col="name",na_filter=False)    
     send_to_plc = pd.read_excel(DATA['config_ods'],sheet_name="send_to_plc",index_col="name",na_filter=False)  

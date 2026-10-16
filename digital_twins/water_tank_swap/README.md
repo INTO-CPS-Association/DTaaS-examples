@@ -51,7 +51,7 @@ The following table shows the configuration files and their purpose.
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/digital_twins/water_tank_swap
+cd /workspace/examples/digital_twins/water_tank_swap
 ```
 
 If required, change the permission of files you need to execute, for example:
@@ -92,7 +92,7 @@ This swapping of FMU models demonstrates the dynamic reconfiguration
 of a DT.
 
 The end of execution phase generates the co-simulation output.csv file
-at `/workspace/data/water_tank_swap/output`.
+at `/workspace/examples/data/water_tank_swap/output`.
 
 ```bash
 lifecycle/execute
@@ -101,7 +101,7 @@ lifecycle/execute
 ### Analyze phase
 
 Process the output of co-simulation to produce a plot at:
-`/workspace/data/water_tank_FI/output/plots/`.
+`/workspace/examples/data/water_tank_FI/output/plots/`.
 
 ```bash
 lifecycle/analyze

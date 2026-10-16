@@ -68,7 +68,7 @@ where {script} is the name of the script, e.g. _create_, _execute_ etc.
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/digital_twins/incubator-NuRV-monitor-validation
+cd /workspace/examples/digital_twins/incubator-NuRV-monitor-validation
 ```
 
 If required, change the execute permission of lifecycle scripts
@@ -102,7 +102,7 @@ lifecycle/execute
 ### Analyze phase
 
 Process the output of co-simulation to produce a plot at:
-`/workspace/data/incubator-NuRV-monitor-validation/output/plots`.
+`/workspace/examples/data/incubator-NuRV-monitor-validation/output/plots`.
 
 ```bash
 lifecycle/analyze
@@ -125,11 +125,11 @@ signifying that the monitoring property is not violated.
 #### Examine the results
 
 The results can be found in the
-_/workspace/data/incubator-NuRV-monitor-validation/output_ directory
+_/workspace/examples/data/incubator-NuRV-monitor-validation/output_ directory
 where the logs are also included.
 
 Figures of the output results can be found in the
-_/workspace/data/incubator-NuRV-monitor-validation/output_
+_/workspace/examples/data/incubator-NuRV-monitor-validation/output_
 directory.
 
 ### Terminate phase

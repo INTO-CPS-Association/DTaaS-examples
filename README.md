@@ -16,49 +16,42 @@ You can also see a
 on the use of DTaaS for creating a digital shadow. This video is recorded using
 DTaaS v0.2.0.
 
-## Workspace Layout
-
-The examples are tested in the DTaaS workspace container
-(`intocps/workspace:main-d27a3c2`, based on Ubuntu 24.04).
-The workspace container expects two directories:
-
-| Directory in container | Purpose | Contents from this repository |
-|:---|:---|:---|
-| `/workspace` | private files of a user | `digital_twins`, `data`, `functions`, `models`, `tools` |
-| `/workspace/common` | files shared by all users | everything inside `common/` |
-
-The lifecycle scripts of the examples use these absolute paths.
-
 ## Copy Examples
 
 The first step is to copy all the example code into your
 user workspace within the DTaaS.
-Use the given shell script to copy the private assets
-into `/workspace` and the common assets into `/workspace/common`.
+Use the given shell script to copy all the examples
+into `/workspace/examples` directory.
 
 ```bash
 wget https://raw.githubusercontent.com/INTO-CPS-Association/DTaaS-examples/main/getExamples.sh
 bash getExamples.sh
 ```
 
+The lifecycle scripts of the examples that do not need external services
+locate the models, tools, data and common assets relative to
+their own location. These examples work from `/workspace/examples` and
+from any other directory that contains a copy of this repository.
+The location of the examples can also be set by exporting
+the `EXAMPLES_PATH` environment variable before running
+the lifecycle scripts.
+The examples that need external services use absolute paths
+and must be placed in `/workspace/examples`.
+
 ## Try the Examples Locally
 
-You can also run the examples in a standalone workspace container.
-Create the private and common directories, copy the examples into them
-and start the workspace container with both directories mounted.
+The examples are tested in the DTaaS workspace container
+(`intocps/workspace:main-d27a3c2`, based on Ubuntu 24.04).
+You can run the examples in a standalone workspace container.
 
 ```bash
-mkdir -p files/user1 files/common
-git clone https://github.com/INTO-CPS-Association/DTaaS-examples.git
-for asset in digital_twins data functions models tools; do
-  cp -r DTaaS-examples/${asset} files/user1/
-done
-cp -r DTaaS-examples/common/. files/common/
+mkdir -p files/user1
+git clone https://github.com/INTO-CPS-Association/DTaaS-examples.git \
+  files/user1/examples
 
 docker run -d --shm-size=512m -p 8080:8080 \
   -e MAIN_USER=user1 -e USER_PW=<password> \
   -v "$PWD/files/user1:/workspace" \
-  -v "$PWD/files/common:/workspace/common" \
   --name workspace intocps/workspace:main-d27a3c2
 ```
 

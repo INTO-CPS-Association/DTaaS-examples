@@ -3,15 +3,18 @@ import asyncio
 import json
 import os
 import random 
+import sys
 
 async def main():
+    # Usage: python opcua-mock-server.py <path to config.json>
+    config_path = os.path.realpath(sys.argv[1])
     working_directory = os.path.dirname(os.path.realpath(__file__))
     os.chdir(working_directory)
     cwd = os.getcwd()
     assert cwd == working_directory, f"working directory expected {working_directory}, got: {cwd}"
 
     # Read configuration file and store info in DATA dictionary
-    with open('/workspace/digital_twins/opc-ua-waterplant/config.json', 'r') as f:
+    with open(config_path, 'r') as f:
         DATA = json.load(f)  
 
     # Instance of Server class

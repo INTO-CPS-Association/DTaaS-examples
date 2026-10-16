@@ -4,7 +4,7 @@
 set -e
 
 if [ -z "$O5G_INSTALL_PATH" ]; then
-  O5G_INSTALL_PATH="/workspace"
+  O5G_INSTALL_PATH="/workspace/examples"
   printf "Installing to ${O5G_INSTALL_PATH}, set O5G_INSTALL_PATH to overwrite"
 fi
 

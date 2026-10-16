@@ -14,9 +14,11 @@ import services.DeviationChecker;
 
 public class TankMainDTaaS {
 	static TwinManager twinManager;
-	static String modelFolderPrefix = "/workspace/models/three-tank/";
-	static String dtFolderPrefix = "/workspace/digital_twins/three-tank/";
-	static String dataFolderPrefix = "/workspace/data/three-tank/";
+	// Root of the examples; relative to the three-tank digital twin directory by default
+	static String examplesPath = System.getProperty("examples.path", "../..");
+	static String modelFolderPrefix = examplesPath + "/models/three-tank/";
+	static String dtFolderPrefix = examplesPath + "/digital_twins/three-tank/";
+	static String dataFolderPrefix = examplesPath + "/data/three-tank/";
 
 	public static void main(String[] args) {
 		//LogManager.shutdown();

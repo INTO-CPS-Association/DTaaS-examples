@@ -148,7 +148,7 @@ The lifecycles that are covered include:
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/digital_twins/opc-ua-waterplant
+cd /workspace/examples/digital_twins/opc-ua-waterplant
 ```
 
 If required, change the execute permission of lifecycle scripts.

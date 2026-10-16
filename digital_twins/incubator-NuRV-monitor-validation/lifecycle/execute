@@ -1,10 +1,15 @@
 #!/bin/bash
-OUTDIR=/workspace/data/incubator-NuRV-monitor-validation/output
-mkdir -p $OUTDIR
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+: "${MAESTRO:=${EXAMPLES_PATH}/common/tools}"
+OUTPUT_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
 
-java -jar /workspace/common/tools/maestro-2.3.0-jar-with-dependencies.jar\
-  import -output $OUTDIR\
-  --dump-intermediate sg1 cosim.json time.json\
+mkdir -p "$OUTPUT_PATH"
+
+java -jar "${MAESTRO}/maestro-2.3.0-jar-with-dependencies.jar" \
+  import -output "$OUTPUT_PATH" \
+  --dump-intermediate sg1 cosim.json time.json \
   -i -vi FMI2 output-dir>debug.log 2>&1
 
-python plot.py
+python3 plot.py "$OUTPUT_PATH" "${EXAMPLES_PATH}/data/$(basename "$PWD")/figs"

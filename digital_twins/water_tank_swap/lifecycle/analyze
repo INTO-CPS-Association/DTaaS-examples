@@ -1,4 +1,8 @@
 #!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+OUTPUT_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
 
-mkdir -p /workspace/data/water_tank_swap/output/plots
-python lifecycle/plot.py
+mkdir -p "$OUTPUT_PATH/plots"
+python3 lifecycle/plot.py "$OUTPUT_PATH/plots"

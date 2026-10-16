@@ -54,7 +54,7 @@ You can change these two files to customize the DT to your needs.
 To run the example, change your present directory.
 
 ```bash
-cd /workspace/digital_twins/water_tank_FI
+cd /workspace/examples/digital_twins/water_tank_FI
 ```
 
 If required, change the execute permission of lifecycle scripts
@@ -79,7 +79,7 @@ lifecycle/create
 ### Execute
 
 Run the co-simulation. Generates the co-simulation output.csv file
-at `/workspace/data/water_tank_FI/output`.
+at `/workspace/examples/data/water_tank_FI/output`.
 
 ```bash
 lifecycle/execute
@@ -88,7 +88,7 @@ lifecycle/execute
 ### Analyze phase
 
 Process the output of co-simulation to produce a plot at:
-`/workspace/data/water_tank_FI/output/plots/`.
+`/workspace/examples/data/water_tank_FI/output/plots/`.
 
 ```bash
 lifecycle/analyze
@@ -97,10 +97,10 @@ lifecycle/analyze
 #### Examine the results
 
 The results can be found in the
-_/workspace/data/water_tank_FI/output directory_.
+_/workspace/examples/data/water_tank_FI/output directory_.
 
 You can also view run logs in the
-_/workspace/digital_twins/water_tank_FI_.
+_/workspace/examples/digital_twins/water_tank_FI_.
 
 ### Terminate phase
 

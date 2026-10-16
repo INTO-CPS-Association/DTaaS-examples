@@ -2,22 +2,23 @@
 
 set -e # Exit on command failure
 
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+: "${NURV:=${EXAMPLES_PATH}/common/tools/NuRV/NuRV}"
+: "${FMI2_HEADERS:=${EXAMPLES_PATH}/common/fmi2_headers}"
+MODELS_PATH="${EXAMPLES_PATH}/models"
 
-NURV="/workspace/common/tools/NuRV/NuRV"
-FMI2_HEADERS="/workspace/common/fmi2_headers"
-
-
-echo "Installing dependencies and create configuration \n\n"
+echo "Installing dependencies and create configuration"
 
 sudo apt-get update
 sudo apt-get install -y openjdk-17-jre
 sudo apt-get install -y python3-pandas python3-matplotlib
 sudo apt-get install -y zip make gcc
 
-
 "$NURV" -quiet -source lifecycle/synthesis_m2_fmu.cmd
 sed -i 's\Enumeration declaredType="eu.fbk.nurv.RV_value"\Integer\g' \
     m2/modelDescription.xml
 
 FMI2_HOME=$FMI2_HEADERS make -C m2 linux64
-mv m2.fmu /workspace/models/m2.fmu
+mv m2.fmu "${MODELS_PATH}/m2.fmu"

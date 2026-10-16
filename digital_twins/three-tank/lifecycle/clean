@@ -1,3 +1,8 @@
 #!/bin/bash
-printf "Cleaning /workspace/data/three-tank/output\n\n"
-rm /workspace/data/three-tank/output/*
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+OUTPUT_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
+
+printf "Cleaning %s\n\n" "$OUTPUT_PATH"
+rm -f "${OUTPUT_PATH}"/*

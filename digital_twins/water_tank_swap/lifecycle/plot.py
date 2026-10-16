@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import sys
+
+# directory in which the plots are saved
+plots_path = Path(sys.argv[1])
 
         # define data location\n",
 df0 = read_csv('stage1/outputs.csv')
@@ -30,5 +34,5 @@ plt.rcParams['figure.figsize'] = [12, 10]
 #plt.show()
 Path('post').mkdir(parents=True, exist_ok=True)
 #plt.savefig('plots/result.png')
-plt.savefig('/workspace/data/water_tank_swap/output/plots/result.png')
-plt.savefig('/workspace/data/water_tank_swap/output/plots/result.pdf')
+plt.savefig(plots_path / 'result.png')
+plt.savefig(plots_path / 'result.pdf')

@@ -70,7 +70,7 @@ where {script} is the name of the script, e.g. _create_, _execute_ etc.
 To run the example, first run the following command in a terminal:
 
 ```bash
-cd /workspace/digital_twins/incubator-NuRV-fmu-monitor-service/
+cd /workspace/examples/digital_twins/incubator-NuRV-fmu-monitor-service/
 ```
 
 Then, first execute the _create_ script followed by the _execute_ script using the following command:
@@ -88,8 +88,8 @@ An example output trace is provided below:
 
 ````log
 ....
-Using LIFECYCLE_PATH: /workspace/digital_twins/incubator-NuRV-fmu-monitor-service/lifecycle
-Using INCUBATOR_PATH: /workspace/digital_twins/incubator-NuRV-fmu-monitor-service/lifecycle/../../../common/digital_twins/incubator
+Using LIFECYCLE_PATH: /workspace/examples/digital_twins/incubator-NuRV-fmu-monitor-service/lifecycle
+Using INCUBATOR_PATH: /workspace/examples/digital_twins/incubator-NuRV-fmu-monitor-service/lifecycle/../../../common/digital_twins/incubator
 Starting NuRV FMU Monitor Service, see output at /tmp/nurv-fmu-service.log
 NuRVService.py PID: 13496
 Starting incubator

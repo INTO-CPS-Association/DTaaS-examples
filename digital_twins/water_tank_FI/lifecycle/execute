@@ -1,21 +1,25 @@
-#!/bin/sh
+#!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+: "${MAESTRO:=${EXAMPLES_PATH}/common/tools}"
+: "${FSP:=${EXAMPLES_PATH}/models}"
+export MAESTRO
+OUTPUT_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
 
-printf Configuring extension
-export MAESTRO="/workspace/common/tools"
-export FSP="/workspace/models"
-printf "\t Maestro path: $MAESTRO"
-printf "\t FMU search path: $FSP"
+printf "Configuring extension\n"
+printf "\t Maestro path: %s\n" "$MAESTRO"
+printf "\t FMU search path: %s\n" "$FSP"
 
-printf "Generating Mabl specifications - DT with FI"
+printf "Generating Mabl specifications - DT with FI\n"
 
-$MAESTRO/maestro import sg1 $MAESTRO/FaultInject.mabl ./multimodelFI.json \
-  ./simulation-config.json -fsp $FSP \
+"$MAESTRO/maestro" import sg1 "$MAESTRO/FaultInject.mabl" ./multimodelFI.json \
+  ./simulation-config.json -fsp "$FSP" \
   -output ./generateFI/
 
-printf "Simulating specification with FI"
+printf "Simulating specification with FI\n"
 
-$MAESTRO/maestro interpret \
+"$MAESTRO/maestro" interpret \
   ./generateFI/spec.mabl \
-  $MAESTRO/FaultInject.mabl \
-  -output /workspace/data/water_tank_FI/output/ 2>&1 | tee out.txt
-
+  "$MAESTRO/FaultInject.mabl" \
+  -output "$OUTPUT_PATH/" 2>&1 | tee out.txt

@@ -2,6 +2,9 @@
 
 set -e # Exit on command failure
 
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
 # install openmodelica
 sudo apt-get update
 sudo apt-get install -y ca-certificates curl gnupg

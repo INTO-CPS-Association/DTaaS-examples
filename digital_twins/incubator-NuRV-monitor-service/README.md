@@ -101,7 +101,7 @@ where {script} is the name of the script, e.g. _create_, _execute_ etc.
 To run the example, first run the following command in a terminal:
 
 ```bash
-cd /workspace/digital_twins/incubator-monitor-server/
+cd /workspace/examples/digital_twins/incubator-monitor-server/
 ```
 
 Then, first execute the _create_ script (this can take a few mins

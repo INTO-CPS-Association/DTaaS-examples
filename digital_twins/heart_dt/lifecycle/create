@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+
 VENV_DIR=".venv"
 echo 'Initializing project...'
 python3 -m venv $VENV_DIR

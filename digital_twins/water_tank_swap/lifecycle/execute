@@ -1,27 +1,32 @@
-#!/bin/sh
+#!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+: "${MAESTRO:=${EXAMPLES_PATH}/common/tools}"
+: "${FSP:=${EXAMPLES_PATH}/models}"
+export MAESTRO
+OUTPUT_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
 
-printf Configuring extension
-export MAESTRO="/workspace/common/tools"
-export FSP="/workspace/models"
-printf "\t Maestro path: $MAESTRO"
-printf "\t FMU search path: $FSP"
+printf "Configuring extension\n"
+printf "\t Maestro path: %s\n" "$MAESTRO"
+printf "\t FMU search path: %s\n" "$FSP"
 
-printf "Generating Mabl specifications"
+printf "Generating Mabl specifications\n"
 
 mkdir -p transition
 
-$MAESTRO/maestro import sg1 ./FaultInject.mabl mm1.json simulation-config.json \
-  -fsp $FSP -output stage1/
+"$MAESTRO/maestro" import sg1 ./FaultInject.mabl mm1.json simulation-config.json \
+  -fsp "$FSP" -output stage1/
 
-$MAESTRO/maestro import sg1 ./FaultInject.mabl mm2.json simulation-config.json \
-  -fsp $FSP -output transition/stage2/
+"$MAESTRO/maestro" import sg1 ./FaultInject.mabl mm2.json simulation-config.json \
+  -fsp "$FSP" -output transition/stage2/
 
 
-printf "Simulating specifications"
+printf "Simulating specifications\n"
 
-$MAESTRO/maestro  interpret stage1/spec.mabl ./FaultInject.mabl -tms 220 \
+"$MAESTRO/maestro" interpret stage1/spec.mabl ./FaultInject.mabl -tms 220 \
   -transition transition -output stage1 2>&1 | tee out.txt
 
-mkdir -p /workspace/data/water_tank_swap/output || exit 0
-cp -R stage1 /workspace/data/water_tank_swap/output
-cp -R transition/stage2 /workspace/data/water_tank_swap/output
+mkdir -p "$OUTPUT_PATH" || exit 0
+cp -R stage1 "$OUTPUT_PATH"
+cp -R transition/stage2 "$OUTPUT_PATH"

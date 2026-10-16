@@ -2,7 +2,11 @@
 
 set -e # Exit on command failure
 
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+
 printf "create fmu from modelica file\n"
 omc lifecycle/create-fmu.mos
 
-mkdir -p "/workspace/data/opc-ua-waterplant/output/"
+mkdir -p "${EXAMPLES_PATH}/data/$(basename "$PWD")/output/"

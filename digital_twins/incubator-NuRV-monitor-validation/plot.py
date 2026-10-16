@@ -1,12 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import sys
 
 print("Creating data plots")
 
-# Read the CSV file
-CSV_PATH = '/workspace/data/incubator-NuRV-monitor-validation/output/outputs.csv'
-FIGS_PATH = '/workspace/data/incubator-NuRV-monitor-validation/figs'
+# Usage: python3 plot.py <co-simulation output directory> <figures directory>
+CSV_PATH = os.path.join(sys.argv[1], 'outputs.csv')
+FIGS_PATH = sys.argv[2]
 
 # Create the directory if it doesn't exist
 if not os.path.exists(FIGS_PATH):
