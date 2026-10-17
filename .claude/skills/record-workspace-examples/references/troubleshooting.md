@@ -80,5 +80,19 @@ and why the scripts do what they do.
 Add the example to `EXAMPLES` in `scripts/plan.py` with its lifecycle
 steps, and add an evidence check to `CHECKS` in `scripts/driver.py` that
 runs right after the step producing the output, before any cleanup step
-removes it. Rehearse the steps without recording first, for example with
-`docker exec -u user dtaas-user-1 bash -c '<commands>'`.
+removes it. Rehearse the steps without recording first, with a terminal
+attached: `docker exec -t -u user dtaas-user-1 bash -c '<commands>'`.
+
+Rehearse with `-t`. The recording types into a real terminal, and some
+installers only ask questions when a terminal is attached; without one
+they silently take a default. Telegraf's `influxdata-archive-keyring`
+package, for example, asks about `/etc/apt/sources.list.d/influxdata.list`
+through `ucf`, which made `apt-get install telegraf` wait forever in the
+recording although every rehearsal without a terminal passed. The install
+scripts now use `DEBIAN_FRONTEND=noninteractive` for that package. Run
+each step with `timeout` during a rehearsal so that a waiting question
+shows up as exit code 124.
+
+The driver presses Ctrl+C when a step runs longer than `STEP_LIMIT`
+(45 minutes), but that does not get past an installer question; check
+`record.sh status` and the screenshot when a step takes unusually long.
