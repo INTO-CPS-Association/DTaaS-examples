@@ -31,6 +31,13 @@ bash getExamples.sh
 
 This copies all examples into the `/workspace/examples` directory.
 
+The script also works when run as root. The examples are then given to
+the user who ran `sudo`, or to the owner of the directory containing
+the examples, so that the workspace user can run them.
+Set `REPOSITORY` and `BRANCH` to download the examples from another
+repository or branch, for example
+`REPOSITORY=<user>/DTaaS-examples BRANCH=<branch> bash getExamples.sh`.
+
 The lifecycle scripts locate the models, tools, data and common assets
 relative to their own location. The examples work from
 `/workspace/examples` and from any other directory that contains
