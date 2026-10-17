@@ -2,8 +2,15 @@
 
 SESSION_NAME="o5g"
 
+# Stop telegraf before closing the tmux session. Closing the session sends
+# SIGHUP, which makes telegraf reload its configuration instead of exiting.
+pkill -f "o5g/input/telegraf.conf"
+for _ in $(seq 1 10); do
+  pgrep -f "o5g/input/telegraf.conf" > /dev/null || break
+  sleep 1
+done
+
 # Kill the session
 tmux kill-session -t $SESSION_NAME
-killall telegraf
 
 echo "Tmux session $SESSION_NAME terminated."

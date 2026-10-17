@@ -3,9 +3,13 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import sys
+
+# directory containing the co-simulation outputs.csv
+output_path = Path(sys.argv[1])
 
 # Plot results with FI
-df0 = read_csv('/workspace/examples/data/mass-spring-damper-monitor/output/outputs.csv')
+df0 = read_csv(output_path / 'outputs.csv')
 df0.fillna(0, inplace=True)
 fig, ax = plt.subplots(1, sharex=False, sharey=False)
 name1='{msd1}.msd1i.x1'

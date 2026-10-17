@@ -4,7 +4,7 @@
 set -e
 
 if [ -z "$O5G_INSTALL_PATH" ]; then
-  O5G_INSTALL_PATH="/workspace/examples"
+  O5G_INSTALL_PATH=$(realpath "$(dirname "${BASH_SOURCE[0]}")/../../..")
   printf "Installing to ${O5G_INSTALL_PATH}, set O5G_INSTALL_PATH to overwrite"
 fi
 
@@ -13,7 +13,22 @@ source "${O5G_INSTALL_PATH}/digital_twins/o5g/config"
 printf "Compiling fmu from OpenModelica model \n"
 
 cd "${O5G_INSTALL_PATH}/models"
-omc "${O5G_INSTALL_PATH}/models/makefmu.mos"
+# The OpenModelica library server can be slow; retry the library
+# download and the FMU build a few times
+for attempt in 1 2 3; do
+  omc "${O5G_INSTALL_PATH}/models/makefmu.mos"
+  # omc does not report failures through its exit code
+  if [ -f "${O5G_INSTALL_PATH}/models/PathOxygenEstimate.fmu" ]; then
+    break
+  fi
+  printf "Attempt %s to create the FMU failed\n" "$attempt"
+  # a timed out download can leave an incomplete library index behind
+  rm -f "${HOME}/.openmodelica/libraries/index.json"
+done
+if [ ! -f "${O5G_INSTALL_PATH}/models/PathOxygenEstimate.fmu" ]; then
+  printf "Failed to create PathOxygenEstimate.fmu, see the omc output above\n"
+  exit 1
+fi
 
 chmod +x "${O5G_INSTALL_PATH}/data/o5g/input/runTessla.sh"
 

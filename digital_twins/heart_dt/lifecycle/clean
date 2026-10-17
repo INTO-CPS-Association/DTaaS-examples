@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+
 echo "Cleaning up..."
 VENV_DIR=".venv"
 

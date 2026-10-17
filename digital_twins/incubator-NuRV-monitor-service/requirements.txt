@@ -1,1 +1,2 @@
-omniorb-py==4.2.4
+# omniORBpy is built from source by lifecycle/create because there are no
+# omniorb-py wheels for the Python version of the workspace (Python 3.12).

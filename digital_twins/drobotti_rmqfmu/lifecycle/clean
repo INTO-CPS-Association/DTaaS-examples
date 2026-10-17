@@ -1,15 +1,11 @@
 #!/bin/bash
-rm -rf target
-cd /workspace/examples/digital_twins/drobotti_rmqfmu || exit
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
 
 echo "Remove generated files and folders"
-rm -rf target
-rm out.txt
-rm -rf generate
-rm publisher-out.txt
-rm consume.txt
+rm -rf target generate
+rm -f out.txt publisher-out.txt consume.txt coe.log
 
 echo "Kill background processes (publisher and consume scripts)"
-kill $(ps -ef | grep "rmq-publisher.py" | awk '{print $2}')
-
-kill $(ps -ef | grep "consume.py" | awk '{print $2}')
+pkill -f "drobotti_rmqfmu/rmq-publisher.py"
+pkill -f "drobotti_rmqfmu/consume.py"

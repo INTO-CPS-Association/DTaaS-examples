@@ -1,12 +1,18 @@
 #!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+MODELS_PATH="${EXAMPLES_PATH}/models"
+
 printf "Preparing file with credentials...\n\n"
 ## From the DTaaS-examples
-source /workspace/examples/tools/flex-cell/requirements/venv/bin/activate
-unzip /workspace/examples/models/rmqfmu-vhost.fmu -d /tmp/rabbitmqfmu_flexcell
-python /workspace/examples/functions/flex-cell/prepare.py
-cp /workspace/examples/models/flex-cell/modelDescription.xml /tmp/rabbitmqfmu_flexcell/
-cp /workspace/examples/models/flex-cell/modelDescription.xml /tmp/rabbitmqfmu_flexcell/resources/
-rm /workspace/examples/models/flex-cell/rmqfmu_flexcell.fmu
-(cd /tmp/rabbitmqfmu_flexcell && zip -r rmqfmu_flexcell.fmu .)
-cp /tmp/rabbitmqfmu_flexcell/rmqfmu_flexcell.fmu /workspace/examples/models/flex-cell/
-rm -r /tmp/rabbitmqfmu_flexcell
+source "${EXAMPLES_PATH}/tools/flex-cell/requirements/venv/bin/activate"
+BUILD_PATH=$(mktemp -d)
+unzip "${MODELS_PATH}/rmqfmu-vhost.fmu" -d "$BUILD_PATH"
+python "${EXAMPLES_PATH}/functions/flex-cell/prepare.py"
+cp "${MODELS_PATH}/flex-cell/modelDescription.xml" "$BUILD_PATH/"
+cp "${MODELS_PATH}/flex-cell/modelDescription.xml" "$BUILD_PATH/resources/"
+rm -f "${MODELS_PATH}/flex-cell/rmqfmu_flexcell.fmu"
+(cd "$BUILD_PATH" && zip -r rmqfmu_flexcell.fmu .)
+cp "$BUILD_PATH/rmqfmu_flexcell.fmu" "${MODELS_PATH}/flex-cell/"
+rm -r "$BUILD_PATH"

@@ -1,10 +1,15 @@
 #!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+TOOLS_PATH="${EXAMPLES_PATH}/tools"
+OUTPUT_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
+
 printf "Installing dependencies...\n\n"
-apt-get update
-apt-get install -y default-jre ## Minimum java 1.8
-apt-get install -y maven
-mvn -f /workspace/examples/tools/TwinManager/pom.xml package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
-cp /workspace/examples/tools/TwinManager/target/TwinManagerFramework-0.0.2.jar /workspace/examples/tools/
-if [ ! -d /workspace/examples/data/three-tank/output ]; then
-    mkdir -p /workspace/examples/data/three-tank/output
-fi
+sudo apt-get update
+# Maestro 4.1.0 needs Java 21
+sudo apt-get install -y openjdk-21-jdk-headless
+sudo apt-get install -y maven
+mvn -f "${TOOLS_PATH}/TwinManager/pom.xml" package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
+cp "${TOOLS_PATH}/TwinManager/target/TwinManagerFramework-0.0.2.jar" "${TOOLS_PATH}/"
+mkdir -p "$OUTPUT_PATH"
