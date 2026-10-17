@@ -21,10 +21,15 @@ for attempt in 1 2 3 4 5; do
   sudo apt-get update || true
   apt-cache policy omc | grep -q "build.openmodelica.org" && break
   printf "Attempt %s to download the OpenModelica package index failed\n" "$attempt"
-  sleep 5
+  sleep 30
 done
 # the OpenModelica server can be slow; retry the downloads
-sudo apt-get install -y -o Acquire::Retries=5 --no-install-recommends omc
+for attempt in 1 2 3 4 5; do
+  sudo apt-get install -y -o Acquire::Retries=5 --no-install-recommends omc && break
+  printf "Attempt %s to download OpenModelica failed\n" "$attempt"
+  sleep 30
+done
+command -v omc > /dev/null
 
 # install python virtual environment with the project requirements
 sudo apt-get install -y build-essential python3-venv python3-dev
