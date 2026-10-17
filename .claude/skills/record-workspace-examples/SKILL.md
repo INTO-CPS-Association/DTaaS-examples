@@ -55,10 +55,17 @@ Run the commands from the repository root. `record.sh` is
    `record.sh fetch <directory>`. The directory then holds
    - `dtaas-workspace-examples.mp4` with chapters per example
      (`dtaas-workspace-examples.mkv` is the raw recording)
+   - `segments/`, one video per chapter: `NN-<example>.mp4` for each
+     example (in recording order), `-retry-<n>` for retries, short
+     segments for sign-in, getting the examples and the services, and
+     `index.txt` with the start and duration of each segment
    - `chapters.txt`, the chapter start times
    - `report.json`, evidence per example (output rows, plots, HTTP status,
      InfluxDB series) collected right after the step that produces it
    - `driver.log`, every typed step with its time
+   The driver cuts the segments at the end of the recording; run
+   `record.sh split` to cut an existing recording again (add `--copy` for a
+   fast cut that snaps to keyframes).
 6. Check `report.json` and skim the video at the chapter marks before
    reporting success. An example only counts as recorded successfully when
    its evidence is present.

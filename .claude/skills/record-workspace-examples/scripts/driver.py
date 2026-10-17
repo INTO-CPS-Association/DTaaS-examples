@@ -228,7 +228,7 @@ async def main():
     ffmpeg = subprocess.Popen(
         ["ffmpeg", "-loglevel", "error", "-y", "-f", "x11grab", "-framerate", "10",
          "-video_size", SIZE, "-i", DISPLAY, "-c:v", "libx264", "-preset", "veryfast",
-         "-crf", "26", "-pix_fmt", "yuv420p", "-g", "100", video],
+         "-crf", "26", "-pix_fmt", "yuv420p", "-g", "20", video],  # keyframe every 2 s
         env=env, stdin=subprocess.PIPE)
     global T0
     T0 = time.time()
@@ -354,6 +354,9 @@ async def main():
        f"-c copy -movflags +faststart {OUT}/dtaas-workspace-examples.mp4")
     with open(f"{OUT}/report.json", "w") as f:
         json.dump(report, f, indent=2)
+    log("splitting the recording into one video per example")
+    subprocess.run([sys.executable, "split.py", f"{OUT}/dtaas-workspace-examples.mp4"],
+                   cwd=os.path.dirname(os.path.abspath(__file__)))
     log("finished")
 
 

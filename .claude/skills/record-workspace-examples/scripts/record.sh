@@ -10,6 +10,8 @@
 #                               --with-install an existing installation is used
 #   status                      show the progress and save a screenshot
 #   stop                        stop the recording
+#   split [--copy]              cut the recording into one video per example
+#                               (done automatically at the end of a recording)
 #   fetch <directory>           copy the recording and its report to the host
 #   teardown                    remove the installation, the services and the
 #                               recording container
@@ -41,6 +43,7 @@ start_studio() {
   fi
   docker cp -q "${SCRIPTS}/driver.py" "${STUDIO}:/opt/rec/driver.py"
   docker cp -q "${SCRIPTS}/plan.py" "${STUDIO}:/opt/rec/plan.py"
+  docker cp -q "${SCRIPTS}/split.py" "${STUDIO}:/opt/rec/split.py"
   docker exec "${STUDIO}" chown -R dtaas:dtaas /opt/rec
   echo "Recording container ${STUDIO} is running"
 }
@@ -97,6 +100,12 @@ stop() {
   echo "Recording stopped"
 }
 
+split_recording() {
+  docker cp -q "${SCRIPTS}/split.py" "${STUDIO}:/opt/rec/split.py"
+  docker cp -q "${SCRIPTS}/plan.py" "${STUDIO}:/opt/rec/plan.py"
+  docker exec -u dtaas -w /opt/rec "${STUDIO}" python3 split.py "$@"
+}
+
 fetch() {
   local dest="${1:?Usage: $0 fetch <directory>}"
   mkdir -p "${dest}"
@@ -121,7 +130,8 @@ case "$1" in
   record) shift; record "$@" ;;
   status) status ;;
   stop) stop ;;
+  split) shift; split_recording "$@" ;;
   fetch) shift; fetch "$@" ;;
   teardown) teardown ;;
-  *) sed -n '2,20p' "$0"; exit 1 ;;
+  *) sed -n '2,22p' "$0"; exit 1 ;;
 esac
