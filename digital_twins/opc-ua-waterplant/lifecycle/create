@@ -7,6 +7,10 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 : "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
 
 printf "create fmu from modelica file\n"
+# OpenModelica builds the FMU with an unlimited "make -j" (one compiler per
+# source file at once), which exhausts the memory of a small machine; do not
+# start more jobs while the machine is busy
+export MAKEFLAGS="${MAKEFLAGS:--l $(nproc)}"
 omc lifecycle/create-fmu.mos
 
 mkdir -p "${EXAMPLES_PATH}/data/$(basename "$PWD")/output/"

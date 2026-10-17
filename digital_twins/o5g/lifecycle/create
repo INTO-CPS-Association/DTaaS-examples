@@ -12,6 +12,11 @@ source "${O5G_INSTALL_PATH}/digital_twins/o5g/config"
 
 printf "Compiling fmu from OpenModelica model \n"
 
+# OpenModelica builds the FMU with an unlimited "make -j" (one compiler per
+# source file at once), which exhausts the memory of a small machine; do not
+# start more jobs while the machine is busy
+export MAKEFLAGS="${MAKEFLAGS:--l $(nproc)}"
+
 cd "${O5G_INSTALL_PATH}/models"
 # The OpenModelica library server can be slow; retry the library
 # download and the FMU build a few times
