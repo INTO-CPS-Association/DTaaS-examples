@@ -85,7 +85,10 @@ Now, run the following scripts:
 
 ### Create
 
-- Installs Open Java Development Kit 21 in the workspace.
+- Installs Open Java Development Kit 21 and, from the Ubuntu repositories,
+  the Python packages used by the plotting script and the Python FMUs
+  (`python3-pandas`, `python3-matplotlib`, `python3-protobuf` and
+  `python3-zmq`).
 - Generates and compiles the monitor FMU from the NuRV specification.
 
 ```bash

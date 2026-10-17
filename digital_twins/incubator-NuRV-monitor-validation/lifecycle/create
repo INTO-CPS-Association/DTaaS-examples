@@ -13,7 +13,8 @@ echo "Installing dependencies and create configuration"
 
 sudo apt-get update
 sudo apt-get install -y openjdk-21-jre
-sudo apt-get install -y python3-pandas python3-matplotlib
+sudo apt-get install -y python3-pandas python3-matplotlib \
+  python3-protobuf python3-zmq
 sudo apt-get install -y zip make gcc
 
 "$NURV" -quiet -source lifecycle/synthesis_incubator_monitor_fmu.cmd

@@ -1,4 +1,5 @@
 #!/bin/bash
 printf "Stopping background processes \n\n"
-pkill -9 -f "flex-cell/input/publisher-flexcell-physical.py"
-pkill -f "flex-cell/FlexCellDTaaS.java"
+# pkill reports an error when the processes are already stopped
+pkill -9 -f "flex-cell/input/publisher-flexcell-physical.py" || true
+pkill -f "flex-cell/FlexCellDTaaS.java" || true

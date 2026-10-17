@@ -16,7 +16,13 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/openmodelica-keyring.gpg] \
   https://build.openmodelica.org/apt \
   ${VERSION_CODENAME} \
   stable" | sudo tee /etc/apt/sources.list.d/openmodelica.list
-sudo apt-get update
+# The OpenModelica server can be slow; retry until its package index is available
+for attempt in 1 2 3 4 5; do
+  sudo apt-get update || true
+  apt-cache policy omc | grep -q "build.openmodelica.org" && break
+  printf "Attempt %s to download the OpenModelica package index failed\n" "$attempt"
+  sleep 5
+done
 # the OpenModelica server can be slow; retry the downloads
 sudo apt-get install -y -o Acquire::Retries=5 --no-install-recommends omc
 
