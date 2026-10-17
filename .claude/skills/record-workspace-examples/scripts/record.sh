@@ -12,6 +12,9 @@
 #   stop                        stop the recording
 #   split [--copy]              cut the recording into one video per example
 #                               (done automatically at the end of a recording)
+#   postprocess [--web] [--gif] compress the videos for the web (web/) and make
+#                               one GIF per example (gif/); both by default
+#                               (done automatically at the end of a recording)
 #   fetch <directory>           copy the recording and its report to the host
 #   teardown                    remove the installation, the services and the
 #                               recording container
@@ -44,6 +47,7 @@ start_studio() {
   docker cp -q "${SCRIPTS}/driver.py" "${STUDIO}:/opt/rec/driver.py"
   docker cp -q "${SCRIPTS}/plan.py" "${STUDIO}:/opt/rec/plan.py"
   docker cp -q "${SCRIPTS}/split.py" "${STUDIO}:/opt/rec/split.py"
+  docker cp -q "${SCRIPTS}/postprocess.py" "${STUDIO}:/opt/rec/postprocess.py"
   docker exec "${STUDIO}" chown -R dtaas:dtaas /opt/rec
   echo "Recording container ${STUDIO} is running"
 }
@@ -106,6 +110,14 @@ split_recording() {
   docker exec -u dtaas -w /opt/rec "${STUDIO}" python3 split.py "$@"
 }
 
+postprocess() {
+  local f
+  for f in postprocess.py split.py plan.py; do
+    docker cp -q "${SCRIPTS}/${f}" "${STUDIO}:/opt/rec/${f}"
+  done
+  docker exec -u dtaas -w /opt/rec "${STUDIO}" python3 postprocess.py "$@"
+}
+
 fetch() {
   local dest="${1:?Usage: $0 fetch <directory>}"
   mkdir -p "${dest}"
@@ -131,7 +143,8 @@ case "$1" in
   status) status ;;
   stop) stop ;;
   split) shift; split_recording "$@" ;;
+  postprocess) shift; postprocess "$@" ;;
   fetch) shift; fetch "$@" ;;
   teardown) teardown ;;
-  *) sed -n '2,22p' "$0"; exit 1 ;;
+  *) sed -n '2,25p' "$0"; exit 1 ;;
 esac

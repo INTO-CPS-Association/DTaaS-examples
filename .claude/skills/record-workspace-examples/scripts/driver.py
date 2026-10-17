@@ -355,8 +355,10 @@ async def main():
     with open(f"{OUT}/report.json", "w") as f:
         json.dump(report, f, indent=2)
     log("splitting the recording into one video per example")
-    subprocess.run([sys.executable, "split.py", f"{OUT}/dtaas-workspace-examples.mp4"],
-                   cwd=os.path.dirname(os.path.abspath(__file__)))
+    here = os.path.dirname(os.path.abspath(__file__))
+    subprocess.run([sys.executable, "split.py", f"{OUT}/dtaas-workspace-examples.mp4"], cwd=here)
+    log("compressing the videos for the web and making GIFs")
+    subprocess.run([sys.executable, "postprocess.py", "--dir", OUT], cwd=here)
     log("finished")
 
 

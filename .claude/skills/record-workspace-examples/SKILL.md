@@ -59,13 +59,25 @@ Run the commands from the repository root. `record.sh` is
      example (in recording order), `-retry-<n>` for retries, short
      segments for sign-in, getting the examples and the services, and
      `index.txt` with the start and duration of each segment
+   - `web/`, the full recording and every segment compressed for the web
+     (H.264, 1280 pixels wide, starts playing before it is fully loaded);
+     use these on web pages and in documentation
+   - `gif/`, one GIF per example at the full screen size, so that the
+     terminal text stays readable, sped up to at most 45 seconds
    - `chapters.txt`, the chapter start times
    - `report.json`, evidence per example (output rows, plots, HTTP status,
      InfluxDB series) collected right after the step that produces it
    - `driver.log`, every typed step with its time
-   The driver cuts the segments at the end of the recording; run
-   `record.sh split` to cut an existing recording again (add `--copy` for a
-   fast cut that snaps to keyframes).
+
+   The driver cuts the segments and post-processes them at the end of the
+   recording. To redo these steps on an existing recording, for example
+   with other settings, run `record.sh split` (add `--copy` for a fast cut
+   that snaps to keyframes) and then `record.sh postprocess`. Pass `--web`
+   or `--gif` to make only one of the two; `--width`, `--crf`,
+   `--gif-width`, `--gif-fps`, `--gif-colors` and `--gif-seconds` change
+   the sizes. The
+   post-processing takes a few hours for a full recording; do not run it
+   while another recording is running, the Docker VM has too little memory.
 6. Check `report.json` and skim the video at the chapter marks before
    reporting success. An example only counts as recorded successfully when
    its evidence is present.
