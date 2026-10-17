@@ -53,7 +53,9 @@ else
     | sudo tee /etc/apt/keyrings/influxdata-archive.gpg > /dev/null
   echo 'deb [signed-by=/etc/apt/keyrings/influxdata-archive.gpg] https://repos.influxdata.com/debian stable main' \
     | sudo tee /etc/apt/sources.list.d/influxdata.list
-  sudo apt-get update && sudo apt-get install -y telegraf
+  # telegraf pulls in influxdata-archive-keyring, which asks about the
+  # influxdata.list written above when a terminal is attached; keep that file
+  sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y telegraf
   rm influxdata-archive.key
 fi
 
