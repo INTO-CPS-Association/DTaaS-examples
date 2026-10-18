@@ -24,8 +24,10 @@ TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "${TMP_DIR}"' EXIT
 
 mkdir "${TMP_DIR}/examples"
+# The demo videos are for the README on GitHub, not for the workspace
 wget -qO- "${ARCHIVE}" |
-  tar -xz --no-same-owner --strip-components=1 -C "${TMP_DIR}/examples"
+  tar -xz --no-same-owner --strip-components=1 --exclude='digital_twins/*/demo.mp4' \
+    -C "${TMP_DIR}/examples"
 mkdir -p "$(dirname "${EXAMPLES_PATH}")"
 mv "${TMP_DIR}/examples" "${EXAMPLES_PATH}"
 
