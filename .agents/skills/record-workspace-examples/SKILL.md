@@ -100,7 +100,10 @@ Run the commands from the repository root. `record.sh` is
    from the latest take that recorded it with evidence. The output holds
    the same `segments/`, `web/` and `gif/` as a take, with `index.txt`
    naming the take of each chapter and the merged `report.json`.
-8. Clean up with `record.sh teardown` once the user has the video.
+8. To update the demo videos of the examples in the repository, follow
+   `references/web-videos.md`; it also lists the sizes and durations of
+   the current videos.
+9. Clean up with `record.sh teardown` once the user has the video.
 
 ## What to expect in the recording
 

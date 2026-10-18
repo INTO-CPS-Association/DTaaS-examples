@@ -85,24 +85,28 @@ The examples vary in complexity. Try them in the following order.
 Some examples need external services, such as RabbitMQ, MQTT or InfluxDB,
 to be running and reachable from the workspace. Configure the access
 details of these services as described in the README of each example.
+The demo video of each example shows it running in a terminal of the
+workspace desktop of DTaaS v1.0 (`workspace-dex-localhost` installation).
+The videos are sped up: results play at normal speed, installations and
+long runs at 16x, and everything else at 4x.
 
-| # | Example | External services |
-|--:|:---|:---|
-| 1 | [Mass Spring Damper](./digital_twins/mass-spring-damper/README.md) | None |
-| 2 | [Water Tank Fault Injection](./digital_twins/water_tank_FI/README.md) | None |
-| 3 | [Water Tank Model Swap](./digital_twins/water_tank_swap/README.md) | None |
-| 4 | [Heart Digital Twin](./digital_twins/heart_dt/README.md) | None |
-| 5 | [Desktop Robotti and RabbitMQ](./digital_twins/drobotti_rmqfmu/README.md) | RabbitMQ |
-| 6 | [Water Treatment Plant and OPC-UA](./digital_twins/opc-ua-waterplant/README.md) | None (uses a mock OPC-UA server) |
-| 7 | [Water Treatment Plant and OPC-UA (complete version, without lifecycle scripts)](./digital_twins/opc-ua-waterplant-complete/README.md) | OPC-UA server (mock servers included) |
-| 8 | [Three Water Tanks with TwinManager Framework](./digital_twins/three-tank/README.md) | None |
-| 9 | [Flex Cell with Two Industrial Robots](./digital_twins/flex-cell/README.md) | RabbitMQ, MQTT |
-| 10 | [Incubator](./digital_twins/incubator/README.md) | RabbitMQ, InfluxDB |
-| 11 | [Firefighters in Emergency Environments](./digital_twins/o5g/README.md) | MQTT, InfluxDB |
-| 12 | [Mass Spring Damper with NuRV Runtime Monitor FMU](./digital_twins/mass-spring-damper-monitor/README.md) | None |
-| 13 | [Water Tank Fault Injection with NuRV Runtime Monitor FMU](./digital_twins/water_tank_FI_monitor/README.md) | None |
-| 14 | [Incubator Co-Simulation with NuRV Runtime Monitor FMU](./digital_twins/incubator-NuRV-monitor-validation/README.md) | None |
-| 15 | [Incubator with NuRV Runtime Monitor as Service](./digital_twins/incubator-NuRV-monitor-service/README.md) | RabbitMQ, InfluxDB |
-| 16 | [Incubator with NuRV Runtime Monitor FMU as Service](./digital_twins/incubator-NuRV-fmu-monitor-service/README.md) | RabbitMQ, InfluxDB |
-| 17 | [Incubator with TeSSLa Runtime Monitor as Service](./digital_twins/incubator-TeSSLa-monitor-service/README.md) | RabbitMQ, InfluxDB |
-| 18 | [Incubator with TeSSLa Runtime Monitor for Active Control](./digital_twins/incubator-TeSSLa-active-control/README.md) | RabbitMQ, InfluxDB |
+| # | Example | External services | Video |
+|--:|:---|:---|:---|
+| 1 | [Mass Spring Damper](./digital_twins/mass-spring-damper/README.md) | None | [demo](./digital_twins/mass-spring-damper/demo.mp4) |
+| 2 | [Water Tank Fault Injection](./digital_twins/water_tank_FI/README.md) | None | [demo](./digital_twins/water_tank_FI/demo.mp4) |
+| 3 | [Water Tank Model Swap](./digital_twins/water_tank_swap/README.md) | None | [demo](./digital_twins/water_tank_swap/demo.mp4) |
+| 4 | [Heart Digital Twin](./digital_twins/heart_dt/README.md) | None | [demo](./digital_twins/heart_dt/demo.mp4) |
+| 5 | [Desktop Robotti and RabbitMQ](./digital_twins/drobotti_rmqfmu/README.md) | RabbitMQ | [demo](./digital_twins/drobotti_rmqfmu/demo.mp4) |
+| 6 | [Water Treatment Plant and OPC-UA](./digital_twins/opc-ua-waterplant/README.md) | None (uses a mock OPC-UA server) | [demo](./digital_twins/opc-ua-waterplant/demo.mp4) |
+| 7 | [Water Treatment Plant and OPC-UA (complete version, without lifecycle scripts)](./digital_twins/opc-ua-waterplant-complete/README.md) | OPC-UA server (mock servers included) | – |
+| 8 | [Three Water Tanks with TwinManager Framework](./digital_twins/three-tank/README.md) | None | [demo](./digital_twins/three-tank/demo.mp4) |
+| 9 | [Flex Cell with Two Industrial Robots](./digital_twins/flex-cell/README.md) | RabbitMQ, MQTT | [demo](./digital_twins/flex-cell/demo.mp4) |
+| 10 | [Incubator](./digital_twins/incubator/README.md) | RabbitMQ, InfluxDB | [demo](./digital_twins/incubator/demo.mp4) |
+| 11 | [Firefighters in Emergency Environments](./digital_twins/o5g/README.md) | MQTT, InfluxDB | [demo](./digital_twins/o5g/demo.mp4) |
+| 12 | [Mass Spring Damper with NuRV Runtime Monitor FMU](./digital_twins/mass-spring-damper-monitor/README.md) | None | [demo](./digital_twins/mass-spring-damper-monitor/demo.mp4) |
+| 13 | [Water Tank Fault Injection with NuRV Runtime Monitor FMU](./digital_twins/water_tank_FI_monitor/README.md) | None | [demo](./digital_twins/water_tank_FI_monitor/demo.mp4) |
+| 14 | [Incubator Co-Simulation with NuRV Runtime Monitor FMU](./digital_twins/incubator-NuRV-monitor-validation/README.md) | None | [demo](./digital_twins/incubator-NuRV-monitor-validation/demo.mp4) |
+| 15 | [Incubator with NuRV Runtime Monitor as Service](./digital_twins/incubator-NuRV-monitor-service/README.md) | RabbitMQ, InfluxDB | [demo](./digital_twins/incubator-NuRV-monitor-service/demo.mp4) |
+| 16 | [Incubator with NuRV Runtime Monitor FMU as Service](./digital_twins/incubator-NuRV-fmu-monitor-service/README.md) | RabbitMQ, InfluxDB | [demo](./digital_twins/incubator-NuRV-fmu-monitor-service/demo.mp4) |
+| 17 | [Incubator with TeSSLa Runtime Monitor as Service](./digital_twins/incubator-TeSSLa-monitor-service/README.md) | RabbitMQ, InfluxDB | [demo](./digital_twins/incubator-TeSSLa-monitor-service/demo.mp4) |
+| 18 | [Incubator with TeSSLa Runtime Monitor for Active Control](./digital_twins/incubator-TeSSLa-active-control/README.md) | RabbitMQ, InfluxDB | [demo](./digital_twins/incubator-TeSSLa-active-control/demo.mp4) |
