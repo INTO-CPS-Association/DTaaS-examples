@@ -72,15 +72,16 @@ and why the scripts do what they do.
 - The recording and the segments use a keyframe every 20 frames so that
   the cuts are accurate. That interval more than doubles the size, so the
   web versions use the default interval.
-- GIFs of scrolling terminal output are large because every frame
-  changes. Frames without any change are dropped, which helps for examples
-  that wait. Scaling a GIF down makes the terminal text unreadable, and so
-  does making it from a segment instead of the recording (a second lossy
-  encoding); the GIFs keep the screen size and come from the recording.
-  The GIFs use 32 colours, plenty for terminal text; a busy three-minute
-  example still makes about 30 MB. Lower `--gif-colors` (16 is still sharp
-  for text), `--gif-fps` or `--gif-seconds` for smaller files, or embed the
-  web MP4 instead.
+- The speed of each part of a web video comes from `driver.log`: a step
+  lasts until the next one starts. Steps that show results are matched by
+  their command (`firefox`, `head`, `tmux attach`, see `RESULT` in
+  `scripts/speed.py`); add a pattern there when an example shows its
+  results another way. The parts are sped up losslessly and encoded once.
+- Scaling makes terminal text unreadable, so the web videos and GIFs keep
+  the screen size. GIFs of scrolling output are still large because every
+  frame changes; frames without change are dropped, and 32 colours are
+  plenty for terminal text. Lower `--gif-colors` (16 is still sharp for
+  text) or `--gif-fps` for smaller files, or embed the web videos instead.
 
 ## Services
 
@@ -94,12 +95,12 @@ and why the scripts do what they do.
   organisation, bucket and token.
 - Each service example's configuration is edited in the recording with
   `sed` to use the service names and the incubator credentials; see the
-  steps in `scripts/plan.py`.
+  steps in `scripts/examples.py`.
 
 ## Adding or changing an example
 
-Add the example to `EXAMPLES` in `scripts/plan.py` with its lifecycle
-steps, and add an evidence check to `CHECKS` in `scripts/driver.py` that
+Add the example to `EXAMPLES` in `scripts/examples.py` with its lifecycle
+steps, and add an evidence check to `CHECKS` in `scripts/checks.py` that
 runs right after the step producing the output, before any cleanup step
 removes it. Rehearse the steps without recording first, with a terminal
 attached: `docker exec -t -u user dtaas-user-1 bash -c '<commands>'`.

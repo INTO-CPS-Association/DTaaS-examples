@@ -1,54 +1,67 @@
-"""Session plan for the recorded DTaaS workspace-dex-localhost demonstration.
+"""The examples of the recording, in the order of the README, with their steps.
 
-Each example is a list of steps typed into the terminal of the VNC desktop.
-Step forms:
-  "command"                         type the command, wait until it finishes
-  ("command", {"interrupt": secs})  type, wait secs, press Ctrl+C, wait until it finishes
-  ("command", {"tmux_view": secs})  type (attaches tmux), wait secs, detach with Ctrl+B d
-  ("command", {"background": secs}) type a command that returns quickly, then wait secs
+Each example is (directory under digital_twins, title, steps). The steps are
+typed into the terminal of the VNC desktop, in the directory of the example:
+  "command"                         type the command, wait until it is done
+  ("command", {"interrupt": secs})  type, wait secs, press Ctrl+C, wait until done
+  ("command", {"tmux_view": secs})  type (attaches tmux), wait secs, detach
 """
 
-EX = "/workspace/examples"
-DT = EX + "/digital_twins"
-
+from config import DT_DIR, EXAMPLES_DIR
 
 
 def use_services(conf):
-    """Point an incubator configuration at the RabbitMQ and InfluxDB services.
-
-    The examples built on the incubator copy its configuration; each edits its
-    own copy, so that it also works when the incubator example is not
-    recorded in the same session.
-    """
+    """Point an incubator configuration at the RabbitMQ and InfluxDB services."""
     return ("sed -i -e 's/ip = \"localhost\"/ip = \"rabbitmq-server\"/' "
             f"-e 's#url = http://localhost:8086#url = http://influxdb-server:8086#' {conf}")
 
 
-def show(path_or_url, secs=20):
-    """Show a plot or web page in the desktop's Firefox for a while."""
-    return (f"firefox --profile ~/.mozilla/firefox/kasm --new-window {path_or_url} >/dev/null 2>&1 & "
-            f"sleep {secs}; pkill -x firefox", {})
+def incubator_config():
+    """Steps that copy the incubator configuration and point it at the services.
 
+    Each example built on the incubator edits its own copy, so that it also
+    works when the incubator example is not recorded in the same session.
+    """
+    return ["cp ../incubator/simulation.conf simulation.conf", use_services("simulation.conf")]
+
+
+def show(path_or_url, secs=20):
+    """Show a plot or web page in the Firefox of the desktop for a while."""
+    return (f"firefox --profile ~/.mozilla/firefox/kasm --new-window {path_or_url} "
+            f">/dev/null 2>&1 & sleep {secs}; pkill -x firefox", {})
+
+
+def output(name, file):
+    """Path of an output file of an example."""
+    return f"{EXAMPLES_DIR}/data/{name}/output/{file}"
+
+
+def show_plot(name, file):
+    """Show a plot of an example."""
+    return show(output(name, f"plots/{file}"))
+
+
+FLEX_CELL_CONNECTIONS = f"{EXAMPLES_DIR}/data/flex-cell/input/connections.conf"
 
 EXAMPLES = [
     ("mass-spring-damper", "Mass Spring Damper", [
         "lifecycle/create",
         "lifecycle/execute",
-        f"head -5 {EX}/data/mass-spring-damper/output/outputs.csv",
+        "head -5 " + output("mass-spring-damper", "outputs.csv"),
         "lifecycle/terminate",
     ]),
     ("water_tank_FI", "Water Tank Fault Injection", [
         "lifecycle/create",
         "lifecycle/execute",
         "lifecycle/analyze",
-        show(f"{EX}/data/water_tank_FI/output/plots/resultFI.png"),
+        show_plot("water_tank_FI", "resultFI.png"),
         "lifecycle/terminate",
     ]),
     ("water_tank_swap", "Water Tank Model Swap", [
         "lifecycle/create",
         "lifecycle/execute",
         "lifecycle/analyze",
-        show(f"{EX}/data/water_tank_swap/output/plots/result.png"),
+        show_plot("water_tank_swap", "result.png"),
         "lifecycle/terminate",
     ]),
     ("heart_dt", "Heart Digital Twin", [
@@ -78,20 +91,21 @@ EXAMPLES = [
     ("three-tank", "Three Water Tanks with TwinManager Framework", [
         "lifecycle/create",
         "lifecycle/execute",
-        f"head -5 {EX}/data/three-tank/output/outputs.csv",
+        "head -5 " + output("three-tank", "outputs.csv"),
         "lifecycle/clean",
     ]),
     ("flex-cell", "Flex Cell with Two Industrial Robots", [
         "# Point the example at the RabbitMQ service, which also provides MQTT",
-        "sed -i -e 's/\"www.google.com\"/\"rabbitmq-server\"/' -e 's/= 1884/= 1883/' -e 's/= 5667/= 5672/' "
+        "sed -i -e 's/\"www.google.com\"/\"rabbitmq-server\"/' "
+        "-e 's/= 1884/= 1883/' -e 's/= 5667/= 5672/' "
         "-e 's/\"username[12]\"/\"incubator\"/' -e 's/\"password[12]\"/\"incubator\"/' "
-        "-e 's/vhost = \"vhost\"/vhost = \"\\/\"/' " + EX + "/data/flex-cell/input/connections.conf",
-        f"cat {EX}/data/flex-cell/input/connections.conf",
+        "-e 's/vhost = \"vhost\"/vhost = \"\\/\"/' " + FLEX_CELL_CONNECTIONS,
+        "cat " + FLEX_CELL_CONNECTIONS,
         "lifecycle/create",
         "lifecycle/prepare",
         ("lifecycle/execute", {"interrupt": 150}),
         "lifecycle/analyze",
-        show(f"{EX}/data/flex-cell/output/experiment_plot.png"),
+        show(output("flex-cell", "experiment_plot.png")),
         "lifecycle/save",
         "lifecycle/clean",
         "lifecycle/terminate",
@@ -128,57 +142,59 @@ EXAMPLES = [
         "lifecycle/create",
         "lifecycle/execute",
         "lifecycle/analyze",
-        show(f"{EX}/data/mass-spring-damper-monitor/output/plots/resultWT_mon.png"),
+        show_plot("mass-spring-damper-monitor", "resultWT_mon.png"),
         "lifecycle/terminate",
     ]),
     ("water_tank_FI_monitor", "Water Tank Fault Injection with NuRV Runtime Monitor FMU", [
         "lifecycle/create",
         "lifecycle/execute",
         "lifecycle/analyze",
-        show(f"{EX}/data/water_tank_FI_monitor/output/plots/resultFI_mon.png"),
+        show_plot("water_tank_FI_monitor", "resultFI_mon.png"),
         "lifecycle/terminate",
     ]),
     ("incubator-NuRV-monitor-validation", "Incubator Co-Simulation with NuRV Runtime Monitor FMU", [
         "lifecycle/create",
         "lifecycle/execute",
         "lifecycle/analyze",
-        show(f"{EX}/data/incubator-NuRV-monitor-validation/output/plots/resultIV.png"),
+        show_plot("incubator-NuRV-monitor-validation", "resultIV.png"),
         "lifecycle/terminate",
     ]),
     ("incubator-NuRV-monitor-service", "Incubator with NuRV Runtime Monitor as Service", [
-        "cp ../incubator/simulation.conf simulation.conf",
-        use_services("simulation.conf"),
+        *incubator_config(),
         "lifecycle/create",
         "lifecycle/execute 2>&1 | tee /tmp/nurv-service.log",
         "lifecycle/clean",
     ]),
     ("incubator-NuRV-fmu-monitor-service", "Incubator with NuRV Runtime Monitor FMU as Service", [
-        "cp ../incubator/simulation.conf simulation.conf",
-        use_services("simulation.conf"),
+        *incubator_config(),
         "lifecycle/create",
         "lifecycle/execute",
     ]),
     ("incubator-TeSSLa-monitor-service", "Incubator with TeSSLa Runtime Monitor as Service", [
-        "cp ../incubator/simulation.conf simulation.conf",
-        use_services("simulation.conf"),
+        *incubator_config(),
         "lifecycle/create",
         "lifecycle/execute",
         "lifecycle/clean",
     ]),
-    ("incubator-TeSSLa-active-control", "Incubator with TeSSLa Runtime Monitor for Active Control", [
-        "cp ../incubator/simulation.conf simulation.conf",
-        use_services("simulation.conf"),
-        "lifecycle/create",
-        "lifecycle/execute",
-        "lifecycle/clean",
-    ]),
+    ("incubator-TeSSLa-active-control",
+     "Incubator with TeSSLa Runtime Monitor for Active Control",
+     [
+         *incubator_config(),
+         "lifecycle/create",
+         "lifecycle/execute",
+         "lifecycle/clean",
+     ]),
 ]
 
 
 def steps(example):
     """Normalised (command, options) steps of one example, starting with the cd."""
     name, title, items = example
-    out = [(f"cd {DT}/{name} && clear", {}), (f"# ===== {title} =====", {})]
+    out = [(f"cd {DT_DIR}/{name} && clear", {}), (f"# ===== {title} =====", {})]
     for item in items:
         out.append(item if isinstance(item, tuple) else (item, {}))
     return out
+
+
+# example directory by title, for naming the chapters of the video
+TITLES = {title: name for name, title, _ in EXAMPLES}

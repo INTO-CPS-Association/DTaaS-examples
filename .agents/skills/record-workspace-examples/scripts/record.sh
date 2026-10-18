@@ -8,15 +8,15 @@
 #   record [--with-install] [example ...]
 #                               start the recording in the background; without
 #                               --with-install an existing installation is used
-#   reset                       stop the services and remove the examples from
-#                               the workspace, to record again on the same
-#                               installation
+#   reset                       stop the services, close the terminals and
+#                               remove the examples from the workspace, to
+#                               record again on the same installation
 #   status                      show the progress and save a screenshot
 #   stop                        stop the recording
 #   split [--copy]              cut the recording into one video per example
 #                               (done automatically at the end of a recording)
-#   postprocess [--web] [--gif] compress the videos for the web (web/) and make
-#                               one GIF per example (gif/); both by default
+#   postprocess [--web] [--gif] speed up the videos for the web (web/) and make
+#                               one GIF per example from them (gif/); both by default
 #                               (done automatically at the end of a recording)
 #   fetch <directory>           copy the recording and its report to the host
 #   teardown                    remove the installation, the services and the
@@ -37,6 +37,16 @@ RELEASE="${DTAAS_RELEASE:-https://github.com/INTO-CPS-Association/DTaaS/releases
 
 as_admin() { docker exec -u dtaas -w "${BASE}" "${STUDIO}" bash -c "$1"; }
 
+# The Python modules of the recording, without their tests
+copy_scripts() {
+  local f
+  for f in "${SCRIPTS}"/*.py; do
+    case "$(basename "${f}")" in test_*) continue ;; esac
+    docker cp -q "${f}" "${STUDIO}:/opt/rec/"
+  done
+  docker exec "${STUDIO}" chown -R dtaas:dtaas /opt/rec
+}
+
 start_studio() {
   docker build -q -t "${IMAGE}" "${SCRIPTS}/studio" > /dev/null
   if ! docker ps --format '{{.Names}}' | grep -qx "${STUDIO}"; then
@@ -47,11 +57,7 @@ start_studio() {
       -v /var/run/docker.sock:/var/run/docker.sock \
       -v "${BASE}:${BASE}" "${IMAGE}" > /dev/null
   fi
-  docker cp -q "${SCRIPTS}/driver.py" "${STUDIO}:/opt/rec/driver.py"
-  docker cp -q "${SCRIPTS}/plan.py" "${STUDIO}:/opt/rec/plan.py"
-  docker cp -q "${SCRIPTS}/split.py" "${STUDIO}:/opt/rec/split.py"
-  docker cp -q "${SCRIPTS}/postprocess.py" "${STUDIO}:/opt/rec/postprocess.py"
-  docker exec "${STUDIO}" chown -R dtaas:dtaas /opt/rec
+  copy_scripts
   echo "Recording container ${STUDIO} is running"
 }
 
@@ -76,7 +82,7 @@ record() {
     echo "No DTaaS installation is running; run '$0 install' or use --with-install"
     exit 1
   fi
-  if docker exec "${STUDIO}" pgrep -f "python driver.py" > /dev/null; then
+  if docker exec "${STUDIO}" pgrep -f "[p]ython driver.py" > /dev/null; then
     echo "A recording is already running"
     exit 1
   fi
@@ -99,7 +105,7 @@ reset() {
     (cd '${incubator}/incubator/communication/installation' && docker compose down -v)
     (cd '${incubator}/digital_twin/data_access/influxdbserver' && docker compose down -v && sudo rm -rf influxdb)" || true
   docker exec -u user dtaas-user-1 bash -c \
-    'tmux kill-server 2> /dev/null; pkill -x telegraf; rm -rf /workspace/examples ~/getExamples.sh*' || true
+    'tmux kill-server 2> /dev/null; pkill -x telegraf; pkill -x xfce4-terminal; rm -rf /workspace/examples ~/getExamples.sh*' || true
   echo "Services stopped and examples removed from the workspace"
 }
 
@@ -121,16 +127,12 @@ stop() {
 }
 
 split_recording() {
-  docker cp -q "${SCRIPTS}/split.py" "${STUDIO}:/opt/rec/split.py"
-  docker cp -q "${SCRIPTS}/plan.py" "${STUDIO}:/opt/rec/plan.py"
+  copy_scripts
   docker exec -u dtaas -w /opt/rec "${STUDIO}" python3 split.py "$@"
 }
 
 postprocess() {
-  local f
-  for f in postprocess.py split.py plan.py; do
-    docker cp -q "${SCRIPTS}/${f}" "${STUDIO}:/opt/rec/${f}"
-  done
+  copy_scripts
   docker exec -u dtaas -w /opt/rec "${STUDIO}" python3 postprocess.py "$@"
 }
 
