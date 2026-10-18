@@ -40,6 +40,22 @@ class ExamplesTest(unittest.TestCase):
         self.assertEqual(steps[1], (f"# ===== {title} =====", {}))
         self.assertTrue(all(isinstance(options, dict) for _, options in steps))
 
+    def test_step_options_are_known(self):
+        """Every step option is one the terminal handles, with valid desktop actions."""
+        for example in examples.EXAMPLES:
+            for _, options in examples.steps(example):
+                self.assertLessEqual(set(options), {"interrupt", "tmux_view", "desktop"})
+                for action in options.get("desktop", []):
+                    valid = isinstance(action, (int, float, str)) or (
+                        len(action) == 3 and action[0] == "click")
+                    self.assertTrue(valid, f"{example[0]}: {action}")
+
+    def test_heart_dt_clicks_the_blue_buttons(self):
+        """The heart digital twin presses Enter on Apply Settings and Reset Position."""
+        actions = examples.HEART_DT_PAGE[1]["desktop"]
+        self.assertEqual(actions.count("Enter"), 2)
+        self.assertEqual(actions[actions.index("Enter") - 5:actions.index("Enter")], ["Tab"] * 5)
+
     def test_incubator_examples_configure_their_own_copy(self):
         """A copied incubator configuration points at the services."""
         for name, _, items in examples.EXAMPLES:

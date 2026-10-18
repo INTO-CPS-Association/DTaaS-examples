@@ -14,7 +14,10 @@ videos that this skill makes; GIFs are not committed.
    step comes from `driver.log` (`speed.py`):
    - steps that show results (Firefox with a plot or web page, `head` of
      an output file, the o5g dashboard) play at normal speed for up to
-     60 seconds, the rest of such a step at 16x
+     60 seconds, the rest of such a step at 16x; the heart digital twin
+     is shown zoomed out, after its Apply Settings and Reset Position
+     buttons are pressed, so that the beating heart and the ECG are both
+     visible
    - steps longer than 20 seconds (installations, builds, runs whose
      output scrolls past) play at 16x
    - everything else plays at 4x
@@ -33,7 +36,7 @@ the assembled set to `digital_twins/<example>/demo.mp4`.
 ## The current videos
 
 Recorded on 17 and 18 October 2026 with DTaaS v1.0
-(`workspace-dex-localhost`) and the examples of this repository, in four
+(`workspace-dex-localhost`) and the examples of this repository, in five
 takes. Raw is the cut of the recording at normal speed; web is the demo
 video.
 
@@ -46,7 +49,7 @@ video.
 | 05 | mass-spring-damper | 8.8 | 1:36 | 1.5 | 0:20 | 3.6 | 0:19 |
 | 06 | water_tank_FI | 30.5 | 4:03 | 6.4 | 0:54 | 16.2 | 0:52 |
 | 07 | water_tank_swap | 18.0 | 2:25 | 3.8 | 0:48 | 9.7 | 0:47 |
-| 08 | heart_dt | 21.1 | 3:43 | 3.2 | 1:13 | 8.2 | 1:13 |
+| 08 | heart_dt | 16.7 | 3:18 | 3.5 | 1:15 | 8.0 | 1:15 |
 | 09 | drobotti_rmqfmu | 15.7 | 2:39 | 2.9 | 0:30 | 7.3 | 0:29 |
 | 10 | opc-ua-waterplant | 66.9 | 9:52 | 8.5 | 0:42 | 21.3 | 0:41 |
 | 11 | three-tank | 63.6 | 5:04 | 11.2 | 0:34 | 27.5 | 0:32 |
@@ -60,11 +63,11 @@ video.
 | 19 | incubator-NuRV-fmu-monitor-service | 27.0 | 6:14 | 2.3 | 0:31 | 6.9 | 0:31 |
 | 20 | incubator-TeSSLa-monitor-service | 37.4 | 7:24 | 3.9 | 0:37 | 11.3 | 0:36 |
 | 21 | incubator-TeSSLa-active-control | 33.3 | 6:51 | 3.7 | 0:35 | 9.8 | 0:33 |
-| | **Total** | **540.7** | **1:29:32** | **82.3** | **14:18** | **211.8** | **13:11** |
+| | **Total** | **536.4** | **1:29:08** | **82.6** | **14:20** | **211.6** | **13:13** |
 
 The web videos of the 17 examples (rows 05 to 21) are the demo videos,
-80.8 MB in all. The setup chapters (rows 01 to 04) are part of the full
-web video only. The full web video lasts 14:18 and has 82.3 MB.
+81.1 MB in all. The setup chapters (rows 01 to 04) are part of the full
+web video only. The full web video lasts 14:20 and has 82.6 MB.
 
 `opc-ua-waterplant-complete` has no lifecycle scripts and is not
 recorded.

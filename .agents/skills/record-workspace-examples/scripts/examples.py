@@ -5,6 +5,10 @@ typed into the terminal of the VNC desktop, in the directory of the example:
   "command"                         type the command, wait until it is done
   ("command", {"interrupt": secs})  type, wait secs, press Ctrl+C, wait until done
   ("command", {"tmux_view": secs})  type (attaches tmux), wait secs, detach
+  ("command", {"desktop": actions}) type, then act on the desktop while the
+                                    command runs: a number waits that many
+                                    seconds, a string presses a key, and
+                                    ("click", x, y) clicks the screen
 """
 
 from config import DT_DIR, EXAMPLES_DIR
@@ -34,6 +38,18 @@ def show(path_or_url, secs=20):
 def output(name, file):
     """Path of an output file of an example."""
     return f"{EXAMPLES_DIR}/data/{name}/output/{file}"
+
+
+# Heart digital twin in Firefox in kiosk mode, so that the page fills the
+# screen. A click on the page heading gives Firefox the keyboard (keys must
+# not reach the terminal), the zoom shows the whole page, and Tab reaches
+# the blue buttons: after the four settings, Apply Settings, then Reset
+# Position. Clicking them starts the beating heart.
+HEART_DT_PAGE = (
+    "firefox --profile ~/.mozilla/firefox/kasm --kiosk http://localhost:5001 "
+    ">/dev/null 2>&1 & sleep 60; pkill -x firefox",
+    {"desktop": [12, ("click", 800, 50), 1, *["Control+Minus"] * 3, 2,
+                 *["Tab"] * 5, "Enter", 3, "Tab", "Enter"]})
 
 
 def show_plot(name, file):
@@ -68,7 +84,7 @@ EXAMPLES = [
         "lifecycle/create",
         "lifecycle/execute",
         ("sleep 20", {}),
-        show("http://localhost:5001", 40),
+        HEART_DT_PAGE,
         "lifecycle/clean",
     ]),
     ("drobotti_rmqfmu", "Desktop Robotti and RabbitMQ", [

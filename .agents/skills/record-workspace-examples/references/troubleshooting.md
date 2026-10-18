@@ -37,6 +37,14 @@ and why the scripts do what they do.
 - Firefox in the workspace image shows its profile chooser because the
   default `profiles.ini` has no profile entry. The plan opens Firefox with
   `--profile ~/.mozilla/firefox/kasm` and closes it with `pkill -x firefox`.
+- A step can act on the desktop while it runs, with the `desktop` option
+  (see `scripts/examples.py`). Keys go to the window with the focus, so
+  give Firefox the focus with a click on its page first; keys that reach
+  the terminal instead are typed into the shell and run when it is free.
+  heart_dt opens Firefox with `--kiosk`, so that the page fills the
+  screen at a known place, clicks the page heading, zooms out with
+  Ctrl+minus, and presses Apply Settings and Reset Position with Tab and
+  Enter. Check a frame of the recording after changing such a step.
 
 ## Knowing when a command has finished
 

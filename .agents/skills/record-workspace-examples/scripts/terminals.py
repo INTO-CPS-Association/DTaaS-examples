@@ -91,11 +91,24 @@ class VncTerminal:
         await asyncio.sleep(2)
         if "interrupt" in options:
             await self._interrupt_after(options["interrupt"])
+        if "desktop" in options:
+            await self._act_on_desktop(options["desktop"])
         if "tmux_view" in options:
             await asyncio.sleep(options["tmux_view"])
             await self.page.keyboard.press("Control+b")
             await self.page.keyboard.press("d")
         await self._wait_until_done(command)
+
+    async def _act_on_desktop(self, actions):
+        """Wait (a number of seconds), press a key (a string) or click ("click", x, y)."""
+        for action in actions:
+            if isinstance(action, (int, float)):
+                await asyncio.sleep(action)
+            elif isinstance(action, str):
+                await self.page.keyboard.press(action)
+                await asyncio.sleep(0.4)
+            else:
+                await self.page.mouse.click(action[1], action[2])
 
     async def _interrupt_after(self, seconds):
         """Let a long-running step run for a while, then press Ctrl+C."""
