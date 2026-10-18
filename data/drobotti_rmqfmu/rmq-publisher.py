@@ -6,6 +6,7 @@ import time
 import csv
 from get_credentials import get_data
 import sys
+import os
 
 
 login_info = get_data()
@@ -57,7 +58,7 @@ channel.queue_bind(exchange='fmi_digital_twin', queue=queue_name,
 time_sleep = 0.1
 
 #Recorded data
-data = '/workspace/examples/data/drobotti_rmqfmu/drobotti_playback_data.csv'
+data = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'drobotti_playback_data.csv')
 
 print(' [*] Waiting for logs. To exit press CTRL+C, sleep time [ms]: ', time_sleep*1000)
 

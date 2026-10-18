@@ -1,9 +1,13 @@
 from pyhocon import ConfigFactory
 from pyhocon import HOCONConverter
 import xml.etree.ElementTree as ET
+import os
+
+# Root of the examples (functions/flex-cell/prepare.py is two levels below it)
+EXAMPLES_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 
-conf = ConfigFactory.parse_file('/workspace/examples/data/flex-cell/input/connections.conf')
+conf = ConfigFactory.parse_file(os.path.join(EXAMPLES_PATH, 'data/flex-cell/input/connections.conf'))
 rabbitmq_host = conf.get_string('rabbitmq.hostname')
 rabbitmq_port = conf.get_int('rabbitmq.port')
 rabbitmq_username = conf.get_string('rabbitmq.username')
@@ -16,8 +20,8 @@ mqtt_username = conf.get_string('mqtt.username')
 mqtt_password = conf.get_string('mqtt.password')
 
 ## Config files
-kuka_conf = ConfigFactory.parse_file('/workspace/examples/digital_twins/flex-cell/kuka_actual.conf')
-ur5e_conf = ConfigFactory.parse_file('/workspace/examples/digital_twins/flex-cell/ur5e_actual.conf')
+kuka_conf = ConfigFactory.parse_file(os.path.join(EXAMPLES_PATH, 'digital_twins/flex-cell/kuka_actual.conf'))
+ur5e_conf = ConfigFactory.parse_file(os.path.join(EXAMPLES_PATH, 'digital_twins/flex-cell/ur5e_actual.conf'))
 
 kuka_conf.pop("mqtt.ip")
 kuka_conf.put("mqtt.ip",mqtt_host)
@@ -28,7 +32,7 @@ kuka_conf.put("mqtt.username",mqtt_username)
 kuka_conf.pop("mqtt.password")
 kuka_conf.put("mqtt.password",mqtt_password)
 HOCONConverter().to_hocon(kuka_conf)
-with open('/workspace/examples/digital_twins/flex-cell/kuka_actual.conf', 'w') as f:
+with open(os.path.join(EXAMPLES_PATH, 'digital_twins/flex-cell/kuka_actual.conf'), 'w') as f:
     print(HOCONConverter().to_hocon(kuka_conf), file=f)
     f.close()
 
@@ -41,12 +45,12 @@ ur5e_conf.pop("mqtt.username")
 ur5e_conf.put("mqtt.username",mqtt_username)
 ur5e_conf.pop("mqtt.password")
 ur5e_conf.put("mqtt.password",mqtt_password)
-with open('/workspace/examples/digital_twins/flex-cell/ur5e_actual.conf', 'w') as f:
+with open(os.path.join(EXAMPLES_PATH, 'digital_twins/flex-cell/ur5e_actual.conf'), 'w') as f:
     print(HOCONConverter().to_hocon(ur5e_conf), file=f)
     f.close()
 
 ## modelDescription file
-md_file = ET.parse('/workspace/examples/models/flex-cell/modelDescription.xml')
+md_file = ET.parse(os.path.join(EXAMPLES_PATH, 'models/flex-cell/modelDescription.xml'))
 root = md_file.getroot()
 model_vars = root.find("ModelVariables")
 for variable in model_vars:
@@ -66,4 +70,4 @@ for variable in model_vars:
         vhost_xml = variable.find("String")
         vhost_xml.attrib["start"] = rabbitmq_vhost
 
-md_file.write('/workspace/examples/models/flex-cell/modelDescription.xml')
+md_file.write(os.path.join(EXAMPLES_PATH, 'models/flex-cell/modelDescription.xml'))

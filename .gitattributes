@@ -1,0 +1,2 @@
+# Leave the demo videos out of the archives that getExamples.sh downloads
+digital_twins/*/demo.mp4 export-ignore

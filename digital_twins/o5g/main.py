@@ -6,7 +6,9 @@ import numpy as np
 import paho.mqtt.client as mqtt
 
 # Read config from env
-INSTALL_PATH = os.environ.get("O5G_INSTALL_PATH", "/workspace/examples")
+INSTALL_PATH = os.environ.get(
+    "O5G_INSTALL_PATH",
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 MQTT_SERVER = os.environ['O5G_MQTT_SERVER']
 MQTT_PORT = int(os.environ['O5G_MQTT_PORT'])

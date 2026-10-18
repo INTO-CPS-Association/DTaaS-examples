@@ -1,7 +1,7 @@
 #!/bin/bash
-rm -r ./data
 # Base relative paths off lifecycle dir
 cd "$(dirname "${BASH_SOURCE[0]}")"
+rm -rf ../data
 
 : ${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
 echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"

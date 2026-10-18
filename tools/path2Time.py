@@ -3,7 +3,9 @@ import fmpy
 import numpy as np
 import matplotlib.pyplot as plt
 
-INSTALL_PATH = os.environ.get("O5G_INSTALL_PATH", "/workspace/examples")
+INSTALL_PATH = os.environ.get(
+    "O5G_INSTALL_PATH",
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Mock Path Data
 mock_path = [5, 3, 6, 2, 9, 3]

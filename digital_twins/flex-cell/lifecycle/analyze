@@ -1,4 +1,9 @@
 #!/bin/bash
-printf "Creating plots of the execution in /workspace/examples/data/flex-cell/output... \n\n"
-source /workspace/examples/tools/flex-cell/requirements/venv/bin/activate
-python /workspace/examples/functions/flex-cell/plots.py
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+OUTPUT_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
+
+printf "Creating plots of the execution in %s... \n\n" "$OUTPUT_PATH"
+source "${EXAMPLES_PATH}/tools/flex-cell/requirements/venv/bin/activate"
+python "${EXAMPLES_PATH}/functions/flex-cell/plots.py"

@@ -1,20 +1,30 @@
 #!/bin/bash
 
-apt update
-cd "$(dirname "${BASH_SOURCE[0]}")"
-# install packages
-apt-get install -y build-essential default-jre-headless python3-venv cargo
+set -e # Exit on command failure
 
-if dpkg -l | grep -qw "telegraf"; then
+# Base relative paths off lifecycle dir
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+# install packages
+sudo apt-get update
+sudo apt-get install -y build-essential default-jre-headless python3-venv cargo
+
+if dpkg -s telegraf &> /dev/null; then
   echo "Telegraf is already installed"
 else
   printf "Installing telegraf \n"
-  # influxdata-archive_compat.key GPG Fingerprint: 9D539D90D3328DC7D6C8D3B9D8FF8E1F7DF8B07E
-  curl -s https://repos.influxdata.com/influxdata-archive_compat.key > influxdata-archive_compat.key
-  echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
-  echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
-  apt-get update && apt-get install telegraf
-  rm influxdata-archive_compat.key
+  # influxdata-archive.key GPG Fingerprint: 24C975CBA61A024EE1B631787C3D57159FC2F927
+  curl -fsSL -o influxdata-archive.key https://repos.influxdata.com/influxdata-archive.key
+  gpg --show-keys --with-fingerprint --with-colons ./influxdata-archive.key 2>&1 \
+    | grep -q '^fpr:\+24C975CBA61A024EE1B631787C3D57159FC2F927:$'
+  gpg --dearmor < influxdata-archive.key \
+    | sudo tee /etc/apt/keyrings/influxdata-archive.gpg > /dev/null
+  echo 'deb [signed-by=/etc/apt/keyrings/influxdata-archive.gpg] https://repos.influxdata.com/debian stable main' \
+    | sudo tee /etc/apt/sources.list.d/influxdata.list
+  # telegraf pulls in influxdata-archive-keyring, which asks about the
+  # influxdata.list written above when a terminal is attached; keep that file
+  sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y telegraf
+  rm influxdata-archive.key
 fi
 
 : ${INCUBATOR_PATH:=../../../common/digital_twins/incubator} # Set variable if not manually exported
@@ -22,4 +32,5 @@ echo "Using INCUBATOR_PATH: ${INCUBATOR_PATH}"
 
 python3 -m venv .venv
 source .venv/bin/activate
+pip install --upgrade pip
 pip install -r "${INCUBATOR_PATH}/requirements.txt"
