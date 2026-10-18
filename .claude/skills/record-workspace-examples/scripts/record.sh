@@ -8,6 +8,9 @@
 #   record [--with-install] [example ...]
 #                               start the recording in the background; without
 #                               --with-install an existing installation is used
+#   reset                       stop the services and remove the examples from
+#                               the workspace, to record again on the same
+#                               installation
 #   status                      show the progress and save a screenshot
 #   stop                        stop the recording
 #   split [--copy]              cut the recording into one video per example
@@ -87,6 +90,19 @@ record() {
   echo "Recording started; check it with '$0 status'"
 }
 
+reset() {
+  local incubator="${INSTALL}/files/user/examples/common/digital_twins/incubator"
+  # the recording starts the services and gets the examples again;
+  # getExamples.sh does not overwrite existing examples
+  as_admin "
+    [ -d '${incubator}' ] || exit 0
+    (cd '${incubator}/incubator/communication/installation' && docker compose down -v)
+    (cd '${incubator}/digital_twin/data_access/influxdbserver' && docker compose down -v && sudo rm -rf influxdb)" || true
+  docker exec -u user dtaas-user-1 bash -c \
+    'tmux kill-server 2> /dev/null; pkill -x telegraf; rm -rf /workspace/examples ~/getExamples.sh*' || true
+  echo "Services stopped and examples removed from the workspace"
+}
+
 status() {
   docker exec "${STUDIO}" bash -c '
     if pgrep -f "[p]ython driver.py" > /dev/null; then echo "recording: running"; else echo "recording: not running"; fi
@@ -140,11 +156,12 @@ case "$1" in
   start) start_studio ;;
   install) install_dtaas ;;
   record) shift; record "$@" ;;
+  reset) reset ;;
   status) status ;;
   stop) stop ;;
   split) shift; split_recording "$@" ;;
   postprocess) shift; postprocess "$@" ;;
   fetch) shift; fetch "$@" ;;
   teardown) teardown ;;
-  *) sed -n '2,25p' "$0"; exit 1 ;;
+  *) sed -n '2,28p' "$0"; exit 1 ;;
 esac

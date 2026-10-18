@@ -188,8 +188,9 @@ CHECKS = {
     "mass-spring-damper-monitor": ("lifecycle/analyze", f"ls {E}/data/mass-spring-damper-monitor/output/plots"),
     "water_tank_FI_monitor": ("lifecycle/analyze", f"ls {E}/data/water_tank_FI_monitor/output/plots"),
     "incubator-NuRV-monitor-validation": ("lifecycle/analyze", f"ls {E}/data/incubator-NuRV-monitor-validation/output/plots"),
-    "incubator-NuRV-monitor-service": ("lifecycle/execute", "ls /workspace/examples/digital_twins/incubator-NuRV-monitor-service/data | wc -l"),
-    "incubator-NuRV-fmu-monitor-service": ("lifecycle/execute", "grep -c \"'_output': 1\" /tmp/nurv-fmu-service.log"),
+    # verdicts of the monitors; the NuRV monitor service prints them only to the terminal
+    "incubator-NuRV-monitor-service": ("lifecycle/execute 2>&1 | tee /tmp/nurv-service.log", "grep -c 'verdict:' /tmp/nurv-service.log"),
+    "incubator-NuRV-fmu-monitor-service": ("lifecycle/execute", "grep -c 'Outputs:' /tmp/nurv-fmu-service.log"),
     "incubator-TeSSLa-monitor-service": ("lifecycle/execute", "grep -c 'alert' /tmp/tessla.log"),
     "incubator-TeSSLa-active-control": ("lifecycle/execute", "grep -c 'Valid Message' /tmp/tessla.log"),
 }
@@ -298,7 +299,7 @@ async def main():
             "# RabbitMQ (with MQTT) and InfluxDB services used by some examples",
             "cd files/user/examples/common/digital_twins/incubator",
             "(cd incubator/communication/installation && docker compose up -d --build)",
-            "(cd digital_twin/data_access/influxdbserver && unzip -q influxdb.zip -d influxdb && docker compose up -d --build)",
+            "(cd digital_twin/data_access/influxdbserver && unzip -q -o influxdb.zip -d influxdb && docker compose up -d --build)",
             "docker network connect dtaas_default rabbitmq-server && docker network connect dtaas_default influxdb-server",
             "sleep 15 && docker ps --format 'table {{.Names}}\\t{{.Image}}\\t{{.Status}}'",
         ]:

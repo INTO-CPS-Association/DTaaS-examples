@@ -13,6 +13,17 @@ DT = EX + "/digital_twins"
 
 
 
+def use_services(conf):
+    """Point an incubator configuration at the RabbitMQ and InfluxDB services.
+
+    The examples built on the incubator copy its configuration; each edits its
+    own copy, so that it also works when the incubator example is not
+    recorded in the same session.
+    """
+    return ("sed -i -e 's/ip = \"localhost\"/ip = \"rabbitmq-server\"/' "
+            f"-e 's#url = http://localhost:8086#url = http://influxdb-server:8086#' {conf}")
+
+
 def show(path_or_url, secs=20):
     """Show a plot or web page in the desktop's Firefox for a while."""
     return (f"firefox --profile ~/.mozilla/firefox/kasm --new-window {path_or_url} >/dev/null 2>&1 & "
@@ -87,8 +98,7 @@ EXAMPLES = [
     ]),
     ("incubator", "Incubator", [
         "# Point the incubator at the RabbitMQ and InfluxDB services",
-        "sed -i -e 's/ip = \"localhost\"/ip = \"rabbitmq-server\"/' "
-        "-e 's#url = http://localhost:8086#url = http://influxdb-server:8086#' simulation.conf",
+        use_services("simulation.conf"),
         "head -18 simulation.conf",
         "lifecycle/create",
         ("lifecycle/execute", {"interrupt": 90}),
@@ -137,23 +147,27 @@ EXAMPLES = [
     ]),
     ("incubator-NuRV-monitor-service", "Incubator with NuRV Runtime Monitor as Service", [
         "cp ../incubator/simulation.conf simulation.conf",
+        use_services("simulation.conf"),
         "lifecycle/create",
-        "lifecycle/execute",
+        "lifecycle/execute 2>&1 | tee /tmp/nurv-service.log",
         "lifecycle/clean",
     ]),
     ("incubator-NuRV-fmu-monitor-service", "Incubator with NuRV Runtime Monitor FMU as Service", [
         "cp ../incubator/simulation.conf simulation.conf",
+        use_services("simulation.conf"),
         "lifecycle/create",
         "lifecycle/execute",
     ]),
     ("incubator-TeSSLa-monitor-service", "Incubator with TeSSLa Runtime Monitor as Service", [
         "cp ../incubator/simulation.conf simulation.conf",
+        use_services("simulation.conf"),
         "lifecycle/create",
         "lifecycle/execute",
         "lifecycle/clean",
     ]),
     ("incubator-TeSSLa-active-control", "Incubator with TeSSLa Runtime Monitor for Active Control", [
         "cp ../incubator/simulation.conf simulation.conf",
+        use_services("simulation.conf"),
         "lifecycle/create",
         "lifecycle/execute",
         "lifecycle/clean",

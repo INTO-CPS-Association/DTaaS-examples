@@ -47,6 +47,10 @@ Run the commands from the repository root. `record.sh` is
    - Recorded: `record.sh record --with-install` on a clean slate.
    Add example names (directory names under `digital_twins/`) to record only
    those, for example `record.sh record mass-spring-damper heart_dt`.
+   To record again on the same installation, run `record.sh reset` first; it
+   stops the services and removes the examples from the workspace, which
+   the recording then sets up again. `record.sh record` empties the output
+   directory, so fetch the previous recording before.
 4. Follow the progress with `record.sh status` every 10 to 20 minutes. It
    prints the last steps and saves the current screen to
    `/tmp/recording-status.png`; look at the image when a step seems stuck.
