@@ -19,6 +19,9 @@
 #                               one GIF per example from them (gif/); both by default
 #                               (done automatically at the end of a recording)
 #   fetch <directory>           copy the recording and its report to the host
+#   assemble <out> <take>...    one set of videos of all examples from fetched
+#                               and post-processed recordings: each example from
+#                               the latest take with evidence for it
 #   teardown                    remove the installation, the services and the
 #                               recording container
 #
@@ -143,6 +146,25 @@ fetch() {
   ls -lh "${dest}"
 }
 
+assemble() {
+  local out="${1:?Usage: $0 assemble <output directory> <take directory>...}"
+  shift
+  [ $# -gt 0 ] || { echo "Usage: $0 assemble <output directory> <take directory>..."; exit 1; }
+  mkdir -p "${out}"
+  # the takes are on the host; mount them at the same paths into a
+  # container of the recording image, which has ffmpeg
+  local dirs=() mounts=() d
+  for d in "${out}" "$@"; do
+    d="$(realpath "${d}")"
+    dirs+=("${d}")
+    mounts+=(-v "${d}:${d}")
+  done
+  docker build -q -t "${IMAGE}" "${SCRIPTS}/studio" > /dev/null
+  docker run --rm -u "$(id -u):$(id -g)" -e PYTHONDONTWRITEBYTECODE=1 "${mounts[@]}" \
+    -v "${SCRIPTS}:/opt/skill:ro" -w /opt/skill --entrypoint python3 "${IMAGE}" \
+    assemble.py "${dirs[@]}"
+}
+
 teardown() {
   local incubator="${INSTALL}/files/user/examples/common/digital_twins/incubator"
   as_admin "
@@ -164,6 +186,7 @@ case "$1" in
   split) shift; split_recording "$@" ;;
   postprocess) shift; postprocess "$@" ;;
   fetch) shift; fetch "$@" ;;
+  assemble) shift; assemble "$@" ;;
   teardown) teardown ;;
-  *) sed -n '2,28p' "$0"; exit 1 ;;
+  *) sed -n '2,31p' "$0"; exit 1 ;;
 esac

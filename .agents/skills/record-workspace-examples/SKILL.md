@@ -26,7 +26,8 @@ container:
   each; `setup_steps.py`: the installation, examples download and
   services; `checks.py`: the evidence collected for each example.
 - `split.py`: one video per chapter; `postprocess.py` with `speed.py`:
-  the web videos and GIFs; `media.py`: ffmpeg helpers and video names.
+  the web videos and GIFs; `assemble.py`: one set from several takes;
+  `media.py`: ffmpeg helpers and video names.
 - `config.py`: the settings, read from the environment.
 
 ## Prerequisites
@@ -91,7 +92,15 @@ Run the commands from the repository root. `record.sh` is
 6. Check `report.json` and skim the video at the chapter marks before
    reporting success. An example only counts as recorded successfully when
    its evidence is present.
-7. Clean up with `record.sh teardown` once the user has the video.
+7. When some examples failed, record them again (`record.sh reset`, then
+   `record.sh record <example>...`), fetch that take into its own
+   directory, and combine the takes:
+   `record.sh assemble <output directory> <take directory>...`, oldest take
+   first. The setup chapters come from the first take, and every example
+   from the latest take that recorded it with evidence. The output holds
+   the same `segments/`, `web/` and `gif/` as a take, with `index.txt`
+   naming the take of each chapter and the merged `report.json`.
+8. Clean up with `record.sh teardown` once the user has the video.
 
 ## What to expect in the recording
 
