@@ -12,6 +12,7 @@ import argparse
 import json
 import logging
 import queue
+import re
 import sys
 from pathlib import Path
 
@@ -31,8 +32,15 @@ def topics_of(manifest_path):
     return topics
 
 
+# Control characters, such as terminal escape sequences, that a broker
+# message or a manifest label could carry into the terminal
+CONTROL = re.compile(r"[\x00-\x1f\x7f]")
+
+
 def line_of(label, payload):
     """One reading as a line a person reads: room, value with unit, time."""
+    label = CONTROL.sub("?", label)
+    payload = CONTROL.sub("?", payload)
     fields = payload.split(",")
     if len(fields) != 5:
         return f"{label}: {payload}"

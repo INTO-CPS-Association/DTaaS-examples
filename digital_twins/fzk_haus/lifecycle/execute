@@ -14,7 +14,7 @@ if [ ! -x .venv/bin/python ]; then
   exit 1
 fi
 
-if [ -f publisher.pid ] && kill -0 "$(cat publisher.pid)" 2>/dev/null; then
+if [ -f publisher.pid ] && ps -p "$(cat publisher.pid)" -o args= 2>/dev/null | grep -q publish_readings.py; then
   printf "The publisher is already running\n"
   exit 0
 fi

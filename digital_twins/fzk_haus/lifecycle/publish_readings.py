@@ -34,6 +34,9 @@ KIND = "simulation"
 
 log = logging.getLogger("publish_readings")
 
+# Hosts where a password without TLS stays on this machine
+LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
+
 
 class Walker:  # pylint: disable=too-few-public-methods
     """A temperature that drifts slowly inside its range.
@@ -97,6 +100,8 @@ def connect():
     username = os.environ.get("MQTT_USERNAME")
     if username:
         client.username_pw_set(username, os.environ.get("MQTT_PASSWORD"))
+        if os.environ.get("MQTT_TLS") != "1" and host not in LOCAL_HOSTS:
+            log.warning("The password goes to %s unencrypted. Set MQTT_TLS=1.", host)
     client.connect(host, port)
     client.loop_start()
     log.info("Connected to %s:%d", host, port)

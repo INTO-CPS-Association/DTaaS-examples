@@ -3,7 +3,12 @@
 # Base relative paths off the digital twin directory
 cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
 
+# Only a process that is still the publisher is stopped: a PID left from an
+# earlier run may belong to another process by now.
 if [ -f publisher.pid ]; then
-  kill "$(cat publisher.pid)" 2>/dev/null && printf "Stopped the publisher\n"
+  pid="$(cat publisher.pid)"
+  if ps -p "$pid" -o args= 2>/dev/null | grep -q publish_readings.py; then
+    kill "$pid" && printf "Stopped the publisher\n"
+  fi
 fi
 lifecycle/clean
