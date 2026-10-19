@@ -43,11 +43,11 @@ class Walker:  # pylint: disable=too-few-public-methods
     easy to see.
     """
 
-    def __init__(self, low, high):
+    def __init__(self, low, high, start):
         self.low = low
         self.high = high
         self.step = (high - low) * 0.03
-        self.value = random.uniform(low + (high - low) * 0.3, low + (high - low) * 0.7)
+        self.value = start
 
     def next(self):
         """Take one small step and return the new value."""
@@ -59,15 +59,25 @@ class Walker:  # pylint: disable=too-few-public-methods
 def sensors_of(manifest_path):
     """The (topic, unit, walker) of every binding that has a live topic."""
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    live = [b for b in manifest.get("bindings", [])
+            if b.get("source", {}).get("live", {}).get("topic")]
     sensors = []
-    for binding in manifest.get("bindings", []):
-        topic = binding.get("source", {}).get("live", {}).get("topic")
-        if not topic:
-            continue
-        display = binding["display"]
-        low, high = display["ramp"]
-        sensors.append((topic, display["unit"], Walker(float(low), float(high))))
+    for index, binding in enumerate(live):
+        low, high = (float(bound) for bound in binding["display"]["ramp"])
+        sensors.append((binding["source"]["live"]["topic"], binding["display"]["unit"],
+                        Walker(low, high, spread_start(low, high, index, len(live)))))
     return sensors
+
+
+def spread_start(low, high, index, count):
+    """Where room index starts, spread over the inner 80% of the range.
+
+    Rooms that start apart take different colours on the Buildings page, so
+    the heatmap shows which room is warm and which is cold from the first
+    reading on.
+    """
+    share = (index + 0.5) / count
+    return low + (high - low) * (0.1 + 0.8 * share)
 
 
 def payload_of(unit, value, now):
