@@ -6,8 +6,13 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
 : "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
 
 # Publishes simulated room temperatures in the background until terminate.
-WORKSPACE="${WORKSPACE:-/workspace}"
+WORKSPACE="${WORKSPACE:-$(realpath "${EXAMPLES_PATH}/..")}"
 MANIFEST="${WORKSPACE}/common/models/fzk_haus.manifest.json"
+
+if [ ! -x .venv/bin/python ]; then
+  printf "Run lifecycle/create first\n"
+  exit 1
+fi
 
 if [ -f publisher.pid ] && kill -0 "$(cat publisher.pid)" 2>/dev/null; then
   printf "The publisher is already running\n"

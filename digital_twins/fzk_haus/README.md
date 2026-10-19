@@ -3,9 +3,9 @@
 ## Overview
 
 This example puts a building model in the DTaaS library and gives each of its
-rooms a simulated temperature sensor. The building is the FZK-Haus, a two
-storey house modelled by the Karlsruhe Institute of Technology (KIT) as an IFC
-example. Its model has 7 rooms (`IfcSpace`) and no sensors, so the example
+rooms a simulated temperature sensor. The building is the FZK-Haus, a
+two-storey house modelled by the Karlsruhe Institute of Technology (KIT) as an
+IFC example. Its model has 7 rooms (`IfcSpace`) and no sensors, so the example
 proposes one temperature sensor per room. Rooms are not drawn in the 3D view,
 so each sensor is bound by its IFC `GlobalId` to a wall or column inside the
 room, the one nearest to the room's centre that no other room has taken. When a
@@ -34,6 +34,7 @@ Institute of Technology (KIT).
 | `lifecycle/make_manifest.py` | Proposes one sensor per room, places it on a wall of the room and writes the binding manifest |
 | `lifecycle/publish_readings.py` | Publishes a simulated temperature per room over MQTT |
 | `lifecycle/requirements.txt` | The IFC converters from ifc-utils and the MQTT client |
+| `lifecycle/constraints.txt` | The versions of the packages those tools pull in, each at least ten days old when pinned |
 
 The create phase writes four files into `/workspace/common/models`, the folder
 the Buildings page reads:
@@ -71,7 +72,7 @@ more variables change where they read and write:
 | Variable | Default | Meaning |
 |:---|:---|:---|
 | `EXAMPLES_PATH` | the repository root | Where `models/fzk_haus.ifc` is read from |
-| `WORKSPACE` | `/workspace` | The library whose `common/models` receives the model |
+| `WORKSPACE` | the folder above `EXAMPLES_PATH`, `/workspace` inside the workspace | The library whose `common/models` receives the model |
 
 ## Lifecycle Phases
 

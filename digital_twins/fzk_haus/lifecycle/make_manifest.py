@@ -5,7 +5,7 @@ one temperature sensor for each room. A room is not drawn in the geometry, so
 the sensor is bound to an object that is: the wall or column inside the room's
 footprint nearest to its centre, or any drawn object there when it has
 neither. The match is made by geometry, so it works for a model that relates
-no element to a room. The Building Models page of DTaaS reads the manifest beside
+no element to a room. The Buildings page of DTaaS reads the manifest beside
 the model and draws each reading on the object it is bound to.
 
 Usage:

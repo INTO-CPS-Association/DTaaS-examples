@@ -5,17 +5,22 @@ set -e
 cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
 : "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
 
-# The Building Models page of DTaaS reads models from common/models in the
-# user's library, so the model and the files derived from it go there.
-WORKSPACE="${WORKSPACE:-/workspace}"
+# The Buildings page of DTaaS reads models from common/models in the user's
+# library, so the model and the files derived from it go there. Inside the
+# workspace the examples sit in /workspace/examples, so the library is the
+# folder above the examples.
+WORKSPACE="${WORKSPACE:-$(realpath "${EXAMPLES_PATH}/..")}"
 MODEL="${EXAMPLES_PATH}/models/fzk_haus.ifc"
 TARGET="${WORKSPACE}/common/models"
 
 # The workspace image does not allow pip to install into the system Python,
 # so the tools go into a virtual environment beside the lifecycle scripts.
 printf "Installing the IFC converters and the MQTT client into .venv\n\n"
+sudo apt-get update
+sudo apt-get install -y python3-venv git
 python3 -m venv .venv
-.venv/bin/pip install --quiet -r lifecycle/requirements.txt
+.venv/bin/pip install --quiet -c lifecycle/constraints.txt \
+  -r lifecycle/requirements.txt
 
 printf "Placing the model in %s\n\n" "${TARGET}"
 mkdir -p "${TARGET}"

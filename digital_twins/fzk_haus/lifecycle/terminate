@@ -6,4 +6,4 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
 if [ -f publisher.pid ]; then
   kill "$(cat publisher.pid)" 2>/dev/null && printf "Stopped the publisher\n"
 fi
-"$(dirname "${BASH_SOURCE[0]}")/clean"
+lifecycle/clean
