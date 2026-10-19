@@ -44,7 +44,12 @@ class ExamplesTest(unittest.TestCase):
         """Every step option is one the terminal handles, with valid desktop actions."""
         for example in examples.EXAMPLES:
             for _, options in examples.steps(example):
-                self.assertLessEqual(set(options), {"interrupt", "tmux_view", "desktop"})
+                self.assertLessEqual(
+                    set(options), {"interrupt", "tmux_view", "desktop", "dtaas_page"})
+                for action in options.get("dtaas_page", (None, []))[1]:
+                    valid = isinstance(action, (int, float)) or (
+                        len(action) == 2 and action[0] in {"click", "scroll", "zoom"})
+                    self.assertTrue(valid, f"{example[0]}: {action}")
                 for action in options.get("desktop", []):
                     valid = isinstance(action, (int, float, str)) or (
                         len(action) == 3 and action[0] == "click")

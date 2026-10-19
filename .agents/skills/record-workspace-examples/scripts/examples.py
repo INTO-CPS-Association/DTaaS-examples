@@ -9,6 +9,12 @@ typed into the terminal of the VNC desktop, in the directory of the example:
                                     command runs: a number waits that many
                                     seconds, a string presses a key, and
                                     ("click", x, y) clicks the screen
+  ("comment", {"dtaas_page": (path, actions)})
+                                    type, then show the DTaaS page at path in
+                                    the signed-in tab: a number waits, ("click",
+                                    name) presses a button by its name,
+                                    ("scroll", pixels) scrolls the page and
+                                    ("zoom", pixels) zooms the 3D view
 """
 
 from config import DT_DIR, EXAMPLES_DIR
@@ -58,6 +64,15 @@ def show_plot(name, file):
 
 
 FLEX_CELL_CONNECTIONS = f"{EXAMPLES_DIR}/data/flex-cell/input/connections.conf"
+
+# The Buildings page with the FZK-Haus: roofs hidden, the ground floor and the
+# heatmap per sensor, coloured by the readings the publisher sends, then the
+# floor plan from above and the sensor cards
+BIM_PAGE = ("# DTaaS page: the building, coloured by its readings", {"dtaas_page": (
+    "/bim/models/fzk_haus",
+    [8, ("scroll", 300), ("click", "Hide Slabs, Roofs And Ceilings"),
+     ("click", "The floor below"), ("click", "The floor below"), ("click", "Heatmap"), 10,
+     ("click", "Look From Above"), ("zoom", 400), 15, ("scroll", 700), 10])})
 
 # The library folder the Buildings page of DTaaS reads, where the BIM example
 # writes the model and the files derived from it
@@ -215,6 +230,7 @@ EXAMPLES = [
         ("sleep 10", {}),
         "cat publisher.log",
         f".venv/bin/python lifecycle/show_readings.py {BIM_MODELS}/fzk_haus.manifest.json",
+        BIM_PAGE,
         "lifecycle/terminate",
     ]),
 ]

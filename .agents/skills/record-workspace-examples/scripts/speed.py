@@ -13,8 +13,9 @@ from config import FPS
 
 # Commands whose step shows results: plots and web pages in Firefox, the
 # first lines of an output file, the o5g dashboard, and the show_ scripts an
-# example keeps in its lifecycle folder, such as the readings of the BIM one
-RESULT = re.compile(r"(firefox |head |tmux attach|\.venv/bin/python lifecycle/show_)")
+# example keeps in its lifecycle folder, such as the readings of the BIM one,
+# and a page of DTaaS
+RESULT = re.compile(r"(firefox |head |tmux attach|\.venv/bin/python lifecycle/show_|# DTaaS page)")
 LOG_LINE = re.compile(r"\[(\d\d):(\d\d):(\d\d)\] (?:CHAPTER |([\w.-]+): )(.*)")
 
 
