@@ -1,10 +1,14 @@
 #!/bin/bash
 set -e
 
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+
 # The Building Models page of DTaaS reads models from common/models in the
 # user's library, so the model and the files derived from it go there.
 WORKSPACE="${WORKSPACE:-/workspace}"
-MODEL="${WORKSPACE}/examples/models/fzk_haus.ifc"
+MODEL="${EXAMPLES_PATH}/models/fzk_haus.ifc"
 TARGET="${WORKSPACE}/common/models"
 
 # The workspace image does not allow pip to install into the system Python,

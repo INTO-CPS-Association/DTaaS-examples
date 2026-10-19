@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+
 # Publishes simulated room temperatures in the background until terminate.
 WORKSPACE="${WORKSPACE:-/workspace}"
 MANIFEST="${WORKSPACE}/common/models/fzk_haus.manifest.json"

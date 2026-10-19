@@ -65,6 +65,14 @@ The publisher reads the broker from these environment variables:
 Without `MQTT_TLS`, the user name and password travel unencrypted, so set it
 whenever the broker is not on the same machine.
 
+The lifecycle scripts work from any directory, as the other examples do. Two
+more variables change where they read and write:
+
+| Variable | Default | Meaning |
+|:---|:---|:---|
+| `EXAMPLES_PATH` | the repository root | Where `models/fzk_haus.ifc` is read from |
+| `WORKSPACE` | `/workspace` | The library whose `common/models` receives the model |
+
 ## Lifecycle Phases
 
 | Lifecycle Phase | Completed Tasks |
