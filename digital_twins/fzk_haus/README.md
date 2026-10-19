@@ -33,6 +33,7 @@ Institute of Technology (KIT).
 | `models/fzk_haus.ifc` | The building model, IFC4 |
 | `lifecycle/make_manifest.py` | Proposes one sensor per room, places it on a wall of the room and writes the binding manifest |
 | `lifecycle/publish_readings.py` | Publishes a simulated temperature per room over MQTT |
+| `lifecycle/show_readings.py` | Prints the first readings that reach the broker |
 | `lifecycle/requirements.txt` | The IFC converters from ifc-utils and the MQTT client |
 | `lifecycle/constraints.txt` | The versions of the packages those tools pull in, each at least ten days old when pinned |
 
@@ -132,6 +133,15 @@ timestamp,measurement,type,unit,value
 
 The `type` field says `simulation`, so a subscriber can tell these values apart
 from measured ones. The log is in `publisher.log`.
+
+To see the readings arrive through the broker, print the first round of them:
+
+```bash
+.venv/bin/python lifecycle/show_readings.py /workspace/common/models/fzk_haus.manifest.json
+```
+
+It prints one line per room, such as `1, Flur temperature: 22.10 °C at
+12:02:14`, and stops with an error when no reading arrives within 10 seconds.
 
 ### Terminate
 
