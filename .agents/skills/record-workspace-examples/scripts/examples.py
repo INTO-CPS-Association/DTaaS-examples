@@ -59,6 +59,10 @@ def show_plot(name, file):
 
 FLEX_CELL_CONNECTIONS = f"{EXAMPLES_DIR}/data/flex-cell/input/connections.conf"
 
+# The library folder the Buildings page of DTaaS reads, where the BIM example
+# writes the model and the files derived from it
+BIM_MODELS = "/workspace/common/models"
+
 EXAMPLES = [
     ("mass-spring-damper", "Mass Spring Damper", [
         "lifecycle/create",
@@ -200,6 +204,19 @@ EXAMPLES = [
          "lifecycle/execute",
          "lifecycle/clean",
      ]),
+    ("fzk_haus", "BIM - Building Information Modeling", [
+        "lifecycle/create",
+        f"ls -l {BIM_MODELS}",
+        "# One proposed sensor per room, each with the MQTT topic it publishes on",
+        f"grep -E '\"(label|topic)\"' {BIM_MODELS}/fzk_haus.manifest.json",
+        "# Publish the readings over the MQTT of the RabbitMQ service",
+        "export MQTT_HOST=rabbitmq-server MQTT_USERNAME=incubator MQTT_PASSWORD=incubator",
+        "lifecycle/execute",
+        ("sleep 10", {}),
+        "cat publisher.log",
+        f".venv/bin/python lifecycle/show_readings.py {BIM_MODELS}/fzk_haus.manifest.json",
+        "lifecycle/terminate",
+    ]),
 ]
 
 
