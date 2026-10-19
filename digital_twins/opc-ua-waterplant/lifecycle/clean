@@ -1,11 +1,16 @@
 #!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
 
 # OpenModelica Build FMU auxiliary files
-rm Test_DTCONEDAR.fmu
-rm Test_DTCONEDAR_FMU.libs
-rm Test_DTCONEDAR_FMU.log
-rm Test_DTCONEDAR_FMU.makefile
-rm Test_DTCONEDAR_info.json
-rm Test_DTCONEDAR.log
-rm -rf "/workspace/examples/data/opc-ua-waterplant/output"
-rm "/workspace/examples/tools/opc-ua-waterplant/model_description.csv"
+rm -f Test_DTCONEDAR.fmu \
+  Test_DTCONEDAR_FMU.libs \
+  Test_DTCONEDAR_FMU.log \
+  Test_DTCONEDAR_FMU.makefile \
+  Test_DTCONEDAR_info.json \
+  Test_DTCONEDAR_external_functions.json \
+  Test_DTCONEDAR.log \
+  index.html
+rm -rf "${EXAMPLES_PATH}/data/$(basename "$PWD")/output"
+rm -f "${EXAMPLES_PATH}/tools/opc-ua-waterplant/model_description.csv"

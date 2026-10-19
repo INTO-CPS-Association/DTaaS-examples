@@ -14,9 +14,11 @@ import services.DeviationChecker;
 
 public class TankMainDTaaS {
 	static TwinManager twinManager;
-	static String modelFolderPrefix = "/workspace/examples/models/three-tank/";
-	static String dtFolderPrefix = "/workspace/examples/digital_twins/three-tank/";
-	static String dataFolderPrefix = "/workspace/examples/data/three-tank/";
+	// Root of the examples; relative to the three-tank digital twin directory by default
+	static String examplesPath = System.getProperty("examples.path", "../..");
+	static String modelFolderPrefix = examplesPath + "/models/three-tank/";
+	static String dtFolderPrefix = examplesPath + "/digital_twins/three-tank/";
+	static String dataFolderPrefix = examplesPath + "/data/three-tank/";
 
 	public static void main(String[] args) {
 		//LogManager.shutdown();
@@ -72,7 +74,8 @@ public class TankMainDTaaS {
 
 		
 		Thread eventThread = new Thread(() -> {
-			new Timer().scheduleAtFixedRate(new TimerTask() {
+			// daemon timer so that the program ends after the co-simulation
+			new Timer(true).scheduleAtFixedRate(new TimerTask() {
 				@Override
 				public void run() {
 					try {

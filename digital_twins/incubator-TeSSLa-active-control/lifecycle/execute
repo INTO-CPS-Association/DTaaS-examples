@@ -20,7 +20,7 @@ python make-telegraf-config.py
 
 cd "$TESSLA_PATH"
 echo "Starting TeSSLa-Telegraf-Connector, see output at /tmp/tessla.log"
-./TesslaTelegrafConnector -i safe-operation.tessla -c telegraf.conf -r 2>&1 > /tmp/tessla.log &
+./TesslaTelegrafConnector -i safe-operation.tessla -t tessla.jar -c telegraf.conf -r 2>&1 > /tmp/tessla.log &
 TESSLA_PID=$!
 sleep 10
 

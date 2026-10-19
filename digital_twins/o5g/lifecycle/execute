@@ -1,10 +1,12 @@
 #!/bin/bash
 
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
 source o5g-venv/bin/activate
 SESSION_NAME="o5g"
 
 if [ -z "$O5G_INSTALL_PATH" ]; then
-  O5G_INSTALL_PATH="/workspace/examples"
+  O5G_INSTALL_PATH=$(realpath ../..)
 fi
 
 # Check if the session exists, discarding output
@@ -17,12 +19,12 @@ if [ $? != 0 ]; then
   tmux new-session -d -s $SESSION_NAME \; \split-window -v \; \split-window -h \; \select-pane -t 0 \; \split-window -h
 
   # Start the first Python script in the left pane
-  tmux send-keys -t ${SESSION_NAME}.0 "export O5G_INSTALL_PATH=${O5G_INSTALL_PATH} && source ${O5G_INSTALL_PATH}/digital_twins/o5g/config && python3 ${O5G_INSTALL_PATH}/data/o5g/input/sensorSimulation.py" C-m
+  tmux send-keys -t ${SESSION_NAME}.0 "export O5G_INSTALL_PATH=${O5G_INSTALL_PATH} && . ${O5G_INSTALL_PATH}/digital_twins/o5g/config && python3 ${O5G_INSTALL_PATH}/data/o5g/input/sensorSimulation.py" C-m
 
   # Start the second Python script in the right pane
-  tmux send-keys -t ${SESSION_NAME}.1 "export O5G_INSTALL_PATH=${O5G_INSTALL_PATH} && source ${O5G_INSTALL_PATH}/digital_twins/o5g/config && python3 ${O5G_INSTALL_PATH}/digital_twins/o5g/main.py" C-m
+  tmux send-keys -t ${SESSION_NAME}.1 "export O5G_INSTALL_PATH=${O5G_INSTALL_PATH} && . ${O5G_INSTALL_PATH}/digital_twins/o5g/config && python3 ${O5G_INSTALL_PATH}/digital_twins/o5g/main.py" C-m
 
-  tmux send-keys -t ${SESSION_NAME}.2 "export O5G_INSTALL_PATH=${O5G_INSTALL_PATH} && source ${O5G_INSTALL_PATH}/digital_twins/o5g/config && telegraf --config ${O5G_INSTALL_PATH}/data/o5g/input/telegraf.conf" C-m
+  tmux send-keys -t ${SESSION_NAME}.2 "export O5G_INSTALL_PATH=${O5G_INSTALL_PATH} && . ${O5G_INSTALL_PATH}/digital_twins/o5g/config && telegraf --config ${O5G_INSTALL_PATH}/data/o5g/input/telegraf.conf" C-m
 
   tmux send-keys -t ${SESSION_NAME}.3 "${O5G_INSTALL_PATH}/data/o5g/input/runTessla.sh" C-m
 fi

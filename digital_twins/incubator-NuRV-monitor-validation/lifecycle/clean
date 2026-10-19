@@ -1,4 +1,8 @@
 #!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+DATA_PATH="${EXAMPLES_PATH}/data/$(basename "$PWD")"
+
 rm -rf debug.log target
-rm -rf "/workspace/examples/data/incubator-NuRV-monitor-validation/output"
-rm -rf "/workspace/examples/data/incubator-NuRV-monitor-validation/figs"
+rm -rf "${DATA_PATH}/output" "${DATA_PATH}/figs"

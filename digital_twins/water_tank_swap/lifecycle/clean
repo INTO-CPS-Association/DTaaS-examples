@@ -1,4 +1,7 @@
 #!/bin/bash
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+
 rm -rf events_xml_log.xml\
   target\
   transition\
@@ -6,4 +9,3 @@ rm -rf events_xml_log.xml\
   stage1\
   debug.log\
   out.txt
-

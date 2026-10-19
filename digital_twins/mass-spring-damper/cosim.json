@@ -1,7 +1,7 @@
 {
 	"fmus":{
-		"{msd1}":"file:///workspace/examples/models/MassSpringDamper1.fmu",
-		"{msd2}":"file:///workspace/examples/models/MassSpringDamper2.fmu"
+		"{msd1}":"../../models/MassSpringDamper1.fmu",
+		"{msd2}":"../../models/MassSpringDamper2.fmu"
 	},
 	"connections": {
 		"{msd1}.msd1i.x1": [
@@ -15,7 +15,8 @@
     ]
 	},
 	"logVariables":{
-		"{msd2}.msd2i":["x2", "v2"]
+		"{msd1}.msd1i":["x1", "v1"],
+		"{msd2}.msd2i":["x2", "v2", "fk"]
 	},
   "parameters": {
 		"{msd2}.msd2i.c2": 1.0,

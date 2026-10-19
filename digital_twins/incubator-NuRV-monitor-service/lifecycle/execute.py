@@ -86,7 +86,7 @@ def startNuRV(ior):
 def startOmniNames():
     if not os.path.exists("../data"):
         os.system("mkdir ../data")
-    cmd = "exec .venv/bin/omniNames -datadir ../data -start -always"
+    cmd = "exec omniNames -datadir ../data -start -always"
     omniNamesProcess = subprocess.Popen(
         cmd,
         shell=True,
