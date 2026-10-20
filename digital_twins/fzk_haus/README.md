@@ -156,9 +156,8 @@ lifecycle/terminate
 The Buildings page draws the model and resolves the manifest, but the DTaaS
 client does not subscribe to MQTT yet. Until it does, the readings reach any
 other MQTT subscriber, such as a dashboard, and not the page. The demo video
-was recorded with the client of
-[DTaaS pull request 1879](https://github.com/INTO-CPS-Association/DTaaS/pull/1879),
-which draws the readings on the page and is not merged yet.
+shows this: the readings reach the terminal through the broker, and the page
+draws the model and its sensors, whose cards wait for a first reading.
 
 ## References
 

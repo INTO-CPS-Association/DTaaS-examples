@@ -48,7 +48,7 @@ class ExamplesTest(unittest.TestCase):
                     set(options), {"interrupt", "tmux_view", "desktop", "dtaas_page"})
                 for action in options.get("dtaas_page", (None, []))[1]:
                     valid = isinstance(action, (int, float)) or (
-                        len(action) == 2 and action[0] in {"click", "scroll", "zoom"})
+                        len(action) == 2 and action[0] in {"click", "choose", "scroll", "zoom"})
                     self.assertTrue(valid, f"{example[0]}: {action}")
                 for action in options.get("desktop", []):
                     valid = isinstance(action, (int, float, str)) or (

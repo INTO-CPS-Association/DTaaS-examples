@@ -65,13 +65,16 @@ def show_plot(name, file):
 
 FLEX_CELL_CONNECTIONS = f"{EXAMPLES_DIR}/data/flex-cell/input/connections.conf"
 
-# The Buildings page with the FZK-Haus: roofs hidden, the ground floor and the
-# heatmap per sensor, coloured by the readings the publisher sends, then the
-# floor plan from above and the sensor cards
-BIM_PAGE = ("# DTaaS page: the building, coloured by its readings", {"dtaas_page": (
-    "/bim/models/fzk_haus",
-    [8, ("scroll", 300), ("click", "Hide Slabs, Roofs And Ceilings"),
-     ("click", "The floor below"), ("click", "The floor below"), ("click", "Heatmap"), 10,
+# The Buildings page with the FZK-Haus as the released client shows it: the
+# model chosen in the picker, roofs hidden, the ground floor, the floor plan
+# from above and the sensor cards. That client draws the model and its sensors
+# but does not receive readings, which reach the terminal through the broker
+# in the step before.
+BIM_PAGE = ("# DTaaS page: the building and its sensors, without readings", {"dtaas_page": (
+    "/bim",
+    [8, ("choose", ("IFC Model", "FZK")), 10, ("scroll", 300),
+     ("click", "Hide Slabs, Roofs And Ceilings"),
+     ("click", "The floor below"), ("click", "The floor below"), 5,
      ("click", "Look From Above"), ("zoom", 400), 15, ("scroll", 700), 10])})
 
 # The library folder the Buildings page of DTaaS reads, where the BIM example

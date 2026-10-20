@@ -54,7 +54,7 @@ async def open_desktop(context, page):
 
 
 async def page_action(page, action):
-    """Wait (seconds), click a button by its name, scroll the page or zoom the 3D view.
+    """Wait (seconds), click a button, choose an option, scroll the page or zoom the 3D view.
 
     The wheel scrolls the page from its right edge, where no canvas takes it,
     and zooms when it is over the first canvas of the page.
@@ -65,6 +65,12 @@ async def page_action(page, action):
     kind, value = action
     if kind == "click":
         await page.get_by_role("button", name=value, exact=True).first.click()
+    elif kind == "choose":
+        # A select is opened by its name, and the option is the first whose
+        # text holds the given part, since a title can be longer than it.
+        label, part = value
+        await page.get_by_role("combobox", name=label).click()
+        await page.get_by_role("option").filter(has_text=part).first.click()
     elif kind == "scroll":
         await page.mouse.move(int(config.SIZE.split("x", maxsplit=1)[0]) - 10, 450)
         await page.mouse.wheel(0, value)

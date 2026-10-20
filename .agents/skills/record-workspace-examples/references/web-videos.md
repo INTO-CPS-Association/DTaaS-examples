@@ -73,11 +73,13 @@ web video only. The full web video lasts 14:20 and has 82.6 MB.
 recorded.
 
 The BIM example (`fzk_haus`) was added after these takes and recorded on
-19 October 2026 in a take of its own. Its chapter ends in the Buildings page,
-which the dtaas-web 1.0.2 of the release does not have, so that take served
-the client of INTO-CPS-Association/DTaaS#1879 instead, with Web MQTT enabled
-on the RabbitMQ service and its address in `env.js`:
+20 October 2026 in a take of its own. Its chapter ends in the Buildings page,
+which the dtaas-web 1.0.2 of the release does not have, so that take served a
+build of the client of DTaaS `feature/distributed-demo`, the upcoming release,
+mounted over the image's build by a second compose file. That client draws
+the model and its sensors and receives no readings, which the terminal shows
+instead:
 
 | Example | Raw MB | Raw time | Web MB | Web time | GIF MB | GIF time |
 |---|--:|--:|--:|--:|--:|--:|
-| fzk_haus | 11.2 | 3:13 | 2.5 | 1:40 | 5.1 | 1:38 |
+| fzk_haus | 11.3 | 3:15 | 2.6 | 1:39 | 5.3 | 1:38 |
