@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+# Base relative paths off the digital twin directory
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit
+: "${EXAMPLES_PATH:=$(realpath ../..)}" # Set variable if not manually exported
+
+# Publishes simulated room temperatures in the background until terminate.
+WORKSPACE="${WORKSPACE:-$(realpath "${EXAMPLES_PATH}/..")}"
+MANIFEST="${WORKSPACE}/common/models/fzk_haus.manifest.json"
+
+if [ ! -x .venv/bin/python ]; then
+  printf "Run lifecycle/create first\n"
+  exit 1
+fi
+
+if [ -f publisher.pid ] && ps -p "$(cat publisher.pid)" -o args= 2>/dev/null | grep -q publish_readings.py; then
+  printf "The publisher is already running\n"
+  exit 0
+fi
+
+printf "Publishing to %s:%s, log in publisher.log\n" \
+  "${MQTT_HOST:-localhost}" "${MQTT_PORT:-1883}"
+nohup .venv/bin/python lifecycle/publish_readings.py "${MANIFEST}" > publisher.log 2>&1 &
+echo $! > publisher.pid

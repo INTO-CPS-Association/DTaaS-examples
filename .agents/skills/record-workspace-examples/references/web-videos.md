@@ -71,3 +71,15 @@ web video only. The full web video lasts 14:20 and has 82.6 MB.
 
 `opc-ua-waterplant-complete` has no lifecycle scripts and is not
 recorded.
+
+The BIM example (`fzk_haus`) was added after these takes and recorded on
+20 October 2026 in a take of its own. Its chapter ends in the Buildings page,
+which the dtaas-web 1.0.2 of the release does not have, so that take served a
+build of the client of DTaaS `feature/distributed-demo`, the upcoming release,
+mounted over the image's build by a second compose file. That client draws
+the model and its sensors and receives no readings, which the terminal shows
+instead:
+
+| Example | Raw MB | Raw time | Web MB | Web time | GIF MB | GIF time |
+|---|--:|--:|--:|--:|--:|--:|
+| fzk_haus | 11.3 | 3:15 | 2.6 | 1:39 | 5.3 | 1:38 |

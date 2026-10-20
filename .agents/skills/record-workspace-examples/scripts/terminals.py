@@ -8,6 +8,7 @@ import asyncio
 import subprocess
 import time
 
+import browser
 import config
 from session import in_workspace, shell
 
@@ -93,6 +94,8 @@ class VncTerminal:
             await self._interrupt_after(options["interrupt"])
         if "desktop" in options:
             await self._act_on_desktop(options["desktop"])
+        if "dtaas_page" in options:
+            await browser.show_dtaas_page(self.page, *options["dtaas_page"])
         if "tmux_view" in options:
             await asyncio.sleep(options["tmux_view"])
             await self.page.keyboard.press("Control+b")

@@ -110,3 +110,4 @@ long runs at 16x, and everything else at 4x.
 | 16 | [Incubator with NuRV Runtime Monitor FMU as Service](./digital_twins/incubator-NuRV-fmu-monitor-service/README.md) | RabbitMQ, InfluxDB | [demo](./digital_twins/incubator-NuRV-fmu-monitor-service/demo.mp4) |
 | 17 | [Incubator with TeSSLa Runtime Monitor as Service](./digital_twins/incubator-TeSSLa-monitor-service/README.md) | RabbitMQ, InfluxDB | [demo](./digital_twins/incubator-TeSSLa-monitor-service/demo.mp4) |
 | 18 | [Incubator with TeSSLa Runtime Monitor for Active Control](./digital_twins/incubator-TeSSLa-active-control/README.md) | RabbitMQ, InfluxDB | [demo](./digital_twins/incubator-TeSSLa-active-control/demo.mp4) |
+| 19 | [BIM - Building Information Modeling](./digital_twins/fzk_haus/README.md) | MQTT | [demo](./digital_twins/fzk_haus/demo.mp4) |

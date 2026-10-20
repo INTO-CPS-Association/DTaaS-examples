@@ -59,6 +59,9 @@ CHECKS = {
     "incubator-TeSSLa-monitor-service": ("lifecycle/execute", "grep -c 'alert' /tmp/tessla.log"),
     "incubator-TeSSLa-active-control": (
         "lifecycle/execute", "grep -c 'Valid Message' /tmp/tessla.log"),
+    # the publisher logs the number of sensors once it is connected
+    "fzk_haus": (
+        "sleep 10", f"grep -c 'Publishing 7 sensors' {DT_DIR}/fzk_haus/publisher.log"),
 }
 
 

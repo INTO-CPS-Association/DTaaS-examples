@@ -59,6 +59,12 @@ class SpeedPlanTest(unittest.TestCase):
         self.assertIn((123, 193, 1), self.plan)
         self.assertEqual(self.plan[-1], (193, 313, 16))
 
+    def test_a_show_script_of_an_example_is_a_result(self):
+        """The readings a show_ script prints play at the result speed."""
+        command = ".venv/bin/python lifecycle/show_readings.py m.json"
+        plan = speed_plan((0, 30), [(0, "a"), (10, command), (20, "b")], Speeds())
+        self.assertIn((10, 20, Speeds().result), plan)
+
     def test_adjacent_equal_speeds_are_merged(self):
         """Neighbouring parts have different speeds."""
         speeds = [speed for _, _, speed in self.plan]

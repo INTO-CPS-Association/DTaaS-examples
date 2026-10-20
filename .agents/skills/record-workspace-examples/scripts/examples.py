@@ -9,6 +9,12 @@ typed into the terminal of the VNC desktop, in the directory of the example:
                                     command runs: a number waits that many
                                     seconds, a string presses a key, and
                                     ("click", x, y) clicks the screen
+  ("comment", {"dtaas_page": (path, actions)})
+                                    type, then show the DTaaS page at path in
+                                    the signed-in tab: a number waits, ("click",
+                                    name) presses a button by its name,
+                                    ("scroll", pixels) scrolls the page and
+                                    ("zoom", pixels) zooms the 3D view
 """
 
 from config import DT_DIR, EXAMPLES_DIR
@@ -58,6 +64,22 @@ def show_plot(name, file):
 
 
 FLEX_CELL_CONNECTIONS = f"{EXAMPLES_DIR}/data/flex-cell/input/connections.conf"
+
+# The Buildings page with the FZK-Haus as the released client shows it: the
+# model chosen in the picker, roofs hidden, the ground floor, the floor plan
+# from above and the sensor cards. That client draws the model and its sensors
+# but does not receive readings, which reach the terminal through the broker
+# in the step before.
+BIM_PAGE = ("# DTaaS page: the building and its sensors, without readings", {"dtaas_page": (
+    "/bim",
+    [8, ("choose", ("IFC Model", "FZK")), 10, ("scroll", 300),
+     ("click", "Hide Slabs, Roofs And Ceilings"),
+     ("click", "The floor below"), ("click", "The floor below"), 5,
+     ("click", "Look From Above"), ("zoom", 400), 15, ("scroll", 700), 10])})
+
+# The library folder the Buildings page of DTaaS reads, where the BIM example
+# writes the model and the files derived from it
+BIM_MODELS = "/workspace/common/models"
 
 EXAMPLES = [
     ("mass-spring-damper", "Mass Spring Damper", [
@@ -200,6 +222,20 @@ EXAMPLES = [
          "lifecycle/execute",
          "lifecycle/clean",
      ]),
+    ("fzk_haus", "BIM - Building Information Modeling", [
+        "lifecycle/create",
+        f"ls -l {BIM_MODELS}",
+        "# One proposed sensor per room, each with the MQTT topic it publishes on",
+        f"grep -E '\"(label|topic)\"' {BIM_MODELS}/fzk_haus.manifest.json",
+        "# Publish the readings over the MQTT of the RabbitMQ service",
+        "export MQTT_HOST=rabbitmq-server MQTT_USERNAME=incubator MQTT_PASSWORD=incubator",
+        "lifecycle/execute",
+        ("sleep 10", {}),
+        "cat publisher.log",
+        f".venv/bin/python lifecycle/show_readings.py {BIM_MODELS}/fzk_haus.manifest.json",
+        BIM_PAGE,
+        "lifecycle/terminate",
+    ]),
 ]
 
 
