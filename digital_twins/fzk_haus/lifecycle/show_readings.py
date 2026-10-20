@@ -74,8 +74,13 @@ def main(argv=None):
     if not args.manifest.is_file():
         log.error("No manifest at %s. Run lifecycle/create first.", args.manifest)
         return 1
+    topics = topics_of(args.manifest)
+    if not topics:
+        log.error("%s names no live topic. Pass the binding manifest, %s.",
+                  args.manifest, "fzk_haus.manifest.json")
+        return 1
     client = connect()
-    lines = collect(client, topics_of(args.manifest), args.count, args.timeout)
+    lines = collect(client, topics, args.count, args.timeout)
     client.loop_stop()
     client.disconnect()
     for line in lines:
